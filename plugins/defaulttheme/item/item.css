@@ -63,11 +63,11 @@
 }
 
 .miniMainSection .itemPageSide {
-    max-width: 17%;
+    max-width: 16%;
 }
 
 .miniMainSection .itemPageMain {
-    width: 83%;
+    width: 84%;
 }
 
 .bulletSeparator {
@@ -131,7 +131,7 @@
 }
 
     .nameContainer h2 {
-        margin: .4em 0 1.7em;
+        margin: .2em 0 1.7em;
     }
 
 .trackList {

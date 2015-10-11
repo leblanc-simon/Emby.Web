@@ -3,12 +3,13 @@ html, body {
     padding: 0;
     overflow: hidden;
     height: 100%;
--webkit-touch-callout: none;
+    -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none;}
+    user-select: none;
+}
 
     html.preload {
         /* Would rather have black during loading than white. */
@@ -65,3 +66,20 @@ html, body {
     right: 0;
     bottom: 0;
 }
+
+.hiddenScrollX {
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+.hiddenScrollX {
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+}
+
+    .hiddenScrollX::-webkit-scrollbar {
+        height: 0 !important;
+        display: none;
+    }

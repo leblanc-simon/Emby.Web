@@ -90,7 +90,8 @@
             var focused = focusedElement;
             focusedElement = null;
 
-            if (focused) {
+            if (focused && focused.classList.contains('transformCard')) {
+                focused.classList.add('transformCardReverse');
                 focused.classList.remove('transformCard');
             }
         }
@@ -99,7 +100,7 @@
         var selectedMediaInfoTimeout;
         function startZoomTimer() {
 
-            if (onZoomTimeout) {
+            if (zoomTimeout) {
                 clearTimeout(zoomTimeout);
             }
             zoomTimeout = setTimeout(onZoomTimeout, 100);
@@ -133,6 +134,7 @@
 
             if (document.activeElement == card) {
                 card.classList.add('transformCard');
+                card.classList.remove('transformCardReverse');
             }
         }
 

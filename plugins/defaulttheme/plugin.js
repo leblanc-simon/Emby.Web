@@ -145,7 +145,8 @@ define([], function () {
                 id: 'defaulttheme-guide',
                 transition: 'slide',
                 dependencies: [
-                    Emby.PluginManager.mapRequire(self, 'livetv/guide.js')
+                    Emby.PluginManager.mapRequire(self, 'livetv/guide.js'),
+                    'css!' + Emby.PluginManager.mapRequire(self, 'livetv/guide.css')
                 ]
             });
 
@@ -223,7 +224,7 @@ define([], function () {
 
             if (item.IsFolder) {
 
-                if (item.Type != 'Series' && item.Type != 'Season' && item.Type != 'MusicAlbum' && item.Type != 'MusicArtist' && item.Type != 'Playlist') {
+                if (item.Type != 'Series' && item.Type != 'Season' && item.Type != 'MusicAlbum' && item.Type != 'MusicArtist' && item.Type != 'Playlist' && item.Type != 'BoxSet') {
                     showList = true;
                 }
             }

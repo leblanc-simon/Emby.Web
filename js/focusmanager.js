@@ -23,7 +23,7 @@
         element.focus();
     }
 
-    var focusableTagNames = ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON', 'PAPER-BUTTON', 'PAPER-INPUT', 'PAPER-TEXTAREA', 'PAPER-ICON-BUTTON', 'PAPER-FAB', 'PAPER-ICON-ITEM'];
+    var focusableTagNames = ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON', 'A', 'PAPER-BUTTON', 'PAPER-INPUT', 'PAPER-TEXTAREA', 'PAPER-ICON-BUTTON', 'PAPER-FAB', 'PAPER-ICON-ITEM'];
     var focusableQuery = focusableTagNames.join(',') + ',.focusable';
 
     function isFocusable(elem) {
