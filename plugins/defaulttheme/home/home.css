@@ -1,0 +1,151 @@
+.homePageContent h1 {
+    margin-top: 0;
+}
+
+.homePageContent {
+    width: 100%;
+}
+
+.homeBody {
+    height: 400px;
+}
+
+.homePageContent .squareCard {
+    width: 132px;
+}
+
+.homePageContent .backdropCard {
+    width: 220px;
+}
+
+.homePageContent .portraitCard {
+    width: 132px;
+}
+
+.wideSpotlightCard {
+    width: 482px;
+}
+
+.miniSpotlightCard {
+    width: 238px;
+}
+
+    .wideSpotlightCard .cardPadder, .miniSpotlightCard .cardPadder {
+        padding-bottom: 50%;
+    }
+
+@media all and (max-height: 1070px) {
+
+    .homePageContainer {
+        bottom: 10px;
+        top: 70px;
+    }
+}
+
+/* 720p */
+@media all and (min-height: 720px) {
+
+    .homeBody {
+        height: 400px;
+    }
+
+    .homePageContent .squareCard {
+        width: 132px;
+    }
+
+    .homePageContent .backdropCard {
+        width: 220px;
+    }
+
+    .homePageContent .portraitCard {
+        width: 132px;
+    }
+
+    .wideSpotlightCard {
+        width: 482px;
+    }
+
+    .miniSpotlightCard {
+        width: 238px;
+    }
+}
+
+/* 1080p */
+@media all and (min-height: 1080px) {
+
+    .homeBody {
+        height: 690px;
+    }
+
+    .homePageContent .squareCard {
+        width: 207px;
+    }
+
+    .homePageContent .backdropCard {
+        width: 359px;
+    }
+
+    .homePageContent .portraitCard {
+        width: 209px;
+    }
+
+    .wideSpotlightCard {
+        width: 812px;
+    }
+
+    .miniSpotlightCard {
+        width: 402px;
+    }
+}
+
+/* 2560 * 1440 */
+@media all and (min-height: 1440px) {
+
+    .homeBody {
+        height: 900px;
+    }
+
+    .homePageContent .squareCard {
+        width: 260px;
+    }
+
+    .homePageContent .backdropCard {
+        width: 449.5px;
+    }
+
+    .homePageContent .portraitCard {
+        width: 260px;
+    }
+
+    .wideSpotlightCard {
+        width: 1015px;
+    }
+
+    .miniSpotlightCard {
+        width: 503px;
+    }
+
+    .wideSpotlightCard {
+        width: 482px;
+    }
+
+    .miniSpotlightCard {
+        width: 238px;
+    }
+
+        .wideSpotlightCard .cardPadder, .miniSpotlightCard .cardPadder {
+            padding-bottom: 50%;
+        }
+}
+
+.allSeriesCard .cardImage {
+    background-image: url(../css/images/tv.jpg);
+}
+
+.allMoviesCard .cardImage {
+    background-image: url(../css/images/movie.jpg);
+}
+
+.movieGenresCard .cardImage, .tvGenresCard .cardImage {
+    background-image: url(../css/images/popcorn.jpg);
+}

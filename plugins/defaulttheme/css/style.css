@@ -347,7 +347,7 @@
         color: #4CAF50;
     }
 
-.homeSection {
+.horizontalSection {
     float: left;
     margin-right: 40px;
 }
@@ -358,7 +358,7 @@
     font-size: 90%;
 }
 
-.homeBody {
+.horizontalBody {
     height: 400px;
 }
 
@@ -376,26 +376,6 @@
 
 .horizontalPageContent .loginSquareCard {
     width: 230px;
-}
-
-.wideSpotlightCard {
-    width: 482px;
-}
-
-.miniSpotlightCard {
-    width: 238px;
-}
-
-    .wideSpotlightCard .cardPadder, .miniSpotlightCard .cardPadder {
-        padding-bottom: 50%;
-    }
-
-@media all and (max-height: 1070px) {
-
-    .homePageContainer {
-        bottom: 10px;
-        top: 70px;
-    }
 }
 
 .mediaInfoItem {
@@ -428,7 +408,7 @@
 /* 720p */
 @media all and (min-height: 720px) {
 
-    .homeBody {
+    .horizontalBody {
         height: 400px;
     }
 
@@ -447,41 +427,25 @@
     .horizontalPageContent .loginSquareCard {
         width: 280px;
     }
-
-    .wideSpotlightCard {
-        width: 482px;
-    }
-
-    .miniSpotlightCard {
-        width: 238px;
-    }
 }
 
 /* 1080p */
 @media all and (min-height: 1080px) {
 
-    .homeBody {
+    .horizontalBody {
         height: 690px;
     }
 
     .horizontalPageContent .squareCard {
-        width: 207px;
+        width: 216px;
     }
 
     .horizontalPageContent .backdropCard {
-        width: 359px;
+        width: 377px;
     }
 
     .horizontalPageContent .portraitCard {
-        width: 209px;
-    }
-
-    .wideSpotlightCard {
-        width: 812px;
-    }
-
-    .miniSpotlightCard {
-        width: 402px;
+        width: 220px;
     }
 
     .horizontalPageContent .loginSquareCard {
@@ -492,7 +456,7 @@
 /* 2560 * 1440 */
 @media all and (min-height: 1440px) {
 
-    .homeBody {
+    .horizontalBody {
         height: 900px;
     }
 
@@ -506,14 +470,6 @@
 
     .horizontalPageContent .portraitCard {
         width: 260px;
-    }
-
-    .wideSpotlightCard {
-        width: 1015px;
-    }
-
-    .miniSpotlightCard {
-        width: 503px;
     }
 
     .horizontalPageContent .loginSquareCard {
@@ -628,16 +584,4 @@
 
 .btnUserDataOn {
     color: #cc3333;
-}
-
-.allSeriesCard .cardImage {
-    background-image: url(images/tv.jpg);
-}
-
-.allMoviesCard .cardImage {
-    background-image: url(images/movie.jpg);
-}
-
-.movieGenresCard .cardImage, .tvGenresCard .cardImage {
-    background-image: url(images/popcorn.jpg);
 }

@@ -163,7 +163,7 @@ define([], function () {
             var keyframes = [
               { opacity: '1', offset: 0 },
               { opacity: '0', offset: 1 }];
-            var timing = { duration: 500, iterations: iterations };
+            var timing = { duration: 900, iterations: iterations };
             return elem.animate(keyframes, timing);
         }
 

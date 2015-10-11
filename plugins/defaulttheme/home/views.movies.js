@@ -125,7 +125,7 @@
                         break;
                 }
 
-                html += '<div class="homeSection">';
+                html += '<div class="horizontalSection">';
                 html += '<div class="sectionTitle">' + title + '</div>';
 
                 html += '<div class="itemsContainer">';
@@ -158,7 +158,7 @@
             gotoMoviesView('movies', parentId);
         });
 
-        element.querySelector('.genresCard').addEventListener('click', function () {
+        element.querySelector('.movieGenresCard').addEventListener('click', function () {
             gotoMoviesView('genres', parentId);
         });
 
