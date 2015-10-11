@@ -629,3 +629,15 @@
 .btnUserDataOn {
     color: #cc3333;
 }
+
+.allSeriesCard .cardImage {
+    background-image: url(images/tv.jpg);
+}
+
+.allMoviesCard .cardImage {
+    background-image: url(images/movie.jpg);
+}
+
+.movieGenresCard .cardImage, .tvGenresCard .cardImage {
+    background-image: url(images/popcorn.jpg);
+}

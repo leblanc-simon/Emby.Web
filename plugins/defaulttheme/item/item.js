@@ -232,7 +232,7 @@
             mainSection.classList.remove('smallBottomMargin');
         }
 
-        if (item.Type == "Season" || item.Type == "MusicArtist" || enableTrackList(item)) {
+        if (item.Type == "Season" || item.Type == "MusicArtist" || item.Type == "BoxSet" || enableTrackList(item)) {
             mainSection.classList.add('miniMainSection');
         } else {
             mainSection.classList.remove('miniMainSection');

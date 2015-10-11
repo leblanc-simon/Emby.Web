@@ -28,7 +28,6 @@
 
             require(['tvguide'], function (guide) {
 
-
                 guideInstance = new guide({
                     element: view.querySelector('.epg')
                 });

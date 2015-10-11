@@ -60,39 +60,94 @@ define([], function () {
 
             showLoading();
 
-            var apiClient = ApiClient;
-            channelQuery.UserId = apiClient.getCurrentUserId();
+            require(['connectionManager'], function (connectionManager) {
 
-            channelQuery.Limit = Math.min(channelQuery.Limit || defaultChannels, channelLimit);
-            channelQuery.AddCurrentProgram = false;
+                var apiClient = connectionManager.currentApiClient();
 
-            channelsPromise = channelsPromise || apiClient.getLiveTvChannels(channelQuery);
+                channelQuery.UserId = apiClient.getCurrentUserId();
 
-            var date = currentDate;
+                channelQuery.Limit = Math.min(channelQuery.Limit || defaultChannels, channelLimit);
+                channelQuery.AddCurrentProgram = false;
 
-            var nextDay = new Date(date.getTime() + msPerDay - 1);
-            Logger.log(nextDay);
-            channelsPromise.done(function (channelsResult) {
+                channelsPromise = channelsPromise || apiClient.getLiveTvChannels(channelQuery);
 
-                apiClient.getLiveTvPrograms({
-                    UserId: Dashboard.getCurrentUserId(),
-                    MaxStartDate: nextDay.toISOString(),
-                    MinEndDate: date.toISOString(),
-                    channelIds: channelsResult.Items.map(function (c) {
-                        return c.Id;
-                    }).join(','),
-                    ImageTypeLimit: 1,
-                    EnableImageTypes: "Primary"
+                var date = currentDate;
 
-                }).done(function (programsResult) {
+                var nextDay = new Date(date.getTime() + msPerDay - 1);
+                Logger.log(nextDay);
+                channelsPromise.done(function (channelsResult) {
 
-                    renderGuide(page, date, channelsResult.Items, programsResult.Items);
+                    apiClient.getLiveTvPrograms({
+                        UserId: apiClient.getCurrentUserId(),
+                        MaxStartDate: nextDay.toISOString(),
+                        MinEndDate: date.toISOString(),
+                        channelIds: channelsResult.Items.map(function (c) {
+                            return c.Id;
+                        }).join(','),
+                        ImageTypeLimit: 1,
+                        EnableImageTypes: "Primary"
 
-                    hideLoading();
+                    }).done(function (programsResult) {
 
+                        renderGuide(page, date, channelsResult.Items, programsResult.Items, apiClient);
+
+                        hideLoading();
+
+                    });
                 });
             });
         }
+
+        function getDisplayTime(date) {
+
+            if ((typeof date).toString().toLowerCase() === 'string') {
+                try {
+
+                    date = parseISO8601Date(date, { toLocal: true });
+
+                } catch (err) {
+                    return date;
+                }
+            }
+
+            var lower = date.toLocaleTimeString().toLowerCase();
+
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+
+            var text;
+
+            if (lower.indexOf('am') != -1 || lower.indexOf('pm') != -1) {
+
+                var suffix = hours > 11 ? 'pm' : 'am';
+
+                hours = (hours % 12) || 12;
+
+                text = hours;
+
+                if (minutes) {
+
+                    text += ':';
+                    if (minutes < 10) {
+                        text += '0';
+                    }
+                    text += minutes;
+                }
+
+                text += suffix;
+
+            } else {
+                text = hours + ':';
+
+                if (minutes < 10) {
+                    text += '0';
+                }
+                text += minutes;
+            }
+
+            return text;
+        }
+
 
         function getTimeslotHeadersHtml(startDate, endDateTime) {
 
@@ -106,10 +161,8 @@ define([], function () {
             while (startDate.getTime() < endDateTime) {
 
                 html += '<div class="timeslotHeader">';
-                html += '<div class="timeslotHeaderInner">';
 
-                html += LibraryBrowser.getDisplayTime(startDate);
-                html += '</div>';
+                html += getDisplayTime(startDate);
                 html += '</div>';
 
                 // Add 30 mins
@@ -212,31 +265,31 @@ define([], function () {
                 html += program.Name;
                 html += '</div>';
 
-                html += '<div class="guideProgramTime">';
-                if (program.IsLive) {
-                    html += '<span class="liveTvProgram">' + Globalize.translate('LabelLiveProgram') + '&nbsp;&nbsp;</span>';
-                }
-                else if (program.IsPremiere) {
-                    html += '<span class="premiereTvProgram">' + Globalize.translate('LabelPremiereProgram') + '&nbsp;&nbsp;</span>';
-                }
-                else if (program.IsSeries && !program.IsRepeat) {
-                    html += '<span class="newTvProgram">' + Globalize.translate('LabelNewProgram') + '&nbsp;&nbsp;</span>';
-                }
+                //html += '<div class="guideProgramTime">';
+                //if (program.IsLive) {
+                //    html += '<span class="liveTvProgram">' + Globalize.translate('LabelLiveProgram') + '&nbsp;&nbsp;</span>';
+                //}
+                //else if (program.IsPremiere) {
+                //    html += '<span class="premiereTvProgram">' + Globalize.translate('LabelPremiereProgram') + '&nbsp;&nbsp;</span>';
+                //}
+                //else if (program.IsSeries && !program.IsRepeat) {
+                //    html += '<span class="newTvProgram">' + Globalize.translate('LabelNewProgram') + '&nbsp;&nbsp;</span>';
+                //}
 
-                html += LibraryBrowser.getDisplayTime(program.StartDateLocal);
-                html += ' - ';
-                html += LibraryBrowser.getDisplayTime(program.EndDateLocal);
+                //html += getDisplayTime(program.StartDateLocal);
+                //html += ' - ';
+                //html += getDisplayTime(program.EndDateLocal);
 
-                if (program.SeriesTimerId) {
-                    html += '<div class="timerCircle seriesTimerCircle"></div>';
-                    html += '<div class="timerCircle seriesTimerCircle"></div>';
-                    html += '<div class="timerCircle seriesTimerCircle"></div>';
-                }
-                else if (program.TimerId) {
+                //if (program.SeriesTimerId) {
+                //    html += '<div class="timerCircle seriesTimerCircle"></div>';
+                //    html += '<div class="timerCircle seriesTimerCircle"></div>';
+                //    html += '<div class="timerCircle seriesTimerCircle"></div>';
+                //}
+                //else if (program.TimerId) {
 
-                    html += '<div class="timerCircle"></div>';
-                }
-                html += '</div>';
+                //    html += '<div class="timerCircle"></div>';
+                //}
+                //html += '</div>';
 
                 if (addAccent) {
                     html += '<div class="programAccent"></div>';
@@ -264,11 +317,8 @@ define([], function () {
             var programGrid = page.querySelector('.programGrid');
             programGrid.innerHTML = html.join('');
 
-            $(programGrid).scrollTop(0).scrollLeft(0);
-
-            if (options.enableHoverMenu) {
-                $(programGrid).createGuideHoverMenu('.programCellInner');
-            }
+            programGrid.scrollTop = 0;
+            programGrid.scrollLeft = 0;
         }
 
         function renderChannelHeaders(page, channels, apiClient) {
@@ -287,7 +337,7 @@ define([], function () {
                 var hasChannelImage = channel.ImageTags.Primary;
                 var cssClass = hasChannelImage ? 'guideChannelInfo guideChannelInfoWithImage' : 'guideChannelInfo';
 
-                html += '<div class="' + cssClass + '">' + channel.Name + '<br/>' + channel.Number + '</div>';
+                html += '<div class="' + cssClass + '">' + channel.Number + '</div>';
 
                 if (hasChannelImage) {
 
@@ -309,7 +359,7 @@ define([], function () {
 
             var channelList = page.querySelector('.channelList');
             channelList.innerHTML = html;
-            ImageLoader.lazyChildren(channelList);
+            //ImageLoader.lazyChildren(channelList);
         }
 
         function renderGuide(page, date, channels, programs, apiClient) {
@@ -343,13 +393,34 @@ define([], function () {
             }
         }
 
+        function getFutureDateText(date) {
+
+            var weekday = [];
+            weekday[0] = Globalize.translate('OptionSunday');
+            weekday[1] = Globalize.translate('OptionMonday');
+            weekday[2] = Globalize.translate('OptionTuesday');
+            weekday[3] = Globalize.translate('OptionWednesday');
+            weekday[4] = Globalize.translate('OptionThursday');
+            weekday[5] = Globalize.translate('OptionFriday');
+            weekday[6] = Globalize.translate('OptionSaturday');
+
+            var day = weekday[date.getDay()];
+            date = date.toLocaleDateString();
+
+            if (date.toLowerCase().indexOf(day.toLowerCase()) == -1) {
+                return day + " " + date;
+            }
+
+            return date;
+        }
+
         function changeDate(page, date) {
 
             currentDate = normalizeDateToTimeslot(date);
 
             reloadGuide(page);
 
-            var text = LibraryBrowser.getFutureDateText(date);
+            var text = getFutureDateText(date);
             text = '<span class="currentDay">' + text.replace(' ', ' </span>');
             page.querySelector('.currentDate').innerHTML = text;
         }
@@ -378,7 +449,7 @@ define([], function () {
             while (start <= end) {
 
                 dateOptions.push({
-                    name: LibraryBrowser.getFutureDateText(start),
+                    name: getFutureDateText(start),
                     id: start.getTime(),
                     ironIcon: 'today'
                 });
@@ -466,12 +537,7 @@ define([], function () {
                 });
             }
 
-            $('.btnUnlockGuide', tabContent).on('click', function () {
-
-                reloadPage(tabContent);
-            });
-
-            $('.btnSelectDate', tabContent).on('click', function () {
+            tabContent.querySelector('.btnSelectDate').addEventListener('click', function () {
 
                 selectDate(tabContent);
             });

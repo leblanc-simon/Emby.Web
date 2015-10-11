@@ -81,17 +81,32 @@ button.card {
 }*/
 
 .transformCard .cardBox {
-    animation: SHW .2s;
+    animation: scaleCardUp .2s;
     animation-fill-mode: both;
 }
 
-@keyframes SHW {
+@keyframes scaleCardUp {
     from {
         transform: scale(1);
     }
 
     to {
         transform: scale(1.12);
+    }
+}
+
+.transformCardReverse .cardBox {
+    animation: scaleCardDown .2s;
+    animation-fill-mode: both;
+}
+
+@keyframes scaleCardDown {
+    from {
+        transform: scale(1.12);
+    }
+
+    to {
+        transform: scale(1);
     }
 }
 

@@ -147,7 +147,7 @@
                     releaseSwing: true,
                     scrollBar: view.querySelector('.contentScrollbar'),
                     scrollBy: 200,
-                    speed: 500,
+                    speed: 300,
                     elasticBounds: 1,
                     dragHandle: 1,
                     dynamicHandle: 1,
@@ -203,7 +203,8 @@
             var focused = focusedElement;
             focusedElement = null;
 
-            if (focused) {
+            if (focused && focused.classList.contains('transformCard')) {
+                focused.classList.add('transformCardReverse');
                 focused.classList.remove('transformCard');
             }
         }
@@ -212,7 +213,7 @@
         var selectedMediaInfoTimeout;
         function startZoomTimer() {
 
-            if (onZoomTimeout) {
+            if (zoomTimeout) {
                 clearTimeout(zoomTimeout);
             }
             zoomTimeout = setTimeout(onZoomTimeout, 100);
@@ -246,6 +247,7 @@
 
             if (document.activeElement == card) {
                 card.classList.add('transformCard');
+                card.classList.remove('transformCardReverse');
             }
         }
 
@@ -305,6 +307,7 @@
         }
 
         function fadeIn(elem, iterations) {
+
             var keyframes = [
               { opacity: '0', offset: 0 },
               { opacity: '1', offset: 1 }];

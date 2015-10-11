@@ -115,7 +115,7 @@ paper-dialog {
             color: #fff !important;
         }
 
-.allSeriesCard .cardImageContainer, .allMoviesCard .cardImageContainer {
+.allSeriesCard .cardImageContainer {
     background: #4CAF50;
 }
 
