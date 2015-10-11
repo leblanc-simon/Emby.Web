@@ -69,5 +69,7 @@
     "LiveTV": "Live TV",
     "TrackCount": "{0} tracks",
     "Search": "Search",
-    "Trailer": "Trailer"
+    "Trailer": "Trailer",
+    "PlayAll": "Play All",
+    "InstantMix": "Instant Mix"
 }
