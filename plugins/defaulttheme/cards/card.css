@@ -83,6 +83,7 @@ button.card {
 .transformCard .cardBox {
     animation: scaleCardUp .2s;
     animation-fill-mode: both;
+    z-index: 999999;
 }
 
 @keyframes scaleCardUp {
@@ -98,6 +99,7 @@ button.card {
 .transformCardReverse .cardBox {
     animation: scaleCardDown .2s;
     animation-fill-mode: both;
+    z-index: 999999;
 }
 
 @keyframes scaleCardDown {

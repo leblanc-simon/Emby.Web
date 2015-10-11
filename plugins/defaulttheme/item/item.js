@@ -62,6 +62,8 @@
 
                 view.querySelector('.btnPlay').addEventListener('click', play);
                 view.querySelector('.btnTrailer').addEventListener('click', playTrailer);
+                view.querySelector('.btnInstantMix').addEventListener('click', instantMix);
+                view.querySelector('.btnShuffle').addEventListener('click', shuffle);
             }
         });
 
@@ -80,6 +82,14 @@
             Emby.PlaybackManager.play({
                 items: [currentItem]
             });
+        }
+
+        function instantMix() {
+            Emby.PlaybackManager.instantMix(currentItem.Id);
+        }
+
+        function shuffle() {
+            Emby.PlaybackManager.shuffle(currentItem);
         }
     }
 
@@ -246,7 +256,6 @@
             taglineElem.classList.add('hide');
         }
 
-
         var overviewElem = view.querySelector('.overview')
         if (item.Overview && item.Type != 'MusicArtist' && item.Type != 'MusicAlbum') {
             overviewElem.classList.remove('hide');
@@ -306,6 +315,22 @@
             genresElem.classList.remove('hide');
             genresElem.innerHTML = genresHtml;
             sideGenresElem.classList.add('hide');
+        }
+
+        if (item.IsFolder) {
+
+            view.querySelector('.btnPlayText').innerHTML = Globalize.translate("PlayAll");
+            view.querySelector('.btnShuffle').classList.remove('hide');
+
+        } else {
+            view.querySelector('.btnPlayText').innerHTML = Globalize.translate("Play");
+            view.querySelector('.btnShuffle').classList.add('hide');
+        }
+
+        if (item.Type == "MusicArtist" || item.Type == "MusicAlbum" || item.Type == "MusicGenre" || item.Type == "Playlist" || item.MediaType == "Audio") {
+            view.querySelector('.btnInstantMix').classList.remove('hide');
+        } else {
+            view.querySelector('.btnInstantMix').classList.add('hide');
         }
     }
 

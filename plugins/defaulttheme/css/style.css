@@ -215,7 +215,6 @@
 }
 
 .scrollFrameX {
-    overflow: hidden;
     white-space: nowrap !important;
 }
 
@@ -465,11 +464,11 @@
     }
 
     .horizontalPageContent .backdropCard {
-        width: 449.5px;
+        width: 455px;
     }
 
     .horizontalPageContent .portraitCard {
-        width: 260px;
+        width: 263px;
     }
 
     .horizontalPageContent .loginSquareCard {
