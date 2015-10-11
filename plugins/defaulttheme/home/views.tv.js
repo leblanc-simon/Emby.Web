@@ -124,7 +124,7 @@
             gotoTvView('series', parentId);
         });
 
-        element.querySelector('.genresCard').addEventListener('click', function () {
+        element.querySelector('.tvGenresCard').addEventListener('click', function () {
             gotoTvView('genres', parentId);
         });
 

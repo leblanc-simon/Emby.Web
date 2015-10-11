@@ -90,7 +90,8 @@ define([], function () {
                 transition: 'slide',
                 type: 'home',
                 dependencies: [
-                    Emby.PluginManager.mapRequire(self, 'home/home.js')
+                    Emby.PluginManager.mapRequire(self, 'home/home.js'),
+                    'css!' + Emby.PluginManager.mapRequire(self, 'home/home.css')
                 ]
             });
 

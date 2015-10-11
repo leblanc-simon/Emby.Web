@@ -37,7 +37,7 @@
 
         var section = document.createElement('div');
         section.classList.add('hide');
-        section.classList.add('homeSection');
+        section.classList.add('horizontalSection');
 
         section.innerHTML = html;
         element.appendChild(section);
