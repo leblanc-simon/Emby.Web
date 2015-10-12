@@ -1,14 +1,31 @@
+@media all and (min-height: 720px) {
+
+    .guidePageContainer {
+        top: 152px;
+        bottom: 20%;
+    }
+}
+
+@media all and (min-height: 1440px) {
+
+    .guidePageContainer {
+        top: 152px;
+    }
+}
+
 .tvGuide {
     text-align: left;
+    margin: 0 0% 0 4%;
 }
 
 .tvGuideHeader {
     white-space: nowrap;
     position: fixed;
-    top: 130px;
-    left: 0;
+    top: 152px;
+    left: 4%;
     z-index: 100;
-    max-width: 100%;
+    max-width: 96%;
+    background-color: #161616;
 }
 
 .neon-animating .tvGuideHeader {
@@ -91,7 +108,7 @@
 .programAccent {
     position: absolute;
     bottom: 0;
-    left: 6px;
+    left: 0;
     right: 0;
     height: 2px;
 }
@@ -166,7 +183,7 @@
     white-space: nowrap;
     position: relative;
     margin: 0 auto;
-    margin-top: 46px;
+    margin-top: 68px;
 }
 
 .mobileGuide .programContainer {
@@ -175,7 +192,7 @@
 
 .channelPrograms {
     white-space: nowrap;
-    height: 61px;
+    height: 71px;
     position: relative;
 }
 
@@ -194,16 +211,29 @@
     text-overflow: ellipsis;
     border-right: 1px solid #161616;
     width: 220px;
-    background: #303030;
+    background: #202020;
+    display: flex;
+    align-items: center;
+    color: #fff !important;
+    text-decoration: none;
+}
+
+.programGrid {
+    margin-left: 225px;
+}
+
+.btnSelectDate {
+    color: #fff;
+    padding-left: .5em;
 }
 
 .channelHeaderCell {
     border-bottom: 0 !important;
 }
 
-.channelHeaderCellContainer + .channelHeaderCellContainer .channelHeaderCell {
-    border-top: 6px solid #161616;
-}
+    .channelHeaderCell + .channelHeaderCell {
+        border-top: 6px solid #161616;
+    }
 
 .channelTimeslotHeader {
     border-right-color: transparent;
@@ -214,15 +244,7 @@
 }
 
 .timeslotHeader, .channelTimeslotHeader {
-    height: 42px;
-}
-
-.channelHeaderCellInner {
-    padding: .35em .5em .5em;
-    display: block;
-    text-decoration: none;
-    color: #fff !important;
-    position: relative;
+    height: 62px;
 }
 
 .pointerInput .channelHeaderCell:hover {
@@ -249,16 +271,13 @@
     position: absolute;
     top: 0;
     bottom: 6px;
-}
-
-.programCellInner {
     border-left: 6px solid #161616;
-    background-color: #212121;
-    display: block;
-    height: 100%;
+    background-color: #282828;
+    display: flex;
     color: #fff !important;
     text-decoration: none;
     overflow: hidden;
+    align-items: center;
 }
 
 .timeslotCellInner {
@@ -273,11 +292,13 @@
 }
 
 .channelHeaderCell {
-    height: 55px;
+    height: 65px;
 }
 
 .guideProgramName {
-    padding: .5em .5em .35em;
+    padding: 0 .5em 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .guideProgramTime {
@@ -285,19 +306,27 @@
     color: #bbb;
 }
 
+.programCell iron-icon {
+    margin-left: auto;
+    margin-right: .5em;
+    height: 32px;
+    width: 32px;
+    color: #ccc;
+}
+
 .guideChannelInfo {
     display: inline-block;
     max-width: 110px;
     overflow: hidden;
     white-space: nowrap;
+    padding-left: .7em;
 }
 
 .guideChannelImage {
-    width: 60px;
-    height: 35px;
-    position: absolute;
-    right: 7px;
-    top: 7px;
+    width: 80px;
+    height: 40px;
+    margin-left: auto;
+    margin-right: .3em;
     background-size: contain;
     background-position: right center;
     background-repeat: no-repeat;
@@ -306,10 +335,19 @@
 @media (max-width: 1920px) {
 
     .channelPrograms, .timeslotHeadersInner {
-        width: 10000px;
+        width: 12000px;
     }
 }
 
 .channelList, .programGrid {
     height: auto !important;
 }
+
+.programCell:focus, .channelHeaderCell:focus {
+    background-color: #52B54B;
+    outline: none !important;
+}
+
+    .programCell:focus .programAccent {
+        background-color: transparent !important;
+    }

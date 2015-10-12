@@ -125,14 +125,6 @@
         width: 503px;
     }
 
-    .wideSpotlightCard {
-        width: 482px;
-    }
-
-    .miniSpotlightCard {
-        width: 238px;
-    }
-
         .wideSpotlightCard .cardPadder, .miniSpotlightCard .cardPadder {
             padding-bottom: 50%;
         }
