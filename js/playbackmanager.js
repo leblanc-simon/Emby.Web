@@ -672,11 +672,6 @@
                 return;
             }
 
-            if (currentPlayer) {
-                playNextAfterEnded = false;
-                currentPlayer.stop(false);
-            }
-
             require(['appsettings', 'connectionManager'], function (appSettings, connectionManager) {
 
                 var apiClient = connectionManager.getApiClient(item.ServerId);
@@ -705,6 +700,12 @@
         function playAfterBitrateDetect(apiClient, item, startPosition, callback) {
 
             var player = getPlayer(item);
+
+            if (currentPlayer) {
+                playNextAfterEnded = false;
+                currentPlayer.stop(false);
+            }
+
             var deviceProfile = player.getDeviceProfile();
 
             tryStartPlayback(apiClient, deviceProfile, item, startPosition, function (mediaSource) {
@@ -1146,32 +1147,26 @@
         };
 
         self.queue = function (options) {
-
-            if (typeof (options) === 'string') {
-                options = { ids: [options] };
-            }
-
-            if (currentPlayer) {
-                // TODO
-                //currentPlayer.queue(options);
-            } else {
-                self.play(options);
-            }
+            queue(options);
         };
 
         self.queueNext = function (options) {
+            queue(options, 'next');
+        };
+
+        function queue(options, mode) {
+
+            if (!currentPlayer) {
+                self.play(options);
+                return;
+            }
 
             if (typeof (options) === 'string') {
                 options = { ids: [options] };
             }
 
-            if (currentPlayer) {
-                // TODO
-                //currentPlayer.queueNext(options);
-            } else {
-                self.play(options);
-            }
-        };
+            // TODO
+        }
 
         function onPlaybackStarted() {
 

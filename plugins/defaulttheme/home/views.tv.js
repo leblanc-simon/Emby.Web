@@ -82,7 +82,7 @@
         });
     }
 
-    function loadSpotlight(element, parentId) {
+    function loadSpotlight(element, parentId, autoFocus) {
 
         var options = {
 
@@ -114,6 +114,10 @@
     function view(element, parentId) {
 
         var self = this;
+
+        if (autoFocus) {
+            Emby.FocusManager.autoFocus(element, true);
+        }
 
         loadSpotlight(element, parentId);
         loadResume(element, parentId);
