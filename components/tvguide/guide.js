@@ -85,7 +85,8 @@ define([], function () {
                             return c.Id;
                         }).join(','),
                         ImageTypeLimit: 1,
-                        EnableImageTypes: "Primary"
+                        EnableImageTypes: "Primary",
+                        SortBy: "StartDate"
 
                     }).done(function (programsResult) {
 
@@ -240,9 +241,7 @@ define([], function () {
                 var endPercent = (renderEndMs - renderStartMs) / msPerDay;
                 endPercent *= 100;
 
-                html += '<div class="programCell" style="left:' + startPercent + '%;width:' + endPercent + '%;">';
-
-                var cssClass = "programCellInner";
+                var cssClass = "programCell";
                 var addAccent = true;
 
                 if (program.IsKids) {
@@ -259,11 +258,17 @@ define([], function () {
                     addAccent = false;
                 }
 
-                html += '<a href="itemdetails.html?id=' + program.Id + '" class="' + cssClass + '" data-programid="' + program.Id + '">';
+                html += '<a href="itemdetails.html?id=' + program.Id + '" data-programid="' + program.Id + '" class="' + cssClass + '" style="left:' + startPercent + '%;width:' + endPercent + '%;">';
 
-                html += '<div class="guideProgramName">';
+                var guideProgramNameClass = "guideProgramName";
+
+                html += '<div class="' + guideProgramNameClass + '">';
                 html += program.Name;
                 html += '</div>';
+
+                if (program.IsHD) {
+                    html += '<iron-icon icon="hd"></iron-icon>';
+                }
 
                 //html += '<div class="guideProgramTime">';
                 //if (program.IsLive) {
@@ -296,8 +301,6 @@ define([], function () {
                 }
 
                 html += '</a>';
-
-                html += '</div>';
             }
 
             html += '</div>';
@@ -329,10 +332,7 @@ define([], function () {
 
                 var channel = channels[i];
 
-                html += '<div class="channelHeaderCellContainer">';
-
-                html += '<div class="channelHeaderCell">';
-                html += '<a class="channelHeaderCellInner" href="itemdetails.html?id=' + channel.Id + '">';
+                html += '<a class="channelHeaderCell" href="itemdetails.html?id=' + channel.Id + '">';
 
                 var hasChannelImage = channel.ImageTags.Primary;
                 var cssClass = hasChannelImage ? 'guideChannelInfo guideChannelInfoWithImage' : 'guideChannelInfo';
@@ -342,8 +342,8 @@ define([], function () {
                 if (hasChannelImage) {
 
                     var url = apiClient.getScaledImageUrl(channel.Id, {
-                        maxHeight: 35,
-                        maxWidth: 60,
+                        maxHeight: 40,
+                        maxWidth: 80,
                         tag: channel.ImageTags.Primary,
                         type: "Primary"
                     });
@@ -352,14 +352,11 @@ define([], function () {
                 }
 
                 html += '</a>';
-                html += '</div>';
-
-                html += '</div>';
             }
 
             var channelList = page.querySelector('.channelList');
             channelList.innerHTML = html;
-            //ImageLoader.lazyChildren(channelList);
+            Emby.ImageLoader.lazyChildren(channelList);
         }
 
         function renderGuide(page, date, channels, programs, apiClient) {
@@ -396,13 +393,13 @@ define([], function () {
         function getFutureDateText(date) {
 
             var weekday = [];
-            weekday[0] = Globalize.translate('OptionSunday');
-            weekday[1] = Globalize.translate('OptionMonday');
-            weekday[2] = Globalize.translate('OptionTuesday');
-            weekday[3] = Globalize.translate('OptionWednesday');
-            weekday[4] = Globalize.translate('OptionThursday');
-            weekday[5] = Globalize.translate('OptionFriday');
-            weekday[6] = Globalize.translate('OptionSaturday');
+            weekday[0] = Globalize.translate('OptionSundayShort');
+            weekday[1] = Globalize.translate('OptionMondayShort');
+            weekday[2] = Globalize.translate('OptionTuesdayShort');
+            weekday[3] = Globalize.translate('OptionWednesdayShort');
+            weekday[4] = Globalize.translate('OptionThursdayShort');
+            weekday[5] = Globalize.translate('OptionFridayShort');
+            weekday[6] = Globalize.translate('OptionSaturdayShort');
 
             var day = weekday[date.getDay()];
             date = date.toLocaleDateString();
@@ -422,7 +419,7 @@ define([], function () {
 
             var text = getFutureDateText(date);
             text = '<span class="currentDay">' + text.replace(' ', ' </span>');
-            page.querySelector('.currentDate').innerHTML = text;
+            page.querySelector('.btnSelectDate').innerHTML = text;
         }
 
         var dateOptions = [];
