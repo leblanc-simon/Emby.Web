@@ -6,7 +6,6 @@
 
         var lastBitrateDetect = 0;
         var currentPlayer;
-        var currentItem;
         var repeatMode = 'RepeatNone';
         var playlist = [];
         var currentPlaylistIndex;
@@ -244,7 +243,7 @@
 
             getPlayerState(mediaRenderer).isChangingStream = true;
 
-            if (currentItem.MediaType == "Video") {
+            if (getPlayerState(mediaRenderer).MediaType == "Video") {
                 apiClient.stopActiveEncodings(playSessionId).done(function () {
 
                     setSrcIntoRenderer(apiClient, mediaRenderer, streamInfo);
@@ -679,8 +678,6 @@
             tryStartPlayback(apiClient, deviceProfile, item, startPosition, function (mediaSource) {
 
                 createStreamInfo(apiClient, item.MediaType, item, mediaSource, startPosition).then(function (streamInfo) {
-
-                    currentItem = item;
 
                     streamInfo.item = item;
                     streamInfo.mediaSource = mediaSource;
@@ -1161,7 +1158,7 @@
 
             var state = getPlayerStateInternal(player);
 
-            reportPlayback(state, currentItem.ServerId, 'reportPlaybackStart');
+            reportPlayback(state, getPlayerState(player).streamInfo.item.ServerId, 'reportPlaybackStart');
 
             startProgressInterval(player);
 
@@ -1177,7 +1174,7 @@
             }
 
             var state = getPlayerStateInternal(player);
-            reportPlayback(state, currentItem.ServerId, 'reportPlaybackProgress');
+            reportPlayback(state, getPlayerState(player).streamInfo.item.ServerId, 'reportPlaybackProgress');
 
             clearProgressInterval(player);
 
@@ -1221,6 +1218,7 @@
             player.lastProgressReport = new Date().getTime();
 
             var state = getPlayerStateInternal(player);
+            var currentItem = getPlayerState(player).streamInfo.item;
             reportPlayback(state, currentItem.ServerId, 'reportPlaybackProgress');
         }
 

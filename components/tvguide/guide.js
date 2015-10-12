@@ -56,7 +56,7 @@ define([], function () {
 
         }
 
-        function reloadGuide(page) {
+        function reloadGuide(page, newStartDate) {
 
             showLoading();
 
@@ -71,7 +71,9 @@ define([], function () {
 
                 channelsPromise = channelsPromise || apiClient.getLiveTvChannels(channelQuery);
 
-                var date = currentDate;
+                var date = newStartDate;
+                // Add one second to avoid getting programs that are just ending
+                date = new Date(date.getTime() + 1000);
 
                 var nextDay = new Date(date.getTime() + msPerDay - 1);
                 Logger.log(nextDay);
@@ -413,9 +415,10 @@ define([], function () {
 
         function changeDate(page, date) {
 
-            currentDate = normalizeDateToTimeslot(date);
+            var newStartDate = normalizeDateToTimeslot(date);
+            currentDate = newStartDate;
 
-            reloadGuide(page);
+            reloadGuide(page, newStartDate);
 
             var text = getFutureDateText(date);
             text = '<span class="currentDay">' + text.replace(' ', ' </span>');
