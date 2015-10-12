@@ -1,6 +1,6 @@
 (function (globalScope) {
 
-    function loadAll(element, parentId) {
+    function loadAll(element, parentId, autoFocus) {
 
         var options = {
 
@@ -20,15 +20,16 @@
             DefaultTheme.CardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
-                shape: 'autoHome'
+                shape: 'autoHome',
+                autoFocus: autoFocus
             });
         });
     }
 
-    function view(element, parentId) {
+    function view(element, parentId, autoFocus) {
         var self = this;
 
-        loadAll(element, parentId);
+        loadAll(element, parentId, autoFocus);
 
         self.destroy = function () {
 

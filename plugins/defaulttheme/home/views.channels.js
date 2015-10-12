@@ -1,6 +1,6 @@
 (function (globalScope) {
 
-    function loadChannels(element, parentId) {
+    function loadChannels(element, parentId, autoFocus) {
 
         Emby.Models.channels().then(function (result) {
 
@@ -17,7 +17,8 @@
                 shape: 'backdropCard',
                 rows: 3,
                 width: DefaultTheme.CardBuilder.homeThumbWidth,
-                preferThumb: true
+                preferThumb: true,
+                autoFocus: autoFocus
             });
 
             var latestContainer = element.querySelector('.latestContainer');
@@ -60,11 +61,11 @@
         });
     }
 
-    function view(element, parentId) {
+    function view(element, parentId, autoFocus) {
 
         var self = this;
 
-        loadChannels(element, parentId);
+        loadChannels(element, parentId, autoFocus);
 
         self.destroy = function () {
 

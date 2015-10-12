@@ -442,6 +442,10 @@
             options.itemsContainer.innerHTML = html;
 
             Emby.ImageLoader.lazyChildren(options.itemsContainer);
+
+            if (options.autoFocus) {
+                Emby.FocusManager.autoFocus(options.itemsContainer, true);
+            }
         });
     }
 
