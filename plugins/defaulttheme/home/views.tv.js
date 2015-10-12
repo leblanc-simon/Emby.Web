@@ -82,7 +82,7 @@
         });
     }
 
-    function loadSpotlight(element, parentId, autoFocus) {
+    function loadSpotlight(element, parentId) {
 
         var options = {
 
@@ -111,7 +111,7 @@
         Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'tv/tv.html?tab=' + tab + "&parentid=" + parentId));
     }
 
-    function view(element, parentId) {
+    function view(element, parentId, autoFocus) {
 
         var self = this;
 
