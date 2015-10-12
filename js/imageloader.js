@@ -164,6 +164,17 @@
         } else {
             elem.setAttribute("src", url);
         }
+
+        fadeIn(elem, 1);
+    }
+
+    function fadeIn(elem, iterations) {
+
+        var keyframes = [
+          { opacity: '0', offset: 0 },
+          { opacity: '1', offset: 1 }];
+        var timing = { duration: 200, iterations: iterations };
+        return elem.animate(keyframes, timing);
     }
 
     function simpleImageStore() {

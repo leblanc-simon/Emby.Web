@@ -59,7 +59,6 @@
                 slidee: horizontalPageContent.querySelector('.scrollSlider'),
                 itemSelector: '.card',
                 smart: true,
-                easing: 'swing',
                 releaseSwing: true,
                 scrollBar: horizontalPageContent.querySelector('.scrollbar'),
                 scrollBy: 200,

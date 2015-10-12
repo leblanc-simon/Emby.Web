@@ -145,9 +145,13 @@
         Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'movies/movies.html?tab=' + tab + "&parentid=" + parentId));
     }
 
-    function view(element, parentId) {
+    function view(element, parentId, autoFocus) {
 
         var self = this;
+
+        if (autoFocus) {
+            Emby.FocusManager.autoFocus(element, true);
+        }
 
         loadResume(element, parentId);
         loadLatest(element, parentId);

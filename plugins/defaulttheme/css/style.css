@@ -305,7 +305,7 @@ a {
 
 .selectedItemInfo {
     position: fixed;
-    bottom: 10px;
+    bottom: 40px;
     left: 0;
     right: 0;
     text-align: center;
@@ -387,10 +387,11 @@ a {
     padding: 4px 24px 4px 0;
     text-transform: uppercase;
     vertical-align: middle;
+    margin-right: .5em;
 }
 
-    .mediaInfoItem + .mediaInfoItem {
-        margin-left: .5em;
+    .mediaInfoItem:last-child {
+        margin-right: 0;
     }
 
 .starRatingContainer + .mediaInfoItem {

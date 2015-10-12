@@ -117,8 +117,12 @@
         Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'music/music.html?tab=' + tab + "&parentid=" + parentId));
     }
 
-    function view(element, parentId) {
+    function view(element, parentId, autoFocus) {
         var self = this;
+
+        if (autoFocus) {
+            Emby.FocusManager.autoFocus(element, true);
+        }
 
         loadLatest(element, parentId);
         loadPlaylists(element, parentId);

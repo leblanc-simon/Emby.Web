@@ -61,8 +61,12 @@
         Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'livetv/livetv.html?tab=' + tab));
     }
 
-    function view(element, parentId) {
+    function view(element, parentId, autoFocus) {
         var self = this;
+
+        if (autoFocus) {
+            Emby.FocusManager.autoFocus(element, true);
+        }
 
         loadLatestRecordings(element);
         loadNowPlaying(element);

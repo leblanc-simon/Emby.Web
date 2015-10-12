@@ -143,7 +143,6 @@
                     slidee: view.querySelector('.contentScrollSlider'),
                     itemSelector: '.card',
                     smart: true,
-                    easing: 'swing',
                     releaseSwing: true,
                     scrollBar: view.querySelector('.contentScrollbar'),
                     scrollBy: 200,
