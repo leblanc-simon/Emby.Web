@@ -89,7 +89,7 @@
         }
 
         function shuffle() {
-            Emby.PlaybackManager.shuffle(currentItem);
+            Emby.PlaybackManager.shuffle(currentItem.Id);
         }
     }
 

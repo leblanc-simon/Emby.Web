@@ -319,10 +319,42 @@
 
         self.shuffle = function (id) {
 
-            validatePlayback(function () {
-                playItems({
-                    ids: id
-                }, 'Shuffle');
+            Emby.Models.item(id).then(function (item) {
+
+                var query = {
+                    Fields: "MediaSources,Chapters",
+                    Limit: 100,
+                    Filters: "IsNotFolder",
+                    Recursive: true,
+                    SortBy: "Random"
+                };
+
+                if (item.Type == "MusicArtist") {
+
+                    query.MediaTypes = "Audio";
+                    query.ArtistIds = item.Id;
+
+                }
+                else if (item.Type == "MusicGenre") {
+
+                    query.MediaTypes = "Audio";
+                    query.Genres = item.Name;
+
+                }
+                else if (item.IsFolder) {
+                    query.ParentId = id;
+
+                }
+                else {
+                    return;
+                }
+
+                getItemsForPlayback(query).then(function (result) {
+
+                    self.play({ items: result.Items });
+
+                });
+
             });
         };
 
