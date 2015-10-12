@@ -165,7 +165,7 @@
             elem.setAttribute("src", url);
         }
 
-        fadeIn(elem, 1);
+        //fadeIn(elem, 1);
     }
 
     function fadeIn(elem, iterations) {
