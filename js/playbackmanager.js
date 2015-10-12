@@ -1141,7 +1141,7 @@
             }
         };
 
-        function onPlaybackStart() {
+        function onPlaybackStarted() {
 
             var player = this;
 
@@ -1165,7 +1165,7 @@
             Events.trigger(self, 'playbackstart', [player]);
         }
 
-        function onPlaybackStop() {
+        function onPlaybackStopped() {
 
             var player = this;
 
@@ -1174,7 +1174,7 @@
             }
 
             var state = getPlayerStateInternal(player);
-            reportPlayback(state, getPlayerState(player).streamInfo.item.ServerId, 'reportPlaybackProgress');
+            reportPlayback(state, getPlayerState(player).streamInfo.item.ServerId, 'reportPlaybackStopped');
 
             clearProgressInterval(player);
 
@@ -1191,8 +1191,8 @@
 
                 plugin.currentState = {};
 
-                Events.on(plugin, 'started', onPlaybackStart);
-                Events.on(plugin, 'stopped', onPlaybackStop);
+                Events.on(plugin, 'started', onPlaybackStarted);
+                Events.on(plugin, 'stopped', onPlaybackStopped);
             }
         });
 
@@ -1247,6 +1247,17 @@
                 getPlayerState(player).currentProgressInterval = null;
             }
         }
+
+        window.addEventListener("beforeunload", function () {
+
+            var player = currentPlayer;
+
+            // Try to report playback stopped before the browser closes
+            if (player && getPlayerState(player).currentProgressInterval) {
+
+                onPlaybackStopped.call(player);
+            }
+        });
     }
 
     if (!globalScope.Emby) {
