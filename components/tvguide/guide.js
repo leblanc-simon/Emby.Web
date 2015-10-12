@@ -508,7 +508,7 @@ define([], function () {
         HttpClient.send({
 
             type: 'GET',
-            url: '/components/tvguide/tvguide.template.html'
+            url: Emby.Page.baseUrl() + '/components/tvguide/tvguide.template.html'
 
         }).done(function (template) {
 
