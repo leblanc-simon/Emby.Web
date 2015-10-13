@@ -19,9 +19,6 @@
             if (item) {
                 Emby.Backdrop.setBackdrops([item]);
 
-                view.querySelector('.nowPlayingProgressContainer').classList.remove('hide');
-                view.querySelector('.nowPlayingButtonsContainer').classList.remove('hide');
-
                 DefaultTheme.CardBuilder.buildCards([item], {
                     shape: 'squareCard',
                     width: 640,
@@ -43,12 +40,18 @@
                 view.querySelector('.nowPlayingMetadata').innerHTML = names.join('<br/>');
                 view.querySelector('.userDataIcons').innerHTML = DefaultTheme.UserData.getIconsHtml(item, false);
 
+                nowPlayingVolumeSlider.disabled = false;
+                nowPlayingPositionSlider.disabled = false;
+
             } else {
-                view.querySelector('.nowPlayingProgressContainer').classList.add('hide');
-                view.querySelector('.nowPlayingButtonsContainer').classList.add('hide');
+
+
                 view.querySelector('.nowPlayingCardContainer').innerHTML = '';
-                view.querySelector('.nowPlayingMetadata').innerHTML = '';
+                view.querySelector('.nowPlayingMetadata').innerHTML = '&nbsp;<br/>&nbsp;';
                 view.querySelector('.userDataIcons').innerHTML = '';
+
+                nowPlayingVolumeSlider.disabled = true;
+                nowPlayingPositionSlider.disabled = true;
 
                 Emby.Backdrop.clear();
             }

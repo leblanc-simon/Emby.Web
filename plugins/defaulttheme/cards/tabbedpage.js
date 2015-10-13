@@ -19,11 +19,10 @@
                 itemSelector: '.btnUserViewHeader',
                 activateOn: 'focus',
                 smart: true,
-                easing: 'swing',
                 releaseSwing: true,
                 scrollBar: view.querySelector('.scrollbar'),
                 scrollBy: 200,
-                speed: 200,
+                speed: 600,
                 elasticBounds: 1,
                 dragHandle: 1,
                 dynamicHandle: 1,
@@ -124,7 +123,7 @@
 
                 selectUserView(view, viewId, self);
 
-            }, 500);
+            }, 700);
         };
 
         function createHorizontalScroller(view) {
@@ -219,7 +218,7 @@
             if (selectedMediaInfoTimeout) {
                 clearTimeout(selectedMediaInfoTimeout);
             }
-            selectedMediaInfoTimeout = setTimeout(onSelectedMediaInfoTimeout, 900);
+            selectedMediaInfoTimeout = setTimeout(onSelectedMediaInfoTimeout, 1000);
         }
 
         function onZoomTimeout() {
