@@ -179,14 +179,14 @@
             confirm: "components/" + componentType + "/confirm",
             toast: "components/" + componentType + "/toast",
             loading: "components/" + componentType + "/loading",
-            soundeffect: "components/soundeffect",
+            soundeffects: "components/soundeffects",
             apphost: "components/apphost",
-            audioManager: "js/audiomanager",
             screensaverManager: "js/screensavermanager",
             viewManager: "js/viewmanager",
             slyScroller: "components/slyscroller",
             appsettings: "components/appsettings",
-            tvguide: "components/tvguide/guide"
+            tvguide: "components/tvguide/guide",
+            howler: 'bower_components/howler.js/howler.min'
         };
 
         if (enableWebComponents()) {
@@ -366,7 +366,8 @@
         'plugins/backdropscreensaver/plugin.js',
         'plugins/keyboard/plugin.js',
         'plugins/htmlvideoplayer/plugin.js',
-        'plugins/htmlaudioplayer/plugin.js'
+        'plugins/htmlaudioplayer/plugin.js',
+        'plugins/defaultsoundeffects/plugin.js'
         ];
 
         if (enableWebComponents()) {
@@ -426,6 +427,7 @@
         var presentationDependencies = [];
 
         presentationDependencies.push('js/models');
+        presentationDependencies.push('js/soundeffectplayer');
 
         require(presentationDependencies, function () {
 

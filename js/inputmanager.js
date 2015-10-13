@@ -186,7 +186,8 @@
 
     function nav(evt, direction) {
 
-        require(['nearestElements'], function () {
+        require(['nearestElements'], function (nearestElements, soundeffects) {
+
             var activeElement = document.activeElement;
 
             if (activeElement) {

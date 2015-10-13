@@ -284,12 +284,12 @@ a {
     }
 
 .userViewNames {
-    margin-bottom: 14px;
+    margin-bottom: 35px;
 }
 
     .userViewNames h2 {
         margin-top: 0;
-        margin-bottom: .7em;
+        margin-bottom: 0;
         font-weight: 300;
     }
 
@@ -305,7 +305,7 @@ a {
 
 .selectedItemInfo {
     position: fixed;
-    bottom: 40px;
+    bottom: 35px;
     left: 0;
     right: 0;
     text-align: center;
@@ -437,7 +437,7 @@ a {
 @media all and (min-height: 1080px) {
 
     .horizontalBody {
-        height: 690px;
+        height: 710px;
     }
 
     .horizontalPageContent .squareCard {
