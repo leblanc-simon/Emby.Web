@@ -10,8 +10,8 @@ define([], function () {
 
         self.getEffects = function() {
             return {
-                //navigation: Emby.PluginManager.mapPath(self, 'navigation.mp3'),
-                //select: Emby.PluginManager.mapPath(self, 'select.mp3')
+                navigation: Emby.PluginManager.mapPath(self, 'navigation.wav'),
+                select: Emby.PluginManager.mapPath(self, 'select.wav')
             };
         };
     }
