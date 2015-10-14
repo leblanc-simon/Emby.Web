@@ -9,7 +9,8 @@ define([], function () {
 
         if (!sound) {
             sound = new Howl({
-                urls: [path]
+                urls: [path],
+                volume: .3
             });
             sounds[path] = sound;
         }
