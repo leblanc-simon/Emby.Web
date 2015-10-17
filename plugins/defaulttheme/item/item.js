@@ -153,7 +153,7 @@
             var focused = Emby.FocusManager.focusableParent(e.target);
 
             if (focused) {
-                self.bodySlyFrame.toCenter(focused);
+                slyFrame.toCenter(focused);
             }
         });
     }
