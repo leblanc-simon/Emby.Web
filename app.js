@@ -269,7 +269,7 @@
             return false;
         }
 
-        return userAgent.indexOf('chrome') != -1;
+        return userAgent.indexOf('chrome') != -1 || userAgent.indexOf('firefox') != -1;
     }
 
     function loadApiClientDependencies(callback) {

@@ -156,6 +156,10 @@ a {
     padding-bottom: 20px;
 }
 
+.itemScrollFrame.scrollFrameY {
+    height: 100%;
+}
+
 .topPadded.itemScrollFrame {
     padding-top: 20px;
 }

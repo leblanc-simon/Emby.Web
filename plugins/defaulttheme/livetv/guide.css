@@ -13,9 +13,8 @@
     }
 }
 
-.tvGuide {
-    text-align: left;
-    margin: 0 0% 0 2.5%;
+.guidePageContainer {
+    left: 2.5%;
 }
 
 .tvGuideHeader {

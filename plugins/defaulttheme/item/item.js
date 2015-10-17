@@ -127,11 +127,11 @@
                 slidee: view.querySelector('.scrollSlider'),
                 itemSelector: '.card',
                 smart: true,
-                easing: 'easeOutQuart',
+                easing: 'swing',
                 releaseSwing: true,
                 scrollBar: view.querySelector('.scrollbar'),
                 scrollBy: 200,
-                speed: 300,
+                speed: 500,
                 dragHandle: 1,
                 dynamicHandle: 1,
                 clickBar: 1
@@ -153,7 +153,7 @@
             var focused = Emby.FocusManager.focusableParent(e.target);
 
             if (focused) {
-                slyFrame.toCenter(focused);
+                self.bodySlyFrame.toCenter(focused);
             }
         });
     }

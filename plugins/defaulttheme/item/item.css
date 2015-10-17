@@ -5,10 +5,6 @@
     bottom: 0;
 }
 
-.itemScrollFrame {
-    height: 100%;
-}
-
 .itemSection > h2 {
     margin-bottom: .25em;
 }
