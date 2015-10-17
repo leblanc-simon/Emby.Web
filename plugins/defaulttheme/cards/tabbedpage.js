@@ -22,7 +22,7 @@
                 releaseSwing: true,
                 scrollBar: view.querySelector('.scrollbar'),
                 scrollBy: 200,
-                speed: 600,
+                speed: 500,
                 elasticBounds: 1,
                 dragHandle: 1,
                 dynamicHandle: 1,
@@ -164,7 +164,7 @@
         function initFocusHandler(view) {
 
             if (pageOptions.handleFocus) {
-                
+
                 var scrollSlider = view.querySelector('.contentScrollSlider');
 
                 scrollSlider.addEventListener('focusin', onFocusIn);
@@ -187,7 +187,8 @@
 
                 var now = new Date().getTime();
 
-                var animate = pageOptions.animateFocus || (now - lastFocus) > 50;
+                var threshold = pageOptions.animateFocus ? 10 : 50;
+                var animate = (now - lastFocus) > threshold;
 
                 self.bodySlyFrame.toCenter(focused, !animate);
                 lastFocus = now;

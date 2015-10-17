@@ -3,6 +3,7 @@ define([], function () {
     return function (options) {
 
         var self = this;
+        var lastFocus = 0;
 
         self.refresh = function () {
             reloadPage(options.element);
@@ -369,6 +370,8 @@ define([], function () {
             var endDate = new Date(startDate.getTime() + msPerDay);
             page.querySelector('.timeslotHeaders').innerHTML = getTimeslotHeadersHtml(startDate, endDate);
             renderPrograms(page, date, channels, programs);
+
+            Emby.FocusManager.autoFocus(page.querySelector('.programGrid'), true);
         }
 
         var gridScrolling = false;
@@ -508,6 +511,57 @@ define([], function () {
             });
         }
 
+        function createVerticalScroller(view, pageInstance) {
+
+            require(["slyScroller", 'loading'], function (slyScroller, loading) {
+
+                var scrollFrame = view.querySelector('.scrollFrame');
+
+                var options = {
+                    horizontal: 0,
+                    itemNav: 0,
+                    mouseDragging: 1,
+                    touchDragging: 1,
+                    slidee: view.querySelector('.scrollSlider'),
+                    itemSelector: '.card',
+                    smart: true,
+                    easing: 'swing',
+                    releaseSwing: true,
+                    scrollBar: view.querySelector('.scrollbar'),
+                    scrollBy: 200,
+                    speed: 300,
+                    dragHandle: 1,
+                    dynamicHandle: 1,
+                    clickBar: 1
+                };
+
+                slyScroller.create(scrollFrame, options).then(function (slyFrame) {
+                    pageInstance.slyFrame = slyFrame;
+                    slyFrame.init();
+                    initFocusHandler(view, slyFrame);
+                });
+            });
+        }
+
+        function initFocusHandler(view, slyFrame) {
+
+            var scrollSlider = view.querySelector('.scrollSlider');
+            scrollSlider.addEventListener('focusin', function (e) {
+
+                var focused = Emby.FocusManager.focusableParent(e.target);
+
+                if (focused) {
+                    var now = new Date().getTime();
+
+                    var threshold = 50;
+                    var animate = (now - lastFocus) > threshold;
+
+                    slyFrame.toCenter(focused, !animate);
+                    lastFocus = now;
+                }
+            });
+        }
+
         HttpClient.send({
 
             type: 'GET',
@@ -518,7 +572,9 @@ define([], function () {
             var tabContent = options.element;
             tabContent.innerHTML = template;
 
-            tabContent.querySelector('.programGrid').addEventListener('scroll', function () {
+            var programGrid = tabContent.querySelector('.programGrid');
+
+            programGrid.addEventListener('scroll', function () {
 
                 onProgramGridScroll(tabContent, this);
             });
@@ -526,10 +582,10 @@ define([], function () {
             var isMobile = false;
 
             if (isMobile) {
-                tabContent.querySelector('.tvGuide').classList.add('mobileGuide');
+                //tabContent.querySelector('.tvGuide').classList.add('mobileGuide');
             } else {
 
-                tabContent.querySelector('.tvGuide').classList.remove('mobileGuide');
+                //tabContent.querySelector('.tvGuide').classList.remove('mobileGuide');
 
                 tabContent.querySelector('.timeslotHeaders').addEventListener('scroll', function () {
 
@@ -542,6 +598,7 @@ define([], function () {
                 selectDate(tabContent);
             });
 
+            createVerticalScroller(tabContent, self);
             self.refresh();
         });
     };
