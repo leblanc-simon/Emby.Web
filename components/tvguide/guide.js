@@ -244,7 +244,7 @@ define([], function () {
                 var endPercent = (renderEndMs - renderStartMs) / msPerDay;
                 endPercent *= 100;
 
-                var cssClass = "programCell";
+                var cssClass = "programCell clearButton itemAction";
                 var addAccent = true;
 
                 if (program.IsKids) {
@@ -261,7 +261,7 @@ define([], function () {
                     addAccent = false;
                 }
 
-                html += '<a href="itemdetails.html?id=' + program.Id + '" data-programid="' + program.Id + '" class="' + cssClass + '" style="left:' + startPercent + '%;width:' + endPercent + '%;">';
+                html += '<button data-action="link" data-isfolder="' + program.IsFolder + '" data-id="' + program.Id + '" data-type="' + program.Type + '" class="' + cssClass + '" style="left:' + startPercent + '%;width:' + endPercent + '%;">';
 
                 var guideProgramNameClass = "guideProgramName";
 
@@ -303,7 +303,7 @@ define([], function () {
                     html += '<div class="programAccent"></div>';
                 }
 
-                html += '</a>';
+                html += '</button>';
             }
 
             html += '</div>';
@@ -335,7 +335,7 @@ define([], function () {
 
                 var channel = channels[i];
 
-                html += '<a class="channelHeaderCell" href="itemdetails.html?id=' + channel.Id + '">';
+                html += '<div class="channelHeaderCell">';
 
                 var hasChannelImage = channel.ImageTags.Primary;
                 var cssClass = hasChannelImage ? 'guideChannelInfo guideChannelInfoWithImage' : 'guideChannelInfo';
@@ -354,7 +354,7 @@ define([], function () {
                     html += '<div class="guideChannelImage lazy" data-src="' + url + '"></div>';
                 }
 
-                html += '</a>';
+                html += '</div>';
             }
 
             var channelList = page.querySelector('.channelList');
