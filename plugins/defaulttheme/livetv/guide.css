@@ -22,7 +22,6 @@
     position: fixed;
     top: 152px;
     left: 2.5%;
-    z-index: 100;
     max-width: 97.5%;
     background-color: #161616;
 }
@@ -185,6 +184,10 @@
     margin-top: 68px;
 }
 
+.programGridContainer {
+    margin-left: 225px;
+}
+
 .mobileGuide .programContainer {
     margin-top: 38px;
 }
@@ -215,10 +218,6 @@
     align-items: center;
     color: #fff !important;
     text-decoration: none;
-}
-
-.programGrid {
-    margin-left: 225px;
 }
 
 .btnSelectDate {
@@ -342,7 +341,7 @@
     height: auto !important;
 }
 
-.programCell:focus, .channelHeaderCell:focus {
+.programCell:focus, .channelHeaderCell:focus, .btnSelectDate:focus {
     background-color: #52B54B;
     outline: none !important;
 }

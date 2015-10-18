@@ -44,10 +44,6 @@ paper-button[raised] {
     background: #383838;
 }
 
-paper-button iron-icon {
-    color: #fff;
-}
-
 .paperRaised:focus {
     background: #52B54B !important;
 }
@@ -105,12 +101,12 @@ paper-dialog {
 }
 
 
-    paper-dialog .buttons {
-        color: #52B54B !important;
+    paper-dialog paper-button {
+        color: #bbb !important;
     }
 
 
-        paper-dialog .buttons paper-button[focused] {
+        paper-dialog paper-button[focused] {
             background-color: #52B54B !important;
             color: #fff !important;
         }

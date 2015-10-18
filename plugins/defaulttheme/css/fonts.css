@@ -26,11 +26,6 @@ h2 {
     font-weight: 300;
 }
 
-paper-dialog h2 {
-    font-size: 32px !important;
-    font-weight: 300;
-}
-
 /* 720p */
 @media all and (min-height: 720px) {
 
@@ -44,10 +39,6 @@ paper-dialog h2 {
 
     h2 {
         font-size: 30px;
-    }
-
-    paper-dialog h2 {
-        font-size: 36px !important;
     }
 }
 
@@ -65,10 +56,6 @@ paper-dialog h2 {
     h2 {
         font-size: 36px;
     }
-
-    paper-dialog h2 {
-        font-size: 44px !important;
-    }
 }
 
 /* 2560 * 1440 */
@@ -84,9 +71,5 @@ paper-dialog h2 {
 
     h2 {
         font-size: 46px;
-    }
-
-    paper-dialog h2 {
-        font-size: 54px !important;
     }
 }

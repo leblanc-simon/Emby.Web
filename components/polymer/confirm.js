@@ -1,4 +1,4 @@
-define(['html!bower_components/paper-dialog/paper-dialog', 'html!bower_components/neon-animation/animations/fade-in-animation.html', 'html!bower_components/neon-animation/animations/fade-out-animation.html'], function () {
+define(['paperdialoghelper'], function (paperdialoghelper) {
 
     return function (options) {
 
@@ -13,18 +13,10 @@ define(['html!bower_components/paper-dialog/paper-dialog', 'html!bower_component
         var title = options.title;
         var callback = options.callback;
 
-        var id = 'paperdlg' + new Date().getTime();
-
-        var dlg = document.createElement('paper-dialog');
-        dlg.id = id;
-        dlg.role = "alertdialog";
-
-        dlg.entryAnimation = 'fade-in-animation';
-        dlg.exitAnimation = 'fade-out-animation';
-        dlg.withBackdrop = true;
+        var dlg = paperdialoghelper.createDialog();
 
         var html = '';
-        html += '<h2>' + title + '</h2>';
+        html += '<h1>' + title + '</h1>';
         html += '<div>' + message + '</div>';
         html += '<div class="buttons">';
 
@@ -37,29 +29,18 @@ define(['html!bower_components/paper-dialog/paper-dialog', 'html!bower_component
 
         var activeElement = document.activeElement;
 
-        // This timeout is obviously messy but it's unclear how to determine when the webcomponent is ready for use
-        // element onload never fires
-        setTimeout(function () {
+        // Has to be assigned a z-index after the call to .open() 
+        dlg.addEventListener('iron-overlay-closed', function (e) {
 
-            // Has to be assigned a z-index after the call to .open() 
-            dlg.addEventListener('iron-overlay-closed', function (e) {
+            this.parentNode.removeChild(this);
 
-                this.parentNode.removeChild(this);
+            activeElement.focus();
 
-                activeElement.focus();
+            if (callback) {
+                callback();
+            }
+        });
 
-                if (callback) {
-                    callback();
-                }
-            });
-
-            dlg.open();
-
-            // autofocus doesn't seem to be doing the trick here
-            setTimeout(function () {
-                dlg.querySelector('.btnConfirm').focus();
-            }, 700);
-
-        }, 300);
+        paperdialoghelper.open(dlg);
     };
 });

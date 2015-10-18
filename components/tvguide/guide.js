@@ -453,8 +453,7 @@ define([], function () {
 
                 dateOptions.push({
                     name: getFutureDateText(start),
-                    id: start.getTime(),
-                    ironIcon: 'today'
+                    id: start.getTime()
                 });
 
                 start.setDate(start.getDate() + 1);
@@ -494,11 +493,10 @@ define([], function () {
 
         function selectDate(page) {
 
-            require(['actionsheet'], function () {
+            require(['actionsheet'], function (actionsheet) {
 
-                ActionSheetElement.show({
+                actionsheet.show({
                     items: dateOptions,
-                    showCancel: true,
                     title: Globalize.translate('HeaderSelectDate'),
                     callback: function (id) {
 
@@ -515,19 +513,20 @@ define([], function () {
 
             require(["slyScroller", 'loading'], function (slyScroller, loading) {
 
-                var scrollFrame = view.querySelector('.scrollFrame');
+                var scrollFrame = view.querySelector('.scrollFrameY');
+                var scrollSlider = view.querySelector('.scrollSliderY');
 
                 var options = {
                     horizontal: 0,
                     itemNav: 0,
                     mouseDragging: 1,
                     touchDragging: 1,
-                    slidee: view.querySelector('.scrollSlider'),
+                    slidee: scrollSlider,
                     itemSelector: '.card',
                     smart: true,
                     easing: 'swing',
                     releaseSwing: true,
-                    scrollBar: view.querySelector('.scrollbar'),
+                    scrollBar: view.querySelector('.scrollbarY'),
                     scrollBy: 200,
                     speed: 300,
                     dragHandle: 1,
@@ -536,16 +535,17 @@ define([], function () {
                 };
 
                 slyScroller.create(scrollFrame, options).then(function (slyFrame) {
-                    pageInstance.slyFrame = slyFrame;
+                    pageInstance.verticalSlyFrame = slyFrame;
                     slyFrame.init();
-                    initFocusHandler(view, slyFrame);
+                    initFocusHandler(view, scrollSlider, slyFrame);
+
+                    createHorizontalScroller(view, pageInstance);
                 });
             });
         }
 
-        function initFocusHandler(view, slyFrame) {
+        function initFocusHandler(view, scrollSlider, slyFrame) {
 
-            var scrollSlider = view.querySelector('.scrollSlider');
             scrollSlider.addEventListener('focusin', function (e) {
 
                 var focused = Emby.FocusManager.focusableParent(e.target);
@@ -559,6 +559,38 @@ define([], function () {
                     slyFrame.toCenter(focused, !animate);
                     lastFocus = now;
                 }
+            });
+        }
+
+        function createHorizontalScroller(view, pageInstance) {
+
+            require(["slyScroller", 'loading'], function (slyScroller, loading) {
+
+                var scrollFrame = view.querySelector('.scrollFrameX');
+                var scrollSlider = view.querySelector('.scrollSliderX');
+
+                var options = {
+                    horizontal: 1,
+                    itemNav: 0,
+                    mouseDragging: 0,
+                    touchDragging: 0,
+                    slidee: scrollSlider,
+                    itemSelector: '.card',
+                    smart: true,
+                    easing: 'swing',
+                    releaseSwing: true,
+                    scrollBy: 200,
+                    speed: 300,
+                    dragHandle: 0,
+                    dynamicHandle: 0,
+                    clickBar: 0
+                };
+
+                slyScroller.create(scrollFrame, options).then(function (slyFrame) {
+                    pageInstance.horizontallyFrame = slyFrame;
+                    slyFrame.init();
+                    initFocusHandler(view, scrollSlider, slyFrame);
+                });
             });
         }
 
