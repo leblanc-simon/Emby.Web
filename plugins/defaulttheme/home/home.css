@@ -10,29 +10,30 @@
     height: 400px;
 }
 
-.homePageContent .squareCard {
+.homePageContent .squareCard .cardImageContainer {
     width: 132px;
+    height: 132px;
 }
 
-.homePageContent .backdropCard {
+.homePageContent .backdropCard .cardImageContainer {
     width: 220px;
+    height: 123.75px;
 }
 
-.homePageContent .portraitCard {
+.homePageContent .portraitCard .cardImageContainer {
     width: 132px;
+    height: 198px;
 }
 
-.wideSpotlightCard {
+.wideSpotlightCard .cardImageContainer {
     width: 482px;
+    height: 271.125px;
 }
 
-.miniSpotlightCard {
+.miniSpotlightCard .cardImageContainer {
     width: 238px;
+    height: 133.875px;
 }
-
-    .wideSpotlightCard .cardPadder, .miniSpotlightCard .cardPadder {
-        padding-bottom: 50%;
-    }
 
 @media all and (max-height: 1070px) {
 
@@ -49,24 +50,29 @@
         height: 400px;
     }
 
-    .homePageContent .squareCard {
+    .homePageContent .squareCard .cardImageContainer {
         width: 132px;
+        height: 132px;
     }
 
-    .homePageContent .backdropCard {
+    .homePageContent .backdropCard .cardImageContainer {
         width: 220px;
+        height: 123.75px;
     }
 
-    .homePageContent .portraitCard {
+    .homePageContent .portraitCard .cardImageContainer {
         width: 132px;
+        height: 198px;
     }
 
-    .wideSpotlightCard {
+    .wideSpotlightCard .cardImageContainer {
         width: 482px;
+        height: 271.125px;
     }
 
-    .miniSpotlightCard {
+    .miniSpotlightCard .cardImageContainer {
         width: 238px;
+        height: 133.875px;
     }
 }
 
@@ -77,24 +83,29 @@
         height: 710px;
     }
 
-    .homePageContent .squareCard {
+    .homePageContent .squareCard .cardImageContainer {
         width: 207px;
+        height: 207px;
     }
 
-    .homePageContent .backdropCard {
-        width: 359px;
+    .homePageContent .backdropCard .cardImageContainer {
+        width: 366.222222222px;
+        height: 206px;
     }
 
-    .homePageContent .portraitCard {
+    .homePageContent .portraitCard .cardImageContainer {
         width: 209px;
+        height: 313.5px;
     }
 
-    .wideSpotlightCard {
-        width: 812px;
+    .wideSpotlightCard .cardImageContainer {
+        width: 813px;
+        height: 419px;
     }
 
-    .miniSpotlightCard {
-        width: 402px;
+    .miniSpotlightCard .cardImageContainer {
+        width: 398px;
+        height: 207px;
     }
 }
 
@@ -105,29 +116,30 @@
         height: 900px;
     }
 
-    .homePageContent .squareCard {
+    .homePageContent .squareCard .cardImageContainer {
         width: 260px;
+        height: 260px;
     }
 
-    .homePageContent .backdropCard {
+    .homePageContent .backdropCard .cardImageContainer {
         width: 449.5px;
+        height: 252.84375px;
     }
 
-    .homePageContent .portraitCard {
+    .homePageContent .portraitCard .cardImageContainer {
         width: 260px;
+        height: 390px;
     }
 
-    .wideSpotlightCard {
+    .wideSpotlightCard .cardImageContainer {
         width: 1015px;
+        height: 570.9375px;
     }
 
-    .miniSpotlightCard {
+    .miniSpotlightCard .cardImageContainer {
         width: 503px;
+        height: 282.9375px;
     }
-
-        .wideSpotlightCard .cardPadder, .miniSpotlightCard .cardPadder {
-            padding-bottom: 50%;
-        }
 }
 
 .allSeriesCard .cardImage {

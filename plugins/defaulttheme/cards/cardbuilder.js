@@ -125,15 +125,7 @@
 
             var item = items[i];
 
-            if (options.block || options.rows) {
-                html += '<div>';
-            }
-
             html += buildCard(i, item, apiClient, options, className);
-
-            if (options.block || options.rows) {
-                html += '</div>';
-            }
 
             itemsInRow++;
 
@@ -337,6 +329,10 @@
 
         className += " itemAction";
 
+        if (options.scalable) {
+            className += " scalableCard";
+        }
+
         var imgInfo = getCardImageUrl(item, apiClient, options);
         var imgUrl = imgInfo.imgUrl;
 
@@ -349,22 +345,35 @@
             cardImageContainerClass += ' emptyCardImageContainer';
         }
 
-        var cardImageContainer = imgUrl ? ('<div class="' + cardImageContainerClass + ' lazy" data-src="' + imgUrl + '">') : ('<div class="' + cardImageContainerClass + '">');
+        var separateCardBox = options.scalable;
+
+        if (!separateCardBox) {
+            cardImageContainerClass += " cardBox";
+        }
+
+        // cardBox can be it's own separate element if an outer footer is ever needed
+        var cardImageContainerOpen = imgUrl ? ('<div class="' + cardImageContainerClass + ' lazy" data-src="' + imgUrl + '">') : ('<div class="' + cardImageContainerClass + '">');
+        var cardImageContainerClose = '</div>';
+
+        if (separateCardBox) {
+            cardImageContainerOpen = '<div class="cardBox"><div class="cardScalable"><div class="cardPadder"></div><div class="cardContent">' + cardImageContainerOpen;
+            cardImageContainerClose += '</div></div></div>';
+        }
 
         if (options.showGroupCount) {
 
             if (item.ChildCount && item.ChildCount > 1) {
-                cardImageContainer += getCountIndicator(item.ChildCount);
+                cardImageContainerOpen += getCountIndicator(item.ChildCount);
             }
         }
         else {
-            cardImageContainer += getPlayedIndicator(item);
+            cardImageContainerOpen += getPlayedIndicator(item);
         }
 
         var showTitle = options.showTitle || imgInfo.forceName;
 
         if (!imgUrl) {
-            cardImageContainer += '<div class="cardText cardCenteredText">' + getDisplayName(item) + '</div>';
+            cardImageContainerOpen += '<div class="cardText cardCenteredText">' + getDisplayName(item) + '</div>';
         }
 
         var nameHtml = '';
@@ -389,6 +398,14 @@
             innerCardFooterClass += " fullInnerCardFooter";
         }
 
+        var innerCardFooter = '';
+
+        if (nameHtml) {
+            innerCardFooter += '<div class="' + innerCardFooterClass + '">';
+            innerCardFooter += nameHtml;
+            innerCardFooter += '</div>';
+        }
+
         var data = '';
 
         if (options.addImageData) {
@@ -402,18 +419,7 @@
 
         return '\
 <' + tagName + ' data-index="' + index + '" data-action="' + action + '" data-isfolder="' + item.IsFolder + '" data-id="' + item.Id + '" data-type="' + item.Type + '" raised class="' + className + '"> \
-<div class="cardBox">\
-<div class="cardScalable">\
-<div class="cardPadder"></div>\
-<div class="cardContent">\
-' + cardImageContainer + '\
-</div>\
-<div class="' + innerCardFooterClass + '">\
-' + nameHtml + '\
-</div>\
-</div>\
-</div>' + data + '\
-</div>\
+' + cardImageContainerOpen + innerCardFooter + data + cardImageContainerClose + '\
 </' + tagName + '>';
     }
 

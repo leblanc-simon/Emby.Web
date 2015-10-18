@@ -115,10 +115,6 @@ paper-dialog {
             color: #fff !important;
         }
 
-.allSeriesCard .cardImageContainer {
-    background: #4CAF50;
-}
-
 .albumsCard .cardImageContainer, .recordingsCard .cardImageContainer {
     background: #38c;
 }

@@ -70,7 +70,7 @@ button.card {
 
     .card[focused] .cardBox, .card:focus .cardBox {
         border-color: #81C784;
-    /*-moz-box-shadow: #81C784 0px 0px 1px 4px;
+        /*-moz-box-shadow: #81C784 0px 0px 1px 4px;
         box-shadow: #81C784 0px 0px 1px 4px;*/
         /*border-color: white;*/
         /*border-radius: 5px!important;*/
@@ -122,6 +122,10 @@ button.card {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+}
+
+.scalableCard .cardImageContainer {
     position: absolute;
     top: 0;
     left: 0;
@@ -129,7 +133,7 @@ button.card {
     bottom: 0;
 }
 
-.coveredImage {
+.coveredImage, .coveredImage .cardImage {
     background-size: cover;
     background-position: center center;
 }
@@ -145,6 +149,8 @@ button.card {
     left: 0;
     text-align: left;
     z-index: 1;
+    overflow: hidden;
+    max-width: 100%;
 }
 
 .fullInnerCardFooter {
@@ -167,10 +173,14 @@ button.card {
 }
 
 .cardImage {
-    width: 100%;
-    height: 100%;
-    background-position: center center;
-    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center bottom;
 }
 
 .cardImageIcon {

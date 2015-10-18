@@ -157,9 +157,18 @@
 
     function setImageIntoElement(elem, url) {
 
+        //url += "&dt=" + new Date().getTime();
+
         if (elem.tagName !== "IMG") {
 
-            elem.style.backgroundImage = "url('" + url + "')";
+            var tmp = new Image();
+
+            tmp.onload = function () {
+
+                elem.style.backgroundImage = "url('" + url + "')";
+            };
+            tmp.src = url;
+
 
         } else {
             elem.setAttribute("src", url);

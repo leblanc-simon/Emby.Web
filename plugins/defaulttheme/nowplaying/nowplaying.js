@@ -22,7 +22,8 @@
                 DefaultTheme.CardBuilder.buildCards([item], {
                     shape: 'squareCard',
                     width: 640,
-                    itemsContainer: view.querySelector('.nowPlayingCardContainer')
+                    itemsContainer: view.querySelector('.nowPlayingCardContainer'),
+                    scalable: true
                 });
 
                 var names = [];
