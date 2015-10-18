@@ -356,7 +356,8 @@
                 itemsContainer: section.querySelector('.itemsContainer'),
                 shape: 'backdropCard',
                 width: DefaultTheme.CardBuilder.homeThumbWidth,
-                showTitle: true
+                showTitle: true,
+                scalable: true
             });
         });
     }
@@ -455,7 +456,8 @@
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
                 shape: 'autoVertical',
-                showTitle: showTitle
+                showTitle: showTitle,
+                scalable: true
             });
         });
     }
