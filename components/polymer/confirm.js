@@ -20,7 +20,7 @@ define(['paperdialoghelper'], function (paperdialoghelper) {
         html += '<div>' + message + '</div>';
         html += '<div class="buttons">';
 
-        html += '<paper-button class="btnConfirm" dialog-confirm autofocus>' + Globalize.translate('ButtonOk') + '</paper-button>';
+        html += '<paper-button class="btnDialogOption" data-result="ok">' + Globalize.translate('ButtonOk') + '</paper-button>';
 
         html += '</div>';
 
@@ -38,6 +38,16 @@ define(['paperdialoghelper'], function (paperdialoghelper) {
 
             if (callback) {
                 callback();
+            }
+        });
+
+        dlg.addEventListener('click', function (e) {
+
+            var actionSheetMenuItem = Emby.Dom.parentWithClass(e.target, 'btnDialogOption');
+
+            if (actionSheetMenuItem) {
+
+                paperdialoghelper.close(dlg);
             }
         });
 
