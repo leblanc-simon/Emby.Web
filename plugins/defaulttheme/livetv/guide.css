@@ -270,7 +270,7 @@
     position: absolute;
     top: 0;
     bottom: 6px;
-    border-left: 6px solid #161616;
+    border-left: 6px solid #161616 !important;
     background-color: #282828;
     display: flex;
     color: #fff !important;
