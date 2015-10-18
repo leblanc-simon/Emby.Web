@@ -105,24 +105,6 @@ button.flat, paper-button {
     z-index: 9999999;
 }
 
-paper-icon-button paper-ripple {
-    color: inherit !important;
-}
-
-paper-input label, paper-input input {
-    font-size: inherit !important;
-}
-
-paper-dialog {
-    font-size: inherit !important;
-    font-family: inherit !important;
-}
-
-    paper-dialog h2 {
-        font-family: inherit !important;
-        line-height: initial !important;
-    }
-
     paper-dialog .buttons {
         padding: 2em 1em 1em 2em;
     }
@@ -142,10 +124,6 @@ paper-progress {
 
 .card paper-progress #progressContainer {
     background: transparent !important;
-}
-
-paper-toast {
-    font-size: inherit !important;
 }
 
 paper-slider {
@@ -169,10 +147,6 @@ paper-progress #secondaryProgress {
 }
 
 paper-icon-item {
-    font-size: inherit !important;
-    font-family: inherit !important;
-    font-family: inherit !important;
-    line-height: inherit !important;
     cursor: pointer;
 }
 
@@ -180,13 +154,6 @@ paper-icon-item {
         padding-top: .35em;
         padding-bottom: .35em;
     }
-
-paper-item-body.paper-item-body-0 [secondary] {
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: inherit;
-}
 
 .paperIconItemImage {
     width: 80px;

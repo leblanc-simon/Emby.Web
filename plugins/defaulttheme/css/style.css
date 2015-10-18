@@ -304,7 +304,7 @@ a {
 
 .selectedItemInfo {
     position: fixed;
-    bottom: 35px;
+    bottom: 25px;
     left: 0;
     right: 0;
     text-align: center;
@@ -599,4 +599,10 @@ a {
 
 .btnUserDataOn {
     color: #cc3333;
+}
+
+.actionSheetMenuItem {
+    padding: .5em 1em;
+    margin: 0;
+    border-radius: 0;
 }

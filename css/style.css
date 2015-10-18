@@ -67,6 +67,12 @@ html, body {
     bottom: 0;
 }
 
+.smoothScrollX {
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: hidden;
+}
+
 .hiddenScrollX {
     overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
@@ -74,12 +80,78 @@ html, body {
     white-space: nowrap;
 }
 
-.hiddenScrollX {
+/*.touch*/ .hiddenScrollX {
     -ms-overflow-style: none;
     overflow: -moz-scrollbars-none;
 }
 
-    .hiddenScrollX::-webkit-scrollbar {
+    /*.touch*/ .hiddenScrollX::-webkit-scrollbar {
         height: 0 !important;
         display: none;
     }
+
+
+.smoothScrollY {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+}
+
+.hiddenScrollY {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+}
+
+/*.touch*/ .hiddenScrollY {
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+}
+
+    /*.touch*/ .hiddenScrollY::-webkit-scrollbar {
+        width: 0 !important;
+        display: none;
+    }
+
+/* Remove overrides from paper elements */
+paper-icon-item, paper-dialog {
+    font-size: inherit !important;
+    font-family: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+}
+
+paper-item-body {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+}
+
+    paper-item-body.paper-item-body-0 [secondary] {
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+    }
+
+paper-icon-button paper-ripple {
+    color: inherit !important;
+}
+
+paper-input label, paper-input input {
+    font-size: inherit !important;
+}
+
+paper-dialog {
+    font-size: inherit !important;
+    font-family: inherit !important;
+}
+
+paper-toast {
+    font-size: inherit !important;
+}
+
+iron-overlay-backdrop.iron-overlay-backdrop-0[opened] {
+    opacity: 0.7;
+}

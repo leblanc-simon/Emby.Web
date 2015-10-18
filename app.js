@@ -186,6 +186,8 @@
             slyScroller: "components/slyscroller",
             appsettings: "components/appsettings",
             tvguide: "components/tvguide/guide",
+            actionsheet: "components/actionsheet",
+            paperdialoghelper: "components/paperdialoghelper",
             howler: 'bower_components/howler.js/howler.min'
         };
 
@@ -250,6 +252,12 @@
         define("jquery.easing", ["bower_components/jquery.easing/js/jquery.easing.min"]);
         define("nearestElements", ["js/nearest"]);
 
+        define("paper-dialog", ['html!bower_components/paper-dialog/paper-dialog']);
+        define("paper-menu", ['html!bower_components/paper-menu/paper-menu']);
+        define("paper-button", ['html!bower_components/paper-button/paper-button']);
+        define("paper-icon-button", ['html!bower_components/paper-icon-button/paper-icon-button']);
+        define("paper-menu-item", ['html!bower_components/paper-menu/paper-menu-item']);
+
         define("slide-from-right-animation", ['html!bower_components/neon-animation/animations/slide-from-right-animation.html']);
         define("slide-left-animation", ['html!bower_components/neon-animation/animations/slide-left-animation.html']);
         define("slide-from-left-animation", ['html!bower_components/neon-animation/animations/slide-from-left-animation.html']);
@@ -259,6 +267,8 @@
         define("reverse-ripple-animation", ['html!bower_components/neon-animation/animations/reverse-ripple-animation.html']);
         define("fade-in-animation", ['html!bower_components/neon-animation/animations/fade-in-animation.html']);
         define("fade-out-animation", ['html!bower_components/neon-animation/animations/fade-out-animation.html']);
+
+        define("scale-up-animation", ['html!bower_components/neon-animation/animations/scale-up-animation.html']);
     }
 
     function enableWebComponents() {

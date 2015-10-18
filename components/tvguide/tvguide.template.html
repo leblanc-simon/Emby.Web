@@ -1,6 +1,6 @@
 ﻿<div class="tvGuideHeader">
     <div class="channelTimeslotHeader">
-        <a class="btnSelectDate" href="#" style="display:block;"></a>
+        <button class="btnSelectDate clearButton" style="display:block;"></button>
     </div>
     <div class="timeslotHeaders hiddenScrollX"></div>
 </div>
@@ -9,11 +9,16 @@
     <div class="handle"><div class="mousearea"></div></div>
 </div>
 <div class="scrollFrame scrollFrameY itemScrollFrame">
-    <div class="scrollSlider">
+    <div class="scrollSlider scrollSliderY">
 
         <div class="programContainer">
             <div class="channelList"></div>
-            <div class="programGrid hiddenScrollX"></div>
+
+            <div class="scrollFrame scrollFrameX programGridContainer" style="white-space: nowrap;">
+                <div class="scrollSlider scrollSliderX programGrid" style="width:10000px;">
+                </div>
+            </div>
+
         </div>
         <div style="height:10000px;"></div>
     </div>

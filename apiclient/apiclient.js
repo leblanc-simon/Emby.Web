@@ -1800,7 +1800,7 @@
        * Adds a virtual folder
        * @param {String} name
        */
-        self.addVirtualFolder = function (name, type, refreshLibrary) {
+        self.addVirtualFolder = function (name, type, refreshLibrary, initialPath) {
 
             if (!name) {
                 throw new Error("null name");
@@ -1821,7 +1821,10 @@
 
             return self.ajax({
                 type: "POST",
-                url: url
+                url: url,
+                data: {
+                    Path: initialPath
+                }
             });
         };
 
@@ -2574,9 +2577,19 @@
 
             options.imageType = "thumb";
 
-            var itemId = item.ImageTags && item.ImageTags.Thumb ? item.Id : item.ParentThumbItemId;
+            if (item.ImageTags && item.ImageTags.Thumb) {
 
-            return itemId ? self.getImageUrl(itemId, options) : null;
+                options.tag = item.ImageTags.Thumb;
+                return self.getImageUrl(item.Id, options);
+            }
+            else if (item.ParentThumbItemId) {
+
+                options.tag = item.ImageTags.ParentThumbImageTag;
+                return self.getImageUrl(item.ParentThumbItemId, options);
+
+            } else {
+                return null;
+            }
         };
 
         /**

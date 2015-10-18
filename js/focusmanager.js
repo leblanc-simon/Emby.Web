@@ -23,7 +23,8 @@
         element.focus();
     }
 
-    var focusableTagNames = ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON', 'A', 'PAPER-BUTTON', 'PAPER-INPUT', 'PAPER-TEXTAREA', 'PAPER-ICON-BUTTON', 'PAPER-FAB', 'PAPER-ICON-ITEM'];
+    var focusableTagNames = ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON', 'A', 'PAPER-BUTTON', 'PAPER-INPUT', 'PAPER-TEXTAREA', 'PAPER-ICON-BUTTON', 'PAPER-FAB', 'PAPER-ICON-ITEM', 'PAPER-MENU-ITEM'];
+    var focusableContainerTagNames = ['BODY', 'PAPER-DIALOG'];
     var focusableQuery = focusableTagNames.join(',') + ',.focusable';
 
     function isFocusable(elem) {
@@ -33,6 +34,15 @@
         }
 
         if (elem.classList && elem.classList.contains('focusable')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    function isFocusContainer(elem) {
+
+        if (focusableContainerTagNames.indexOf(elem.tagName) != -1) {
             return true;
         }
 
@@ -75,11 +85,24 @@
         globalScope.Emby = {};
     }
 
+    function getFocusContainer(elem) {
+        while (!isFocusContainer(elem)) {
+            elem = elem.parentNode;
+
+            if (!elem) {
+                return document.body;
+            }
+        }
+
+        return elem;
+    }
+
     globalScope.Emby.FocusManager = {
         autoFocus: autoFocus,
         focus: focus,
         focusableParent: focusableParent,
-        getFocusableElements: getFocusableElements
+        getFocusableElements: getFocusableElements,
+        getFocusContainer: getFocusContainer
     };
 
 })(this, document);

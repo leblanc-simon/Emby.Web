@@ -194,7 +194,8 @@
                 activeElement = Emby.FocusManager.focusableParent(activeElement);
             }
 
-            var focusable = Emby.FocusManager.getFocusableElements();
+            var container = activeElement ? Emby.FocusManager.getFocusContainer(activeElement) : document.body;
+            var focusable = Emby.FocusManager.getFocusableElements(container);
 
             if (!activeElement) {
                 if (focusable.length) {
