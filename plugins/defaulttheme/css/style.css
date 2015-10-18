@@ -278,7 +278,7 @@ a {
     vertical-align: top;
 }
 
-    .cardColumn button.card {
+    .cardColumn .card {
         display: block !important;
     }
 
@@ -364,16 +364,19 @@ a {
     height: 400px;
 }
 
-.horizontalPageContent .squareCard {
+.horizontalPageContent .squareCard .cardImageContainer {
     width: 132px;
+    height: 132px;
 }
 
-.horizontalPageContent .backdropCard {
+.horizontalPageContent .backdropCard .cardImageContainer {
     width: 220px;
+    height: 123.75px;
 }
 
-.horizontalPageContent .portraitCard {
+.horizontalPageContent .portraitCard .cardImageContainer {
     width: 132px;
+    height: 198px;
 }
 
 .horizontalPageContent .loginSquareCard {
@@ -415,16 +418,19 @@ a {
         height: 400px;
     }
 
-    .horizontalPageContent .squareCard {
+    .horizontalPageContent .squareCard .cardImageContainer {
         width: 132px;
+        height: 132px;
     }
 
-    .horizontalPageContent .backdropCard {
+    .horizontalPageContent .backdropCard .cardImageContainer {
         width: 220px;
+        height: 123.75px;
     }
 
-    .horizontalPageContent .portraitCard {
+    .horizontalPageContent .portraitCard .cardImageContainer {
         width: 132px;
+        height: 198px;
     }
 
     .horizontalPageContent .loginSquareCard {
@@ -439,16 +445,19 @@ a {
         height: 710px;
     }
 
-    .horizontalPageContent .squareCard {
+    .horizontalPageContent .squareCard .cardImageContainer {
         width: 216px;
+        height: 216px;
     }
 
-    .horizontalPageContent .backdropCard {
+    .horizontalPageContent .backdropCard .cardImageContainer {
         width: 377px;
+        height: 212.0625px;
     }
 
-    .horizontalPageContent .portraitCard {
+    .horizontalPageContent .portraitCard .cardImageContainer {
         width: 220px;
+        height: 330px;
     }
 
     .horizontalPageContent .loginSquareCard {
@@ -463,16 +472,19 @@ a {
         height: 900px;
     }
 
-    .horizontalPageContent .squareCard {
+    .horizontalPageContent .squareCard .cardImageContainer {
         width: 260px;
+        height: 260px;
     }
 
-    .horizontalPageContent .backdropCard {
+    .horizontalPageContent .backdropCard .cardImageContainer {
         width: 455px;
+        height: 255.9375px;
     }
 
-    .horizontalPageContent .portraitCard {
+    .horizontalPageContent .portraitCard .cardImageContainer {
         width: 263px;
+        height: 394.5px;
     }
 
     .horizontalPageContent .loginSquareCard {

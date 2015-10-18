@@ -55,7 +55,6 @@
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
                 shape: 'autoHome',
-                preferThumb: true,
                 showTitle: false
             });
         });

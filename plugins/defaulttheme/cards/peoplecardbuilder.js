@@ -37,7 +37,7 @@
 
     function buildPersonCard(person, options, className) {
 
-        className += " itemAction";
+        className += " itemAction scalableCard";
 
         var imgUrl = person.images ? person.images.primary : '';
 

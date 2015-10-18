@@ -2,7 +2,7 @@
 
     function buildChapterCardsHtml(chapters, options) {
 
-        var className = 'card';
+        var className = 'card scalableCard';
 
         if (options.shape) {
             className += ' ' + options.shape;

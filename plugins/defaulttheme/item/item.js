@@ -131,7 +131,7 @@
                 releaseSwing: true,
                 scrollBar: view.querySelector('.scrollbar'),
                 scrollBy: 200,
-                speed: 500,
+                speed: 400,
                 dragHandle: 1,
                 dynamicHandle: 1,
                 clickBar: 1
@@ -487,7 +487,8 @@
                     parentContainer: section,
                     itemsContainer: section.querySelector('.itemsContainer'),
                     shape: 'portraitCard itemPersonThumb',
-                    coverImage: true
+                    coverImage: true,
+                    width: (section.offsetWidth / 7)
                 });
             });
         });
@@ -546,7 +547,8 @@
             DefaultTheme.CardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
-                shape: 'autoVertical'
+                shape: 'autoVertical',
+                scalable: true
             });
         });
     }

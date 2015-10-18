@@ -189,7 +189,6 @@
 
                 var threshold = pageOptions.animateFocus ? 10 : 50;
                 var animate = (now - lastFocus) > threshold;
-
                 self.bodySlyFrame.toCenter(focused, !animate);
                 lastFocus = now;
                 startZoomTimer();

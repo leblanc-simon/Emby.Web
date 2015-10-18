@@ -422,7 +422,7 @@
             }
 
             return '\
-<' + tagName + ' raised class="card squareCard loginSquareCard" data-cardtype="' + item.cardType + '" data-url="' + item.url + '" data-name="' + item.name + '" data-serverid="' + item.serverId + '">\
+<' + tagName + ' raised class="card squareCard loginSquareCard scalableCard" data-cardtype="' + item.cardType + '" data-url="' + item.url + '" data-name="' + item.name + '" data-serverid="' + item.serverId + '">\
 '+ innerOpening + '<div class="cardScalable">\
 <div class="cardPadder"></div>\
 <div class="cardContent">\
@@ -670,7 +670,7 @@
             }
 
             return '\
-<' + tagName + ' raised class="card squareCard loginSquareCard" data-id="' + item.id + '" data-url="' + (item.url || '') + '" data-cardtype="' + item.cardType + '">\
+<' + tagName + ' raised class="card squareCard loginSquareCard scalableCard" data-id="' + item.id + '" data-url="' + (item.url || '') + '" data-cardtype="' + item.cardType + '">\
 '+ innerOpening + '<div class="cardScalable">\
 <div class="cardPadder"></div>\
 <div class="cardContent">\

@@ -10,7 +10,7 @@
             maxWidth: width
         });
 
-        var cardImageContainer = card.querySelector('.cardImageContainer');
+        var cardImageContainer = card.querySelector('.cardImage');
 
         var newCardImageContainer = document.createElement('div');
         newCardImageContainer.className = cardImageContainer.className;

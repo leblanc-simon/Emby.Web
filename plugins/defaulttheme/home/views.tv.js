@@ -191,7 +191,7 @@
         var cardImageContainer = card.querySelector('.cardImageContainer');
 
         var newCardImageContainer = document.createElement('div');
-        newCardImageContainer.className = cardImageContainer.className;
+        newCardImageContainer.className = 'cardImage';
         newCardImageContainer.classList.add('cardRevealContent');
 
         var imgUrl = Emby.Models.imageUrl(card.getAttribute('data-id'), {
@@ -202,7 +202,7 @@
 
         newCardImageContainer.style.backgroundImage = "url('" + imgUrl + "')";
         newCardImageContainer.classList.add('hide');
-        cardImageContainer.parentNode.appendChild(newCardImageContainer);
+        cardImageContainer.appendChild(newCardImageContainer);
 
         flipElementWithDuration(card, 600, function () {
             newCardImageContainer.classList.remove('hide');
