@@ -24,34 +24,6 @@
 
                     renderTabs(view, self);
                 });
-                //require(['alert'], function (alert) {
-                //    alert({
-                //        title: 'Confirm Button Select',
-                //        text: 'This is some text to confirm blah blah blah. This is some text to confirm blah blah blah. This is some text to confirm blah blah blah. This is some text to confirm blah blah blah. This is some text to confirm blah blah blah. Are you sure you wish to continue?'
-                //    });
-                //});
-                require(['actionsheet'], function (actionsheet) {
-
-                    actionsheet.show({
-                        title: 'Confirm Button Select',
-                        items: [
-                        {
-                            name: Globalize.translate('ButtonInstantMix'),
-                            id: 'instantmix',
-                            ironIcon: 'shuffle'
-                        },
-                        {
-                            name: Globalize.translate('ButtonInstantMix'),
-                            id: 'instantmix',
-                            ironIcon: 'shuffle'
-                        }],
-                        callback: function (id) {
-
-                        }
-                    });
-
-                });
-
             }
         });
         view.addEventListener('viewdestroy', function () {
