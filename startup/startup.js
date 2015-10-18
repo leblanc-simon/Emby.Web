@@ -426,7 +426,7 @@
 '+ innerOpening + '<div class="cardScalable">\
 <div class="cardPadder"></div>\
 <div class="cardContent">\
-<div class="cardImageContainer">\
+<div class="cardImageContainer coveredImage">\
 '+ cardImageContainer + '</div>\
 </div>\
 </div>\
