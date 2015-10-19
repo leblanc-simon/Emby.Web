@@ -453,20 +453,6 @@
         });
     }
 
-    function exit() {
-
-        require(['apphost'], function (apphost) {
-
-            if (apphost.supports('Exit')) {
-                apphost.exit();
-            } else {
-
-                // Sign out since that's the closest thing we can do to closing the app
-                logout();
-            }
-        });
-    }
-
     function logout() {
 
         require(['connectionManager', 'loading'], function (connectionManager, loading) {
@@ -484,7 +470,6 @@
     }
 
     globalScope.Emby.App = {
-        exit: exit,
         logout: logout
     };
 

@@ -195,8 +195,9 @@
    * @api public
    */
 
-  page.show = function(path, state, dispatch, push) {
-    var ctx = new Context(path, state);
+  page.show = function(path, state, dispatch, push, isBack) {
+      var ctx = new Context(path, state);
+      ctx.isBack = isBack;
     page.current = ctx.path;
     if (false !== dispatch) page.dispatch(ctx);
     if (false !== ctx.handled && false !== push) ctx.pushState();
@@ -266,8 +267,9 @@
    */
 
 
-  page.replace = function(path, state, init, dispatch) {
+  page.replace = function(path, state, init, dispatch, isBack) {
     var ctx = new Context(path, state);
+    ctx.isBack = isBack;
     page.current = ctx.path;
     ctx.init = init;
     ctx.save(); // save before dispatching, which may redirect
@@ -528,9 +530,9 @@
       if (!loaded) return;
       if (e.state) {
         var path = e.state.path;
-        page.replace(path, e.state);
+        page.replace(path, e.state, null, null, true);
       } else {
-        page.show(location.pathname + location.hash, undefined, undefined, false);
+        page.show(location.pathname + location.hash, undefined, undefined, false, true);
       }
     };
   })();

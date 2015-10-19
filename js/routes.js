@@ -82,7 +82,7 @@
         }
     }
 
-    function loadContentUrl(ctx, next, route) {
+    function loadContentUrl(ctx, next, route, isBackNav) {
 
         require(['httpclient'], function (httpclient) {
 
@@ -100,7 +100,7 @@
 
             }).then(function (html) {
 
-                loadContent(ctx, next, route, html);
+                loadContent(ctx, next, route, html, isBackNav);
 
             }, next);
         });
@@ -109,6 +109,7 @@
     function handleRoute(ctx, next, route) {
 
         authenticate(ctx, route, function () {
+
             require(route.dependencies || [], function () {
                 sendRouteToViewManager(ctx, next, route);
             });
@@ -120,19 +121,18 @@
         require(['viewManager'], function (viewManager) {
             var url = window.location.href;
 
+            var isBackNav = ctx.isBack;
+
             var onNewViewNeeded = function () {
                 if (typeof route.path === 'string') {
 
-                    loadContentUrl(ctx, next, route);
+                    loadContentUrl(ctx, next, route, isBackNav);
 
                 } else {
                     // ? TODO
                     next();
                 }
             };
-
-            var isBackNav = isBack();
-
             if (!isBackNav) {
                 onNewViewNeeded();
                 return;
@@ -249,8 +249,13 @@
                 Logger.log('Emby.Page - user is authenticated');
 
                 if (route.isDefaultRoute) {
-                    Logger.log('Emby.Page - loading theme home page');
-                    Emby.ThemeManager.loadUserTheme();
+
+                    if (ctx.isBack) {
+                        handleBackToDefault();
+                    } else {
+                        Logger.log('Emby.Page - loading theme home page');
+                        Emby.ThemeManager.loadUserTheme();
+                    }
                 } else {
                     Logger.log('Emby.Page - next()');
                     callback();
@@ -272,23 +277,29 @@
         });
     }
 
-    var backUrl;
-    document.addEventListener('viewshow', function () {
+    var isHandlingBackToDefault;
+    function handleBackToDefault() {
 
-        if (window.location.href != backUrl) {
-            backUrl = null;
+        if (isHandlingBackToDefault) {
+            return;
         }
-    });
 
-    window.addEventListener("popstate", function () {
-        backUrl = window.location.href;
-    });
+        isHandlingBackToDefault = true;
 
-    function isBack() {
-        return backUrl == window.location.href;
+        // This must result in a call to either 
+        // Emby.ThemeManager.loadUserTheme();
+        // Logout
+        // Or exit app
+
+        var cancelFn = function () {
+            Emby.ThemeManager.loadUserTheme();
+            isHandlingBackToDefault = false;
+        };
+
+        Emby.ThemeManager.getCurrentTheme().showBackMenu(cancelFn);
     }
 
-    function loadContent(ctx, next, route, html) {
+    function loadContent(ctx, next, route, html, isBackNav) {
 
         html = Globalize.translateHtml(html);
 
@@ -299,7 +310,7 @@
                 view: html,
                 url: window.location.href,
                 transition: route.transition,
-                isBack: isBack()
+                isBack: isBackNav
             });
             currentRoute = route;
             //next();
@@ -359,7 +370,17 @@
             history.back();
 
         } else {
-            Emby.App.exit();
+
+            require(['apphost'], function (apphost) {
+
+                if (apphost.supports('Exit')) {
+                    apphost.exit();
+                } else {
+
+                    // Sign out since that's the closest thing we can do to closing the app
+                    Emby.App.logout();
+                }
+            });
         }
     }
     function canGoBack() {
