@@ -23,7 +23,9 @@
 
         require(['paperdialoghelper', 'apphost'], function (paperdialoghelper, apphost) {
 
-            var dlg = paperdialoghelper.createDialog();
+            var dlg = paperdialoghelper.createDialog({
+                entryAnimation: 'fade-in-animation'
+            });
 
             dlg.classList.add('backMenu');
 
