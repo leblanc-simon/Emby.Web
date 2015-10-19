@@ -19,7 +19,7 @@
 
     function show(options) {
 
-        var isCancelled = true;
+        var dialogResult;
 
         require(['paperdialoghelper', 'apphost'], function (paperdialoghelper, apphost) {
 
@@ -79,8 +79,33 @@
 
                 activeElement.focus();
 
-                if (isCancelled) {
-                    options.cancelCallback();
+                switch (dialogResult) {
+
+                    case 'logout':
+                        Emby.App.logout();
+                        break;
+                    case 'home':
+                        Emby.Page.goHome();
+                        break;
+                    case 'exit':
+                        apphost.exit();
+                        break;
+                    case 'sleep':
+                        apphost.sleep();
+                        break;
+                    case 'shutdown':
+                        apphost.shutdown();
+                        break;
+                    case 'restart':
+                        apphost.restart();
+                        break;
+                    case 'settings':
+                        // TODO
+                        Emby.Page.goHome();
+                        break;
+                    default:
+                        options.cancelCallback();
+                        break;
                 }
             });
 
@@ -90,42 +115,9 @@
 
                 if (backMenuButton) {
 
-                    var option = backMenuButton.getAttribute('data-option');
+                    dialogResult = backMenuButton.getAttribute('data-option');
 
                     paperdialoghelper.close(dlg);
-
-                    switch (option) {
-
-                        case 'logout':
-                            isCancelled = false;
-                            Emby.App.logout();
-                            break;
-                        case 'settings':
-                            // TODO
-                            break;
-                        case 'home':
-                            isCancelled = false;
-                            Emby.Page.goHome();
-                            break;
-                        case 'exit':
-                            isCancelled = false;
-                            apphost.exit();
-                            break;
-                        case 'sleep':
-                            isCancelled = false;
-                            apphost.sleep();
-                            break;
-                        case 'shutdown':
-                            isCancelled = false;
-                            apphost.shutdown();
-                            break;
-                        case 'restart':
-                            isCancelled = false;
-                            apphost.restart();
-                            break;
-                        default:
-                            break;
-                    }
                 }
 
             });
