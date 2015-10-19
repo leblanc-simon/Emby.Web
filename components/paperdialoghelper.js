@@ -1,4 +1,4 @@
-﻿define(['paper-dialog', 'scale-up-animation', 'fade-out-animation'], function () {
+﻿define(['paper-dialog', 'scale-up-animation', 'fade-out-animation', 'fade-in-animation'], function () {
 
     function paperDialogHashHandler(dlg, hash, lockDocumentScroll) {
 
@@ -106,7 +106,7 @@
         //// seeing max call stack size exceeded in the debugger with this
         dlg.setAttribute('noAutoFocus', 'noAutoFocus');
 
-        dlg.entryAnimation = 'scale-up-animation';
+        dlg.entryAnimation = options.entryAnimation || 'scale-up-animation';
         dlg.exitAnimation = 'fade-out-animation';
 
         dlg.classList.add('popupEditor');
