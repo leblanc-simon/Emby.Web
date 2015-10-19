@@ -1,8 +1,14 @@
 define([], function () {
 
-    function onChange() {
+    function triggerChange() {
         // Create a scroll event so that the lazy image loading knows the document is scrolling
         document.dispatchEvent(new CustomEvent("scroll", {}));
+    }
+
+    function onChange() {
+
+        //triggerChange();
+        setTimeout(triggerChange, 100);
     }
 
     return {

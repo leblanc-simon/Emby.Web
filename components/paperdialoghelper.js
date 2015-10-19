@@ -2,20 +2,21 @@
 
     function paperDialogHashHandler(dlg, hash, lockDocumentScroll) {
 
-        function onHashChange(e, data) {
+        function onHashChange(e) {
 
-            var isActive = window.location.hash == '#' + hash;
+            var state = e.state || {};
+            var isActive = state.dialogId == hash;
 
             var isBack = self.originalUrl == window.location.href;
 
-            if (isBack) {
-                if (dlg) {
-                    if (!isActive) {
-                        dlg.close();
-                        dlg = null;
-                    }
+            //if (isBack) {
+            if (dlg) {
+                if (!isActive) {
+                    dlg.close();
+                    dlg = null;
                 }
             }
+            //}
         }
 
         function onDialogClosed() {
@@ -29,7 +30,8 @@
 
                 window.removeEventListener('popstate', onHashChange);
 
-                if (window.location.hash == '#' + hash) {
+                var state = history.state || {};
+                if (state.dialogId == hash) {
                     history.back();
                 }
             }
@@ -48,7 +50,7 @@
 
         if (enableHashChange()) {
 
-            history.pushState({}, "Dialog", hash);
+            history.pushState({ dialogId: hash }, "Dialog", hash);
 
             window.addEventListener('popstate', onHashChange);
         }

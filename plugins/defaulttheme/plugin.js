@@ -258,7 +258,24 @@ define([], function () {
 
         self.showUserMenu = function () {
 
+            // For now just go cheap
+            showBackMenuInternal(function () { }, true);
         };
+
+        self.showBackMenu = function (cancelCallback) {
+
+            showBackMenuInternal(cancelCallback, false);
+        };
+
+        function showBackMenuInternal(cancelCallback, showHome) {
+
+            require([Emby.PluginManager.mapPath(self, 'backmenu/backmenu.js'), 'css!' + Emby.PluginManager.mapPath(self, 'backmenu/backmenu.css')], function () {
+                DefaultTheme.BackMenu.show({
+                    cancelCallback: cancelCallback,
+                    showHome: showHome
+                });
+            });
+        }
 
         function loadControlBox() {
 
@@ -272,7 +289,9 @@ define([], function () {
             document.addEventListener('windowstatechanged', onWindowStateChanged);
 
             document.querySelector('.appExitButton').addEventListener('click', function () {
-                Emby.App.exit();
+                require(['apphost'], function (apphost) {
+                    apphost.exit();
+                });
             });
 
             document.querySelector('.minimizeButton').addEventListener('click', function () {
