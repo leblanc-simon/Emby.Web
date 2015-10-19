@@ -90,30 +90,35 @@
 
                     var option = backMenuButton.getAttribute('data-option');
 
-                    isCancelled = false;
                     paperdialoghelper.close(dlg);
 
                     switch (option) {
 
                         case 'logout':
+                            isCancelled = false;
                             Emby.App.logout();
                             break;
                         case 'settings':
                             // TODO
                             break;
                         case 'home':
+                            isCancelled = false;
                             Emby.Page.goHome();
                             break;
                         case 'exit':
+                            isCancelled = false;
                             apphost.exit();
                             break;
                         case 'sleep':
+                            isCancelled = false;
                             apphost.sleep();
                             break;
                         case 'shutdown':
+                            isCancelled = false;
                             apphost.shutdown();
                             break;
                         case 'restart':
+                            isCancelled = false;
                             apphost.restart();
                             break;
                         default:
