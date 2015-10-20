@@ -10,8 +10,8 @@
         self.render = function () {
 
             if (options.itemsContainer) {
-                options.itemsContainer.addEventListener('focusin', onFocusIn);
-                options.itemsContainer.addEventListener('focusout', onFocusOut);
+                options.itemsContainer.addEventListener('focus', onFocusIn, true);
+                options.itemsContainer.addEventListener('blur', onFocusOut, true);
             }
 
             require(['loading'], function (loading) {
@@ -202,8 +202,8 @@
         self.destroy = function () {
 
             if (options.itemsContainer) {
-                options.itemsContainer.removeEventListener('focusin', onFocusIn);
-                options.itemsContainer.removeEventListener('focusout', onFocusOut);
+                options.itemsContainer.removeEventListener('focus', onFocusIn, true);
+                options.itemsContainer.removeEventListener('blur', onFocusOut, true);
             }
 
             if (options.selectedItemInfoElement) {

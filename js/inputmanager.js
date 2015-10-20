@@ -85,7 +85,7 @@
     }
 
     if (!hasBuiltInKeyboard()) {
-        document.addEventListener('focusin', function (evt) {
+        document.addEventListener('focus', function (evt) {
 
             var tag = evt.target.tagName;
 
@@ -101,7 +101,8 @@
                     return false;
                 }
             }
-        });
+
+        }, true);
     }
 
     function onKeyDown(evt) {

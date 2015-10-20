@@ -70,6 +70,7 @@ button.card {
 
     .card[focused] .cardBox, .card:focus .cardBox {
         border-color: #81C784;
+        border-radius: 2px !important;
         /*-moz-box-shadow: #81C784 0px 0px 1px 4px;
         box-shadow: #81C784 0px 0px 1px 4px;*/
         /*border-color: white;*/

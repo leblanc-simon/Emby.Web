@@ -56,14 +56,14 @@
             }
         });
 
-        userViewNames.addEventListener('focusin', function (e) {
+        userViewNames.addEventListener('focus', function (e) {
 
             var elem = Emby.Dom.parentWithClass(e.target, 'btnUserViewHeader');
 
             if (elem) {
                 instance.setFocusDelay(view, elem);
             }
-        });
+        }, true);
     }
 
     function selectUserView(page, id, self) {
@@ -167,8 +167,8 @@
 
                 var scrollSlider = view.querySelector('.contentScrollSlider');
 
-                scrollSlider.addEventListener('focusin', onFocusIn);
-                scrollSlider.addEventListener('focusout', onFocusOut);
+                scrollSlider.addEventListener('focus', onFocusIn, true);
+                scrollSlider.addEventListener('blur', onFocusOut, true);
             }
         }
 

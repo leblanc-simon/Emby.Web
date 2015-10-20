@@ -70,7 +70,7 @@
 
             var activeElement = document.activeElement;
 
-            dlg.addEventListener('focusin', onFocusIn);
+            dlg.addEventListener('focus', onFocusIn, true);
 
             // Has to be assigned a z-index after the call to .open() 
             dlg.addEventListener('iron-overlay-closed', function (e) {

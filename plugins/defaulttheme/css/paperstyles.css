@@ -176,7 +176,7 @@ paper-icon-item.largeImage #contentIcon {
 }
 
 paper-icon-item.largeImage {
-    padding: 1em 0;
+    padding: 1em 0 1em 1em;
 }
 
     paper-icon-item.largeImage .paperIconItemImage {
