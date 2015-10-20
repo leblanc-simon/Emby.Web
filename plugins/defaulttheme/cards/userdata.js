@@ -8,7 +8,7 @@
 
     }
 
-    function getIconsHtml(item, includePlayed, style) {
+    function getIconsHtml(item, includePlayed, cssClass) {
 
         var html = '';
 
@@ -16,15 +16,21 @@
 
         var itemId = item.Id;
 
+        var btnCssClass = "btnUserData";
+
+        if (cssClass) {
+            btnCssClass += " " + cssClass;
+        }
+
         if (includePlayed !== false) {
             var tooltipPlayed = Globalize.translate('TooltipPlayed');
 
             if (item.MediaType == 'Video' || item.Type == 'Series' || item.Type == 'Season' || item.Type == 'BoxSet' || item.Type == 'Playlist') {
                 if (item.Type != 'TvChannel') {
                     if (userData.Played) {
-                        html += getUserDataButtonHtml('markPlayed', itemId, 'btnUserData btnUserDataOn', 'check', tooltipPlayed, style);
+                        html += getUserDataButtonHtml('markPlayed', itemId, btnCssClass + ' btnUserDataOn', 'check', tooltipPlayed);
                     } else {
-                        html += getUserDataButtonHtml('markPlayed', itemId, 'btnUserData', 'check', tooltipPlayed, style);
+                        html += getUserDataButtonHtml('markPlayed', itemId, btnCssClass + ' btnUserData', 'check', tooltipPlayed);
                     }
                 }
             }
@@ -34,24 +40,24 @@
         var tooltipDislike = Globalize.translate('TooltipDislike');
 
         if (typeof userData.Likes == "undefined") {
-            html += getUserDataButtonHtml('markDislike', itemId, 'btnUserData btnDislike', 'thumb-down', tooltipDislike, style);
-            html += getUserDataButtonHtml('markLike', itemId, 'btnUserData btnLike', 'thumb-up', tooltipLike, style);
+            html += getUserDataButtonHtml('markDislike', itemId, btnCssClass + ' btnUserData btnDislike', 'thumb-down', tooltipDislike);
+            html += getUserDataButtonHtml('markLike', itemId, btnCssClass + ' btnUserData btnLike', 'thumb-up', tooltipLike);
         }
         else if (userData.Likes) {
-            html += getUserDataButtonHtml('markDislike', itemId, 'btnUserData btnDislike', 'thumb-down', tooltipDislike, style);
-            html += getUserDataButtonHtml('markLike', itemId, 'btnUserData btnLike btnUserDataOn', 'thumb-up', tooltipLike, style);
+            html += getUserDataButtonHtml('markDislike', itemId, btnCssClass + ' btnUserData btnDislike', 'thumb-down', tooltipDislike);
+            html += getUserDataButtonHtml('markLike', itemId, btnCssClass + ' btnUserData btnLike btnUserDataOn', 'thumb-up', tooltipLike);
         }
         else {
-            html += getUserDataButtonHtml('markDislike', itemId, 'btnUserData btnDislike btnUserDataOn', 'thumb-down', tooltipDislike, style);
-            html += getUserDataButtonHtml('markLike', itemId, 'btnUserData btnLike', 'thumb-up', tooltipLike, style);
+            html += getUserDataButtonHtml('markDislike', itemId, btnCssClass + ' btnUserData btnDislike btnUserDataOn', 'thumb-down', tooltipDislike);
+            html += getUserDataButtonHtml('markLike', itemId, btnCssClass + ' btnUserData btnLike', 'thumb-up', tooltipLike);
         }
 
         var tooltipFavorite = Globalize.translate('TooltipFavorite');
         if (userData.IsFavorite) {
 
-            html += getUserDataButtonHtml('markFavorite', itemId, 'btnUserData btnUserDataOn', 'favorite', tooltipFavorite, style);
+            html += getUserDataButtonHtml('markFavorite', itemId, btnCssClass + ' btnUserData btnUserDataOn', 'favorite', tooltipFavorite);
         } else {
-            html += getUserDataButtonHtml('markFavorite', itemId, 'btnUserData', 'favorite', tooltipFavorite, style);
+            html += getUserDataButtonHtml('markFavorite', itemId, btnCssClass + ' btnUserData', 'favorite', tooltipFavorite);
         }
 
         return html;
@@ -113,7 +119,7 @@
     }
 
     function markPlayed(link) {
-        
+
         var id = link.getAttribute('data-itemid');
 
         if (!link.classList.contains('btnUserDataOn')) {

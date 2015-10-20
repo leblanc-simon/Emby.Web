@@ -39,7 +39,7 @@
                 }
 
                 view.querySelector('.nowPlayingMetadata').innerHTML = names.join('<br/>');
-                view.querySelector('.userDataIcons').innerHTML = DefaultTheme.UserData.getIconsHtml(item, false);
+                view.querySelector('.userDataIcons').innerHTML = DefaultTheme.UserData.getIconsHtml(item, false, 'xlargePaperIconButton');
 
                 nowPlayingVolumeSlider.disabled = false;
                 nowPlayingPositionSlider.disabled = false;

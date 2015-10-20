@@ -50,7 +50,7 @@
                         focusMainSection.call(mainSection);
                     }
 
-                    view.querySelector('.itemPageUserDataIcons').innerHTML = DefaultTheme.UserData.getIconsHtml(item, true);
+                    view.querySelector('.itemPageUserDataIcons').innerHTML = DefaultTheme.UserData.getIconsHtml(item, true, "mediumPaperIconButton");
 
                     // Always refresh this
                     renderNextUp(view, item);
