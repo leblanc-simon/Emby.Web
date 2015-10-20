@@ -460,6 +460,15 @@
 
         html += getStarIconsHtml(item);
 
+        if (item.CriticRating) {
+
+            if (item.CriticRating >= 60) {
+                html += '<div class="mediaInfoItem criticRatingFresh">' + item.CriticRating + '</div>';
+            } else {
+                html += '<div class="mediaInfoItem criticRatingRotten">' + item.CriticRating + '</div>';
+            }
+        }
+
         var miscInfo = [];
 
         var text, date, minutes;

@@ -597,6 +597,10 @@ a {
     color: #52B54B;
 }
 
+.btnUserData {
+    color: #aaa;
+}
+
 .btnUserDataOn {
     color: #cc3333;
 }
@@ -605,4 +609,22 @@ a {
     padding: .5em 1em;
     margin: 0;
     border-radius: 0;
+}
+
+.criticRatingFresh {
+    padding-left: 44px;
+    background-image: url(images/fresh.png);
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: auto 36px;
+    margin-left: .5em;
+}
+
+.criticRatingRotten {
+    padding-left: 44px;
+    background-image: url(images/rotten.png);
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: auto 36px;
+    margin-left: .5em;
 }

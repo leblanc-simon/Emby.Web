@@ -50,6 +50,8 @@
                         focusMainSection.call(mainSection);
                     }
 
+                    view.querySelector('.itemPageUserDataIcons').innerHTML = DefaultTheme.UserData.getIconsHtml(item, true);
+
                     // Always refresh this
                     renderNextUp(view, item);
 

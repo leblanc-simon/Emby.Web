@@ -574,6 +574,20 @@
         });
     }
 
+    function played(id, isPlayed) {
+        return new Promise(function (resolve, reject) {
+
+            require(['connectionManager'], function (connectionManager) {
+
+                var apiClient = connectionManager.currentApiClient();
+
+                var method = isPlayed ? 'markPlayed' : 'markUnplayed';
+
+                apiClient[method](apiClient.getCurrentUserId(), id, new Date()).done(resolve, reject);
+            });
+        });
+    }
+
     function favorite(id, isFavorite) {
         return new Promise(function (resolve, reject) {
 
@@ -636,6 +650,7 @@
         backdropImageUrl: backdropImageUrl,
         instantMix: instantMix,
         likes: likes,
+        played: played,
         favorite: favorite,
         clearLike: clearLike
     };
