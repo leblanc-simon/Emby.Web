@@ -112,6 +112,24 @@
         link.parentNode.querySelector('.btnLike').classList.remove('btnUserDataOn');
     }
 
+    function markPlayed(link) {
+        
+        var id = link.getAttribute('data-itemid');
+
+        if (!link.classList.contains('btnUserDataOn')) {
+
+            Emby.Models.played(id, true);
+
+            link.classList.add('btnUserDataOn');
+
+        } else {
+
+            Emby.Models.played(id, false);
+
+            link.classList.remove('btnUserDataOn');
+        }
+    }
+
     if (!globalScope.DefaultTheme) {
         globalScope.DefaultTheme = {};
     }
@@ -120,7 +138,8 @@
         getIconsHtml: getIconsHtml,
         markFavorite: markFavorite,
         markLike: markLike,
-        markDislike: markDislike
+        markDislike: markDislike,
+        markPlayed: markPlayed
     };
 
 })(this);

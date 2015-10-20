@@ -83,10 +83,24 @@
         height: 48px;
     }
 
-.itemPageButtons paper-button {
-    padding: .3em .6em .45em;
-    text-transform: none;
+.itemPageButtons, .itemPageUserDataIcons {
+    display: inline-block;
+    vertical-align: middle;
 }
+
+    .itemPageButtons paper-button {
+        padding: .3em .6em .45em;
+        text-transform: none;
+    }
+
+.itemPageUserDataIcons {
+    margin-left: 1em;
+}
+
+    .itemPageUserDataIcons paper-icon-button {
+        height: 50px;
+        width: 50px;
+    }
 
 .detailImage {
     min-width: 50%;

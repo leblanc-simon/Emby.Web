@@ -76,7 +76,9 @@ define([], function () {
                 // Add one second to avoid getting programs that are just ending
                 date = new Date(date.getTime() + 1000);
 
-                var nextDay = new Date(date.getTime() + msPerDay - 1);
+                // Subtract to avoid getting programs that are starting when the grid ends
+                var nextDay = new Date(date.getTime() + msPerDay - 2000);
+
                 Logger.log(nextDay);
                 channelsPromise.done(function (channelsResult) {
 
