@@ -3,7 +3,7 @@
     function getButton(name, icon, option) {
 
         var html = '';
-        html += '<paper-icon-button class="backMenuButton" icon="' + icon + '" data-option="' + option + '" data-name="' + name + '"></paper-icon-button>';
+        html += '<paper-icon-button class="backMenuButton xlargePaperIconButton" icon="' + icon + '" data-option="' + option + '" data-name="' + name + '"></paper-icon-button>';
 
         return html;
     }

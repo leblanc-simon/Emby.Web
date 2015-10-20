@@ -1,0 +1,27 @@
+.largePaperIconButton {
+    width: 60px;
+    height: 60px;
+}
+
+.xlargePaperIconButton {
+    width: 50px;
+    height: 50px;
+}
+
+/* 1080p */
+@media all and (min-height: 1080px) {
+
+    .xlargePaperIconButton {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+/* 2560 * 1440 */
+@media all and (min-height: 1440px) {
+
+    .xlargePaperIconButton {
+        width: 100px;
+        height: 100px;
+    }
+}
