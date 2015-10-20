@@ -47,6 +47,7 @@ define([], function () {
                 'css!' + Emby.PluginManager.mapRequire(self, 'cards/card'),
                 'css!' + Emby.PluginManager.mapRequire(self, 'css/colors.dark'),
                 'css!' + Emby.PluginManager.mapRequire(self, 'css/paperstyles'),
+                'css!' + Emby.PluginManager.mapRequire(self, 'css/papericonbutton'),
                 Emby.PluginManager.mapRequire(self, 'cards/cardbuilder.js'),
                 Emby.PluginManager.mapRequire(self, 'cards/userdata.js'),
                 Emby.PluginManager.mapRequire(self, 'cards/tabbedpage.js'),
@@ -340,14 +341,14 @@ define([], function () {
         function onPlaybackStart(e, player) {
 
             if (Emby.PlaybackManager.currentItem(player).MediaType == 'Audio') {
-                document.querySelector('.audioPlayerButtonContainer').classList.remove('hide');
+                document.querySelector('.headerAudioPlayerButton').classList.remove('hide');
             } else {
-                document.querySelector('.audioPlayerButtonContainer').classList.add('hide');
+                document.querySelector('.headerAudioPlayerButton').classList.add('hide');
             }
         }
 
         function onPlaybackStop() {
-            document.querySelector('.audioPlayerButtonContainer').classList.add('hide');
+            document.querySelector('.headerAudioPlayerButton').classList.add('hide');
         }
 
         function onWindowStateChanged(e) {
@@ -369,7 +370,7 @@ define([], function () {
 
             document.querySelector('.logo').classList.add('hide');
 
-            document.querySelector('.searchButtonContainer').classList.remove('hide');
+            document.querySelector('.headerSearchButton').classList.remove('hide');
 
             var headerUserButton = document.querySelector('.headerUserButton');
 
@@ -385,7 +386,7 @@ define([], function () {
                 headerUserButton.icon = 'person';
             }
 
-            document.querySelector('.userButtonContainer').classList.remove('hide');
+            document.querySelector('.headerUserButton').classList.remove('hide');
         }
 
         function onLocalUserSignedOut(e) {
@@ -393,8 +394,8 @@ define([], function () {
             // Put the logo back in the page title
             document.querySelector('.logo').classList.remove('hide');
 
-            document.querySelector('.searchButtonContainer').classList.add('hide');
-            document.querySelector('.userButtonContainer').classList.add('hide');
+            document.querySelector('.headerSearchButton').classList.add('hide');
+            document.querySelector('.headerUserButton').classList.add('hide');
         }
 
         function onViewShow(e) {

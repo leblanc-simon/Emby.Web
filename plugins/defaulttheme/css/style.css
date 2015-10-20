@@ -78,14 +78,9 @@ a {
     display: none;
 }
 
-.header .headerButtonContainer {
-    display: inline-block;
+.headerButton {
     vertical-align: middle;
-}
-
-.headerButtonContainer paper-icon-button {
-    width: 60px;
-    height: 60px;
+    margin: 0 .25em;
 }
 
 .searchButtonContainer {
@@ -93,7 +88,7 @@ a {
     margin-left: .5em;
 }
 
-.userButtonContainer img {
+.headerUserButton img {
     border-radius: 1000px;
 }
 
@@ -515,39 +510,6 @@ paper-item-body .overview {
 
 .nowPlayingInfoContainer {
     width: 40%;
-}
-
-.nowPlayingButtonsContainer paper-icon-button {
-    width: 50px;
-    height: 50px;
-}
-
-/* 1080p */
-@media all and (min-height: 1080px) {
-
-    .nowPlayingButtonsContainer paper-icon-button {
-        width: 80px;
-        height: 80px;
-    }
-
-    .nowPlayingButtonsContainer .userDataIcons paper-icon-button {
-        width: 60px;
-        height: 60px;
-    }
-}
-
-/* 2560 * 1440 */
-@media all and (min-height: 1440px) {
-
-    .nowPlayingButtonsContainer paper-icon-button {
-        width: 100px;
-        height: 100px;
-    }
-
-    .nowPlayingButtonsContainer .userDataIcons paper-icon-button {
-        width: 80px;
-        height: 80px;
-    }
 }
 
 .nowPlayingButtonsContainer .userDataIcons {
