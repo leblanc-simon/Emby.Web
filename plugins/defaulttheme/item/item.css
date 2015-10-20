@@ -66,6 +66,15 @@
     width: 84%;
 }
 
+.seasonMainSection .itemPageSide {
+    display: none;
+}
+
+.seasonMainSection .itemPageMain {
+    width: auto;
+    text-align: center;
+}
+
 .bulletSeparator {
     color: #52B54B;
 }
@@ -147,4 +156,9 @@
 
 .trackList {
     margin: 1em 0 0 -.5em;
+}
+
+.episodes {
+    margin: 1em 0 0 -.5em;
+    text-align: left;
 }

@@ -400,6 +400,14 @@ a {
     margin-left: 1.25em;
 }
 
+paper-item-body .paperIconItemMediaInfo {
+    margin: .5em 0;
+}
+
+    paper-item-body .paperIconItemMediaInfo .starRatingContainer {
+        margin-left: -3px;
+    }
+
 .starRatingContainer {
     display: inline-block;
     vertical-align: middle;
@@ -410,6 +418,10 @@ a {
         height: 38px;
         color: #CB272A;
     }
+
+paper-item-body .overview {
+    white-space: normal;
+}
 
 /* 720p */
 @media all and (min-height: 720px) {
@@ -612,19 +624,19 @@ a {
 }
 
 .criticRatingFresh {
-    padding-left: 44px;
+    padding-left: 40px;
     background-image: url(images/fresh.png);
     background-position: left center;
     background-repeat: no-repeat;
-    background-size: auto 36px;
+    background-size: auto 32px;
     margin-left: .5em;
 }
 
 .criticRatingRotten {
-    padding-left: 44px;
+    padding-left: 40px;
     background-image: url(images/rotten.png);
     background-position: left center;
     background-repeat: no-repeat;
-    background-size: auto 36px;
+    background-size: auto 32px;
     margin-left: .5em;
 }

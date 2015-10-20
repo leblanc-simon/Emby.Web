@@ -685,9 +685,17 @@
 
             var html = '';
 
-            html += '<paper-icon-item class="itemAction" data-index="' + index + '" data-action="' + action + '" data-isfolder="' + item.IsFolder + '" data-id="' + item.Id + '" data-type="' + item.Type + '">';
+            var cssClass = "itemAction";
 
             var downloadWidth = 80;
+
+            if (options.imageSize == 'large') {
+                cssClass += " largeImage";
+                downloadWidth = 500;
+            }
+
+            html += '<paper-icon-item class="' + cssClass + '" data-index="' + index + '" data-action="' + action + '" data-isfolder="' + item.IsFolder + '" data-id="' + item.Id + '" data-type="' + item.Type + '">';
+
             // Scaling 400w episode images to 80 doesn't turn out very well
             var minScale = item.Type == 'Episode' || item.Type == 'Game' ? 2 : 1.5;
 
@@ -697,6 +705,14 @@
                 minScale: minScale
             });
 
+            if (!imgUrl) {
+                imgUrl = Emby.Models.thumbImageUrl(item, {
+                    width: downloadWidth,
+                    type: "Thumb",
+                    minScale: minScale
+                });
+            }
+
             if (imgUrl) {
                 html += '<div class="paperIconItemImage lazy" data-src="' + imgUrl + '" item-icon></div>';
             } else {
@@ -705,10 +721,12 @@
 
             var textlines = [];
 
-            if (item.Type == 'Episode') {
-                textlines.push(item.SeriesName || '&nbsp;');
-            } else if (item.Type == 'MusicAlbum') {
-                textlines.push(item.AlbumArtist || '&nbsp;');
+            if (options.showParentTitle) {
+                if (item.Type == 'Episode') {
+                    textlines.push(item.SeriesName || '&nbsp;');
+                } else if (item.Type == 'MusicAlbum') {
+                    textlines.push(item.AlbumArtist || '&nbsp;');
+                }
             }
 
             var displayName = getDisplayName(item);
@@ -725,9 +743,17 @@
                 }).join(', ') || '&nbsp;');
             }
 
-            if (textlines.length > 2) {
+            var lineCount = textlines.length;
+            if (!options.enableSideMediaInfo) {
+                lineCount++;
+            }
+            if (options.enableOverview && item.Overview) {
+                lineCount++;
+            }
+
+            if (lineCount > 2) {
                 html += '<paper-item-body three-line>';
-            } else if (textlines.length > 1) {
+            } else if (lineCount > 1) {
                 html += '<paper-item-body two-line>';
             } else {
                 html += '<paper-item-body>';
@@ -744,9 +770,21 @@
                 html += '</div>';
             }
 
+            if (!options.enableSideMediaInfo) {
+                html += '<div class="paperIconItemMediaInfo">' + getMediaInfoHtml(item) + '</div>';
+            }
+
+            if (options.enableOverview && item.Overview) {
+                html += '<div secondary class="overview">';
+                html += item.Overview;
+                html += '</div>';
+            }
+
             html += '</paper-item-body>';
 
-            html += '<div class="paperIconItemMediaInfo">' + getMediaInfoHtml(item) + '</div>';
+            if (options.enableSideMediaInfo) {
+                html += '<div class="paperIconItemMediaInfo">' + getMediaInfoHtml(item) + '</div>';
+            }
 
             html += '</paper-icon-item>';
 

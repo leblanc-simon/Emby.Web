@@ -105,13 +105,13 @@ button.flat, paper-button {
     z-index: 9999999;
 }
 
-    paper-dialog .buttons {
-        padding: 2em 1em 1em 2em;
-    }
+paper-dialog .buttons {
+    padding: 2em 1em 1em 2em;
+}
 
-    paper-dialog > * {
-        margin-top: 40px;
-    }
+paper-dialog > * {
+    margin-top: 40px;
+}
 
 paper-progress {
     height: 6px;
@@ -167,6 +167,23 @@ paper-icon-item #contentIcon {
     width: 95px;
 }
 
+paper-icon-item.largeImage #contentIcon {
+    width: 25.5%;
+    margin-right: 2%;
+}
+
+paper-icon-item.largeImage {
+    padding: 1em 0;
+}
+
+    paper-icon-item.largeImage .paperIconItemImage {
+        width: 100%;
+        height: 300px;
+    }
+
+paper-icon-item[focused] paper-item-body div {
+    color: inherit !important;
+}
 
 /* 2560 * 1440 */
 @media all and (min-height: 1440px) {
@@ -178,5 +195,9 @@ paper-icon-item #contentIcon {
 
     paper-icon-item #contentIcon {
         width: 135px;
+    }
+
+    paper-icon-item.largeImage .paperIconItemImage {
+        height: 340px;
     }
 }

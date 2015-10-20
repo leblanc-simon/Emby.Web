@@ -163,6 +163,7 @@
     function renderName(view, item) {
 
         var nameContainer = view.querySelector('.nameContainer');
+
         nameContainer.innerHTML = '<h2>' + DefaultTheme.CardBuilder.getDisplayName(item) + '</h2>';
     }
 
@@ -219,7 +220,7 @@
 
             var detailImage = view.querySelector('.detailImageContainer');
 
-            if (url) {
+            if (url && item.Type != "Season") {
                 detailImage.classList.remove('hide');
                 detailImage.innerHTML = '<img class="detailImage" src="' + url + '" />';
             } else {
@@ -244,9 +245,13 @@
             mainSection.classList.remove('smallBottomMargin');
         }
 
-        if (item.Type == "Season" || item.Type == "MusicArtist" || item.Type == "BoxSet" || enableTrackList(item)) {
+        if (item.Type == "Season") {
+            mainSection.classList.add('seasonMainSection');
+        }
+        else if (item.Type == "MusicArtist" || item.Type == "BoxSet" || enableTrackList(item)) {
             mainSection.classList.add('miniMainSection');
-        } else {
+        }
+        else {
             mainSection.classList.remove('miniMainSection');
         }
 
@@ -259,7 +264,7 @@
         }
 
         var overviewElem = view.querySelector('.overview')
-        if (item.Overview && item.Type != 'MusicArtist' && item.Type != 'MusicAlbum') {
+        if (item.Overview && item.Type != 'MusicArtist' && item.Type != 'MusicAlbum' && item.Type != 'Season') {
             overviewElem.classList.remove('hide');
             overviewElem.innerHTML = item.Overview;
         } else {
@@ -278,7 +283,7 @@
             view.querySelector('.btnPlay').classList.add('hide');
         }
 
-        var mediaInfoHtml = DefaultTheme.CardBuilder.getMediaInfoHtml(item);
+        var mediaInfoHtml = item.Type == 'Season' ? '' : DefaultTheme.CardBuilder.getMediaInfoHtml(item);
         var mediaInfoElem = view.querySelector('.mediaInfo');
         var sideMediaInfoElem = view.querySelector('.sideMediaInfo');
 
@@ -393,7 +398,43 @@
 
             section.innerHTML = DefaultTheme.CardBuilder.getListViewHtml(result.Items, {
                 showIndexNumber: item.Type == 'MusicAlbum',
-                action: 'playallfromhere'
+                action: 'playallfromhere',
+                showParentTitle: true,
+                enableSideMediaInfo: true
+            });
+
+            Emby.ImageLoader.lazyChildren(section);
+        });
+    }
+
+    function renderEpisodes(view, item) {
+
+        var section = view.querySelector('.episodes');
+
+        if (item.Type != "Season") {
+            section.classList.add('hide');
+            return;
+        }
+
+        Emby.Models.children(item, {
+
+            SortBy: 'SortName',
+            Fields: "Overview"
+
+        }).then(function (result) {
+
+            if (!result.Items.length) {
+                section.classList.add('hide');
+                return;
+            }
+
+            section.classList.remove('hide');
+
+            section.innerHTML = DefaultTheme.CardBuilder.getListViewHtml(result.Items, {
+                showIndexNumber: item.Type == 'MusicAlbum',
+                action: 'playallfromhere',
+                enableOverview: true,
+                imageSize: 'large'
             });
 
             Emby.ImageLoader.lazyChildren(section);
@@ -403,6 +444,7 @@
     function renderChildren(view, item) {
 
         renderTrackList(view, item);
+        renderEpisodes(view, item);
 
         var section = view.querySelector('.childrenSection');
 
@@ -419,11 +461,6 @@
         if (item.Type == "Series") {
             headerText.innerHTML = Globalize.translate('Seasons');
             headerText.classList.remove('hide');
-
-        } else if (item.Type == "Season") {
-            headerText.innerHTML = Globalize.translate('Episodes');
-            headerText.classList.remove('hide');
-            showTitle = true;
 
         } else if (item.Type == "MusicArtist") {
             headerText.innerHTML = Globalize.translate('Albums');

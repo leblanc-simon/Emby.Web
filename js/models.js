@@ -488,6 +488,25 @@
         return null;
     }
 
+    function thumbImageUrl(item, options) {
+
+        options = options || {};
+        options.type = "Thumb";
+
+        if (item.ImageTags && item.ImageTags.Thumb) {
+
+            options.tag = item.ImageTags.Thumb;
+            return getConnectionManager().getApiClient(item.ServerId).getScaledImageUrl(item.Id, options);
+        }
+
+        if (item.ParentThumbImageTag) {
+            options.tag = item.ParentThumbImageTag;
+            return getConnectionManager().getApiClient(item.ServerId).getScaledImageUrl(item.ParentThumbItemId, options);
+        }
+
+        return null;
+    }
+
     function imageUrl(item, options) {
 
         options = options || {};
@@ -646,6 +665,7 @@
         logoImageUrl: logoImageUrl,
         intros: intros,
         imageUrl: imageUrl,
+        thumbImageUrl: thumbImageUrl,
         userImageUrl: userImageUrl,
         backdropImageUrl: backdropImageUrl,
         instantMix: instantMix,
