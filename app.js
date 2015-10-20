@@ -188,6 +188,7 @@
             tvguide: "components/tvguide/guide",
             actionsheet: "components/actionsheet",
             paperdialoghelper: "components/paperdialoghelper",
+            slideshow: "components/slideshow/slideshow",
             howler: 'bower_components/howler.js/howler.min'
         };
 
