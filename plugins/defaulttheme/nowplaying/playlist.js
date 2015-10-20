@@ -36,7 +36,9 @@
             var items = Emby.PlaybackManager.playlist();
 
             section.innerHTML = DefaultTheme.CardBuilder.getListViewHtml(items, {
-                action: 'setplaylistindex'
+                action: 'setplaylistindex',
+                showParentTitle: true,
+                enableSideMediaInfo: true
             });
 
             Emby.ImageLoader.lazyChildren(section);
