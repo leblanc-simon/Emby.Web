@@ -714,10 +714,17 @@
             }
 
             if (imgUrl) {
-                html += '<div class="paperIconItemImage lazy" data-src="' + imgUrl + '" item-icon></div>';
+                html += '<div class="paperIconItemImage lazy" data-src="' + imgUrl + '" item-icon>';
             } else {
-                html += '<div class="paperIconItemImage" item-icon></div>';
+                html += '<div class="paperIconItemImage" item-icon>';
             }
+            html += getPlayedIndicator(item);
+            var progressHtml = getProgressBarHtml(item);
+
+            if (progressHtml) {
+                html += progressHtml;
+            }
+            html += '</div>';
 
             var textlines = [];
 
