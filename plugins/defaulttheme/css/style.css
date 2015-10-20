@@ -610,3 +610,21 @@ a {
     margin: 0;
     border-radius: 0;
 }
+
+.criticRatingFresh {
+    padding-left: 44px;
+    background-image: url(images/fresh.png);
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: auto 36px;
+    margin-left: .5em;
+}
+
+.criticRatingRotten {
+    padding-left: 44px;
+    background-image: url(images/rotten.png);
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: auto 36px;
+    margin-left: .5em;
+}
