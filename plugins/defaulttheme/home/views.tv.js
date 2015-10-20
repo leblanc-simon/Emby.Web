@@ -142,14 +142,15 @@
 
     function bindFlipEvents(element) {
 
-        element.addEventListener('focusin', function (e) {
+        element.addEventListener('focus', function (e) {
 
             var card = Emby.Dom.parentWithClass(e.target, 'card');
 
             if (card) {
                 startCardFlipTimer(card);
             }
-        });
+
+        }, true);
     }
 
     var cardFlipTimer;

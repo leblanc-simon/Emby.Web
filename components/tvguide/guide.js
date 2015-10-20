@@ -548,7 +548,7 @@ define([], function () {
 
         function initFocusHandler(view, scrollSlider, slyFrame) {
 
-            scrollSlider.addEventListener('focusin', function (e) {
+            scrollSlider.addEventListener('focus', function (e) {
 
                 var focused = Emby.FocusManager.focusableParent(e.target);
 
@@ -561,7 +561,8 @@ define([], function () {
                     slyFrame.toCenter(focused, !animate);
                     lastFocus = now;
                 }
-            });
+
+            }, true);
         }
 
         function createHorizontalScroller(view, pageInstance) {

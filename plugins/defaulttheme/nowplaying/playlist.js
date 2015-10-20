@@ -135,14 +135,15 @@
     function initFocusHandler(view, slyFrame) {
 
         var scrollSlider = view.querySelector('.scrollSlider');
-        scrollSlider.addEventListener('focusin', function (e) {
+        scrollSlider.addEventListener('focus', function (e) {
 
             var focused = Emby.FocusManager.focusableParent(e.target);
 
             if (focused) {
                 slyFrame.toCenter(focused);
             }
-        });
+
+        }, true);
     }
 
 })();
