@@ -1,6 +1,11 @@
+.mediumPaperIconButton {
+    height: 40px;
+    width: 40px;
+}
+
 .largePaperIconButton {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
 }
 
 .xlargePaperIconButton {
@@ -11,17 +16,49 @@
 /* 1080p */
 @media all and (min-height: 1080px) {
 
+    .mediumPaperIconButton {
+        height: 50px;
+        width: 50px;
+    }
+
+    .largePaperIconButton {
+        width: 60px;
+        height: 60px;
+    }
+
     .xlargePaperIconButton {
         width: 80px;
         height: 80px;
     }
+
+        /* Tone these down a little because they end up looking massive */
+        .xlargePaperIconButton[icon='thumb-up'], .xlargePaperIconButton[icon='thumb-down'], .xlargePaperIconButton[icon='favorite'] {
+            width: 64px;
+            height: 64px;
+        }
 }
 
 /* 2560 * 1440 */
 @media all and (min-height: 1440px) {
 
+    .mediumPaperIconButton {
+        width: 64px;
+        height: 64px;
+    }
+
+    .largePaperIconButton {
+        width: 70px;
+        height: 70px;
+    }
+
     .xlargePaperIconButton {
         width: 100px;
         height: 100px;
     }
+
+        /* Tone these down a little because they end up looking massive */
+        .xlargePaperIconButton[icon='thumb-up'], .xlargePaperIconButton[icon='thumb-down'], .xlargePaperIconButton[icon='favorite'] {
+            width: 80px;
+            height: 80px;
+        }
 }
