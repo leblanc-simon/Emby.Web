@@ -438,7 +438,30 @@
             });
 
             Emby.ImageLoader.lazyChildren(section);
+
+            focusFirstUnWatched(result.Items, section);
         });
+    }
+
+    function focusFirstUnWatched(items, element) {
+
+        var focusItem = items.filter(function (i) {
+
+            return !i.UserData.Played;
+
+        })[0];
+
+        // If none then focus the first
+        if (!focusItem) {
+            focusItem = items[0];
+        }
+
+        if (focusItem) {
+
+            var itemElement = element.querySelector('*[data-id=\'' + focusItem.Id + '\']');
+
+            Emby.FocusManager.focus(itemElement);
+        }
     }
 
     function renderChildren(view, item) {
