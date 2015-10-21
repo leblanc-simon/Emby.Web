@@ -696,20 +696,15 @@
 
             html += '<paper-icon-item class="' + cssClass + '" data-index="' + index + '" data-action="' + action + '" data-isfolder="' + item.IsFolder + '" data-id="' + item.Id + '" data-type="' + item.Type + '">';
 
-            // Scaling 400w episode images to 80 doesn't turn out very well
-            var minScale = item.Type == 'Episode' || item.Type == 'Game' ? 2 : 1.5;
-
             var imgUrl = Emby.Models.imageUrl(item, {
                 width: downloadWidth,
-                type: "Primary",
-                minScale: minScale
+                type: "Primary"
             });
 
             if (!imgUrl) {
                 imgUrl = Emby.Models.thumbImageUrl(item, {
                     width: downloadWidth,
-                    type: "Thumb",
-                    minScale: minScale
+                    type: "Thumb"
                 });
             }
 

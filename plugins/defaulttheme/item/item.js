@@ -238,19 +238,50 @@
 
     function renderMediaInfoIcons(view, item) {
 
+        var showMediaInfoIcons = false;
         var displayType = (item.DisplayMediaType || '').toLowerCase();
 
         if (item.VideoType == 'Dvd' || displayType == 'dvd') {
             view.querySelector('.dvdIcon').classList.remove('hide');
+            showMediaInfoIcons = true;
         } else {
             view.querySelector('.dvdIcon').classList.add('hide');
         }
 
         if (item.VideoType == 'BluRay' || displayType == 'bluray') {
             view.querySelector('.blurayIcon').classList.remove('hide');
+            showMediaInfoIcons = true;
         } else {
             view.querySelector('.blurayIcon').classList.add('hide');
         }
+
+        if (hasCodec(item, 'Audio', 'ac3')) {
+            view.querySelector('.dolbyIcon').classList.remove('hide');
+            showMediaInfoIcons = true;
+        } else {
+            view.querySelector('.dolbyIcon').classList.add('hide');
+        }
+
+        if (showMediaInfoIcons) {
+            view.querySelector('.mediaInfoIcons').classList.remove('hide');
+        } else {
+            view.querySelector('.mediaInfoIcons').classList.add('hide');
+        }
+
+    }
+
+    function hasCodec(item, streamType, codec) {
+
+        if (!item.MediaSources || !item.MediaSources.length) {
+            return false;
+        }
+
+        return item.MediaSources[0].MediaStreams.filter(function (i) {
+
+            return i.Type == streamType && (i.Codec || '').toLowerCase() == codec;
+
+        }).length > 0;
+
     }
 
     function renderDetails(view, item) {
