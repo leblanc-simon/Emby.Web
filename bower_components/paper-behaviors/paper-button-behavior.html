@@ -41,6 +41,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       '_computeKeyboardClass(receivedFocusFromKeyboard)'
     ],
 
+    keyBindings: {
+        'enter:keydown': '_spaceKeyDownHandler',
+        'enter:keyup': '_enterKeyUpHandler'
+    },
+
     hostAttributes: {
       role: 'button',
       tabindex: '0',
@@ -87,6 +92,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       if (this.hasRipple()) {
         this._ripple.uiUpAction();
       }
+    },
+
+    _enterKeyUpHandler: function () {
+        if (this.hasRipple()) {
+            this._ripple.uiUpAction();
+        }
+    },
+
+      // trigger click asynchronously, the asynchrony is useful to allow one
+      // event handler to unwind before triggering another event
+    _asyncClick: function () {
+        this.async(function () {
+            this.click();
+        }, 1);
     }
 
   };

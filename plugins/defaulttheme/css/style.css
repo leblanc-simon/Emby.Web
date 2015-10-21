@@ -299,10 +299,22 @@ a {
 
 .selectedItemInfo {
     position: fixed;
-    bottom: 25px;
+    bottom: 20px;
     left: 0;
     right: 0;
     text-align: center;
+}
+
+.homePageContainer .selectedItemInfo {
+    bottom: 25px;
+}
+
+.selectedItemInfo.topPadded {
+    bottom: 5px;
+}
+
+.homePageContainer .selectedItemInfo.topPadded {
+    bottom: 10px;
 }
 
 .selectedItemInfoInner {

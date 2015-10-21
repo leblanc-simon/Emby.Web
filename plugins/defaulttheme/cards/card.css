@@ -52,7 +52,7 @@ button.card {
 
 .card paper-ripple {
     /* Just give it a value to ensure it will be visible over the content */
-    z-index: 1;
+    z-index: 10000;
 }
 
 .card .cardBox {
@@ -85,7 +85,7 @@ button.card {
 .transformCard .cardBox {
     animation: scaleCardUp .2s;
     animation-fill-mode: both;
-    z-index: 999999;
+    z-index: 9999;
 }
 
 @keyframes scaleCardUp {

@@ -152,6 +152,7 @@
             if (item) {
 
                 Emby.Backdrop.setBackdrops([item]);
+                var topPadded = true;
 
                 html += '<div>';
                 html += item.Name;
@@ -161,6 +162,8 @@
                     html += '<div class="selectedItemSecondaryInfo">';
                     html += item.AlbumArtist;
                     html += '</div>';
+                } else {
+                    topPadded = false;
                 }
 
                 var mediaInfo = DefaultTheme.CardBuilder.getMediaInfoHtml(item);
@@ -169,10 +172,18 @@
                     html += '<div class="selectedItemSecondaryInfo">';
                     html += mediaInfo;
                     html += '</div>';
+                } else {
+                    topPadded = false;
                 }
 
                 var logoImageUrl = Emby.Models.logoImageUrl(item, {
                 });
+
+                if (topPadded) {
+                    options.selectedItemInfoElement.parentNode.classList.add('topPadded');
+                } else {
+                    options.selectedItemInfoElement.parentNode.classList.remove('topPadded');
+                }
 
                 if (logoImageUrl) {
                     options.selectedItemInfoElement.classList.add('selectedItemInfoInnerWithLogo');

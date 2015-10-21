@@ -187,11 +187,6 @@ paper-icon-item.largeImage {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 8px;
-}
-
-.paperIconItemImage #progressContainer {
-    height: 8px !important;
 }
 
 paper-icon-item[focused] paper-item-body div {
