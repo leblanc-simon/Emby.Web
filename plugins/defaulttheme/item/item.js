@@ -238,10 +238,18 @@
 
     function renderMediaInfoIcons(view, item) {
 
-        if (item.VideoType == 'Dvd') {
+        var displayType = (item.DisplayMediaType || '').toLowerCase();
+
+        if (item.VideoType == 'Dvd' || displayType == 'dvd') {
             view.querySelector('.dvdIcon').classList.remove('hide');
         } else {
             view.querySelector('.dvdIcon').classList.add('hide');
+        }
+
+        if (item.VideoType == 'BluRay' || displayType == 'bluray') {
+            view.querySelector('.blurayIcon').classList.remove('hide');
+        } else {
+            view.querySelector('.blurayIcon').classList.add('hide');
         }
     }
 
