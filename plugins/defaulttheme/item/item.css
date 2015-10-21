@@ -168,7 +168,23 @@
     text-align: left;
 }
 
-.mediaInfoIcons svg {
-    height: 64px;
+.mediaInfoIcons {
+    margin-top: 1.5em;
+}
+
+.mediaInfoIcon {
+    height: 36px;
     fill: currentColor;
+    vertical-align: middle;
+    margin-right: 1.5em;
+}
+
+.dvdIcon {
+    /* These have a lot of whitespace */
+    height: 64px;
+}
+
+.blurayIcon {
+    /* These have a lot of whitespace */
+    height: 60px;
 }
