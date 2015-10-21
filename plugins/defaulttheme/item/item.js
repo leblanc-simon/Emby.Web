@@ -35,6 +35,7 @@
                         renderImage(view, item);
                         renderChildren(view, item);
                         renderDetails(view, item);
+                        renderMediaInfoIcons(view, item);
                         renderPeople(view, item);
                         renderScenes(view, item);
                         renderSimilar(view, item);
@@ -233,6 +234,15 @@
 
     function enableTrackList(item) {
         return item.Type == "MusicAlbum" || item.Type == "Playlist";
+    }
+
+    function renderMediaInfoIcons(view, item) {
+
+        if (item.VideoType == 'Dvd') {
+            view.querySelector('.dvdIcon').classList.remove('hide');
+        } else {
+            view.querySelector('.dvdIcon').classList.add('hide');
+        }
     }
 
     function renderDetails(view, item) {
