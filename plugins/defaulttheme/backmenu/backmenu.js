@@ -39,6 +39,8 @@
             }
 
             html += getButton(Globalize.translate('Settings'), 'settings', 'settings');
+
+            html += getButton(Globalize.translate('SelectServer'), 'wifi', 'selectserver');
             html += getButton(Globalize.translate('SignOut'), 'lock', 'logout');
 
             if (apphost.supports('exit')) {
@@ -100,8 +102,10 @@
                         apphost.restart();
                         break;
                     case 'settings':
-                        // TODO
-                        Emby.Page.goHome();
+                        Emby.Page.gotoSettings();
+                        break;
+                    case 'selectserver':
+                        Emby.Page.selectServer();
                         break;
                     default:
                         options.cancelCallback();

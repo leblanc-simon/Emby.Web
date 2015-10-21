@@ -106,11 +106,21 @@
     margin-left: 1em;
 }
 
+.detailImageContainer {
+    margin-bottom: 1em;
+    /* Eliminates the gap of space between the image and progress bar*/
+    line-height: 1;
+}
+
+    .detailImageContainer paper-progress {
+        position: relative;
+        top: -6px;
+    }
+
 .detailImage {
     min-width: 50%;
     max-width: 100%;
     max-height: 400px;
-    margin-bottom: 1em;
 }
 
 @media all and (min-height: 800px) {

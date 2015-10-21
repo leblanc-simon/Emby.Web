@@ -113,17 +113,13 @@ paper-dialog > * {
     margin-top: 40px;
 }
 
-paper-progress {
-    height: 6px;
+paper-progress.block {
+    display: block;
+    width: 100%;
 }
 
-    paper-progress.block {
-        display: block;
-        width: 100%;
-    }
-
-.card paper-progress #progressContainer {
-    background: transparent !important;
+paper-progress.transparent #progressContainer {
+    background: rgba(0,0,0,.5) !important;
 }
 
 paper-slider {
@@ -171,7 +167,7 @@ paper-icon-item #contentIcon {
 }
 
 paper-icon-item.largeImage #contentIcon {
-    width: 25.5%;
+    width: 28%;
     margin-right: 2%;
 }
 
@@ -181,8 +177,8 @@ paper-icon-item.largeImage {
 
     paper-icon-item.largeImage .paperIconItemImage {
         width: 100%;
-        height: 300px;
-        background-position: center top;
+        height: 263px;
+        background-position: center center;
         position: relative;
     }
 
@@ -191,11 +187,10 @@ paper-icon-item.largeImage {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 10px;
+    height: 8px;
 }
 
 .paperIconItemImage #progressContainer {
-    background-color: transparent !important;
     height: 8px !important;
 }
 
@@ -216,6 +211,6 @@ paper-icon-item[focused] paper-item-body div {
     }
 
     paper-icon-item.largeImage .paperIconItemImage {
-        height: 340px;
+        height: 362px;
     }
 }

@@ -88,5 +88,7 @@
     "OptionEveryday": "Every day",
     "OptionWeekend": "Weekends",
     "OptionWeekday": "Weekdays",
-    "InstantMix": "Instant Mix"
+    "InstantMix": "Instant Mix",
+    "SelectServer": "Select server",
+    "SignOut": "Sign out"
 }

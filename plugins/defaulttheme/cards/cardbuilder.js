@@ -286,7 +286,7 @@
         if (enableProgressIndicator(item)) {
             if (item.Type == "Recording" && item.CompletionPercentage) {
 
-                return '<paper-progress value="' + item.CompletionPercentage + '" class="block"></paper-progress>';
+                return '<paper-progress value="' + item.CompletionPercentage + '" class="block transparent"></paper-progress>';
             }
 
             var userData = item.UserData;
@@ -295,7 +295,7 @@
 
                 if (pct && pct < 100) {
 
-                    return '<paper-progress value="' + pct + '" class="block"></paper-progress>';
+                    return '<paper-progress value="' + pct + '" class="block transparent"></paper-progress>';
                 }
             }
         }
@@ -815,7 +815,8 @@
         homeSquareWidth: 180,
         getDisplayName: getDisplayName,
         getMediaInfoHtml: getMediaInfoHtml,
-        getListViewHtml: getListViewHtml
+        getListViewHtml: getListViewHtml,
+        getProgressBarHtml: getProgressBarHtml
     };
 
 })(this);
