@@ -51,7 +51,7 @@ button.card {
 }
 
 .card paper-ripple {
-    /* Just give it a value to ensure it will be visible over the content */
+    /* Just give it a value to ensure it will be visible over the content. Also make sure it is greater than the z-index used by transformCard */
     z-index: 10000;
 }
 

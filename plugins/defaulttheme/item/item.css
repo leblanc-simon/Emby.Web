@@ -167,3 +167,8 @@
     margin: 1em 0 0 -.5em;
     text-align: left;
 }
+
+.mediaInfoIcons svg {
+    height: 64px;
+    fill: currentColor;
+}
