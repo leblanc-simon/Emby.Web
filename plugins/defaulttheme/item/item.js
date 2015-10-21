@@ -223,7 +223,7 @@
 
             if (url && item.Type != "Season") {
                 detailImage.classList.remove('hide');
-                detailImage.innerHTML = '<img class="detailImage" src="' + url + '" />';
+                detailImage.innerHTML = '<img class="detailImage" src="' + url + '" />' + DefaultTheme.CardBuilder.getProgressBarHtml(item);
             } else {
                 detailImage.classList.add('hide');
                 detailImage.innerHTML = '';

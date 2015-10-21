@@ -425,6 +425,14 @@
         Emby.ThemeManager.getCurrentTheme().setTitle(title);
     }
 
+    function gotoSettings() {
+        Emby.Page.show('/settings/settings.html');
+    }
+
+    function selectServer() {
+        Emby.Page.show('/startup/selectserver.html');
+    }
+
     globalScope.Emby.Page = {
         getHandler: getHandler,
         param: param,
@@ -436,8 +444,10 @@
         current: current,
         redirectToLogin: redirectToLogin,
         goHome: goHome,
+        gotoSettings: gotoSettings,
         showItem: showItem,
-        setTitle: setTitle
+        setTitle: setTitle,
+        selectServer: selectServer
     };
 
 })(this);

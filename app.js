@@ -90,6 +90,13 @@
         });
 
         defineRoute({
+            path: '/settings/settings.html',
+            id: 'settings',
+            transition: 'slide',
+            dependencies: ['settings/settings']
+        });
+
+        defineRoute({
             path: '/index.html',
             id: 'index',
             isDefaultRoute: true,

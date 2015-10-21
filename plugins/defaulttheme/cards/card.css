@@ -226,3 +226,17 @@ button.card {
 .emptyCardImageContainer {
     font-size: 90%;
 }
+
+/* 2560 * 1440 */
+@media all and (min-height: 1440px) {
+
+    .playedIndicator {
+        width: 56px;
+        height: 56px;
+    }
+
+    .playedIndicator iron-icon {
+        width: 34px;
+        height: 34px;
+    }
+}
