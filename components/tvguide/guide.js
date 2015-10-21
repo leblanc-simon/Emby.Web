@@ -337,7 +337,7 @@ define([], function () {
 
                 var channel = channels[i];
 
-                html += '<div class="channelHeaderCell">';
+                html += '<button type="button" class="channelHeaderCell clearButton itemAction" data-action="link" data-isfolder="' + channel.IsFolder + '" data-id="' + channel.Id + '" data-type="' + channel.Type + '">';
 
                 var hasChannelImage = channel.ImageTags.Primary;
                 var cssClass = hasChannelImage ? 'guideChannelInfo guideChannelInfoWithImage' : 'guideChannelInfo';
@@ -356,7 +356,7 @@ define([], function () {
                     html += '<div class="guideChannelImage lazy" data-src="' + url + '"></div>';
                 }
 
-                html += '</div>';
+                html += '</button>';
             }
 
             var channelList = page.querySelector('.channelList');
