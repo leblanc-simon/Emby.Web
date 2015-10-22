@@ -262,7 +262,7 @@
             },
             {
                 codec: 'truehd',
-                cssClass: 'dolbyIcon'
+                cssClass: 'truehdIcon'
             },
             {
                 codec: 'dts',
