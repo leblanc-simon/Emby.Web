@@ -166,7 +166,7 @@
 
         var nameContainer = view.querySelector('.nameContainer');
 
-        nameContainer.innerHTML = '<h2>' + DefaultTheme.CardBuilder.getDisplayName(item) + '</h2>';
+        nameContainer.innerHTML = '<h1>' + DefaultTheme.CardBuilder.getDisplayName(item) + '</h1>';
     }
 
     function renderImage(view, item) {
@@ -370,7 +370,8 @@
             sideMediaInfoElem.classList.add('hide');
         }
 
-        var genresHtml = (item.Genres || []).map(function (i) {
+        var genres = [];
+        var genresHtml = genres.map(function (i) {
 
             return i;
 

@@ -88,8 +88,8 @@
 }
 
     .mediaInfo .starRatingContainer iron-icon {
-        width: 42px;
-        height: 42px;
+        width: 40px;
+        height: 40px;
     }
 
 .itemPageButtons, .itemPageUserDataIcons {
@@ -155,8 +155,8 @@
     text-align: center;
 }
 
-    .nameContainer h2 {
-        margin: .2em 0 1.7em;
+    .nameContainer h1 {
+        margin: .2em 0 1.5em;
     }
 
 .trackList {
@@ -169,14 +169,14 @@
 }
 
 .mediaInfoIcons {
-    margin-top: 1.5em;
+    margin-top: 1em;
 }
 
 .mediaInfoIcon {
     height: 36px;
     fill: currentColor;
     vertical-align: middle;
-    margin-right: 1.5em;
+    margin-right: 1em;
     opacity: .9;
 }
 
