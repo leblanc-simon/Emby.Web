@@ -177,7 +177,12 @@
     fill: currentColor;
     vertical-align: middle;
     margin-right: 1.5em;
+    opacity: .85;
 }
+
+    .mediaInfoIcon path {
+        fill: currentColor;
+    }
 
 .dvdIcon {
     /* These have a lot of whitespace */
@@ -187,4 +192,9 @@
 .blurayIcon {
     /* These have a lot of whitespace */
     height: 60px;
+}
+
+.dtsIcon {
+    /* This one doesn't scale */
+    height: 48px;
 }
