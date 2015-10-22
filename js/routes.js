@@ -1,7 +1,6 @@
 (function (globalScope) {
 
-    function allowAnonymous(ctx) {
-
+    function isStartup(ctx) {
         var path = ctx.pathname;
 
         if (path.indexOf('welcome') != -1) {
@@ -29,6 +28,11 @@
         }
 
         return false;
+    }
+
+    function allowAnonymous(ctx) {
+
+        return isStartup(ctx);
     }
 
     function redirectToLogin() {
@@ -248,14 +252,13 @@
 
                 Logger.log('Emby.Page - user is authenticated');
 
-                if (route.isDefaultRoute) {
+                if (ctx.isBack && (route.isDefaultRoute || isStartup(ctx))) {
+                    handleBackToDefault();
+                }
+                else if (route.isDefaultRoute) {
+                    Logger.log('Emby.Page - loading theme home page');
 
-                    if (ctx.isBack) {
-                        handleBackToDefault();
-                    } else {
-                        Logger.log('Emby.Page - loading theme home page');
-                        Emby.ThemeManager.loadUserTheme();
-                    }
+                    Emby.ThemeManager.loadUserTheme();
                 } else {
                     Logger.log('Emby.Page - next()');
                     callback();
@@ -271,6 +274,7 @@
                 redirectToLogin();
             }
             else {
+
                 Logger.log('Emby.Page - proceeding to ' + pathname);
                 callback();
             }
@@ -291,12 +295,14 @@
         // Logout
         // Or exit app
 
-        var cancelFn = function () {
-            Emby.ThemeManager.loadUserTheme();
-            isHandlingBackToDefault = false;
-        };
+        Emby.ThemeManager.getCurrentTheme().showBackMenu(function (wasCancelled) {
 
-        Emby.ThemeManager.getCurrentTheme().showBackMenu(cancelFn);
+            isHandlingBackToDefault = false;
+
+            if (wasCancelled) {
+                Emby.ThemeManager.loadUserTheme();
+            }
+        });
     }
 
     function loadContent(ctx, next, route, html, isBackNav) {

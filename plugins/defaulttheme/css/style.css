@@ -393,10 +393,11 @@ a {
 .mediaInfoItem {
     border-radius: 5px;
     display: inline-block;
-    padding: 4px 24px 4px 0;
+    padding: 4px .5em 4px 0;
     text-transform: uppercase;
     vertical-align: middle;
     margin-right: .5em;
+    font-weight: 400;
 }
 
     .mediaInfoItem:last-child {

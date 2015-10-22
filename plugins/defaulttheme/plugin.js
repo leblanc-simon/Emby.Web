@@ -263,16 +263,16 @@ define([], function () {
             showBackMenuInternal(function () { }, true);
         };
 
-        self.showBackMenu = function (cancelCallback) {
+        self.showBackMenu = function (callback) {
 
-            showBackMenuInternal(cancelCallback, false);
+            showBackMenuInternal(callback, false);
         };
 
-        function showBackMenuInternal(cancelCallback, showHome) {
+        function showBackMenuInternal(callback, showHome) {
 
             require([Emby.PluginManager.mapPath(self, 'backmenu/backmenu.js'), 'css!' + Emby.PluginManager.mapPath(self, 'backmenu/backmenu.css')], function () {
                 DefaultTheme.BackMenu.show({
-                    cancelCallback: cancelCallback,
+                    callback: callback,
                     showHome: showHome
                 });
             });
