@@ -419,16 +419,15 @@
                 trigger('change');
                 if (!renderID) {
 
-                    //if (animation.immediate) {
-                    //    if (currentAnimation) {
-                    //        currentAnimation.cancel();
-                    //        currentAnimation = null;
-                    //    }
-                    //    render();
-                    //} else {
-                    //    renderAnimate();
-                    //}
-                    render();
+                    if (!o.horizontal) {
+                        if (currentAnimation) {
+                            currentAnimation.cancel();
+                            currentAnimation = null;
+                        }
+                        render();
+                    } else {
+                        renderAnimate(animation.immediate);
+                    }
                 }
             }
 
@@ -442,7 +441,7 @@
         }
 
         var currentAnimation;
-        function renderAnimate() {
+        function renderAnimate(immediate) {
 
             var curr = currentAnimation;
             if (curr) {
@@ -455,12 +454,29 @@
                 currentAnimation = null;
             }
 
+            if (immediate) {
+                //trigger('moveStart');
+                //trigger('move');
+                //var currentPos = pos.cur;
+
+                //pos.cur = animation.to;
+                //var to = animation.to + currentPos;
+
+                //if (transform) {
+                //    $slidee[0].style[transform] = gpuAcceleration + (o.horizontal ? 'translateX' : 'translateY') + '(' + (-round(to)) + 'px)';
+                //} else {
+                //    $slidee[0].style[o.horizontal ? 'left' : 'top'] = (-round(to)) + 'px';
+                //}
+                //trigger('moveEnd');
+                //return;
+            }
+
             var keyframes = [
-                           { transform: (o.horizontal ? 'translateX' : 'translateY') + '(' + (-round(pos.cur || animation.from)) + 'px)', offset: 0 },
-                           { transform: (o.horizontal ? 'translateX' : 'translateY') + '(' + (-round(animation.to)) + 'px)', offset: 1 }];
+                           { transform: gpuAcceleration + (o.horizontal ? 'translateX' : 'translateY') + '(' + (-round(pos.cur || animation.from)) + 'px)', offset: 0 },
+                           { transform: gpuAcceleration + (o.horizontal ? 'translateX' : 'translateY') + '(' + (-round(animation.to)) + 'px)', offset: 1 }];
 
             var animationInstance = $slidee[0].animate(keyframes, {
-                duration: o.speed,
+                duration: immediate ? 50 : o.speed,
                 iterations: 1,
                 fill: 'both'
             });
@@ -478,12 +494,6 @@
                 }
 
                 pos.cur = animation.to;
-
-                if (transform) {
-                    $slidee[0].style[transform] = gpuAcceleration + (o.horizontal ? 'translateX' : 'translateY') + '(' + (-pos.cur) + 'px)';
-                } else {
-                    $slidee[0].style[o.horizontal ? 'left' : 'top'] = -round(pos.cur) + 'px';
-                }
 
                 trigger('moveEnd');
 
