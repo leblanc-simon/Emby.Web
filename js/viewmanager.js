@@ -2,7 +2,7 @@ define([], function () {
 
     var currentView;
 
-    function onViewChange(view, viewId, url, isRestore) {
+    function onViewChange(view, viewId, url, state, isRestore) {
 
         var lastView = currentView;
 
@@ -14,7 +14,7 @@ define([], function () {
 
         require(['bower_components/query-string/index'], function () {
 
-            var eventDetail = getViewEventDetail(view, url, isRestore);
+            var eventDetail = getViewEventDetail(view, url, state, isRestore);
 
             if (!isRestore) {
                 view.dispatchEvent(new CustomEvent("viewinit-" + viewId, eventDetail));
@@ -32,7 +32,7 @@ define([], function () {
         });
     }
 
-    function getViewEventDetail(view, url, isRestore) {
+    function getViewEventDetail(view, url, state, isRestore) {
 
         var index = url.indexOf('?');
         var params = index == -1 ? {} : queryString.parse(url.substring(index + 1));
@@ -42,7 +42,8 @@ define([], function () {
                 element: view,
                 id: view.getAttribute('data-id'),
                 params: params,
-                isRestored: isRestore
+                isRestored: isRestore,
+                state: state
             },
             bubbles: true,
             cancelable: false
@@ -64,7 +65,7 @@ define([], function () {
 
         viewcontainer.tryRestoreView(options).then(function (view) {
 
-            onViewChange(view, options.id, options.url, true);
+            onViewChange(view, options.id, options.url, options.state, true);
             resolve();
 
         }, reject);
@@ -86,7 +87,7 @@ define([], function () {
             require(['viewcontainer'], function (viewcontainer) {
                 viewcontainer.loadView(options).then(function (view) {
 
-                    onViewChange(view, options.id, options.url);
+                    onViewChange(view, options.id, options.url, options.state);
                 });
             });
         };

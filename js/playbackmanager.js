@@ -25,6 +25,10 @@
             return currentPlayer;
         };
 
+        self.isPlaying = function () {
+            return currentPlayer != null && currentPlayer.currentSrc() != null;
+        };
+
         self.isPlayingVideo = function () {
             return false;
         };

@@ -446,6 +446,7 @@
 
         presentationDependencies.push('js/models');
         presentationDependencies.push('js/soundeffectplayer');
+        presentationDependencies.push('js/thememediaplayer');
 
         require(presentationDependencies, function () {
 

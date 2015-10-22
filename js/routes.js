@@ -146,7 +146,8 @@
                 id: route.id,
                 url: url,
                 transition: route.transition,
-                isBack: isBackNav
+                isBack: isBackNav,
+                state: ctx.state
 
             }).then(function () {
 
@@ -316,7 +317,8 @@
                 view: html,
                 url: window.location.href,
                 transition: route.transition,
-                isBack: isBackNav
+                isBack: isBackNav,
+                state: ctx.state
             });
             currentRoute = route;
             //next();
