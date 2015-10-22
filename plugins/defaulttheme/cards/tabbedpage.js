@@ -162,7 +162,7 @@
                     releaseSwing: true,
                     scrollBar: view.querySelector('.contentScrollbar'),
                     scrollBy: 200,
-                    speed: 400,
+                    speed: 300,
                     elasticBounds: 1,
                     dragHandle: 1,
                     dynamicHandle: 1,
