@@ -299,14 +299,14 @@ a {
 
 .selectedItemInfo {
     position: fixed;
-    bottom: 20px;
+    bottom: 15px;
     left: 0;
     right: 0;
     text-align: center;
 }
 
 .homePageContainer .selectedItemInfo {
-    bottom: 20px;
+    bottom: 15px;
 }
 
 .selectedItemInfo.topPadded {

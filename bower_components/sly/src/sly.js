@@ -446,7 +446,7 @@
             var curr = currentAnimation;
             if (curr) {
 
-                var obj = $($slidee[0]).css('transform').match(/([-+]?(?:\d*\.)?\d+)\D*, ([-+]?(?:\d*\.)?\d+)\D*\)/);
+                var obj = getComputedStyle($slidee[0], null).getPropertyValue('transform').match(/([-+]?(?:\d*\.)?\d+)\D*, ([-+]?(?:\d*\.)?\d+)\D*\)/);
                 // [1] = x, [2] = y
                 pos.cur = parseInt(o.horizontal ? obj[1] : obj[2]) * -1;
 
@@ -454,38 +454,28 @@
                 currentAnimation = null;
             }
 
-            if (immediate) {
-                //trigger('moveStart');
-                //trigger('move');
-                //var currentPos = pos.cur;
-
-                //pos.cur = animation.to;
-                //var to = animation.to + currentPos;
-
-                //if (transform) {
-                //    $slidee[0].style[transform] = gpuAcceleration + (o.horizontal ? 'translateX' : 'translateY') + '(' + (-round(to)) + 'px)';
-                //} else {
-                //    $slidee[0].style[o.horizontal ? 'left' : 'top'] = (-round(to)) + 'px';
-                //}
-                //trigger('moveEnd');
-                //return;
-            }
-
             var prefix = gpuAcceleration ? 'rotateZ(0) ' : "'";
+            prefix = gpuAcceleration;
             //prefix = '';
 
             var keyframes = [
                            { transform: prefix + (o.horizontal ? 'translateX' : 'translateY') + '(' + (-round(pos.cur || animation.from)) + 'px)', offset: 0 },
                            { transform: prefix + (o.horizontal ? 'translateX' : 'translateY') + '(' + (-round(animation.to)) + 'px)', offset: 1 }];
 
-            var animationInstance = $slidee[0].animate(keyframes, {
-                duration: immediate ? 50 : o.speed,
+            var animationConfig = {
+                duration: immediate ? 100 : o.speed,
                 iterations: 1,
-                fill: 'forwards',
-                easing: 'ease-in-out'
-            });
+                fill: 'forwards'
+            };
+
+            if (animationConfig.duration >= 200) {
+                animationConfig.easing = 'ease-out';
+            }
 
             trigger('moveStart');
+
+            var animationInstance = $slidee[0].animate(keyframes, animationConfig);
+
             trigger('move');
 
             currentAnimation = animationInstance;
