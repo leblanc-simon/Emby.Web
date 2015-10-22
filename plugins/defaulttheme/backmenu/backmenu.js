@@ -80,6 +80,7 @@
                 this.parentNode.removeChild(this);
 
                 activeElement.focus();
+                var cancelled = false;
 
                 switch (dialogResult) {
 
@@ -108,9 +109,11 @@
                         Emby.Page.selectServer();
                         break;
                     default:
-                        options.cancelCallback();
+                        cancelled = true;
                         break;
                 }
+
+                options.callback(cancelled);
             });
 
             dlg.addEventListener('click', function (e) {
