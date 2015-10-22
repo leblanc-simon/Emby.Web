@@ -114,7 +114,7 @@
             ];
 
             if (elem.animate) {
-                var timing = { duration: 150, iterations: 1, fill: 'forwards' };
+                var timing = { duration: 120, iterations: 1, fill: 'forwards' };
                 elem.animate(keyframes, timing);
             }
         }
@@ -182,7 +182,7 @@
             };
 
             if (elem.animate) {
-                var timing = { duration: 150, iterations: 1, fill: 'forwards' };
+                var timing = { duration: 120, iterations: 1, fill: 'forwards' };
                 var animation = elem.animate(keyframes, timing);
 
                 animation.onfinish = onAnimationFinished;

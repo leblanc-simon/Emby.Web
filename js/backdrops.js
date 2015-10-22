@@ -22,7 +22,7 @@
 
                 parent.appendChild(backdropImage);
 
-                var animation = fadeIn(backdropImage, 1);
+                var animation = fadeInRight(backdropImage, 1);
                 currentAnimation = animation;
                 animation.onfinish = function () {
                     if (existingBackdropImage && existingBackdropImage.parentNode && !isDestroyed) {
@@ -41,6 +41,22 @@
               { opacity: '0', offset: 0 },
               { opacity: '1', offset: 1 }];
             var timing = { duration: 800, iterations: iterations, easing: 'ease-in' };
+            return elem.animate(keyframes, timing);
+        }
+
+        function fadeInRight(elem, iterations) {
+            var keyframes = [
+              { opacity: '0', transform: 'translate3d(4%, -4%, 0)', offset: 0 },
+              { opacity: '1', transform: 'none', offset: 1 }];
+            var timing = { duration: 300, iterations: iterations };
+            return elem.animate(keyframes, timing);
+        }
+
+        function fadeInDown(elem, iterations) {
+            var keyframes = [
+              { opacity: '0', transform: 'translate3d(0, -100%, 0)', offset: 0 },
+              { opacity: '1', transform: 'none', offset: 1 }];
+            var timing = { duration: 900, iterations: iterations };
             return elem.animate(keyframes, timing);
         }
 

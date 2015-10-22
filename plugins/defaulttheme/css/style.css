@@ -148,7 +148,7 @@ a {
 
 .itemScrollFrame.scrollFrameX {
     padding-left: 70px;
-    padding-bottom: 40px;
+    padding-bottom: 50px;
 }
 
 .itemScrollFrame.scrollFrameY {
@@ -156,7 +156,7 @@ a {
 }
 
 .topPadded.itemScrollFrame {
-    padding-top: 20px;
+    padding-top: 30px;
 }
 
 @media all and (min-height: 720px) {
