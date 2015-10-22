@@ -222,6 +222,7 @@
         view.querySelector('.btnStop').addEventListener('click', function () {
 
             Emby.PlaybackManager.stop();
+            Emby.Page.back();
         });
 
         view.querySelector('.btnNextTrack').addEventListener('click', function () {

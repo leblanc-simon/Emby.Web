@@ -174,7 +174,8 @@
 
             imgUrl = apiClient.getThumbImageUrl(item.ParentThumbItemId, {
                 type: "Thumb",
-                maxWidth: width
+                maxWidth: width,
+                tag: item.ParentThumbImageTag
             });
 
         } else if (options.preferThumb && item.BackdropImageTags && item.BackdropImageTags.length) {
@@ -257,9 +258,10 @@
 
         } else if (item.ParentThumbItemId) {
 
-            imgUrl = apiClient.getThumbImageUrl(item, {
+            imgUrl = apiClient.getThumbImageUrl(item.ParentThumbItemId, {
                 type: "Thumb",
-                maxWidth: width
+                maxWidth: width,
+                tag: item.ParentThumbImageTag
             });
 
         }

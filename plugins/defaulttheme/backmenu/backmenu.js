@@ -3,7 +3,7 @@
     function getButton(name, icon, option) {
 
         var html = '';
-        html += '<paper-icon-button class="backMenuButton xlargePaperIconButton" icon="' + icon + '" data-option="' + option + '" data-name="' + name + '"></paper-icon-button>';
+        html += '<paper-icon-button class="backMenuButton xlargePaperIconButton" icon="' + icon + '" data-option="' + option + '" title="' + name + '"></paper-icon-button>';
 
         return html;
     }
@@ -13,7 +13,7 @@
         var btn = Emby.Dom.parentWithClass(e.target, 'backMenuButton');
 
         if (btn) {
-            document.querySelector('.backMenuButtonTitle').innerHTML = btn.getAttribute('data-name');
+            document.querySelector('.backMenuButtonTitle').innerHTML = btn.getAttribute('title');
         }
     }
 
