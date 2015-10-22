@@ -460,17 +460,6 @@
     function getMediaInfoHtml(item) {
         var html = '';
 
-        html += getStarIconsHtml(item);
-
-        if (item.CriticRating) {
-
-            if (item.CriticRating >= 60) {
-                html += '<div class="mediaInfoItem criticRatingFresh">' + item.CriticRating + '</div>';
-            } else {
-                html += '<div class="mediaInfoItem criticRatingRotten">' + item.CriticRating + '</div>';
-            }
-        }
-
         var miscInfo = [];
 
         var text, date, minutes;
@@ -588,7 +577,10 @@
         }
 
         if (item.OfficialRating && item.Type !== "Season" && item.Type !== "Episode") {
-            miscInfo.push(item.OfficialRating);
+            miscInfo.push({
+                text: item.OfficialRating,
+                cssClass: 'mediaInfoOfficialRating'
+            });
         }
 
         if (item.Video3DFormat) {
@@ -601,9 +593,27 @@
 
         html += miscInfo.map(function (m) {
 
-            return '<div class="mediaInfoItem">' + m + '</div>';
+            var cssClass = "mediaInfoItem";
+            var mediaInfoText = m;
+
+            if (typeof (m) !== 'string' && typeof (m) !== 'number') {
+                mediaInfoText = m.text;
+                cssClass += ' ' + m.cssClass;
+            }
+            return '<div class="' + cssClass + '">' + mediaInfoText + '</div>';
 
         }).join('');
+
+        html += getStarIconsHtml(item);
+
+        if (item.CriticRating) {
+
+            if (item.CriticRating >= 60) {
+                html += '<div class="mediaInfoItem criticRatingFresh">' + item.CriticRating + '</div>';
+            } else {
+                html += '<div class="mediaInfoItem criticRatingRotten">' + item.CriticRating + '</div>';
+            }
+        }
 
         return html;
     }
@@ -653,7 +663,7 @@
         var rating = item.CommunityRating;
 
         if (rating) {
-            html += '<div class="starRatingContainer">';
+            html += '<div class="starRatingContainer mediaInfoItem">';
 
             for (var i = 0; i < 5; i++) {
                 var starValue = (i + 1) * 2;

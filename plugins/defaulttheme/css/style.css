@@ -391,20 +391,23 @@ a {
 }
 
 .mediaInfoItem {
-    border-radius: 5px;
     display: inline-block;
-    padding: 4px .5em 4px 0;
-    text-transform: uppercase;
+    margin: 4px .9em 4px 0;
     vertical-align: middle;
-    margin-right: .5em;
 }
 
     .mediaInfoItem:last-child {
         margin-right: 0;
     }
 
-.starRatingContainer + .mediaInfoItem {
-    margin-left: 1.25em;
+.mediaInfoOfficialRating {
+    font-family: Montsterrat;
+    border: 2px solid #ccc;
+    text-align: center;
+    padding: 0 .5em;
+    border-radius: 1px;
+    font-size: 94%;
+    font-weight: bold;
 }
 
 paper-item-body .paperIconItemMediaInfo {
@@ -418,6 +421,10 @@ paper-item-body .paperIconItemMediaInfo {
 .starRatingContainer {
     display: inline-block;
     vertical-align: middle;
+    padding-top: 0;
+    padding-bottom: 0;
+    position: relative;
+    top: -2px;
 }
 
     .starRatingContainer iron-icon {
@@ -598,19 +605,17 @@ paper-item-body .overview {
 }
 
 .criticRatingFresh {
-    padding-left: 40px;
-    background-image: url(images/fresh.png);
+    padding-left: 34px;
     background-position: left center;
     background-repeat: no-repeat;
-    background-size: auto 32px;
-    margin-left: .5em;
+    background-size: auto 28px;
+    background-image: url(images/fresh.png);
 }
 
 .criticRatingRotten {
-    padding-left: 40px;
-    background-image: url(images/rotten.png);
+    padding-left: 34px;
     background-position: left center;
     background-repeat: no-repeat;
-    background-size: auto 32px;
-    margin-left: .5em;
+    background-size: auto 28px;
+    background-image: url(images/rotten.png);
 }
