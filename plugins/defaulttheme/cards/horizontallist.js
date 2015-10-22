@@ -165,8 +165,7 @@
                 return;
             }
 
-            zoomElement = cardBox;
-            elem = zoomElement;
+            elem = cardBox;
 
             var keyframes = [
                 { transform: 'scale(1)  ', offset: 0 },
@@ -178,6 +177,7 @@
             }
 
             var onAnimationFinished = function () {
+                zoomElement = elem;
                 currentAnimation = null;
             };
 
