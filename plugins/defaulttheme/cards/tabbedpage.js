@@ -82,7 +82,7 @@
         var focusedElement;
         var zoomElement;
         var currentAnimation;
-        var zoomScale = '1.14';
+        var zoomScale = '1.20';
 
         var selectedItemInfoInner = page.querySelector('.selectedItemInfoInner');
         var selectedIndexElement = page.querySelector('.selectedIndex');
@@ -162,7 +162,7 @@
                     releaseSwing: true,
                     scrollBar: view.querySelector('.contentScrollbar'),
                     scrollBy: 200,
-                    speed: 240,
+                    speed: 200,
                     elasticBounds: 1,
                     dragHandle: 1,
                     dynamicHandle: 1,
@@ -239,7 +239,7 @@
             ];
 
             if (elem.animate) {
-                var timing = { duration: 200, iterations: 1, fill: 'forwards', easing: 'ease-out' };
+                var timing = { duration: 150, iterations: 1, fill: 'forwards', easing: 'ease-out' };
                 elem.animate(keyframes, timing);
             }
         }
@@ -307,7 +307,7 @@
             };
 
             if (elem.animate) {
-                var timing = { duration: 200, iterations: 1, fill: 'forwards', easing: 'ease-out' };
+                var timing = { duration: 150, iterations: 1, fill: 'forwards', easing: 'ease-out' };
                 var animation = elem.animate(keyframes, timing);
 
                 animation.onfinish = onAnimationFinished;

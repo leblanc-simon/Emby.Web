@@ -463,7 +463,7 @@
                            { transform: prefix + (o.horizontal ? 'translateX' : 'translateY') + '(' + (-round(animation.to)) + 'px)', offset: 1 }];
 
             var animationConfig = {
-                duration: immediate ? 100 : o.speed,
+                duration: immediate ? 50 : o.speed,
                 iterations: 1,
                 fill: 'forwards'
             };

@@ -62,7 +62,7 @@
                 releaseSwing: true,
                 scrollBar: horizontalPageContent.querySelector('.scrollbar'),
                 scrollBy: 200,
-                speed: 240,
+                speed: 200,
                 elasticBounds: 1,
                 dragHandle: 1,
                 dynamicHandle: 1,
