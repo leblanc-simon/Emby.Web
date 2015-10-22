@@ -162,7 +162,7 @@
                     releaseSwing: true,
                     scrollBar: view.querySelector('.contentScrollbar'),
                     scrollBy: 200,
-                    speed: 300,
+                    speed: 240,
                     elasticBounds: 1,
                     dragHandle: 1,
                     dynamicHandle: 1,
@@ -255,7 +255,7 @@
             if (selectedMediaInfoTimeout) {
                 clearTimeout(selectedMediaInfoTimeout);
             }
-            selectedMediaInfoTimeout = setTimeout(onSelectedMediaInfoTimeout, 1000);
+            selectedMediaInfoTimeout = setTimeout(onSelectedMediaInfoTimeout, 1200);
         }
 
         function onZoomTimeout() {

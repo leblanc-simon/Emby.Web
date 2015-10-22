@@ -40,7 +40,7 @@
             var keyframes = [
               { opacity: '0', offset: 0 },
               { opacity: '1', offset: 1 }];
-            var timing = { duration: 500, iterations: iterations, easing: 'ease-in' };
+            var timing = { duration: 800, iterations: iterations, easing: 'ease-in' };
             return elem.animate(keyframes, timing);
         }
 
