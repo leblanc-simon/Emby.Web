@@ -302,9 +302,9 @@
         //    }
         //}
 
-        if (!Emby.Dom.visibleInViewport(originalElement) && !Emby.Dom.visibleInViewport(elem)) {
-            return;
-        }
+        //if (!Emby.Dom.visibleInViewport(originalElement) && !Emby.Dom.visibleInViewport(elem)) {
+        //    return;
+        //}
         Emby.FocusManager.focus(elem);
     }
 
