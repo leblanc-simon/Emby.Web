@@ -21,8 +21,6 @@
                 rows: 3,
                 width: DefaultTheme.CardBuilder.homeThumbWidth,
                 preferThumb: true,
-                showTitle: true,
-                hiddenTitle: true,
                 addImageData: true
             });
         });
@@ -47,8 +45,6 @@
                 rows: 3,
                 width: DefaultTheme.CardBuilder.homeThumbWidth,
                 preferThumb: true,
-                showTitle: true,
-                hiddenTitle: true,
                 addImageData: true
             });
         });
@@ -208,17 +204,8 @@
         flipElementWithDuration(card, 600, function () {
             newCardImageContainer.classList.remove('hide');
 
-            var hiddenTitle = card.querySelector('.hiddenTitle');
-            if (hiddenTitle) {
-                hiddenTitle.classList.remove('hide');
-            }
-
             setTimeout(function () {
                 newCardImageContainer.parentNode.removeChild(newCardImageContainer);
-
-                if (hiddenTitle) {
-                    hiddenTitle.classList.add('hide');
-                }
             }, 4000);
         });
     }
