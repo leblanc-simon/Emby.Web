@@ -11,6 +11,8 @@
 
     function clearBackdrop() {
 
+        cancelAnimation();
+
         var elem = getBackdropContainer();
         elem.innerHTML = '';
         document.querySelector('.themeContainer').classList.remove('withBackdrop');
@@ -21,6 +23,8 @@
     }
 
     function setBackdropImage(url) {
+
+        cancelAnimation();
 
         var elem = getBackdropContainer();
         var existingBackdropImage = elem.querySelector('.displayingBackdropImage');
@@ -43,7 +47,9 @@
         elem.appendChild(backdropImage);
 
         //backdropImage.classList.remove('hide');
-        fadeIn(backdropImage, 1).onfinish = function () {
+        var animation = fadeIn(backdropImage, 1);
+        currentAnimation = animation;
+        animation.onfinish = function () {
             if (existingBackdropImage && existingBackdropImage.parentNode) {
                 existingBackdropImage.parentNode.removeChild(existingBackdropImage);
             }
@@ -52,12 +58,22 @@
         document.querySelector('.themeContainer').classList.add('withBackdrop');
     }
 
+    var currentAnimation;
     function fadeIn(elem, iterations) {
         var keyframes = [
           { opacity: '0', offset: 0 },
           { opacity: '1', offset: 1 }];
         var timing = { duration: 500, iterations: iterations };
         return elem.animate(keyframes, timing);
+    }
+
+    function cancelAnimation() {
+        var animation = currentAnimation;
+        if (animation) {
+            Logger.log('Cancelling backdrop animation');
+            animation.cancel();
+            currentAnimation = null;
+        }
     }
 
     function setBackdrops(items) {
