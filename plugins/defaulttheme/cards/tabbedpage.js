@@ -102,6 +102,20 @@
             createHorizontalScroller(page);
         };
 
+        page.querySelector('.viewsScrollSlider').classList.add('focusable');
+        page.querySelector('.viewsScrollSlider').focus = focusViewSlider;
+
+        function focusViewSlider() {
+
+            var selected = this.querySelector('.selected');
+
+            if (selected) {
+                Emby.FocusManager.focus(selected);
+            } else {
+                Emby.FocusManager.autoFocus(this, true);
+            }
+        }
+
         var focusTimeout;
         self.setFocusDelay = function (view, elem) {
 
@@ -148,7 +162,7 @@
                     releaseSwing: true,
                     scrollBar: view.querySelector('.contentScrollbar'),
                     scrollBy: 200,
-                    speed: 700,
+                    speed: 600,
                     elasticBounds: 1,
                     dragHandle: 1,
                     dynamicHandle: 1,

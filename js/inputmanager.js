@@ -290,18 +290,21 @@
 
     function focusElement(originalElement, elem) {
 
-        var scrollSlider = Emby.Dom.parentWithClass(elem, 'scrollSlider');
+        //var scrollSlider = Emby.Dom.parentWithClass(elem, 'scrollSlider');
 
-        if (scrollSlider && scrollSlider != Emby.Dom.parentWithClass(originalElement, 'scrollSlider')) {
+        //if (scrollSlider && scrollSlider != Emby.Dom.parentWithClass(originalElement, 'scrollSlider')) {
 
-            var selected = scrollSlider.querySelector('.selected');
+        //    var selected = scrollSlider.querySelector('.selected');
 
-            if (selected) {
-                Emby.FocusManager.focus(selected);
-                return;
-            }
+        //    if (selected) {
+        //        Emby.FocusManager.focus(selected);
+        //        return;
+        //    }
+        //}
+
+        if (!Emby.Dom.visibleInViewport(originalElement) && !Emby.Dom.visibleInViewport(elem)) {
+            return;
         }
-
         Emby.FocusManager.focus(elem);
     }
 
