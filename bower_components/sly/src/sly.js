@@ -471,15 +471,18 @@
                 //return;
             }
 
+            var prefix = gpuAcceleration ? 'rotateZ(0) ' : "'";
+            //prefix = '';
+
             var keyframes = [
-                           { transform: gpuAcceleration + (o.horizontal ? 'translateX' : 'translateY') + '(' + (-round(pos.cur || animation.from)) + 'px)', offset: 0 },
-                           { transform: gpuAcceleration + (o.horizontal ? 'translateX' : 'translateY') + '(' + (-round(animation.to)) + 'px)', offset: 1 }];
+                           { transform: prefix + (o.horizontal ? 'translateX' : 'translateY') + '(' + (-round(pos.cur || animation.from)) + 'px)', offset: 0 },
+                           { transform: prefix + (o.horizontal ? 'translateX' : 'translateY') + '(' + (-round(animation.to)) + 'px)', offset: 1 }];
 
             var animationInstance = $slidee[0].animate(keyframes, {
-                duration: immediate ? 100 : o.speed,
+                duration: immediate ? 50 : o.speed,
                 iterations: 1,
-                fill: 'both',
-                easing: 'linear'
+                fill: 'forwards',
+                easing: 'ease-in-out'
             });
 
             trigger('moveStart');
