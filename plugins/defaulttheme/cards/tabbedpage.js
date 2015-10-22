@@ -83,6 +83,7 @@
         var zoomElement;
         var currentAnimation;
         var zoomScale = '1.20';
+        var zoomEase = 'ease-in';
 
         var selectedItemInfoInner = page.querySelector('.selectedItemInfoInner');
         var selectedIndexElement = page.querySelector('.selectedIndex');
@@ -239,7 +240,7 @@
             ];
 
             if (elem.animate) {
-                var timing = { duration: 120, iterations: 1, fill: 'forwards', easing: 'ease-out' };
+                var timing = { duration: 120, iterations: 1, fill: 'forwards', easing: zoomEase };
                 elem.animate(keyframes, timing);
             }
         }
@@ -307,7 +308,7 @@
             };
 
             if (elem.animate) {
-                var timing = { duration: 120, iterations: 1, fill: 'forwards', easing: 'ease-out' };
+                var timing = { duration: 120, iterations: 1, fill: 'forwards', easing: zoomEase };
                 var animation = elem.animate(keyframes, timing);
 
                 animation.onfinish = onAnimationFinished;
