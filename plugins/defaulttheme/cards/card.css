@@ -57,10 +57,10 @@ button.card {
 
 .card .cardBox {
     padding: 0 !important;
-    margin: 1px;
+    margin: 2px;
     transition: none !important;
     border-radius: 0 !important;
-    border: 4px solid transparent;
+    border: 3px solid transparent;
 }
 
 .card[focused], .card:focus {
@@ -70,7 +70,6 @@ button.card {
 
     .card[focused] .cardBox, .card:focus .cardBox {
         border-color: #81C784;
-        border-radius: 2px !important;
         /*-moz-box-shadow: #81C784 0px 0px 1px 4px;
         box-shadow: #81C784 0px 0px 1px 4px;*/
         /*border-color: white;*/
@@ -83,7 +82,7 @@ button.card {
 }*/
 
 .transformCard .cardBox {
-    animation: scaleCardUp .2s;
+    animation: scaleCardUp .4s;
     animation-fill-mode: both;
     z-index: 9999;
 }
@@ -94,19 +93,19 @@ button.card {
     }
 
     to {
-        transform: scale(1.12);
+        transform: scale(1.14);
     }
 }
 
 .transformCardReverse .cardBox {
-    animation: scaleCardDown .2s;
+    animation: scaleCardDown .4s;
     animation-fill-mode: both;
     z-index: 999999;
 }
 
 @keyframes scaleCardDown {
     from {
-        transform: scale(1.12);
+        transform: scale(1.14);
     }
 
     to {
