@@ -80,6 +80,9 @@
         var self = this;
         pageOptions = pageOptions || {};
         var focusedElement;
+        var zoomElement;
+        var currentAnimation;
+        var zoomScale = '1.14';
 
         var selectedItemInfoInner = page.querySelector('.selectedItemInfoInner');
         var selectedIndexElement = page.querySelector('.selectedIndex');
@@ -201,9 +204,29 @@
             var focused = focusedElement;
             focusedElement = null;
 
-            if (focused && focused.classList.contains('transformCard')) {
-                focused.classList.add('transformCardReverse');
-                focused.classList.remove('transformCard');
+            var zoomed = zoomElement;
+            zoomElement = null;
+
+            if (zoomed) {
+                zoomOut(zoomed);
+            }
+
+            if (currentAnimation) {
+                currentAnimation.cancel();
+                currentAnimation = null;
+            }
+        }
+
+        function zoomOut(elem) {
+
+            var keyframes = [
+            { transform: 'scale(' + zoomScale + ')  ', offset: 0 },
+            { transform: 'scale(1)', offset: 1 }
+            ];
+
+            if (elem.animate) {
+                var timing = { duration: 200, iterations: 1, fill: 'both' };
+                elem.animate(keyframes, timing);
             }
         }
 
@@ -243,9 +266,40 @@
 
             var card = elem;
 
-            if (document.activeElement == card) {
-                card.classList.add('transformCard');
-                card.classList.remove('transformCardReverse');
+            if (document.activeElement != card) {
+                return;
+            }
+
+            var cardBox = card.querySelector('.cardBox');
+
+            if (!cardBox) {
+                return;
+            }
+
+            zoomElement = cardBox;
+            elem = zoomElement;
+
+            var keyframes = [
+                { transform: 'scale(1)  ', offset: 0 },
+              { transform: 'scale(' + zoomScale + ')', offset: 1 }
+            ];
+
+            if (currentAnimation) {
+                currentAnimation.cancel();
+            }
+
+            var onAnimationFinished = function () {
+                currentAnimation = null;
+            };
+
+            if (elem.animate) {
+                var timing = { duration: 200, iterations: 1, fill: 'both' };
+                var animation = elem.animate(keyframes, timing);
+
+                animation.onfinish = onAnimationFinished;
+                currentAnimation = animation;
+            } else {
+                onAnimationFinished();
             }
         }
 
