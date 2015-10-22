@@ -418,7 +418,13 @@
     }
 
     function showItem(item) {
-        Emby.ThemeManager.getCurrentTheme().showItem(item);
+
+        if (typeof (item) === 'string') {
+            Emby.Models.item(item).then(showItem);
+
+        } else {
+            Emby.ThemeManager.getCurrentTheme().showItem(item);
+        }
     }
 
     function setTitle(title) {

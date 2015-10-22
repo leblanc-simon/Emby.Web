@@ -509,7 +509,28 @@
             Emby.ImageLoader.lazyChildren(section);
 
             focusFirstUnWatched(result.Items, section);
+
+            section.removeEventListener('keydown', onEpisodeListKeyDown);
+            section.addEventListener('keydown', onEpisodeListKeyDown);
         });
+    }
+
+    function onEpisodeListKeyDown(e) {
+
+        // 39
+        if (e.keyCode == 39) {
+
+            var card = Emby.Dom.parentWithClass(e.target, 'itemAction');
+
+            if (card) {
+
+                Emby.Page.showItem(card.getAttribute('data-id'));
+
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        }
     }
 
     function focusFirstUnWatched(items, element) {

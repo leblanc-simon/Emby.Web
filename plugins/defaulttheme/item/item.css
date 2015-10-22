@@ -198,3 +198,7 @@
     /* This one doesn't scale */
     height: 48px;
 }
+
+.paperIconItemRightButton {
+    display: none;
+}

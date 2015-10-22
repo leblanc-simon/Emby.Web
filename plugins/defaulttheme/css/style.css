@@ -306,7 +306,7 @@ a {
 }
 
 .homePageContainer .selectedItemInfo {
-    bottom: 25px;
+    bottom: 20px;
 }
 
 .selectedItemInfo.topPadded {
@@ -314,7 +314,7 @@ a {
 }
 
 .homePageContainer .selectedItemInfo.topPadded {
-    bottom: 10px;
+    bottom: 5px;
 }
 
 .selectedItemInfoInner {
