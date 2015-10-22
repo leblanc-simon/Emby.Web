@@ -402,10 +402,10 @@ a {
 
 .mediaInfoOfficialRating {
     font-family: Montsterrat;
-    border: 2px solid #ccc;
+    border: 2px solid #ddd;
     text-align: center;
     padding: 0 .5em;
-    border-radius: 1px;
+    border-radius: 3px;
     font-size: 94%;
     font-weight: bold;
 }
@@ -424,7 +424,7 @@ paper-item-body .paperIconItemMediaInfo {
     padding-top: 0;
     padding-bottom: 0;
     position: relative;
-    top: -2px;
+    top: -3px;
 }
 
     .starRatingContainer iron-icon {
