@@ -232,9 +232,9 @@ define([], function () {
             }
 
             if (showList) {
-                Emby.Page.show(Emby.PluginManager.mapPath(self, 'list/list.html') + '?parentid=' + item.Id);
+                Emby.Page.show(Emby.PluginManager.mapPath(self, 'list/list.html') + '?parentid=' + item.Id, { item: item });
             } else {
-                Emby.Page.show(Emby.PluginManager.mapPath(self, 'item/item.html') + '?id=' + item.Id);
+                Emby.Page.show(Emby.PluginManager.mapPath(self, 'item/item.html') + '?id=' + item.Id, {item: item});
             }
         };
 

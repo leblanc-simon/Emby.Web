@@ -357,7 +357,13 @@ define([], function () {
         };
 
         function onEnded() {
-            Events.trigger(self, 'stopped');
+
+            var stopInfo = {
+                src: currentSrc
+            };
+
+            Events.trigger(self, 'stopped', [stopInfo]);
+            currentSrc = null;
         }
 
         function onTimeUpdate() {
