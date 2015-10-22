@@ -476,9 +476,10 @@
                            { transform: gpuAcceleration + (o.horizontal ? 'translateX' : 'translateY') + '(' + (-round(animation.to)) + 'px)', offset: 1 }];
 
             var animationInstance = $slidee[0].animate(keyframes, {
-                duration: immediate ? 50 : o.speed,
+                duration: immediate ? 100 : o.speed,
                 iterations: 1,
-                fill: 'both'
+                fill: 'both',
+                easing: 'linear'
             });
 
             trigger('moveStart');
