@@ -1,5 +1,64 @@
 ﻿(function (globalScope) {
 
+    function backdrop() {
+
+        var self = this;
+        var isDestroyed;
+
+        self.load = function (url, parent, existingBackdropImage) {
+
+            var img = new Image();
+            img.onload = function() {
+
+                if (isDestroyed) {
+                    return;
+                }
+
+                var backdropImage = document.createElement('div');
+                backdropImage.classList.add('backdropImage');
+                backdropImage.classList.add('displayingBackdropImage');
+                backdropImage.style.backgroundImage = "url('" + url + "')";
+                backdropImage.setAttribute('data-url', url);
+
+                parent.appendChild(backdropImage);
+
+                var animation = fadeIn(backdropImage, 1);
+                currentAnimation = animation;
+                animation.onfinish = function () {
+                    if (existingBackdropImage && existingBackdropImage.parentNode && !isDestroyed) {
+                        existingBackdropImage.parentNode.removeChild(existingBackdropImage);
+                    }
+                };
+
+                document.querySelector('.themeContainer').classList.add('withBackdrop');
+            };
+            img.src = url;
+        };
+
+        var currentAnimation;
+        function fadeIn(elem, iterations) {
+            var keyframes = [
+              { opacity: '0', offset: 0 },
+              { opacity: '1', offset: 1 }];
+            var timing = { duration: 500, iterations: iterations, easing: 'ease-in' };
+            return elem.animate(keyframes, timing);
+        }
+
+        function cancelAnimation() {
+            var animation = currentAnimation;
+            if (animation) {
+                Logger.log('Cancelling backdrop animation');
+                animation.cancel();
+                currentAnimation = null;
+            }
+        }
+
+        self.destroy = function () {
+
+            cancelAnimation();
+        };
+    }
+
     var backdropContainer;
     function getBackdropContainer() {
 
@@ -11,7 +70,10 @@
 
     function clearBackdrop() {
 
-        cancelAnimation();
+        if (currentLoadingBackdrop) {
+            currentLoadingBackdrop.destroy();
+            currentLoadingBackdrop = null;
+        }
 
         var elem = getBackdropContainer();
         elem.innerHTML = '';
@@ -22,9 +84,13 @@
         return Math.floor(Math.random() * (max - min) + min);
     }
 
+    var currentLoadingBackdrop;
     function setBackdropImage(url) {
 
-        cancelAnimation();
+        if (currentLoadingBackdrop) {
+            currentLoadingBackdrop.destroy();
+            currentLoadingBackdrop = null;
+        }
 
         var elem = getBackdropContainer();
         var existingBackdropImage = elem.querySelector('.displayingBackdropImage');
@@ -36,44 +102,9 @@
             existingBackdropImage.classList.remove('displayingBackdropImage');
         }
 
-        var backdropImage = document.createElement('div');
-        backdropImage.classList.add('backdropImage');
-        backdropImage.classList.add('displayingBackdropImage');
-        backdropImage.style.backgroundImage = "url('" + url + "')";
-        backdropImage.setAttribute('data-url', url);
-
-        //backdropImage.classList.add('hide');
-
-        elem.appendChild(backdropImage);
-
-        //backdropImage.classList.remove('hide');
-        var animation = fadeIn(backdropImage, 1);
-        currentAnimation = animation;
-        animation.onfinish = function () {
-            if (existingBackdropImage && existingBackdropImage.parentNode) {
-                existingBackdropImage.parentNode.removeChild(existingBackdropImage);
-            }
-        };
-
-        document.querySelector('.themeContainer').classList.add('withBackdrop');
-    }
-
-    var currentAnimation;
-    function fadeIn(elem, iterations) {
-        var keyframes = [
-          { opacity: '0', offset: 0 },
-          { opacity: '1', offset: 1 }];
-        var timing = { duration: 500, iterations: iterations };
-        return elem.animate(keyframes, timing);
-    }
-
-    function cancelAnimation() {
-        var animation = currentAnimation;
-        if (animation) {
-            Logger.log('Cancelling backdrop animation');
-            animation.cancel();
-            currentAnimation = null;
-        }
+        var instance = new backdrop();
+        instance.load(url, elem, existingBackdropImage);
+        currentLoadingBackdrop = instance;
     }
 
     function setBackdrops(items) {
