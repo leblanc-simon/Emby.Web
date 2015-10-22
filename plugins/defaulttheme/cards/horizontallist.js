@@ -8,7 +8,7 @@
         var focusedElement;
         var zoomElement;
         var currentAnimation;
-        var zoomScale = '1.14';
+        var zoomScale = '1.2';
 
         self.render = function () {
 
@@ -114,7 +114,7 @@
             ];
 
             if (elem.animate) {
-                var timing = { duration: 200, iterations: 1, fill: 'forwards' };
+                var timing = { duration: 150, iterations: 1, fill: 'forwards' };
                 elem.animate(keyframes, timing);
             }
         }
@@ -182,7 +182,7 @@
             };
 
             if (elem.animate) {
-                var timing = { duration: 200, iterations: 1, fill: 'forwards' };
+                var timing = { duration: 150, iterations: 1, fill: 'forwards' };
                 var animation = elem.animate(keyframes, timing);
 
                 animation.onfinish = onAnimationFinished;
