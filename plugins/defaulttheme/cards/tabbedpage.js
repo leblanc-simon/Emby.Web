@@ -82,6 +82,7 @@
         var focusedElement;
         var zoomElement;
         var currentAnimation;
+        var zoomScale = '1.14';
 
         var selectedItemInfoInner = page.querySelector('.selectedItemInfoInner');
         var selectedIndexElement = page.querySelector('.selectedIndex');
@@ -219,7 +220,7 @@
         function zoomOut(elem) {
 
             var keyframes = [
-            { transform: 'scale(1.12)  ', offset: 0 },
+            { transform: 'scale(' + zoomScale + ')  ', offset: 0 },
             { transform: 'scale(1)', offset: 1 }
             ];
 
@@ -280,7 +281,7 @@
 
             var keyframes = [
                 { transform: 'scale(1)  ', offset: 0 },
-              { transform: 'scale(1.12)', offset: 1 }
+              { transform: 'scale(' + zoomScale + ')', offset: 1 }
             ];
 
             if (currentAnimation) {
