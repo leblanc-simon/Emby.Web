@@ -113,25 +113,25 @@
                 // left
                 evt.preventDefault();
                 evt.stopPropagation();
-                nav(evt, 0);
+                nav(evt.target, 0);
                 break;
             case 38:
                 // up
                 evt.preventDefault();
                 evt.stopPropagation();
-                nav(evt, 2);
+                nav(evt.target, 2);
                 break;
             case 39:
                 // right
                 evt.preventDefault();
                 evt.stopPropagation();
-                nav(evt, 1);
+                nav(evt.target, 1);
                 break;
             case 40:
                 // down
                 evt.preventDefault();
                 evt.stopPropagation();
-                nav(evt, 3);
+                nav(evt.target, 3);
                 break;
         }
     }
@@ -185,7 +185,7 @@
             && typeof t.scrollTop == 'number' ? t : document.body).scrollTop;
     }
 
-    function nav(evt, direction) {
+    function nav(originalElement, direction) {
 
         require(['nearestElements'], function (nearestElements, soundeffects) {
 
@@ -200,7 +200,7 @@
 
             if (!activeElement) {
                 if (focusable.length) {
-                    focusElement(evt.target, focusable[0]);
+                    focusElement(originalElement, focusable[0]);
                 }
                 return;
             }
@@ -283,7 +283,7 @@
             });
 
             if (nearest.length) {
-                focusElement(evt.target, nearest[0]);
+                focusElement(originalElement, nearest[0]);
             }
         });
     }
@@ -328,5 +328,55 @@
     globalScope.Emby.InputManager = {
         idleTime: idleTime
     };
+
+    require(['components/gamepad'], function () {
+
+        var gamepad = new Gamepad();
+
+        console.log('Gamepad input supported: ' + gamepad.init());
+
+        gamepad.bind(Gamepad.Event.BUTTON_DOWN, function (e) {
+
+            var original = document.activeElement;
+            //'LEFT_TOP_SHOULDER', 'RIGHT_TOP_SHOULDER', 'LEFT_BOTTOM_SHOULDER', 'RIGHT_BOTTOM_SHOULDER',
+            //'SELECT_BACK', 'START_FORWARD', 'LEFT_STICK', 'RIGHT_STICK',
+            //'DPAD_UP', 'DPAD_DOWN', 'DPAD_LEFT', 'DPAD_RIGHT',
+            //'HOME'
+
+            switch (e.control) {
+
+                case 'DPAD_LEFT':
+                    // left
+                    nav(original, 0);
+                    break;
+                case 'DPAD_UP':
+                    // up
+                    nav(original, 2);
+                    break;
+                case 'DPAD_RIGHT':
+                    // right
+                    nav(original, 1);
+                    break;
+                case 'DPAD_DOWN':
+                    // down
+                    nav(original, 3);
+                    break;
+                case 'HOME':
+                    Emby.Page.goHome();
+                    break;
+                case 'SELECT_BACK':
+                    Emby.Page.back();
+                    break;
+                case 'START_FORWARD':
+                    if (original) {
+                        original.click();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        });
+
+    });
 
 })(this, document);
