@@ -204,7 +204,7 @@
 
                 var now = new Date().getTime();
 
-                var threshold = pageOptions.animateFocus ? 10 : 50;
+                var threshold = pageOptions.animateFocus ? 50 : 50;
                 var animate = (now - lastFocus) > threshold;
                 self.bodySlyFrame.toCenter(focused, !animate);
                 lastFocus = now;
@@ -239,7 +239,7 @@
             ];
 
             if (elem.animate) {
-                var timing = { duration: 200, iterations: 1, fill: 'both' };
+                var timing = { duration: 200, iterations: 1, fill: 'forwards' };
                 elem.animate(keyframes, timing);
             }
         }
@@ -307,7 +307,7 @@
             };
 
             if (elem.animate) {
-                var timing = { duration: 200, iterations: 1, fill: 'both' };
+                var timing = { duration: 200, iterations: 1, fill: 'forwards' };
                 var animation = elem.animate(keyframes, timing);
 
                 animation.onfinish = onAnimationFinished;
