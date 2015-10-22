@@ -386,9 +386,6 @@
 
         if (showTitle) {
             var nameClass = 'cardText';
-            if (options.showTitle && options.hiddenTitle) {
-                nameClass += ' hide hiddenTitle';
-            }
             nameHtml += '<div class="' + nameClass + '">' + getDisplayName(item) + '</div>';
         }
 
