@@ -255,12 +255,31 @@
             view.querySelector('.blurayIcon').classList.add('hide');
         }
 
-        if (hasCodec(item, 'Audio', 'ac3')) {
-            view.querySelector('.dolbyIcon').classList.remove('hide');
-            showMediaInfoIcons = true;
-        } else {
-            view.querySelector('.dolbyIcon').classList.add('hide');
-        }
+        var audioIcons = [
+            {
+                codec: 'ac3',
+                cssClass: 'dolbyIcon'
+            },
+            {
+                codec: 'truehd',
+                cssClass: 'dolbyIcon'
+            },
+            {
+                codec: 'dts',
+                cssClass: 'dtsIcon'
+            }
+        ];
+
+        audioIcons.map(function (i) {
+
+            if (hasCodec(item, 'Audio', i.codec)) {
+                view.querySelector('.' + i.cssClass).classList.remove('hide');
+                showMediaInfoIcons = true;
+            } else {
+                view.querySelector('.' + i.cssClass).classList.add('hide');
+            }
+
+        });
 
         if (showMediaInfoIcons) {
             view.querySelector('.mediaInfoIcons').classList.remove('hide');
@@ -278,7 +297,7 @@
 
         return item.MediaSources[0].MediaStreams.filter(function (i) {
 
-            return i.Type == streamType && (i.Codec || '').toLowerCase() == codec;
+            return i.Type == streamType && ((i.Codec || '').toLowerCase() == codec || (i.Profile || '').toLowerCase() == codec);
 
         }).length > 0;
 
