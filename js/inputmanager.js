@@ -364,9 +364,11 @@
                 case 'HOME':
                     Emby.Page.goHome();
                     break;
+                case 'FACE_0':
                 case 'SELECT_BACK':
                     Emby.Page.back();
                     break;
+                case 'FACE_1':
                 case 'START_FORWARD':
                     if (original) {
                         original.click();

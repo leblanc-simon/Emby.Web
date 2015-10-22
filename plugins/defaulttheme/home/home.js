@@ -131,7 +131,7 @@
 
     function loadViewHtml(page, parentId, html, viewName, autoFocus) {
 
-        var homeScrollContent = page.querySelector('.scrollContent');
+        var homeScrollContent = page.querySelector('.contentScrollSlider');
 
         html = '<div class="homePanel">' + html + '</div>';
         homeScrollContent.innerHTML = Globalize.translateHtml(html);
