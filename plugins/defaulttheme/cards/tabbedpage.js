@@ -239,7 +239,7 @@
             ];
 
             if (elem.animate) {
-                var timing = { duration: 150, iterations: 1, fill: 'forwards', easing: 'ease-out' };
+                var timing = { duration: 120, iterations: 1, fill: 'forwards', easing: 'ease-out' };
                 elem.animate(keyframes, timing);
             }
         }
@@ -307,7 +307,7 @@
             };
 
             if (elem.animate) {
-                var timing = { duration: 150, iterations: 1, fill: 'forwards', easing: 'ease-out' };
+                var timing = { duration: 120, iterations: 1, fill: 'forwards', easing: 'ease-out' };
                 var animation = elem.animate(keyframes, timing);
 
                 animation.onfinish = onAnimationFinished;
