@@ -49,7 +49,7 @@
         nameHtml += '<div class="cardText">' + chapter.Name + '</div>';
 
         var html = '\
-<paper-button raised class="' + className + '"> \
+<button type="button" class="' + className + '"> \
 <div class="cardBox">\
 <div class="cardScalable">\
 <div class="cardPadder"></div>\
@@ -62,7 +62,7 @@
 </div>\
 </div>\
 </div>\
-</paper-button>'
+</button>'
         ;
 
         return html;

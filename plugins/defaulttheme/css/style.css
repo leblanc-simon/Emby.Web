@@ -388,9 +388,15 @@ a {
     vertical-align: middle;
 }
 
-    .mediaInfoItem:last-child {
-        margin-right: 0;
-    }
+iron-icon.mediaInfoItem {
+    width: 40px;
+    height: 40px;
+    margin-right: .6em;
+}
+
+.mediaInfoItem:last-child {
+    margin-right: 0;
+}
 
 .mediaInfoOfficialRating {
     font-family: Montsterrat;
