@@ -299,27 +299,19 @@ a {
 
 .selectedItemInfo {
     position: fixed;
-    bottom: 15px;
+    bottom: 5px;
     left: 0;
     right: 0;
     text-align: center;
 }
 
 .homePageContainer .selectedItemInfo {
-    bottom: 15px;
-}
-
-.selectedItemInfo.topPadded {
-    bottom: 5px;
-}
-
-.homePageContainer .selectedItemInfo.topPadded {
     bottom: 5px;
 }
 
 .selectedItemInfoInner {
     margin: auto;
-    max-width: 40%;
+    max-width: 50%;
     display: inline-block;
     text-align: left;
 }
@@ -406,7 +398,6 @@ a {
     text-align: center;
     padding: 0 .5em;
     border-radius: 2px;
-    font-size: 94%;
     font-weight: bold;
     line-height: 100%;
 }

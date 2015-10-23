@@ -1,0 +1,70 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+html {
+    font-family: Segoe SemiLight, Segoe WP SemiLight;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+h1, h2 {
+    font-family: Segoe UI Light;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: 300;
+}
+
+h2 {
+    font-weight: normal;
+    font-size: 26px;
+    font-weight: 300;
+}
+
+/* 720p */
+@media all and (min-height: 720px) {
+
+    html {
+        font-size: 20px;
+    }
+
+    h1 {
+        font-size: 36px;
+    }
+
+    h2 {
+        font-size: 30px;
+    }
+}
+
+/* 1080p */
+@media all and (min-height: 1080px) {
+
+    html {
+        font-size: 27px;
+    }
+
+    h1 {
+        font-size: 45px;
+    }
+
+    h2 {
+        font-size: 37px;
+    }
+}
+
+/* 2560 * 1440 */
+@media all and (min-height: 1440px) {
+
+    html {
+        font-size: 34px;
+    }
+
+    h1 {
+        font-size: 54px;
+    }
+
+    h2 {
+        font-size: 46px;
+    }
+}

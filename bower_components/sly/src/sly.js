@@ -419,7 +419,7 @@
                 trigger('change');
                 if (!renderID) {
 
-                    if (false) {
+                    if (!o.horizontal ) {
                         if (currentAnimation) {
                             currentAnimation.cancel();
                             currentAnimation = null;
@@ -477,7 +477,7 @@
             };
 
             if (animationConfig.duration >= 200) {
-                animationConfig.easing = 'ease-out';
+                animationConfig.easing = 'linear';
             }
 
             trigger('moveStart');

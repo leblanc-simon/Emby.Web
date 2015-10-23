@@ -116,6 +116,7 @@
 
         var html = '';
         var itemsInRow = 0;
+        var lastRowStartIndex = options.rows ? ((items.length % options.rows) || items.length - options.rows) : 0;
 
         for (var i = 0, length = items.length; i < length; i++) {
 
@@ -125,7 +126,17 @@
 
             var item = items[i];
 
-            html += buildCard(i, item, apiClient, options, className);
+            var cardClass = className;
+            if (options.rows) {
+                if (options.enableleftNavGuard && i < options.rows) {
+                    cardClass += " noNavLeft";
+                }
+                else if (options.enableRightNavGuard && i >= lastRowStartIndex) {
+                    cardClass += " noNavRight";
+                }
+            }
+
+            html += buildCard(i, item, apiClient, options, cardClass);
 
             itemsInRow++;
 

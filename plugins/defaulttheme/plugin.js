@@ -43,7 +43,6 @@ define([], function () {
 
             var list = [
                 'css!' + Emby.PluginManager.mapRequire(self, 'css/style'),
-                'css!' + Emby.PluginManager.mapRequire(self, 'css/fonts'),
                 'css!' + Emby.PluginManager.mapRequire(self, 'cards/card'),
                 'css!' + Emby.PluginManager.mapRequire(self, 'css/colors.dark'),
                 'css!' + Emby.PluginManager.mapRequire(self, 'css/paperstyles'),
@@ -53,6 +52,12 @@ define([], function () {
                 Emby.PluginManager.mapRequire(self, 'cards/tabbedpage.js'),
                 Emby.PluginManager.mapRequire(self, 'cards/horizontallist.js')
             ];
+
+            if (navigator.userAgent.toLowerCase().indexOf('windows') != -1) {
+                list.push('css!' + Emby.PluginManager.mapRequire(self, 'css/fonts.windows'));
+            } else {
+                list.push('css!' + Emby.PluginManager.mapRequire(self, 'css/fonts'));
+            }
 
             if (Emby.Dom.supportsWebComponents()) {
                 list.push('html!' + Emby.PluginManager.mapRequire(self, 'icons.html'));
@@ -234,7 +239,7 @@ define([], function () {
             if (showList) {
                 Emby.Page.show(Emby.PluginManager.mapPath(self, 'list/list.html') + '?parentid=' + item.Id, { item: item });
             } else {
-                Emby.Page.show(Emby.PluginManager.mapPath(self, 'item/item.html') + '?id=' + item.Id, {item: item});
+                Emby.Page.show(Emby.PluginManager.mapPath(self, 'item/item.html') + '?id=' + item.Id, { item: item });
             }
         };
 
