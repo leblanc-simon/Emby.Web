@@ -320,7 +320,7 @@ define([], function () {
                 return;
             }
 
-            var decrement = elem.volume >= .6 ? .15 : .1;
+            var decrement = self.volume() >= 60 ? 15 : 10;
 
             fadeOutInterval = setInterval(function () {
 
@@ -330,7 +330,7 @@ define([], function () {
                     return;
                 }
 
-                elem.volume = Math.max(0, elem.volume - decrement);
+                self.volume(Math.max(0, self.volume() - decrement));
 
             }, 100);
         }
