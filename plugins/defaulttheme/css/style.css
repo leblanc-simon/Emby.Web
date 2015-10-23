@@ -148,7 +148,7 @@ a {
 
 .itemScrollFrame.scrollFrameX {
     padding-left: 70px;
-    padding-bottom: 50px;
+    padding-bottom: 30px;
 }
 
 .itemScrollFrame.scrollFrameY {
@@ -278,7 +278,7 @@ a {
     }
 
 .userViewNames {
-    margin-bottom: 35px;
+    margin-bottom: 10px;
 }
 
     .userViewNames h2 {
@@ -469,7 +469,7 @@ paper-item-body .overview {
 @media all and (min-height: 1080px) {
 
     .horizontalBody {
-        height: 710px;
+        height: 750px;
     }
 
     .horizontalPageContent .squareCard .cardImageContainer {

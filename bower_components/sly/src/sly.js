@@ -419,7 +419,7 @@
                 trigger('change');
                 if (!renderID) {
 
-                    if (!o.horizontal) {
+                    if (false) {
                         if (currentAnimation) {
                             currentAnimation.cancel();
                             currentAnimation = null;
