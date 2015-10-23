@@ -188,7 +188,8 @@
         var cardImageContainer = card.querySelector('.cardImageContainer');
 
         var newCardImageContainer = document.createElement('div');
-        newCardImageContainer.className = 'cardImage';
+        newCardImageContainer.classList.add('cardImage');
+        newCardImageContainer.classList.add('coveredImage');
         newCardImageContainer.classList.add('cardRevealContent');
 
         var imgUrl = Emby.Models.imageUrl(card.getAttribute('data-id'), {

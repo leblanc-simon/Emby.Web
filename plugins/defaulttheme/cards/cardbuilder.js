@@ -591,9 +591,11 @@
             });
         }
 
-        miscInfo.push({
-            html: '<iron-icon class="mediaInfoItem" icon="closed-caption"></iron-icon>'
-        });
+        if (item.HasSubtitles) {
+            miscInfo.push({
+                html: '<iron-icon class="mediaInfoItem" icon="closed-caption"></iron-icon>'
+            });
+        }
 
         if (item.Video3DFormat) {
             miscInfo.push("3D");
