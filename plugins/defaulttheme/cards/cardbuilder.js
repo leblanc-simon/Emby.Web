@@ -425,7 +425,7 @@
 
         var action = options.action || 'link';
 
-        var tagName = Emby.Dom.supportsWebComponents() ? 'paper-button' : 'button';
+        var tagName = 'button';
 
         return '\
 <' + tagName + ' data-index="' + index + '" data-action="' + action + '" data-isfolder="' + item.IsFolder + '" data-id="' + item.Id + '" data-type="' + item.Type + '" raised class="' + className + '"> \
@@ -591,6 +591,10 @@
             });
         }
 
+        miscInfo.push({
+            html: '<iron-icon class="mediaInfoItem" icon="closed-caption"></iron-icon>'
+        });
+
         if (item.Video3DFormat) {
             miscInfo.push("3D");
         }
@@ -605,6 +609,10 @@
             var mediaInfoText = m;
 
             if (typeof (m) !== 'string' && typeof (m) !== 'number') {
+
+                if (m.html) {
+                    return m.html;
+                }
                 mediaInfoText = m.text;
                 cssClass += ' ' + m.cssClass;
             }

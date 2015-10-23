@@ -195,7 +195,6 @@
                 return true;
             case 1:
                 // right
-                //return !originalElement.classList.contains('noNavRight');
                 return true;
             case 2:
                 return true;

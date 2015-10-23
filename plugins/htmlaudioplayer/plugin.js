@@ -303,10 +303,44 @@ define([], function () {
 
         self.stop = function () {
             if (mediaElement) {
-                mediaElement.pause();
-                onEnded();
+                startFadeOut(mediaElement, function () {
+
+                    mediaElement.pause();
+                    onEnded();
+                });
             }
         };
+
+        var fadeOutInterval;
+        function startFadeOut(elem, callback) {
+
+            stopFadeOut();
+            if (!elem.volume) {
+                callback();
+                return;
+            }
+
+            var decrement = elem.volume >= .6 ? .15 : .1;
+
+            fadeOutInterval = setInterval(function () {
+
+                if (!elem.volume) {
+                    stopFadeOut();
+                    callback();
+                    return;
+                }
+
+                elem.volume = Math.max(0, elem.volume - decrement);
+
+            }, 100);
+        }
+
+        function stopFadeOut() {
+            if (fadeOutInterval) {
+                clearInterval(fadeOutInterval);
+                fadeOutInterval = null;
+            }
+        }
 
         self.pause = function () {
             if (mediaElement) {
@@ -372,7 +406,10 @@ define([], function () {
         }
 
         function onVolumeChange() {
-            Events.trigger(self, 'volumechange');
+
+            if (!fadeOutInterval) {
+                Events.trigger(self, 'volumechange');
+            }
         }
 
         function onPlaying() {
