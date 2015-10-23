@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
 
 html {
-    font-family: Segoe SemiLight, Segoe WP SemiLight;
+    font-family: Segoe UI;
     font-size: 18px;
     font-weight: 400;
 }
@@ -45,11 +45,11 @@ h2 {
     }
 
     h1 {
-        font-size: 45px;
+        font-size: 46px;
     }
 
     h2 {
-        font-size: 37px;
+        font-size: 38px;
     }
 }
 
