@@ -43,6 +43,10 @@
     }
 }
 
+.homePageContainer .userViewNames {
+    margin-bottom: 35px;
+}
+
 /* 720p */
 @media all and (min-height: 720px) {
 

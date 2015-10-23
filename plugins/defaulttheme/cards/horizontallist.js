@@ -9,7 +9,8 @@
         var zoomElement;
         var currentAnimation;
         var zoomScale = '1.2';
-        var zoomEase = 'ease-in';
+        var zoomEase = 'linear';
+        var zoomDuration = 200;
 
         self.render = function () {
 
@@ -115,7 +116,7 @@
             ];
 
             if (elem.animate) {
-                var timing = { duration: 120, iterations: 1, fill: 'forwards', easing: zoomEase };
+                var timing = { duration: zoomDuration, iterations: 1, fill: 'forwards', easing: zoomEase };
                 elem.animate(keyframes, timing);
             }
         }
@@ -183,7 +184,7 @@
             };
 
             if (elem.animate) {
-                var timing = { duration: 120, iterations: 1, fill: 'forwards', easing: zoomEase };
+                var timing = { duration: zoomDuration, iterations: 1, fill: 'forwards', easing: zoomEase };
                 var animation = elem.animate(keyframes, timing);
 
                 animation.onfinish = onAnimationFinished;
