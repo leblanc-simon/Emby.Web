@@ -462,8 +462,8 @@
 
             if (o.horizontal) {
                 keyframes = [
-                               { transform: 'translate3d(' + (-round(pos.cur || animation.from)) + 'px, 0, 0)', offset: 0 },
-                               { transform: 'translate3d(' + (-round(animation.to)) + 'px, 0, 0)', offset: 1 }];
+                               { transform: 'translateX(' + (-round(pos.cur || animation.from)) + 'px)', offset: 0 },
+                               { transform: 'translateX(' + (-round(animation.to)) + 'px)', offset: 1 }];
             } else {
                 keyframes = [
                               { transform: 'translate3d(0, ' + (-round(pos.cur || animation.from)) + 'px, 0)', offset: 0 },
