@@ -160,7 +160,7 @@ define([], function () {
                 html += '<div class="selectedItemSecondaryInfo">';
                 html += item.AlbumArtist;
                 html += '</div>';
-            } 
+            }
 
             var mediaInfo = DefaultTheme.CardBuilder.getMediaInfoHtml(item);
 
@@ -170,7 +170,7 @@ define([], function () {
                 html += '</div>';
             }
 
-            if (item.Overview) {
+            if (item.Overview && item.Type != 'MusicAlbum' && item.Type != 'MusicArtist') {
                 html += '<div class="selectedItemSecondaryInfo">';
                 html += item.Overview;
                 html += '</div>';
@@ -217,7 +217,7 @@ define([], function () {
             return elem.animate(keyframes, timing);
         }
 
-        self.destroy = function() {
+        self.destroy = function () {
 
             parent.addEventListener('focus', onFocusIn, true);
             parent.addEventListener('blur', onFocusOut, true);
