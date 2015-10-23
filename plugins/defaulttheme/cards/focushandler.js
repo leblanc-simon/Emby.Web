@@ -151,19 +151,16 @@ define([], function () {
         function setSelectedInfo(card, item) {
 
             var html = '';
-            var topPadded = true;
 
             html += '<div>';
-            html += item.Name;
+            html += DefaultTheme.CardBuilder.getDisplayName(item);
             html += '</div>';
 
             if (item.AlbumArtist) {
                 html += '<div class="selectedItemSecondaryInfo">';
                 html += item.AlbumArtist;
                 html += '</div>';
-            } else {
-                topPadded = false;
-            }
+            } 
 
             var mediaInfo = DefaultTheme.CardBuilder.getMediaInfoHtml(item);
 
@@ -171,8 +168,12 @@ define([], function () {
                 html += '<div class="selectedItemSecondaryInfo">';
                 html += mediaInfo;
                 html += '</div>';
-            } else {
-                topPadded = false;
+            }
+
+            if (item.Overview) {
+                html += '<div class="selectedItemSecondaryInfo">';
+                html += item.Overview;
+                html += '</div>';
             }
 
             var logoImageUrl = Emby.Models.logoImageUrl(item, {
@@ -188,12 +189,6 @@ define([], function () {
             }
 
             selectedItemInfoInner.innerHTML = html;
-
-            if (topPadded) {
-                selectedItemInfoInner.parentNode.classList.add('topPadded');
-            } else {
-                selectedItemInfoInner.parentNode.classList.remove('topPadded');
-            }
 
             if (html) {
                 fadeIn(selectedItemInfoInner, 1);

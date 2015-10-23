@@ -185,7 +185,34 @@
             && typeof t.scrollTop == 'number' ? t : document.body).scrollTop;
     }
 
+    function validateNav(originalElement, direction) {
+
+        switch (direction) {
+
+            case 0:
+                // left
+                //return !originalElement.classList.contains('noNavLeft');
+                return true;
+            case 1:
+                // right
+                //return !originalElement.classList.contains('noNavRight');
+                return true;
+            case 2:
+                return true;
+            case 3:
+                return true;
+            default:
+                return true;
+        }
+    }
+
+    var processingInput;
+
     function nav(originalElement, direction) {
+
+        if (!validateNav(originalElement, direction)) {
+            return;
+        }
 
         require(['nearestElements'], function (nearestElements, soundeffects) {
 
