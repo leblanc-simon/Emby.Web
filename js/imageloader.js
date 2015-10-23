@@ -54,13 +54,15 @@
             images = remaining;
 
             if (!images.length) {
-                Events.off(document, 'scroll.' + eventNamespace);
-                Events.off(window, 'resize.' + eventNamespace);
+                document.removeEventListener('focus', unveil);
+                document.removeEventListener('scroll', unveil);
+                window.removeEventListener('resize', unveil);
             }
         }
 
-        Events.on(document, 'scroll.' + eventNamespace, unveil);
-        Events.on(window, 'resize.' + eventNamespace, unveil);
+        document.addEventListener('scroll', unveil, true);
+        document.addEventListener('focus', unveil, true);
+        window.addEventListener('resize', unveil, true);
 
         unveil();
     }
