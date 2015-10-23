@@ -102,6 +102,11 @@ a {
     display: none;
 }
 
+.controlBox paper-icon-button {
+    width: 48px;
+    height: 48px;
+}
+
 .header .headerLeft {
     position: fixed;
     top: 35px;
