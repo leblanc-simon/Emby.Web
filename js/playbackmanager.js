@@ -63,6 +63,15 @@
             }).length;
         };
 
+        self.canQueueMediaType = function (mediaType) {
+
+            if (currentPlayer) {
+                return currentPlayer.canPlayMediaType(mediaType);
+            }
+
+            return false;
+        };
+
         self.isMuted = function () {
 
             if (currentPlayer) {

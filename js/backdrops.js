@@ -30,9 +30,6 @@
                     }
                 };
 
-                if (existingBackdropImage && existingBackdropImage.parentNode && !isDestroyed) {
-                    existingBackdropImage.parentNode.removeChild(existingBackdropImage);
-                }
                 document.querySelector('.themeContainer').classList.add('withBackdrop');
             };
             img.src = url;

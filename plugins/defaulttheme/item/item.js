@@ -82,7 +82,16 @@
         }
 
         function play() {
-            Emby.PlaybackManager.showPlayMenu(currentItem);
+
+            if (currentItem.IsFolder) {
+                Emby.PlaybackManager.play({
+                    items: [currentItem]
+                });
+            } else {
+                require(['playmenu'], function (playmenu) {
+                    playmenu.show(currentItem);
+                });
+            }
         }
 
         function instantMix() {
@@ -130,7 +139,7 @@
                 smart: true,
                 scrollBar: view.querySelector('.scrollbar'),
                 scrollBy: 200,
-                speed: 300,
+                speed: 270,
                 dragHandle: 1,
                 dynamicHandle: 1,
                 clickBar: 1

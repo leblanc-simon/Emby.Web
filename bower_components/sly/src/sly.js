@@ -443,19 +443,11 @@
             syncPagesbar();
         }
 
-        var currentAnimation;
         function renderAnimate(immediate) {
 
-            var curr = currentAnimation;
-            if (curr) {
-
-                var obj = getComputedStyle(slideeElement, null).getPropertyValue('transform').match(/([-+]?(?:\d*\.)?\d+)\D*, ([-+]?(?:\d*\.)?\d+)\D*\)/);
-                // [1] = x, [2] = y
-                pos.cur = parseInt(o.horizontal ? obj[1] : obj[2]) * -1;
-
-                //curr.cancel();
-                currentAnimation = null;
-            }
+            var obj = getComputedStyle(slideeElement, null).getPropertyValue('transform').match(/([-+]?(?:\d*\.)?\d+)\D*, ([-+]?(?:\d*\.)?\d+)\D*\)/);
+            // [1] = x, [2] = y
+            pos.cur = parseInt(o.horizontal ? obj[1] : obj[2]) * -1;
 
             var keyframes;
 
@@ -472,7 +464,7 @@
             var animationConfig = {
                 duration: immediate ? 50 : o.speed,
                 iterations: 1,
-                fill: 'forwards'
+                fill: 'both'
             };
 
             if (!immediate) {
@@ -481,14 +473,7 @@
 
             var animationInstance = slideeElement.animate(keyframes, animationConfig);
 
-            currentAnimation = animationInstance;
-
             animationInstance.finished.then(function () {
-
-                curr = currentAnimation;
-                if (curr == animationInstance) {
-                    currentAnimation = null;
-                }
 
                 pos.cur = animation.to;
             });

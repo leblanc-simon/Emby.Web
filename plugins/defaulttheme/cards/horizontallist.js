@@ -67,7 +67,7 @@
         self.destroy = function () {
 
             if (self.focusHandler) {
-                focusHandler.destroy();
+                self.focusHandler.destroy();
             }
 
             if (options.selectedItemInfoElement) {
