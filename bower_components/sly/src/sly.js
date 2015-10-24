@@ -1480,11 +1480,11 @@
 
             // Bind dragging events
             if (isTouch) {
-                dragTouchEvents.map(function (eventName) {
+                dragTouchEvents.forEach(function (eventName) {
                     document.addEventListener(eventName, dragHandler);
                 });
             } else {
-                dragMouseEvents.map(function (eventName) {
+                dragMouseEvents.forEach(function (eventName) {
                     document.addEventListener(eventName, dragHandler);
                 });
             }
@@ -1578,11 +1578,11 @@
             dragging.released = true;
 
             if (dragging.touch) {
-                dragTouchEvents.map(function (eventName) {
+                dragTouchEvents.forEach(function (eventName) {
                     document.removeEventListener(eventName, dragHandler);
                 });
             } else {
-                dragMouseEvents.map(function (eventName) {
+                dragMouseEvents.forEach(function (eventName) {
                     document.removeEventListener(eventName, dragHandler);
                 });
             }
@@ -1864,7 +1864,7 @@
 				.add($nextPageButton)
 				.off('.' + namespace);
 
-            dragInitEventNames.map(function (eventName) {
+            dragInitEventNames.forEach(function (eventName) {
                 handle.removeEventListener(eventName, dragInitHandle);
             });
 
@@ -1888,7 +1888,7 @@
             if (!parallax) {
                 // Unbind events from frame
                 if (o.activateOn) {
-                    o.activateOn.split(' ').map(function (eventName) {
+                    o.activateOn.split(' ').forEach(function (eventName) {
                         frameElement.removeEventListener(eventName, activateHandler);
                     });
                 }
@@ -1956,7 +1956,7 @@
             }
             if (transform) {
                 if (gpuAcceleration) {
-                    movables.map(function (m) {
+                    movables.forEach(function (m) {
                         m.style.transform = gpuAcceleration;
                     });
                 }
@@ -1964,7 +1964,7 @@
                 if ($sb.css('position') === 'static') {
                     $sb.css('position', 'relative');
                 }
-                movables.map(function (m) {
+                movables.forEach(function (m) {
                     m.style.position = 'absolute';
                 });
             }
@@ -2000,7 +2000,7 @@
             // Click on items navigation
             if (itemNav) {
                 if (o.activateOn) {
-                    o.activateOn.split(' ').map(function (eventName) {
+                    o.activateOn.split(' ').forEach(function (eventName) {
                         frameElement.addEventListener(eventName, activateHandler, true);
                     });
                 }
@@ -2016,7 +2016,7 @@
 
             // Scrollbar dragging navigation
             if (handle) {
-                dragInitEventNames.map(function (eventName) {
+                dragInitEventNames.forEach(function (eventName) {
                     handle.addEventListener(eventName, dragInitHandle);
                 });
             }
