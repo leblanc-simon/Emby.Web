@@ -16,8 +16,8 @@
     // Other global values
     var dragInitEventNames = ['touchstart', 'mousedown'];
     var dragInitEvents = 'touchstart.' + namespace + ' mousedown.' + namespace;
-    var dragMouseEvents = ['mousemove'  , 'mouseup'] ;
-    var dragTouchEvents = ['touchmove'  , 'touchend'] ;
+    var dragMouseEvents = ['mousemove', 'mouseup'];
+    var dragTouchEvents = ['touchmove', 'touchend'];
     var wheelEvent = (document.implementation.hasFeature('Event.wheel', '3.0') ? 'wheel' : 'mousewheel');
     var clickEvent = 'click.' + namespace;
     var mouseDownEvent = 'mousedown.' + namespace;
@@ -36,8 +36,9 @@
     // Keep track of last fired global wheel event
     var lastGlobalWheel = 0;
     document.addEventListener(wheelEvent, function (event) {
-        var sly = event.originalEvent[namespace];
+        var sly = event[namespace];
         var time = +new Date();
+
         // Update last global wheel time, but only when event didn't originate
         // in Sly frame, or the origin was less than scrollHijack time ago
         if (!sly || sly.options.scrollHijack < time - lastGlobalWheel) lastGlobalWheel = time;
@@ -429,7 +430,7 @@
                         }
                         render();
                     } else {
-                        renderAnimate(animation.immediate);
+                        renderAnimate(animation);
                     }
                 }
             }
@@ -443,7 +444,7 @@
             syncPagesbar();
         }
 
-        function renderAnimate(immediate) {
+        function renderAnimate() {
 
             var obj = getComputedStyle(slideeElement, null).getPropertyValue('transform').match(/([-+]?(?:\d*\.)?\d+)\D*, ([-+]?(?:\d*\.)?\d+)\D*\)/);
             // [1] = x, [2] = y
@@ -462,12 +463,12 @@
             }
 
             var animationConfig = {
-                duration: immediate ? 50 : o.speed,
+                duration: animation.immediate ? 50 : o.speed,
                 iterations: 1,
                 fill: 'both'
             };
 
-            if (!immediate) {
+            if (!animation.immediate) {
                 animationConfig.easing = 'ease-in-out-sine';
             }
 
@@ -1467,7 +1468,7 @@
             dragging.init = 0;
             dragging.source = event.target;
             dragging.touch = isTouch;
-            dragging.pointer = isTouch ? event.originalEvent.touches[0] : event;
+            dragging.pointer = isTouch ? event.touches[0] : event;
             dragging.initX = dragging.pointer.pageX;
             dragging.initY = dragging.pointer.pageY;
             dragging.initPos = isSlidee ? pos.cur : hPos.cur;
@@ -1481,7 +1482,7 @@
 
             // Bind dragging events
             if (isTouch) {
-                dragTouchEvents.map(function(eventName) {
+                dragTouchEvents.map(function (eventName) {
                     document.addEventListener(eventName, dragHandler);
                 });
             } else {
@@ -1519,7 +1520,7 @@
 		 */
         function dragHandler(event) {
             dragging.released = event.type === 'mouseup' || event.type === 'touchend';
-            dragging.pointer = dragging.touch ? event.originalEvent[dragging.released ? 'changedTouches' : 'touches'][0] : event;
+            dragging.pointer = dragging.touch ? event[dragging.released ? 'changedTouches' : 'touches'][0] : event;
             dragging.pathX = dragging.pointer.pageX - dragging.initX;
             dragging.pathY = dragging.pointer.pageY - dragging.initY;
             dragging.path = sqrt(pow(dragging.pathX, 2) + pow(dragging.pathY, 2));
@@ -1889,7 +1890,7 @@
                 // Unbind events from frame
 
                 if (o.activateOn) {
-                    o.activateOn.split(' ').map(function(eventName) {
+                    o.activateOn.split(' ').map(function (eventName) {
                         frameElement.removeEventListener(eventName, activateHandler);
                     });
                 }
@@ -1966,7 +1967,7 @@
                 if ($sb.css('position') === 'static') {
                     $sb.css('position', 'relative');
                 }
-                movables.map(function(m) {
+                movables.map(function (m) {
                     m.style.position = 'absolute';
                 });
             }
@@ -2018,7 +2019,7 @@
 
             // Scrollbar dragging navigation
             if (handle) {
-                dragInitEventNames.map(function(eventName) {
+                dragInitEventNames.map(function (eventName) {
                     handle.addEventListener(eventName, dragInitHandle);
                 });
             }

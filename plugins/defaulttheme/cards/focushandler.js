@@ -9,8 +9,9 @@ define([], function () {
         var zoomElement;
         var currentAnimation;
         var zoomScale = '1.20';
-        var zoomEase = 'linear';
-        var zoomDuration = 200;
+        var zoomInEase = 'ease-out-sine';
+        var zoomOutEase = 'ease-in-cubic';
+        var zoomDuration = 160;
         var lastFocus = 0;
 
         parent.addEventListener('focus', onFocusIn, true);
@@ -68,7 +69,7 @@ define([], function () {
             if (zoomTimeout) {
                 clearTimeout(zoomTimeout);
             }
-            zoomTimeout = setTimeout(onZoomTimeout, 100);
+            zoomTimeout = setTimeout(onZoomTimeout, 50);
             if (selectedMediaInfoTimeout) {
                 clearTimeout(selectedMediaInfoTimeout);
             }
@@ -115,7 +116,7 @@ define([], function () {
             ];
 
             if (currentAnimation) {
-                currentAnimation.cancel();
+                //currentAnimation.cancel();
             }
 
             var onAnimationFinished = function () {
@@ -124,7 +125,7 @@ define([], function () {
             };
 
             if (elem.animate) {
-                var timing = { duration: zoomDuration, iterations: 1, fill: 'forwards', easing: zoomEase };
+                var timing = { duration: zoomDuration, iterations: 1, fill: 'both', easing: zoomInEase };
                 var animation = elem.animate(keyframes, timing);
 
                 animation.onfinish = onAnimationFinished;
@@ -203,7 +204,7 @@ define([], function () {
             ];
 
             if (elem.animate) {
-                var timing = { duration: zoomDuration, iterations: 1, fill: 'forwards', easing: zoomEase };
+                var timing = { duration: zoomDuration, iterations: 1, fill: 'both', easing: zoomOutEase };
                 elem.animate(keyframes, timing);
             }
         }
