@@ -453,7 +453,7 @@
                 // [1] = x, [2] = y
                 pos.cur = parseInt(o.horizontal ? obj[1] : obj[2]) * -1;
 
-                curr.cancel();
+                //curr.cancel();
                 currentAnimation = null;
             }
 
@@ -472,19 +472,14 @@
             var animationConfig = {
                 duration: immediate ? 50 : o.speed,
                 iterations: 1,
-                fill: 'both'
+                fill: 'forwards'
             };
 
-            if (animationConfig.duration >= 200) {
+            if (!immediate) {
                 animationConfig.easing = 'ease-in-out-sine';
-                //animationConfig.easing = 'linear';
             }
 
-            trigger('moveStart');
-
             var animationInstance = slideeElement.animate(keyframes, animationConfig);
-
-            trigger('move');
 
             currentAnimation = animationInstance;
 
@@ -496,9 +491,6 @@
                 }
 
                 pos.cur = animation.to;
-
-                trigger('moveEnd');
-
             });
         }
 
