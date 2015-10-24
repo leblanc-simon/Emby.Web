@@ -168,6 +168,10 @@
             changeStream(ticks);
         };
 
+        self.showPlayMenu = function (item) {
+
+        };
+
         // Returns true if the player can seek using native client-side seeking functions
         function canPlayerSeek() {
 
