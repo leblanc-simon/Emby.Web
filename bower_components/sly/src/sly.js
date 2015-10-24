@@ -77,7 +77,7 @@
 
         // Scrollbar
         var $sb = $(o.scrollBar).eq(0);
-        var $handle = $sb.children().eq(0);
+        var handle = $sb.children().eq(0)[0];
         var sbSize = 0;
         var handleSize = 0;
         var hPos = {
@@ -106,7 +106,7 @@
         var frameStyles = new StyleRestorer($frame[0]);
         var slideeStyles = new StyleRestorer($slidee[0]);
         var sbStyles = new StyleRestorer($sb[0]);
-        var handleStyles = new StyleRestorer($handle[0]);
+        var handleStyles = new StyleRestorer(handle);
 
         // Navigation type booleans
         var basicNav = o.itemNav === 'basic';
@@ -281,14 +281,14 @@
             updateRelatives();
 
             // Scrollbar
-            if ($handle.length && sbSize > 0) {
+            if (handle && sbSize > 0) {
                 // Stretch scrollbar handle to represent the visible area
                 if (o.dynamicHandle) {
                     handleSize = pos.start === pos.end ? sbSize : round(sbSize * frameSize / slideeSize);
                     handleSize = within(handleSize, o.minHandleSize, sbSize);
-                    $handle[0].style[o.horizontal ? 'width' : 'height'] = handleSize + 'px';
+                    handle.style[o.horizontal ? 'width' : 'height'] = handleSize + 'px';
                 } else {
-                    handleSize = $handle[o.horizontal ? 'outerWidth' : 'outerHeight']();
+                    handleSize = $(handle)[o.horizontal ? 'outerWidth' : 'outerHeight']();
                 }
 
                 hPos.end = sbSize - handleSize;
@@ -574,15 +574,15 @@
 		 * @return {Void}
 		 */
         function syncScrollbar() {
-            if ($handle.length) {
+            if (handle) {
                 hPos.cur = pos.start === pos.end ? 0 : (((dragging.init && !dragging.slidee) ? pos.dest : pos.cur) - pos.start) / (pos.end - pos.start) * hPos.end;
                 hPos.cur = within(round(hPos.cur), hPos.start, hPos.end);
                 if (last.hPos !== hPos.cur) {
                     last.hPos = hPos.cur;
                     if (transform) {
-                        $handle[0].style[transform] = gpuAcceleration + (o.horizontal ? 'translateX' : 'translateY') + '(' + hPos.cur + 'px)';
+                        handle.style[transform] = gpuAcceleration + (o.horizontal ? 'translateX' : 'translateY') + '(' + hPos.cur + 'px)';
                     } else {
-                        $handle[0].style[o.horizontal ? 'left' : 'top'] = hPos.cur + 'px';
+                        handle.style[o.horizontal ? 'left' : 'top'] = hPos.cur + 'px';
                     }
                 }
             }
@@ -1216,7 +1216,7 @@
                     }
                 }
             } else {
-                $(element).remove();
+                element.parentNode.removeChild(element);
                 load();
             }
         };
@@ -1460,7 +1460,7 @@
 
             // Properties used in dragHandler
             dragging.init = 0;
-            dragging.$source = $(event.target);
+            dragging.source = event.target;
             dragging.touch = isTouch;
             dragging.pointer = isTouch ? event.originalEvent.touches[0] : event;
             dragging.initX = dragging.pointer.pageX;
@@ -1481,7 +1481,11 @@
             self.pause(1);
 
             // Add dragging class
-            (isSlidee ? $slidee : $handle).addClass(o.draggedClass);
+            if (isSlidee) {
+                $slidee.addClass(o.draggedClass);
+            } else {
+                handle.classList.add(o.draggedClass);
+            }
 
             // Trigger moveStart event
             trigger('moveStart');
@@ -1534,7 +1538,7 @@
             // Disable click on a source element, as it is unwelcome when dragging
             if (!dragging.locked && dragging.path > dragging.pathToLock && dragging.slidee) {
                 dragging.locked = 1;
-                dragging.$source.on(clickEvent, disableOneEvent);
+                dragging.source.addEventListener(clickEvent, disableOneEvent);
             }
 
             // Cancel dragging on release
@@ -1561,11 +1565,15 @@
             clearInterval(historyID);
             dragging.released = true;
             $doc.off(dragging.touch ? dragTouchEvents : dragMouseEvents, dragHandler);
-            (dragging.slidee ? $slidee : $handle).removeClass(o.draggedClass);
+            if (dragging.slidee) {
+                $slidee.removeClass(o.draggedClass);
+            } else {
+                handle.classList.remove(o.draggedClass);
+            }
 
             // Make sure that disableOneEvent is not active in next tick.
             setTimeout(function () {
-                dragging.$source.off(clickEvent, disableOneEvent);
+                dragging.source.removeEventListener(clickEvent, disableOneEvent);
             });
 
             // Normally, this is triggered in render(), but if there
@@ -1822,7 +1830,7 @@
 
             // Unbind all events
             $scrollSource
-				.add($handle)
+				.add($(handle))
 				.add($sb)
 				.add($pb)
 				.add($forwardButton)
@@ -1899,9 +1907,12 @@
             handleStyles.save.apply(handleStyles, movableProps);
 
             // Set required styles
-            var $movables = $handle;
+            var movables = [handle];
             if (!parallax) {
-                $movables = $movables.add($slidee);
+
+                if ($slidee.length) {
+                    movables.push($slidee[0]);
+                }
                 $frame.css('overflow', 'hidden');
                 if (!transform && $frame.css('position') === 'static') {
                     $frame.css('position', 'relative');
@@ -1909,13 +1920,17 @@
             }
             if (transform) {
                 if (gpuAcceleration) {
-                    $movables.css(transform, gpuAcceleration);
+                    movables.map(function (m) {
+                        m.style.transform = gpuAcceleration;
+                    });
                 }
             } else {
                 if ($sb.css('position') === 'static') {
                     $sb.css('position', 'relative');
                 }
-                $movables.css({ position: 'absolute' });
+                movables.map(function(m) {
+                    m.style.position = 'absolute';
+                });
             }
 
             // Navigation buttons
@@ -1960,8 +1975,8 @@
             $dragSource.on(dragInitEvents, { source: 'slidee' }, dragInit);
 
             // Scrollbar dragging navigation
-            if ($handle) {
-                $handle.on(dragInitEvents, { source: 'handle' }, dragInit);
+            if (handle) {
+                handle.addEventListener(dragInitEvents, { source: 'handle' }, dragInit);
             }
 
             // Keyboard navigation
@@ -2046,7 +2061,7 @@
     function disableOneEvent(event) {
         /*jshint validthis:true */
         stopDefault(event, 1);
-        $(this).off(event.type, disableOneEvent);
+        this.removeEventListener(event.type, disableOneEvent);
     }
 
     /**
