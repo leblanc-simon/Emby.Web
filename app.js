@@ -194,6 +194,7 @@
             appsettings: "components/appsettings",
             tvguide: "components/tvguide/guide",
             actionsheet: "components/actionsheet",
+            playmenu: "components/playmenu",
             paperdialoghelper: "components/paperdialoghelper",
             slideshow: "components/slideshow/slideshow",
             howler: 'bower_components/howler.js/howler.min'
