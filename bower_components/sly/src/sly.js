@@ -419,9 +419,7 @@
                 trigger('change');
                 if (!renderID) {
 
-                    var animateLegacy = false;
-
-                    if (animateLegacy) {
+                    if (!slideeElement.animate) {
                         if (currentAnimation) {
                             currentAnimation.cancel();
                             currentAnimation = null;
