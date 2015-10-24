@@ -302,47 +302,6 @@ a {
         padding-right: 70px;
     }
 
-.selectedItemInfo {
-    position: fixed;
-    bottom: 10px;
-    left: 0;
-    right: 0;
-    text-align: center;
-}
-
-.homePageContainer .selectedItemInfo {
-    bottom: 15px;
-}
-
-.selectedItemInfoInner {
-    margin: auto;
-    max-width: 40%;
-    display: inline-block;
-    text-align: left;
-}
-
-.selectedItemInfoInnerWithLogo {
-    padding-left: 220px;
-    position: relative;
-}
-
-.selectedItemInfoLogo {
-    position: absolute;
-    top: 10%;
-    left: 0;
-    bottom: 10%;
-    width: 200px;
-    background-repeat: no-repeat;
-    background-position: right center;
-    background-size: contain;
-}
-
-.selectedItemInfoInner div {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
 .listNumbers {
     position: fixed;
     bottom: 30px;
@@ -405,10 +364,9 @@ iron-icon.mediaInfoItem {
 
 .mediaInfoOfficialRating {
     font-family: Montsterrat;
-    border: 2px solid #ddd;
+    border: 1px solid #fff;
     text-align: center;
     padding: 0 .5em;
-    border-radius: 2px;
     font-weight: bold;
     line-height: 100%;
 }
@@ -438,6 +396,79 @@ paper-item-body .paperIconItemMediaInfo {
 
 paper-item-body .overview {
     white-space: normal;
+}
+
+.selectedItemInfo {
+    position: fixed;
+    bottom: 25px;
+    left: 0;
+    right: 10%;
+    font-weight: 300;
+}
+
+.homePageContainer .selectedItemInfo {
+    bottom: 25px;
+    right: 2%;
+}
+
+.selectedItemInfo h2 {
+    margin: 0;
+    display: inline-block;
+}
+
+.selectedItemMediaInfo {
+    display: inline-block;
+    vertical-align: bottom;
+    font-size: 90%;
+    margin-left: 1em;
+}
+
+    .selectedItemMediaInfo iron-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .selectedItemMediaInfo .starRatingContainer iron-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .selectedItemMediaInfo .criticRating {
+        display: none;
+    }
+
+.selectedItemInfoInnerWithLogo {
+    padding-left: 220px;
+    position: relative;
+}
+
+.selectedItemInfoLogo {
+    position: absolute;
+    top: 10%;
+    left: 0;
+    bottom: 10%;
+    width: 200px;
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: contain;
+}
+
+.selectedItemInfoInner > div {
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.selectedItemInfoInner .overview {
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-width: 100%;
+    /* TODO: Need fallback for max number of lines*/
 }
 
 /* 720p */

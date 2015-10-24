@@ -153,8 +153,17 @@ define([], function () {
 
             var html = '';
 
+            var mediaInfo = DefaultTheme.CardBuilder.getMediaInfoHtml(item);
+
             html += '<div>';
+            html += '<h2>';
             html += DefaultTheme.CardBuilder.getDisplayName(item);
+            html += '</h2>';
+            if (mediaInfo) {
+                html += '<div class="selectedItemMediaInfo">';
+                html += mediaInfo;
+                html += '</div>';
+            }
             html += '</div>';
 
             if (item.AlbumArtist) {
@@ -163,23 +172,15 @@ define([], function () {
                 html += '</div>';
             }
 
-            var mediaInfo = DefaultTheme.CardBuilder.getMediaInfoHtml(item);
-
-            if (mediaInfo) {
-                html += '<div class="selectedItemSecondaryInfo">';
-                html += mediaInfo;
-                html += '</div>';
-            }
-
             if (item.Overview && item.Type != 'MusicAlbum' && item.Type != 'MusicArtist') {
-                html += '<div class="selectedItemSecondaryInfo">';
+                html += '<div class="overview">';
                 html += item.Overview;
                 html += '</div>';
             }
 
             var logoImageUrl = Emby.Models.logoImageUrl(item, {
             });
-
+            logoImageUrl = null;
             if (logoImageUrl) {
                 selectedItemInfoInner.classList.add('selectedItemInfoInnerWithLogo');
 
@@ -191,8 +192,11 @@ define([], function () {
 
             selectedItemInfoInner.innerHTML = html;
 
+            var rect = card.getBoundingClientRect();
+            selectedItemInfoInner.parentNode.style.left = (Math.max(rect.left - 0, 70)) + 'px';
+
             if (html) {
-                fadeIn(selectedItemInfoInner, 1);
+                //fadeIn(selectedItemInfoInner, 1);
             }
         }
 
