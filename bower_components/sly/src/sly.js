@@ -1786,7 +1786,7 @@
             // Ignore events that:
             // - are not originating from direct SLIDEE children
             // - originated from interactive elements
-            //if (this.parentNode !== $slidee[0] || event.originalEvent[namespace + 'ignore']) return;
+            //if (this.parentNode !== slideeElement || event[namespace + 'ignore']) return;
 
             self.activate(elem);
         }
