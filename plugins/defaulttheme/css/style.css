@@ -316,7 +316,7 @@ a {
 
 .selectedItemInfoInner {
     margin: auto;
-    max-width: 50%;
+    max-width: 40%;
     display: inline-block;
     text-align: left;
 }
@@ -444,7 +444,7 @@ paper-item-body .overview {
 @media all and (min-height: 720px) {
 
     .horizontalBody {
-        height: 400px;
+        height: 440px;
     }
 
     .horizontalPageContent .squareCard .cardImageContainer {
