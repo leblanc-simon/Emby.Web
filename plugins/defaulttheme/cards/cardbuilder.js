@@ -593,7 +593,7 @@
 
         if (item.HasSubtitles) {
             miscInfo.push({
-                html: '<iron-icon class="mediaInfoItem" icon="closed-caption"></iron-icon>'
+                html: '<iron-icon class="mediaInfoItem closedCaptionIcon" icon="closed-caption"></iron-icon>'
             });
         }
 
@@ -627,9 +627,9 @@
         if (item.CriticRating) {
 
             if (item.CriticRating >= 60) {
-                html += '<div class="mediaInfoItem criticRatingFresh">' + item.CriticRating + '</div>';
+                html += '<div class="mediaInfoItem criticRating criticRatingFresh">' + item.CriticRating + '</div>';
             } else {
-                html += '<div class="mediaInfoItem criticRatingRotten">' + item.CriticRating + '</div>';
+                html += '<div class="mediaInfoItem criticRating criticRatingRotten">' + item.CriticRating + '</div>';
             }
         }
 

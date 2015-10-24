@@ -38,7 +38,6 @@
     document.addEventListener(wheelEvent, function (event) {
         var sly = event[namespace];
         var time = +new Date();
-
         // Update last global wheel time, but only when event didn't originate
         // in Sly frame, or the origin was less than scrollHijack time ago
         if (!sly || sly.options.scrollHijack < time - lastGlobalWheel) lastGlobalWheel = time;
@@ -116,7 +115,7 @@
         var itemNav = !parallax && (basicNav || centeredNav || forceCenteredNav);
 
         // Miscellaneous
-        var $scrollSource = o.scrollSource ? $(o.scrollSource) : $(frameElement);
+        var scrollSource = o.scrollSource ? o.scrollSource : frameElement;
         var $dragSource = o.dragSource ? $(o.dragSource) : $(frameElement);
         var $forwardButton = $(o.forward);
         var $backwardButton = $(o.backward);
@@ -179,7 +178,6 @@
             frameSize = parallax ? 0 : $(frameElement)[o.horizontal ? 'width' : 'height']();
             sbSize = $sb[o.horizontal ? 'width' : 'height']();
             slideeSize = parallax ? frame : $(slideeElement)[o.horizontal ? 'outerWidth' : 'outerHeight']();
-
             pages.length = 0;
 
             // Set position limits & relatives
@@ -421,9 +419,7 @@
                 trigger('change');
                 if (!renderID) {
 
-                    var animateLegacy = false;
-
-                    if (animateLegacy) {
+                    if (!slideeElement.animate) {
                         if (currentAnimation) {
                             currentAnimation.cancel();
                             currentAnimation = null;
@@ -1482,11 +1478,11 @@
 
             // Bind dragging events
             if (isTouch) {
-                dragTouchEvents.map(function (eventName) {
+                dragTouchEvents.forEach(function (eventName) {
                     document.addEventListener(eventName, dragHandler);
                 });
             } else {
-                dragMouseEvents.map(function (eventName) {
+                dragMouseEvents.forEach(function (eventName) {
                     document.addEventListener(eventName, dragHandler);
                 });
             }
@@ -1580,11 +1576,11 @@
             dragging.released = true;
 
             if (dragging.touch) {
-                dragTouchEvents.map(function (eventName) {
+                dragTouchEvents.forEach(function (eventName) {
                     document.removeEventListener(eventName, dragHandler);
                 });
             } else {
-                dragMouseEvents.map(function (eventName) {
+                dragMouseEvents.forEach(function (eventName) {
                     document.removeEventListener(eventName, dragHandler);
                 });
             }
@@ -1705,10 +1701,10 @@
 		 */
         function scrollHandler(event) {
             // Mark event as originating in a Sly instance
-            event.originalEvent[namespace] = self;
+            event[namespace] = self;
             // Don't hijack global scrolling
             var time = +new Date();
-            if (lastGlobalWheel + o.scrollHijack > time && $scrollSource[0] !== document && $scrollSource[0] !== window) {
+            if (lastGlobalWheel + o.scrollHijack > time && scrollSource !== document && scrollSource !== window) {
                 lastGlobalWheel = time;
                 return;
             }
@@ -1716,7 +1712,7 @@
             if (!o.scrollBy || pos.start === pos.end) {
                 return;
             }
-            var delta = normalizeWheelDelta(event.originalEvent);
+            var delta = normalizeWheelDelta(event);
             // Trap scrolling only when necessary and/or requested
             if (o.scrollTrap || delta > 0 && pos.dest < pos.end || delta < 0 && pos.dest > pos.start) {
                 stopDefault(event, 1);
@@ -1781,13 +1777,14 @@
 
             // Ignore clicks on interactive elements.
             if (isInteractive(elem)) {
+                event[namespace + 'ignore'] = true;
                 return;
             }
 
             // Ignore events that:
             // - are not originating from direct SLIDEE children
             // - originated from interactive elements
-            //if (this.parentNode !== $slidee[0] || event.originalEvent[namespace + 'ignore']) return;
+            //if (this.parentNode !== slideeElement || event[namespace + 'ignore']) return;
 
             self.activate(elem);
         }
@@ -1853,8 +1850,10 @@
             // Remove the reference to itself
             Sly.removeInstance(frame);
 
+            scrollSource.removeEventListener(wheelEvent, scrollHandler);
+
             // Unbind all events
-            $scrollSource
+            $(scrollSource)
 				.add($sb)
 				.add($pb)
 				.add($forwardButton)
@@ -1865,7 +1864,7 @@
 				.add($nextPageButton)
 				.off('.' + namespace);
 
-            dragInitEventNames.map(function (eventName) {
+            dragInitEventNames.forEach(function (eventName) {
                 handle.removeEventListener(eventName, dragInitHandle);
             });
 
@@ -1888,9 +1887,8 @@
 
             if (!parallax) {
                 // Unbind events from frame
-
                 if (o.activateOn) {
-                    o.activateOn.split(' ').map(function (eventName) {
+                    o.activateOn.split(' ').forEach(function (eventName) {
                         frameElement.removeEventListener(eventName, activateHandler);
                     });
                 }
@@ -1898,7 +1896,6 @@
                 frameElement.removeEventListener('mouseleave', pauseOnHoverHandler);
                 // Reset native FRAME element scroll
                 frameElement.removeEventListener('scroll', resetScroll);
-
                 // Restore original styles
                 frameStyles.restore();
                 slideeStyles.restore();
@@ -1959,7 +1956,7 @@
             }
             if (transform) {
                 if (gpuAcceleration) {
-                    movables.map(function (m) {
+                    movables.forEach(function (m) {
                         m.style.transform = gpuAcceleration;
                     });
                 }
@@ -1967,7 +1964,7 @@
                 if ($sb.css('position') === 'static') {
                     $sb.css('position', 'relative');
                 }
-                movables.map(function (m) {
+                movables.forEach(function (m) {
                     m.style.position = 'absolute';
                 });
             }
@@ -1993,7 +1990,7 @@
             }
 
             // Scrolling navigation
-            $scrollSource.on(wheelEvent, scrollHandler);
+            scrollSource.addEventListener(wheelEvent, scrollHandler);
 
             // Clicking on scrollbar navigation
             if ($sb[0]) {
@@ -2003,7 +2000,7 @@
             // Click on items navigation
             if (itemNav) {
                 if (o.activateOn) {
-                    o.activateOn.split(' ').map(function (eventName) {
+                    o.activateOn.split(' ').forEach(function (eventName) {
                         frameElement.addEventListener(eventName, activateHandler, true);
                     });
                 }
@@ -2019,7 +2016,7 @@
 
             // Scrollbar dragging navigation
             if (handle) {
-                dragInitEventNames.map(function (eventName) {
+                dragInitEventNames.forEach(function (eventName) {
                     handle.addEventListener(eventName, dragInitHandle);
                 });
             }

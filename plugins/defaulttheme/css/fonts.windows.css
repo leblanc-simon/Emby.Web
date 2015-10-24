@@ -1,4 +1,22 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700);
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700);
+
+@font-face {
+    font-family: "Segoe UI";
+    font-weight: 200;
+    src: local("Segoe UI Light");
+}
+@font-face {
+    font-family: "Segoe UI";
+    font-weight: 300;
+    src: local("Segoe UI Semilight");
+}
+@font-face {
+    font-family: "Segoe UI";
+    font-weight: 400;
+    src: local("Segoe UI");
+}
 
 html {
     font-family: Segoe UI;
@@ -6,17 +24,14 @@ html {
     font-weight: 400;
 }
 
-h1, h2 {
-    font-family: Segoe UI Light, Segoe UI;
-}
-
 h1 {
+    font-family: Source Sans Pro, Open Sans;
     font-size: 32px;
     font-weight: 300;
 }
 
 h2 {
-    font-weight: normal;
+    font-family: Segoe UI;
     font-size: 26px;
     font-weight: 300;
 }
