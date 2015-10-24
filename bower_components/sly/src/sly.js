@@ -38,7 +38,6 @@
     document.addEventListener(wheelEvent, function (event) {
         var sly = event[namespace];
         var time = +new Date();
-
         // Update last global wheel time, but only when event didn't originate
         // in Sly frame, or the origin was less than scrollHijack time ago
         if (!sly || sly.options.scrollHijack < time - lastGlobalWheel) lastGlobalWheel = time;
@@ -179,7 +178,6 @@
             frameSize = parallax ? 0 : $(frameElement)[o.horizontal ? 'width' : 'height']();
             sbSize = $sb[o.horizontal ? 'width' : 'height']();
             slideeSize = parallax ? frame : $(slideeElement)[o.horizontal ? 'outerWidth' : 'outerHeight']();
-
             pages.length = 0;
 
             // Set position limits & relatives
@@ -1781,6 +1779,7 @@
 
             // Ignore clicks on interactive elements.
             if (isInteractive(elem)) {
+                event[namespace + 'ignore'] = true;
                 return;
             }
 
@@ -1888,7 +1887,6 @@
 
             if (!parallax) {
                 // Unbind events from frame
-
                 if (o.activateOn) {
                     o.activateOn.split(' ').map(function (eventName) {
                         frameElement.removeEventListener(eventName, activateHandler);
@@ -1898,7 +1896,6 @@
                 frameElement.removeEventListener('mouseleave', pauseOnHoverHandler);
                 // Reset native FRAME element scroll
                 frameElement.removeEventListener('scroll', resetScroll);
-
                 // Restore original styles
                 frameStyles.restore();
                 slideeStyles.restore();
