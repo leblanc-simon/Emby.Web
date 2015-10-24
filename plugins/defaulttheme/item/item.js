@@ -82,9 +82,7 @@
         }
 
         function play() {
-            Emby.PlaybackManager.play({
-                items: [currentItem]
-            });
+            Emby.PlaybackManager.showPlayMenu(currentItem);
         }
 
         function instantMix() {
