@@ -39,14 +39,6 @@
 
             var tabs = [
             {
-                Name: Globalize.translate('Suggested'),
-                Id: "suggested"
-            },
-            {
-                Name: Globalize.translate('Latest'),
-                Id: "latest"
-            },
-            {
                 Name: Globalize.translate('Series'),
                 Id: "series"
             },
@@ -81,9 +73,6 @@
 
                 case 'series':
                     renderSeries(page, pageParams, autoFocus, this.bodySlyFrame);
-                    break;
-                case 'latest':
-                    renderLatest(page, pageParams, autoFocus, this.bodySlyFrame);
                     break;
                 case 'genres':
                     renderGenres(page, pageParams, autoFocus, this.bodySlyFrame);
