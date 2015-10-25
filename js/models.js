@@ -50,6 +50,23 @@
         });
     }
 
+    function upcoming(options) {
+
+        return new Promise(function (resolve, reject) {
+
+            require(['connectionManager'], function (connectionManager) {
+
+                options = options || {};
+                normalizeOptions(options);
+
+                var apiClient = connectionManager.currentApiClient();
+                options.UserId = apiClient.getCurrentUserId();
+
+                apiClient.getJSON(apiClient.getUrl('Shows/Upcoming', options)).done(resolve, reject);
+            });
+        });
+    }
+
     function latestItems(options) {
 
         return new Promise(function (resolve, reject) {
@@ -659,6 +676,7 @@
     globalScope.Emby.Models = {
         resumable: resumable,
         nextUp: nextUp,
+        upcoming: upcoming,
         latestItems: latestItems,
         liveTvRecordings: liveTvRecordings,
         item: item,

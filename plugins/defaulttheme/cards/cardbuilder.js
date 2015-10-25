@@ -118,13 +118,58 @@
         var itemsInRow = 0;
         var lastRowStartIndex = options.rows ? ((items.length % options.rows) || items.length - options.rows) : 0;
 
+        var currentIndexValue;
+        var hasOpenRow;
+        var hasOpenSection;
+
         for (var i = 0, length = items.length; i < length; i++) {
 
-            if (options.rows && itemsInRow == 0) {
-                html += '<div class="cardColumn">';
+            var item = items[i];
+
+            if (options.indexBy) {
+                var newIndexValue = '';
+
+                if (options.indexBy == 'premieredate') {
+                    if (item.PremiereDate) {
+                        try {
+
+                            newIndexValue = getDisplayDateText(Emby.DateTime.parseISO8601Date(item.PremiereDate));
+
+                        } catch (err) {
+                        }
+                    }
+                }
+
+                if (newIndexValue != currentIndexValue) {
+
+                    if (hasOpenRow) {
+                        html += '</div>';
+                        hasOpenRow = false;
+                        itemsInRow = 0;
+                    }
+
+                    if (hasOpenSection) {
+                        html += '</div>';
+                        hasOpenSection = false;
+                    }
+
+                    html += '<div class="horizontalSection">';
+                    html += '<div class="sectionTitle">' + newIndexValue + '</div>';
+                    currentIndexValue = newIndexValue;
+                    hasOpenSection = true;
+                }
             }
 
-            var item = items[i];
+            if (options.rows && itemsInRow == 0) {
+
+                if (hasOpenRow) {
+                    html += '</div>';
+                    hasOpenRow = false;
+                }
+
+                html += '<div class="cardColumn">';
+                hasOpenRow = true;
+            }
 
             var cardClass = className;
             if (options.rows) {
@@ -141,12 +186,42 @@
             itemsInRow++;
 
             if (options.rows && itemsInRow >= options.rows) {
-                itemsInRow = 0;
                 html += '</div>';
+                hasOpenRow = false;
+                itemsInRow = 0;
             }
         }
 
+        if (hasOpenRow) {
+            html += '</div>';
+        }
+
+        if (hasOpenSection) {
+            html += '</div>';
+        }
+
         return html;
+    }
+
+    function getDisplayDateText(date) {
+
+        var weekday = [];
+        weekday[0] = Globalize.translate('OptionSunday');
+        weekday[1] = Globalize.translate('OptionMonday');
+        weekday[2] = Globalize.translate('OptionTuesday');
+        weekday[3] = Globalize.translate('OptionWednesday');
+        weekday[4] = Globalize.translate('OptionThursday');
+        weekday[5] = Globalize.translate('OptionFriday');
+        weekday[6] = Globalize.translate('OptionSaturday');
+
+        var day = weekday[date.getDay()];
+        date = date.toLocaleDateString();
+
+        if (date.toLowerCase().indexOf(day.toLowerCase()) == -1) {
+            return day + " " + date;
+        }
+
+        return date;
     }
 
     function getCardImageUrl(item, apiClient, options) {

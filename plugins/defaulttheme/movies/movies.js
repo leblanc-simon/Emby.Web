@@ -8,7 +8,6 @@
     function musicPage(view, params) {
 
         var self = this;
-        var itemPromise;
 
         view.addEventListener('viewshow', function (e) {
 
@@ -19,12 +18,7 @@
                     renderTabs(view, params.tab, self, params);
                 }
 
-                itemPromise = itemPromise || Emby.Models.item(params.parentid);
-
-                itemPromise.then(function (item) {
-
-                    Emby.Page.setTitle(item.Name);
-                });
+                Emby.Page.setTitle('');
             });
         });
 
