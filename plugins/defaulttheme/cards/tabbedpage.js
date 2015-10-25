@@ -163,7 +163,7 @@
                     dragHandle: 1,
                     dynamicHandle: 1,
                     clickBar: 1,
-                    centerOffset: window.innerWidth * .2
+                    centerOffset: window.innerWidth * .15
                 };
 
                 slyScroller.create(scrollFrame, options).then(function (slyFrame) {
