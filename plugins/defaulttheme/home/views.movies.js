@@ -83,12 +83,14 @@
 
         }).then(function (recommendations) {
 
-            var recs = element.querySelector('.recommendations');
-
             Promise.all(recommendations.map(getRecommendationHtml)).then(function(values) {
                 
-                recs.innerHTML = values.join('');
-                Emby.ImageLoader.lazyChildren(recs);
+                var recs = element.querySelector('.recommendations');
+
+                if (recs) {
+                    recs.innerHTML = values.join('');
+                    Emby.ImageLoader.lazyChildren(recs);
+                }
             });
         });
     }

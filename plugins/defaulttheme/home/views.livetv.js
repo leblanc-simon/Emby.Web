@@ -75,7 +75,7 @@
 
             IsAiring: false,
             HasAired: false,
-            limit: 6,
+            limit: 9,
             IsMovie: false,
             IsSports: false,
             IsKids: false,
@@ -87,7 +87,7 @@
 
             IsAiring: false,
             HasAired: false,
-            limit: 6,
+            limit: 9,
             IsMovie: true
 
         });
@@ -96,7 +96,7 @@
 
             IsAiring: false,
             HasAired: false,
-            limit: 6,
+            limit: 9,
             IsSports: true
 
         });
@@ -105,7 +105,7 @@
 
             IsAiring: false,
             HasAired: false,
-            limit: 6,
+            limit: 9,
             IsSports: false,
             IsKids: true
         });

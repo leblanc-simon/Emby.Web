@@ -8,7 +8,6 @@
     function tvPage(view, params) {
 
         var self = this;
-        var itemPromise;
 
         view.addEventListener('viewshow', function (e) {
 
@@ -19,12 +18,7 @@
                     renderTabs(view, params.tab, self, params);
                 }
 
-                itemPromise = itemPromise || Emby.Models.item(params.parentid);
-
-                itemPromise.then(function (item) {
-
-                    Emby.Page.setTitle(item.Name);
-                });
+                Emby.Page.setTitle('');
             });
         });
 
@@ -77,26 +71,26 @@
                 case 'genres':
                     renderGenres(page, pageParams, autoFocus, this.bodySlyFrame);
                     break;
+                case 'upcoming':
+                    renderUpcoming(page, pageParams, autoFocus, this.bodySlyFrame);
+                    break;
                 default:
                     break;
             }
         }
 
-        function renderLatest(page, pageParams, autoFocus, slyFrame) {
+        function renderUpcoming(page, pageParams, autoFocus, slyFrame) {
 
             self.listController = new DefaultTheme.HorizontalList({
 
                 itemsContainer: page.querySelector('.contentScrollSlider'),
                 getItemsMethod: function (startIndex, limit) {
-                    return Emby.Models.latestItems({
-                        IncludeItemTypes: "Episode",
+                    return Emby.Models.upcoming({
                         ImageTypeLimit: 1,
                         EnableImageTypes: "Primary,Backdrop,Thumb",
                         StartIndex: startIndex,
-                        Limit: Math.min(limit, 32),
-                        ParentId: pageParams.parentid,
-                        Recursive: true,
-                        SortBy: "SortName"
+                        Limit: Math.min(limit, 60),
+                        ParentId: pageParams.parentid
                     });
                 },
                 listCountElement: page.querySelector('.listCount'),
@@ -106,7 +100,8 @@
                     shape: 'backdropCard',
                     rows: 3,
                     preferThumb: true,
-                    width: DefaultTheme.CardBuilder.homeThumbWidth
+                    width: DefaultTheme.CardBuilder.homeThumbWidth,
+                    indexBy: 'premieredate'
                 },
                 selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
                 selectedIndexElement: page.querySelector('.selectedIndex'),
