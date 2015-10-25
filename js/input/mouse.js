@@ -55,6 +55,50 @@
         }
     });
 
+    function onMouseEnter(e) {
+
+        var parent = Emby.FocusManager.focusableParent(e.target);
+        if (parent) {
+            Emby.FocusManager.focus(e.target);
+        }
+    }
+
+    function enableFocusWithMouse() {
+
+        // This is going to be really difficult to get right
+        var userAgent = navigator.userAgent.toLowerCase();
+
+        if (userAgent.indexOf('xbox') != -1) {
+            return true;
+        }
+
+        if (userAgent.indexOf('mobile') != -1) {
+            return false;
+        }
+
+        if (userAgent.indexOf('tv') != -1) {
+            return true;
+        }
+
+        if (userAgent.indexOf('samsung') != -1) {
+            return true;
+        }
+
+        if (userAgent.indexOf('nintendo') != -1) {
+            return true;
+        }
+
+        if (userAgent.indexOf('viera') != -1) {
+            return true;
+        }
+
+        return false;
+    }
+
+    if (enableFocusWithMouse()) {
+        document.addEventListener('mouseenter', onMouseEnter, true);
+    }
+
     setInterval(function () {
 
         if (mouseIdleTime() >= 5000) {
