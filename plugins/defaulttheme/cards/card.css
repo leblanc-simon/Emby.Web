@@ -9,6 +9,7 @@
     box-shadow: none !important;
     outline: none !important;
     cursor: pointer;
+    font-weight: inherit;
 }
 
 button.card {
@@ -235,8 +236,8 @@ button.card {
         height: 56px;
     }
 
-    .playedIndicator iron-icon {
-        width: 34px;
-        height: 34px;
-    }
+        .playedIndicator iron-icon {
+            width: 34px;
+            height: 34px;
+        }
 }

@@ -180,7 +180,7 @@ define([], function () {
 
             var logoImageUrl = Emby.Models.logoImageUrl(item, {
             });
-            logoImageUrl = null;
+
             if (logoImageUrl) {
                 selectedItemInfoInner.classList.add('selectedItemInfoInnerWithLogo');
 
@@ -193,10 +193,10 @@ define([], function () {
             selectedItemInfoInner.innerHTML = html;
 
             var rect = card.getBoundingClientRect();
-            selectedItemInfoInner.parentNode.style.left = (Math.max(rect.left - 0, 70)) + 'px';
+            selectedItemInfoInner.parentNode.style.left = (Math.max(rect.left - 0, 290)) + 'px';
 
             if (html) {
-                //fadeIn(selectedItemInfoInner, 1);
+                fadeIn(selectedItemInfoInner, 1);
             }
         }
 

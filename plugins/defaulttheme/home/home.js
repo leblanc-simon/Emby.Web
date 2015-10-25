@@ -133,7 +133,7 @@
 
         var homeScrollContent = page.querySelector('.contentScrollSlider');
 
-        html = '<div class="homePanel">' + html + '</div>';
+        html =  html ;
         homeScrollContent.innerHTML = Globalize.translateHtml(html);
 
         if (homeScrollContent.animate) {
@@ -142,7 +142,7 @@
 
         require([Emby.PluginManager.mapRequire('defaulttheme', 'home/views.' + viewName + '.js')], function () {
 
-            var homePanel = homeScrollContent.querySelector('.homePanel');
+            var homePanel = homeScrollContent;
             new DefaultTheme[viewName + 'View'](homePanel, parentId, autoFocus);
         });
     }

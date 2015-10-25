@@ -76,8 +76,8 @@
         };
 
         // Scrollbar
-        var $sb = $(o.scrollBar).eq(0);
-        var handle = $sb.children().eq(0)[0];
+        var sb = o.scrollBar;
+        var handle = $(sb).children().eq(0)[0];
         var sbSize = 0;
         var handleSize = 0;
         var hPos = {
@@ -87,12 +87,12 @@
         };
 
         // Pagesbar
-        var $pb = $(o.pagesBar);
-        var $pages = 0;
+        var pagesBar = o.pagesBar;
+        var pagesElements = [];
         var pages = [];
 
         // Items
-        var $items = 0;
+        var itemElements = [];
         var items = [];
         var rel = {
             firstItem: 0,
@@ -105,7 +105,7 @@
         // Styles
         var frameStyles = new StyleRestorer(frameElement);
         var slideeStyles = new StyleRestorer(slideeElement);
-        var sbStyles = new StyleRestorer($sb[0]);
+        var sbStyles = new StyleRestorer(sb);
         var handleStyles = new StyleRestorer(handle);
 
         // Navigation type booleans
@@ -176,8 +176,8 @@
 
             // Reset global variables
             frameSize = parallax ? 0 : $(frameElement)[o.horizontal ? 'width' : 'height']();
-            sbSize = $sb[o.horizontal ? 'width' : 'height']();
-            slideeSize = parallax ? frame : $(slideeElement)[o.horizontal ? 'outerWidth' : 'outerHeight']();
+            sbSize = $(sb)[o.horizontal ? 'width' : 'height']();
+            slideeSize = parallax ? frame : slideeElement[o.horizontal ? 'offsetWidth' : 'offsetHeight'];
             pages.length = 0;
 
             // Set position limits & relatives
@@ -190,17 +190,17 @@
                 lastItemsCount = items.length;
 
                 // Reset itemNav related variables
-                $items = $(o.itemSelector, slideeElement);
+                itemElements = slideeElement.querySelectorAll(o.itemSelector);
                 items.length = 0;
 
                 // Needed variables
                 var slideeComputedStyle = getComputedStyle(slideeElement, null);
                 var paddingStart = getStylePx(slideeComputedStyle, o.horizontal ? 'padding-left' : 'padding-top');
                 var paddingEnd = getStylePx(slideeComputedStyle, o.horizontal ? 'padding-right' : 'padding-bottom');
-                var borderBox = $($items).css('boxSizing') === 'border-box';
-                var areFloated = $items.css('float') !== 'none';
+                var borderBox = $(itemElements).css('boxSizing') === 'border-box';
+                var areFloated = $(itemElements).css('float') !== 'none';
                 var ignoredMargin = 0;
-                var lastItemIndex = $items.length - 1;
+                var lastItemIndex = itemElements.length - 1;
                 var lastItem;
 
                 // Reset slideeSize
@@ -208,14 +208,16 @@
 
                 var lastItemEnd;
 
-                // Iterate through items
-                $items.each(function (i, element) {
+                var itemsArray = [];
+                for (var i = 0, itemsLength = itemElements.length; i < itemsLength; i++) {
+                    var element = itemElements[i];
+                    itemsArray.push(element);
                     // Item
-                    var $item = $(element);
                     var rect = element.getBoundingClientRect();
                     var itemSize = round(o.horizontal ? rect.width || rect.right - rect.left : rect.height || rect.bottom - rect.top);
-                    var itemMarginStart = getPx($item, o.horizontal ? 'marginLeft' : 'marginTop');
-                    var itemMarginEnd = getPx($item, o.horizontal ? 'marginRight' : 'marginBottom');
+                    var elementComputedStyle = getComputedStyle(element, null);
+                    var itemMarginStart = getStylePx(elementComputedStyle, o.horizontal ? 'margin-left' : 'margin-top');
+                    var itemMarginEnd = getStylePx(elementComputedStyle, o.horizontal ? 'margin-right' : 'margin-bottom');
                     var itemSizeFull = itemSize + itemMarginStart + itemMarginEnd;
                     var singleSpaced = !itemMarginStart || !itemMarginEnd;
                     var item = {};
@@ -257,7 +259,10 @@
                     // Add item object to items array
                     items.push(item);
                     lastItem = item;
-                });
+
+                }
+
+                itemElements = itemsArray;
 
                 // Resize SLIDEE to fit all items
                 slideeElement.style[o.horizontal ? 'width' : 'height'] = (borderBox ? slideeSize : slideeSize - paddingStart - paddingEnd) + 'px';
@@ -325,12 +330,13 @@
                 }
 
                 // Pages bar
-                if ($pb[0] && lastPagesCount !== pages.length) {
+                if (pagesBar && lastPagesCount !== pages.length) {
                     for (var i = 0; i < pages.length; i++) {
                         pagesHtml += o.pageBuilder.call(self, i);
                     }
-                    $pages = $pb.html(pagesHtml).children();
-                    $pages.eq(rel.activePage).addClass(o.activeClass);
+                    pagesBar.innerHTML = pagesHtml;
+                    pagesElements = $(pagesBar).children().get();
+                    pagesElements[rel.activePage].classList.add(o.activeClass);
                 }
             }
 
@@ -568,9 +574,13 @@
 		 * @return {Void}
 		 */
         function syncPagesbar() {
-            if ($pages[0] && last.page !== rel.activePage) {
+            if (pagesElements[0] && last.page !== rel.activePage) {
                 last.page = rel.activePage;
-                $pages.removeClass(o.activeClass).eq(rel.activePage).addClass(o.activeClass);
+
+                pagesElements.forEach(function(page) {
+                    page.classList.remove(o.activeClass);
+                });
+                pagesElements[rel.activePage].classList.add(o.activeClass)
                 trigger('activePage', last.page);
             }
         }
@@ -617,9 +627,11 @@
                 var offset = o.horizontal ? itemOffset.left - slideeOffset.left : itemOffset.top - slideeOffset.top;
                 var size = item[o.horizontal ? 'offsetWidth' : 'offsetHeight'];
 
+                var centerOffset = o.centerOffset || 0;
+
                 return {
                     start: offset,
-                    center: offset - frameSize / 2 + size / 2,
+                    center: offset + centerOffset - frameSize / 2 + size / 2,
                     end: offset - frameSize + size,
                     size: size
                 };
@@ -838,7 +850,7 @@
             return item != null ?
 					isNumber(item) ?
 						item >= 0 && item < items.length ? item : -1 :
-						$items.index(item) :
+						itemElements.indexOf(item) :
 					-1;
         }
         // Expose getIndex without lowering the compressibility of it,
@@ -874,8 +886,11 @@
             // has been a change. Otherwise just return the current active index.
             if (last.active !== index || force) {
                 // Update classes
-                $items.eq(rel.activeItem).removeClass(o.activeClass);
-                $items.eq(index).addClass(o.activeClass);
+
+                if (rel.activeItem) {
+                    itemElements[rel.activeItem].classList.remove(o.activeClass);
+                }
+                itemElements[index].classList.add(o.activeClass);
 
                 last.active = rel.activeItem = index;
 
@@ -1144,135 +1159,6 @@
             } else if (o.hasOwnProperty(name)) {
                 o[name] = value;
             }
-        };
-
-        /**
-		 * Add one or multiple items to the SLIDEE end, or a specified position index.
-		 *
-		 * @param {Mixed} element Node element, or HTML string.
-		 * @param {Int}   index   Index of a new item position. By default item is appended at the end.
-		 *
-		 * @return {Void}
-		 */
-        self.add = function (element, index) {
-            var $element = $(element);
-
-            if (itemNav) {
-                // Insert the element(s)
-                if (index == null || !items[0] || index >= items.length) {
-                    slideeElement.appendChild(element);
-                } else if (items.length) {
-                    $element.insertBefore(items[index].el);
-                }
-
-                // Adjust the activeItem index
-                if (rel.activeItem != null && index <= rel.activeItem) {
-                    last.active = rel.activeItem += $element.length;
-                }
-            } else {
-                slideeElement.appendChild(element);
-            }
-
-            // Reload
-            load();
-        };
-
-        /**
-		 * Remove an item from SLIDEE.
-		 *
-		 * @param {Mixed} element Item index, or DOM element.
-		 * @param {Int}   index   Index of a new item position. By default item is appended at the end.
-		 *
-		 * @return {Void}
-		 */
-        self.remove = function (element) {
-            if (itemNav) {
-                var index = getRelativeIndex(element);
-
-                if (index > -1) {
-                    // Remove the element
-                    $items.eq(index).remove();
-
-                    // If the current item is being removed, activate new one after reload
-                    var reactivate = index === rel.activeItem;
-
-                    // Adjust the activeItem index
-                    if (rel.activeItem != null && index < rel.activeItem) {
-                        last.active = --rel.activeItem;
-                    }
-
-                    // Reload
-                    load();
-
-                    // Activate new item at the removed position
-                    if (reactivate) {
-                        last.active = null;
-                        self.activate(rel.activeItem);
-                    }
-                }
-            } else {
-                element.parentNode.removeChild(element);
-                load();
-            }
-        };
-
-        /**
-		 * Helps re-arranging items.
-		 *
-		 * @param  {Mixed} item     Item DOM element, or index starting at 0. Use negative numbers to select items from the end.
-		 * @param  {Mixed} position Item insertion anchor. Accepts same input types as item argument.
-		 * @param  {Bool}  after    Insert after instead of before the anchor.
-		 *
-		 * @return {Void}
-		 */
-        function moveItem(item, position, after) {
-            item = getRelativeIndex(item);
-            position = getRelativeIndex(position);
-
-            // Move only if there is an actual change requested
-            if (item > -1 && position > -1 && item !== position && (!after || position !== item - 1) && (after || position !== item + 1)) {
-                $items.eq(item)[after ? 'insertAfter' : 'insertBefore'](items[position].el);
-
-                var shiftStart = item < position ? item : (after ? position : position - 1);
-                var shiftEnd = item > position ? item : (after ? position + 1 : position);
-                var shiftsUp = item > position;
-
-                // Update activeItem index
-                if (rel.activeItem != null) {
-                    if (item === rel.activeItem) {
-                        last.active = rel.activeItem = after ? (shiftsUp ? position + 1 : position) : (shiftsUp ? position : position - 1);
-                    } else if (rel.activeItem > shiftStart && rel.activeItem < shiftEnd) {
-                        last.active = rel.activeItem += shiftsUp ? 1 : -1;
-                    }
-                }
-
-                // Reload
-                load();
-            }
-        }
-
-        /**
-		 * Move item after the target anchor.
-		 *
-		 * @param  {Mixed} item     Item to be moved. Can be DOM element or item index.
-		 * @param  {Mixed} position Target position anchor. Can be DOM element or item index.
-		 *
-		 * @return {Void}
-		 */
-        self.moveAfter = function (item, position) {
-            moveItem(item, position, 1);
-        };
-
-        /**
-		 * Move item before the target anchor.
-		 *
-		 * @param  {Mixed} item     Item to be moved. Can be DOM element or item index.
-		 * @param  {Mixed} position Target position anchor. Can be DOM element or item index.
-		 *
-		 * @return {Void}
-		 */
-        self.moveBefore = function (item, position) {
-            moveItem(item, position);
         };
 
         /**
@@ -1615,7 +1501,6 @@
 		 */
         function isInteractive(element) {
             return false;
-            return ~$.inArray(element.nodeName, interactiveElements);
         }
 
         /**
@@ -1729,10 +1614,11 @@
 		 */
         function scrollbarHandler(event) {
             // Only clicks on scroll bar. Ignore the handle.
-            if (o.clickBar && event.target === $sb[0]) {
+            if (o.clickBar && event.target === sb) {
                 stopDefault(event);
                 // Calculate new handle position and sync SLIDEE to it
-                slideTo(handleToSlidee((o.horizontal ? event.pageX - $sb.offset().left : event.pageY - $sb.offset().top) - handleSize / 2));
+                var sbOffset = getOffset(sb);
+                slideTo(handleToSlidee((o.horizontal ? event.pageX - sbOffset.left : event.pageY - sbOffset.top) - handleSize / 2));
             }
         }
 
@@ -1799,8 +1685,9 @@
         function activatePageHandler() {
             /*jshint validthis:true */
             // Accept only events from direct pages bar children.
-            if (this.parentNode === $pb[0]) {
-                self.activatePage($pages.index(this));
+            var elem = e.target;
+            if (elem.parentNode === pagesBar) {
+                self.activatePage(pagesElements.indexOf(elem));
             }
         }
 
@@ -1854,8 +1741,6 @@
 
             // Unbind all events
             $(scrollSource)
-				.add($sb)
-				.add($pb)
 				.add($forwardButton)
 				.add($backwardButton)
 				.add($prevButton)
@@ -1863,6 +1748,10 @@
 				.add($prevPageButton)
 				.add($nextPageButton)
 				.off('.' + namespace);
+
+            if (sb) {
+                sb.removeEventListener(clickEvent, scrollbarHandler);
+            }
 
             dragInitEventNames.forEach(function (eventName) {
                 handle.removeEventListener(eventName, dragInitHandle);
@@ -1878,12 +1767,20 @@
 				.add($nextPageButton)
 				.removeClass(o.disabledClass);
 
-            if ($items && rel.activeItem != null) {
-                $items.eq(rel.activeItem).removeClass(o.activeClass);
+            if (itemElements && rel.activeItem != null) {
+                itemElements[rel.activeItem].classList.remove(o.activeClass);
             }
 
             // Remove page items
-            $pb.empty();
+            if (pagesBar) {
+                pagesBar.innerHTML = '';
+
+                if (o.activatePageOn) {
+                    o.activateOn.split(' ').forEach(function (eventName) {
+                        pagesBar.removeEventListener(eventName, activatePageHandler);
+                    });
+                }
+            }
 
             if (!parallax) {
                 // Unbind events from frame
@@ -1961,8 +1858,8 @@
                     });
                 }
             } else {
-                if ($sb.css('position') === 'static') {
-                    $sb.css('position', 'relative');
+                if (getComputedStyle(sb, null).getPropertyValue('position') === 'static') {
+                    sb.style.position = 'relative';
                 }
                 movables.forEach(function (m) {
                     m.style.position = 'absolute';
@@ -1993,8 +1890,8 @@
             scrollSource.addEventListener(wheelEvent, scrollHandler);
 
             // Clicking on scrollbar navigation
-            if ($sb[0]) {
-                $sb.on(clickEvent, scrollbarHandler);
+            if (sb) {
+                sb.addEventListener(clickEvent, scrollbarHandler);
             }
 
             // Click on items navigation
@@ -2007,8 +1904,10 @@
             }
 
             // Pages navigation
-            if ($pb[0] && o.activatePageOn) {
-                $pb.on(o.activatePageOn + '.' + namespace, '*', activatePageHandler);
+            if (pagesBar && o.activatePageOn) {
+                o.activateOn.split(' ').forEach(function (eventName) {
+                    pagesBar.addEventListener(eventName, activatePageHandler, true);
+                });
             }
 
             // Dragging navigation
@@ -2137,18 +2036,6 @@
 	 *
 	 * @return {Int}
 	 */
-    function getPx($item, property) {
-        return 0 | round(String($item.css(property)).replace(/[^\-0-9.]/g, ''));
-    }
-
-    /**
-	 * Parse style to pixels.
-	 *
-	 * @param {Object}   $item    jQuery object with element.
-	 * @param {Property} property CSS property to get the pixels from.
-	 *
-	 * @return {Int}
-	 */
     function getStylePx(computedStyle, property) {
         return 0 | round(String(computedStyle.getPropertyValue(property)).replace(/[^\-0-9.]/g, ''));
     }
@@ -2248,36 +2135,6 @@
 
     // Expose class globally
     w[className] = Sly;
-
-    // jQuery proxy
-    $.fn[pluginName] = function (options, callbackMap) {
-        var method, methodArgs;
-
-        // Attributes logic
-        if (!$.isPlainObject(options)) {
-            if (type(options) === 'string' || options === false) {
-                method = options === false ? 'destroy' : options;
-                methodArgs = Array.prototype.slice.call(arguments, 1);
-            }
-            options = {};
-        }
-
-        // Apply to all elements
-        return this.each(function (i, element) {
-            // Call with prevention against multiple instantiations
-            var plugin = Sly.getInstance(element);
-
-            if (!plugin && !method) {
-                // Create a new object if it doesn't exist yet
-                plugin = new Sly(element, options, callbackMap).init();
-            } else if (plugin && method) {
-                // Call method
-                if (plugin[method]) {
-                    plugin[method].apply(plugin, methodArgs);
-                }
-            }
-        });
-    };
 
     // Default options
     Sly.defaults = {
