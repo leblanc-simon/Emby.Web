@@ -289,7 +289,6 @@ a {
     .userViewNames h2 {
         margin-top: 0;
         margin-bottom: 0;
-        font-weight: 300;
     }
 
     .userViewNames .btnUserViewHeader {
@@ -313,7 +312,8 @@ a {
     }
 
 .horizontalSection {
-    float: left;
+    display: inline-block;
+    vertical-align: top;
     margin-right: 40px;
 }
 
@@ -403,7 +403,7 @@ paper-item-body .overview {
     bottom: 25px;
     left: 0;
     right: 10%;
-    font-weight: 300;
+    max-width: 60%;
 }
 
 .homePageContainer .selectedItemInfo {
@@ -421,6 +421,7 @@ paper-item-body .overview {
     vertical-align: bottom;
     font-size: 90%;
     margin-left: 1em;
+    position: relative;
 }
 
     .selectedItemMediaInfo iron-icon {
@@ -438,18 +439,16 @@ paper-item-body .overview {
     }
 
 .selectedItemInfoInnerWithLogo {
-    padding-left: 220px;
-    position: relative;
 }
 
 .selectedItemInfoLogo {
     position: absolute;
     top: 10%;
-    left: 0;
+    left: -19%;
+    width: 17%;
     bottom: 10%;
-    width: 200px;
     background-repeat: no-repeat;
-    background-position: left center;
+    background-position: center center;
     background-size: contain;
 }
 

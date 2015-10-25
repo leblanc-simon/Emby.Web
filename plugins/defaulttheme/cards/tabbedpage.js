@@ -162,7 +162,8 @@
                     elasticBounds: 1,
                     dragHandle: 1,
                     dynamicHandle: 1,
-                    clickBar: 1
+                    clickBar: 1,
+                    centerOffset: window.innerWidth * .2
                 };
 
                 slyScroller.create(scrollFrame, options).then(function (slyFrame) {
