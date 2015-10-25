@@ -25,6 +25,10 @@
             return true;
         }
 
+        if (userAgent.indexOf('viera') != -1) {
+            return true;
+        }
+
         return false;
     }
 
