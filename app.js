@@ -195,6 +195,7 @@
             tvguide: "components/tvguide/guide",
             actionsheet: "components/actionsheet",
             playmenu: "components/playmenu",
+            inputreceiver: "components/inputreceiver",
             paperdialoghelper: "components/paperdialoghelper",
             slideshow: "components/slideshow/slideshow",
             howler: 'bower_components/howler.js/howler.min'
@@ -332,7 +333,6 @@
              'js/globalize',
              'js/thememanager',
              'js/focusmanager',
-             'js/inputmanager',
              'js/imageloader',
              'js/backdrops',
              'js/dom',
@@ -448,6 +448,11 @@
         presentationDependencies.push('js/models');
         presentationDependencies.push('js/soundeffectplayer');
         presentationDependencies.push('js/thememediaplayer');
+
+        presentationDependencies.push('js/input/gamepad');
+        presentationDependencies.push('js/input/mouse');
+        presentationDependencies.push('js/input/onscreenkeyboard');
+        presentationDependencies.push('js/input/keyboard');
 
         require(presentationDependencies, function () {
 

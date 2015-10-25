@@ -97,12 +97,202 @@
         return elem;
     }
 
+    function getOffset(elem, doc) {
+
+        var box = { top: 0, left: 0 };
+
+        if (!doc) {
+            return box;
+        }
+
+        var docElem = doc.documentElement;
+
+        // Support: BlackBerry 5, iOS 3 (original iPhone)
+        // If we don't have gBCR, just use 0,0 rather than error
+        if (elem.getBoundingClientRect) {
+            box = elem.getBoundingClientRect();
+        }
+        var win = doc.defaultView;
+        return {
+            top: box.top + win.pageYOffset - docElem.clientTop,
+            left: box.left + win.pageXOffset - docElem.clientLeft
+        };
+    }
+
+    function getViewportBoundingClientRect(elem) {
+
+        var doc = elem.ownerDocument;
+        var offset = getOffset(elem, doc);
+        var win = doc.defaultView;
+
+        var posY = offset.top - win.pageXOffset;
+        var posX = offset.left - win.pageYOffset;
+
+        var width = elem.offsetWidth;
+        var height = elem.offsetHeight;
+
+        return {
+            left: posX,
+            top: posY,
+            width: width,
+            height: height,
+            right: posX + width,
+            bottom: posY + height
+        };
+        var scrollLeft = (((t = document.documentElement) || (t = document.body.parentNode))
+            && typeof t.scrollLeft == 'number' ? t : document.body).scrollLeft;
+
+        var scrollTop = (((t = document.documentElement) || (t = document.body.parentNode))
+            && typeof t.scrollTop == 'number' ? t : document.body).scrollTop;
+    }
+
+    function validateNav(originalElement, direction) {
+
+        switch (direction) {
+
+            case 0:
+                // left
+                //return !originalElement.classList.contains('noNavLeft');
+                return true;
+            case 1:
+                // right
+                return true;
+            case 2:
+                return true;
+            case 3:
+                return true;
+            default:
+                return true;
+        }
+    }
+
+    function nav(originalElement, direction) {
+
+        originalElement = originalElement || document.activeElement;
+
+        if (!validateNav(originalElement, direction)) {
+            return;
+        }
+
+        require(['nearestElements'], function (nearestElements, soundeffects) {
+
+            var activeElement = document.activeElement;
+
+            if (activeElement) {
+                activeElement = Emby.FocusManager.focusableParent(activeElement);
+            }
+
+            var container = activeElement ? Emby.FocusManager.getFocusContainer(activeElement) : document.body;
+            var focusable = Emby.FocusManager.getFocusableElements(container);
+
+            if (!activeElement) {
+                if (focusable.length) {
+                    focusElement(originalElement, focusable[0]);
+                }
+                return;
+            }
+
+            var rect = getViewportBoundingClientRect(activeElement);
+            var focusableElements = [];
+
+            for (var i = 0, length = focusable.length; i < length; i++) {
+                var curr = focusable[i];
+                if (curr != activeElement) {
+
+                    var elementRect = getViewportBoundingClientRect(curr);
+
+                    switch (direction) {
+
+                        case 0:
+                            // left
+                            if (elementRect.left >= rect.left) {
+                                continue;
+                            }
+                            if (elementRect.right == rect.right) {
+                                continue;
+                            }
+                            if (elementRect.right > rect.left + 10) {
+                                continue;
+                            }
+                            break;
+                        case 1:
+                            // right
+                            if (elementRect.right <= rect.right) {
+                                continue;
+                            }
+                            if (elementRect.left == rect.left) {
+                                continue;
+                            }
+                            if (elementRect.left < rect.right - 10) {
+                                continue;
+                            }
+                            break;
+                        case 2:
+                            // up
+                            if (elementRect.top >= rect.top) {
+                                continue;
+                            }
+                            if (elementRect.bottom >= rect.bottom) {
+                                continue;
+                            }
+                            break;
+                        case 3:
+                            // down
+                            if (elementRect.bottom <= rect.bottom) {
+                                continue;
+                            }
+                            if (elementRect.top <= rect.top) {
+                                continue;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    focusableElements.push({
+                        element: curr,
+                        clientRect: elementRect
+                    });
+                }
+            }
+
+            var nearest = window.nearest(focusableElements, {
+
+                x: rect.left + rect.width / 2, // X position of top left corner of point/region
+                y: rect.top + rect.height / 2, // Y position of top left corner of point/region
+                w: 0, // Width of region
+                h: 0, // Height of region
+                tolerance: 1, // Distance tolerance in pixels, mainly to handle fractional pixel rounding bugs
+                container: document, // Container of objects for calculating %-based dimensions
+                includeSelf: false, // Include 'this' in search results (t/f) - only applies to $(elem).func(selector) syntax
+                onlyX: false, // Only check X axis variations (t/f)
+                onlyY: false // Only check Y axis variations (t/f)
+
+            });
+
+            if (nearest.length) {
+                focus(nearest[0]);
+            }
+        });
+    }
+
     globalScope.Emby.FocusManager = {
         autoFocus: autoFocus,
         focus: focus,
         focusableParent: focusableParent,
         getFocusableElements: getFocusableElements,
-        getFocusContainer: getFocusContainer
+        getFocusContainer: getFocusContainer,
+        moveLeft: function (sourceElement) {
+            nav(sourceElement, 0);
+        },
+        moveRight: function (sourceElement) {
+            nav(sourceElement, 1);
+        },
+        moveUp: function (sourceElement) {
+            nav(sourceElement, 2);
+        },
+        moveDown: function (sourceElement) {
+            nav(sourceElement, 3);
+        }
     };
 
 })(this, document);

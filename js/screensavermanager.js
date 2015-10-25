@@ -86,25 +86,29 @@ define([], function () {
             hide();
         };
 
-        setInterval(function () {
-
+        function onInterval() {
+            
             if (self.isShowing()) {
                 return;
             }
 
-            var minIdleTime = getMinIdleTime();
+            require(['inputreceiver'], function (inputreceiver) {
 
-            if (minIdleTime > Emby.InputManager.idleTime()) {
-                return;
-            }
+                var minIdleTime = getMinIdleTime();
 
-            if (Emby.PlaybackManager.isPlayingVideo()) {
-                return;
-            }
+                if (minIdleTime > inputreceiver.idleTime()) {
+                    return;
+                }
 
-            self.show();
+                if (Emby.PlaybackManager.isPlayingVideo()) {
+                    return;
+                }
 
-        }, 10000);
+                self.show();
+            });
+        }
+
+        setInterval(onInterval, 10000);
     }
 
     return new ScreenSaverManager();
