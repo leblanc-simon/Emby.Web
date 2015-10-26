@@ -294,6 +294,8 @@ a {
     .userViewNames .btnUserViewHeader {
         min-width: initial;
         text-transform: none !important;
+        margin-top: 0;
+        padding-top: .25em;
     }
 
     .userViewNames .scrollSlider {
@@ -320,11 +322,7 @@ a {
 .sectionTitle {
     text-transform: uppercase;
     padding-left: .25em;
-    font-size: 90%;
-}
-
-.horizontalBody {
-    height: 400px;
+    font-size: 86%;
 }
 
 .horizontalPageContent .squareCard .cardImageContainer {
@@ -474,10 +472,6 @@ paper-item-body .overview {
 /* 720p */
 @media all and (min-height: 720px) {
 
-    .horizontalBody {
-        height: 440px;
-    }
-
     .horizontalPageContent .squareCard .cardImageContainer {
         width: 132px;
         height: 132px;
@@ -501,10 +495,6 @@ paper-item-body .overview {
 /* 1080p */
 @media all and (min-height: 1080px) {
 
-    .horizontalBody {
-        height: 780px;
-    }
-
     .horizontalPageContent .squareCard .cardImageContainer {
         width: 216px;
         height: 216px;
@@ -527,10 +517,6 @@ paper-item-body .overview {
 
 /* 2560 * 1440 */
 @media all and (min-height: 1440px) {
-
-    .horizontalBody {
-        height: 900px;
-    }
 
     .horizontalPageContent .squareCard .cardImageContainer {
         width: 260px;

@@ -16,6 +16,7 @@
             Emby.Page.setTitle(null);
 
             if (!isRestored) {
+
                 Emby.Backdrop.clear();
 
                 require(['loading'], function (loading) {
@@ -62,7 +63,6 @@
                 self.tabbedPage.destroy();
             }
         });
-
 
         function renderTabs(view, pageInstance) {
 
@@ -133,7 +133,7 @@
 
         var homeScrollContent = page.querySelector('.contentScrollSlider');
 
-        html =  html ;
+        html = html;
         homeScrollContent.innerHTML = Globalize.translateHtml(html);
 
         if (homeScrollContent.animate) {
