@@ -1,4 +1,4 @@
-.homePageContent h1 {
+.homePageContainer h1 {
     margin-top: 0;
 }
 
@@ -6,21 +6,17 @@
     width: 100%;
 }
 
-.homeBody {
-    height: 400px;
-}
-
-.homePageContent .squareCard .cardImageContainer {
+.homePageContainer .squareCard .cardImageContainer {
     width: 132px;
     height: 132px;
 }
 
-.homePageContent .backdropCard .cardImageContainer {
+.homePageContainer .backdropCard .cardImageContainer {
     width: 220px;
     height: 123.75px;
 }
 
-.homePageContent .portraitCard .cardImageContainer {
+.homePageContainer .portraitCard .cardImageContainer {
     width: 132px;
     height: 198px;
 }
@@ -50,21 +46,17 @@
 /* 720p */
 @media all and (min-height: 720px) {
 
-    .homeBody {
-        height: 510px;
-    }
-
-    .homePageContent .squareCard .cardImageContainer {
+    .homePageContainer .squareCard .cardImageContainer {
         width: 132px;
         height: 132px;
     }
 
-    .homePageContent .backdropCard .cardImageContainer {
+    .homePageContainer .backdropCard .cardImageContainer {
         width: 220px;
         height: 123.75px;
     }
 
-    .homePageContent .portraitCard .cardImageContainer {
+    .homePageContainer .portraitCard .cardImageContainer {
         width: 132px;
         height: 198px;
     }
@@ -83,21 +75,17 @@
 /* 1080p */
 @media all and (min-height: 1080px) {
 
-    .homeBody {
-        height: 740px;
-    }
-
-    .homePageContent .squareCard .cardImageContainer {
+    .homePageContainer .squareCard .cardImageContainer {
         width: 207px;
         height: 207px;
     }
 
-    .homePageContent .backdropCard .cardImageContainer {
+    .homePageContainer .backdropCard .cardImageContainer {
         width: 366.222222222px;
         height: 206px;
     }
 
-    .homePageContent .portraitCard .cardImageContainer {
+    .homePageContainer .portraitCard .cardImageContainer {
         width: 209px;
         height: 313.5px;
     }
@@ -116,21 +104,17 @@
 /* 2560 * 1440 */
 @media all and (min-height: 1440px) {
 
-    .homeBody {
-        height: 900px;
-    }
-
-    .homePageContent .squareCard .cardImageContainer {
+    .homePageContainer .squareCard .cardImageContainer {
         width: 260px;
         height: 260px;
     }
 
-    .homePageContent .backdropCard .cardImageContainer {
+    .homePageContainer .backdropCard .cardImageContainer {
         width: 449.5px;
         height: 252.84375px;
     }
 
-    .homePageContent .portraitCard .cardImageContainer {
+    .homePageContainer .portraitCard .cardImageContainer {
         width: 260px;
         height: 390px;
     }
