@@ -40,12 +40,16 @@
                 Id: "movies"
             },
             {
+                Name: Globalize.translate('Collections'),
+                Id: "collections"
+            },
+            {
                 Name: Globalize.translate('Genres'),
                 Id: "genres"
             },
             {
-                Name: Globalize.translate('Collections'),
-                Id: "collections"
+                Name: Globalize.translate('Years'),
+                Id: "years"
             },
             {
                 Name: Globalize.translate('Favorites'),
@@ -78,6 +82,9 @@
 
                 case 'movies':
                     renderMovies(page, pageParams, autoFocus, this.bodySlyFrame);
+                    break;
+                case 'years':
+                    renderYears(page, pageParams, autoFocus, this.bodySlyFrame);
                     break;
                 case 'collections':
                     renderCollections(page, pageParams, autoFocus, this.bodySlyFrame);
@@ -199,6 +206,35 @@
             self.listController.render();
         }
 
+        function renderYears(page, pageParams, autoFocus, slyFrame) {
+
+            self.listController = new DefaultTheme.HorizontalList({
+
+                itemsContainer: page.querySelector('.contentScrollSlider'),
+                getItemsMethod: function (startIndex, limit) {
+                    return Emby.Models.items({
+                        StartIndex: startIndex,
+                        Limit: limit,
+                        ParentId: pageParams.parentid,
+                        IncludeItemTypes: "Movie",
+                        Recursive: true,
+                        SortBy: "ProductionYear,SortName",
+                        SortOrder: "Descending"
+                    });
+                },
+                cardOptions: {
+                    indexBy: 'ProductionYear'
+                },
+                listCountElement: page.querySelector('.listCount'),
+                listNumbersElement: page.querySelector('.listNumbers'),
+                autoFocus: autoFocus,
+                selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
+                selectedIndexElement: page.querySelector('.selectedIndex'),
+                slyFrame: slyFrame
+            });
+
+            self.listController.render();
+        }
     }
 
 })();

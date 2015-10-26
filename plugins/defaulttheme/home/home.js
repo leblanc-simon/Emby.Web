@@ -137,7 +137,7 @@
         homeScrollContent.innerHTML = Globalize.translateHtml(html);
 
         if (homeScrollContent.animate) {
-            fadeIn(homeScrollContent, 1);
+            fadeInRight(homeScrollContent, 1);
         }
 
         require([Emby.PluginManager.mapRequire('defaulttheme', 'home/views.' + viewName + '.js')], function () {
@@ -149,9 +149,9 @@
 
     function fadeInRight(elem, iterations) {
         var keyframes = [
-          { opacity: '0', transform: 'translate3d(1%, 0, 0)', offset: 0 },
+          { opacity: '0', transform: 'translate3d(10px, 0, 0)', offset: 0 },
           { opacity: '1', transform: 'none', offset: 1 }];
-        var timing = { duration: 200, iterations: iterations };
+        var timing = { duration: 300, iterations: iterations };
         elem.animate(keyframes, timing).onfinish = function () {
             //document.dispatchEvent(new CustomEvent("scroll", {}));
         };

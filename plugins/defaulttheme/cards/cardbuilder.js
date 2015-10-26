@@ -129,7 +129,7 @@
             if (options.indexBy) {
                 var newIndexValue = '';
 
-                if (options.indexBy == 'premieredate') {
+                if (options.indexBy == 'PremiereDate') {
                     if (item.PremiereDate) {
                         try {
 
@@ -138,6 +138,10 @@
                         } catch (err) {
                         }
                     }
+                }
+
+                else if (options.indexBy == 'ProductionYear') {
+                    newIndexValue = item.ProductionYear;
                 }
 
                 if (newIndexValue != currentIndexValue) {

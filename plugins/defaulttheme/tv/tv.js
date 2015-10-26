@@ -43,6 +43,10 @@
             {
                 Name: Globalize.translate('Genres'),
                 Id: "genres"
+            },
+            {
+                Name: Globalize.translate('Favorites'),
+                Id: "favorites"
             }];
 
             var tabbedPage = new DefaultTheme.TabbedPage(view);
@@ -74,6 +78,9 @@
                 case 'upcoming':
                     renderUpcoming(page, pageParams, autoFocus, this.bodySlyFrame);
                     break;
+                case 'favorites':
+                    renderFavorites(page, pageParams, autoFocus, this.bodySlyFrame);
+                    break;
                 default:
                     break;
             }
@@ -101,7 +108,7 @@
                     rows: 3,
                     preferThumb: true,
                     width: DefaultTheme.CardBuilder.homeThumbWidth,
-                    indexBy: 'premieredate'
+                    indexBy: 'PremiereDate'
                 },
                 selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
                 selectedIndexElement: page.querySelector('.selectedIndex'),
@@ -154,6 +161,33 @@
                     rows: 3,
                     preferThumb: true,
                     width: DefaultTheme.CardBuilder.homeThumbWidth
+                },
+                listCountElement: page.querySelector('.listCount'),
+                listNumbersElement: page.querySelector('.listNumbers'),
+                autoFocus: autoFocus,
+                selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
+                selectedIndexElement: page.querySelector('.selectedIndex'),
+                slyFrame: slyFrame
+            });
+
+            self.listController.render();
+        }
+
+        function renderFavorites(page, pageParams, autoFocus, slyFrame) {
+
+            self.listController = new DefaultTheme.HorizontalList({
+
+                itemsContainer: page.querySelector('.contentScrollSlider'),
+                getItemsMethod: function (startIndex, limit) {
+                    return Emby.Models.items({
+                        StartIndex: startIndex,
+                        Limit: limit,
+                        ParentId: pageParams.parentid,
+                        IncludeItemTypes: "Series",
+                        Recursive: true,
+                        Filters: "IsFavorite",
+                        SortBy: "SortName"
+                    });
                 },
                 listCountElement: page.querySelector('.listCount'),
                 listNumbersElement: page.querySelector('.listNumbers'),
