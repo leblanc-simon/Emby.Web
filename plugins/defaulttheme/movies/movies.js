@@ -235,7 +235,6 @@
 
             self.listController.render();
         }
-
     }
 
 })();
