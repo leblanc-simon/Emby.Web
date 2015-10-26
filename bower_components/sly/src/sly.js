@@ -449,8 +449,10 @@
         function renderAnimate() {
 
             var obj = getComputedStyle(slideeElement, null).getPropertyValue('transform').match(/([-+]?(?:\d*\.)?\d+)\D*, ([-+]?(?:\d*\.)?\d+)\D*\)/);
-            // [1] = x, [2] = y
-            pos.cur = parseInt(o.horizontal ? obj[1] : obj[2]) * -1;
+            if (obj) {
+                // [1] = x, [2] = y
+                pos.cur = parseInt(o.horizontal ? obj[1] : obj[2]) * -1;
+            }
 
             var keyframes;
 
@@ -1845,7 +1847,8 @@
                 if (slideeElement) {
                     movables.push(slideeElement);
                 }
-                frameElement.style.overflow = 'hidden';
+
+                //frameElement.style.overflow = 'hidden';
 
                 if (!transform && getComputedStyle(frameElement, null).getPropertyValue('position') === 'static') {
                     frameElement.style.position = 'relative';

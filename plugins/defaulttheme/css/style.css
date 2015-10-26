@@ -160,10 +160,6 @@ a {
     height: 100%;
 }
 
-.topPadded.itemScrollFrame {
-    padding-top: 30px;
-}
-
 @media all and (min-height: 720px) {
 
     .pageContainer {
@@ -186,10 +182,6 @@ a {
 
     .itemScrollFrame.scrollFrameX {
         padding-bottom: 60px;
-    }
-
-    .topPadded.itemScrollFrame {
-        padding-top: 60px;
     }
 }
 
@@ -283,7 +275,7 @@ a {
     }
 
 .userViewNames {
-    margin-bottom: 10px;
+    margin-bottom: 1em;
 }
 
     .userViewNames h2 {
@@ -398,14 +390,13 @@ paper-item-body .overview {
 
 .selectedItemInfo {
     position: fixed;
-    bottom: 25px;
+    bottom: 30px;
     left: 0;
     right: 10%;
     max-width: 60%;
 }
 
 .homePageContainer .selectedItemInfo {
-    bottom: 25px;
     right: 2%;
 }
 
@@ -496,18 +487,18 @@ paper-item-body .overview {
 @media all and (min-height: 1080px) {
 
     .horizontalPageContent .squareCard .cardImageContainer {
-        width: 216px;
-        height: 216px;
+        width: 207px;
+        height: 207px;
     }
 
     .horizontalPageContent .backdropCard .cardImageContainer {
-        width: 377px;
-        height: 212.0625px;
+        width: 366.222222222px;
+        height: 206px;
     }
 
     .horizontalPageContent .portraitCard .cardImageContainer {
-        width: 220px;
-        height: 330px;
+        width: 209px;
+        height: 313.5px;
     }
 
     .horizontalPageContent .loginSquareCard {
@@ -524,13 +515,13 @@ paper-item-body .overview {
     }
 
     .horizontalPageContent .backdropCard .cardImageContainer {
-        width: 455px;
-        height: 255.9375px;
+        width: 449.5px;
+        height: 252.84375px;
     }
 
     .horizontalPageContent .portraitCard .cardImageContainer {
-        width: 263px;
-        height: 394.5px;
+        width: 260px;
+        height: 390px;
     }
 
     .horizontalPageContent .loginSquareCard {

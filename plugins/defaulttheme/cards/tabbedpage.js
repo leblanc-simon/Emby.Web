@@ -82,7 +82,7 @@
 
         // lock the height so that the location of the top tabs won't fluctuate
         var contentScrollSlider = page.querySelector('.contentScrollSlider');
-        contentScrollSlider.style.height = contentScrollSlider.offsetHeight + 'px';
+        contentScrollSlider.style.minHeight = contentScrollSlider.offsetHeight + 'px';
 
         var selectedItemInfoInner = page.querySelector('.selectedItemInfoInner');
         var selectedIndexElement = page.querySelector('.selectedIndex');
