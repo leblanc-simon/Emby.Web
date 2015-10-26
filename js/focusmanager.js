@@ -187,7 +187,7 @@
 
             if (!activeElement) {
                 if (focusable.length) {
-                    focusElement(originalElement, focusable[0]);
+                    focus(focusable[0]);
                 }
                 return;
             }
