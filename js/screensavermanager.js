@@ -18,13 +18,13 @@ define([], function () {
             activeScreenSaver = screensaver;
 
             if (screensaver.hideOnClick !== false) {
-                document.addEventListener('click', hide);
+                window.addEventListener('click', hide);
             }
             if (screensaver.hideOnMouse !== false) {
-                document.addEventListener('mousemove', hide);
+                window.addEventListener('mousemove', hide);
             }
             if (screensaver.hideOnKey !== false) {
-                document.addEventListener('keydown', hide);
+                window.addEventListener('keydown', hide, true);
             }
         }
 
@@ -35,9 +35,9 @@ define([], function () {
                 activeScreenSaver = null;
             }
 
-            document.removeEventListener('click', hide);
-            document.removeEventListener('mousemove', hide);
-            document.removeEventListener('keydown', hide);
+            window.removeEventListener('click', hide);
+            window.removeEventListener('mousemove', hide);
+            window.removeEventListener('keydown', hide);
         }
 
         self.isShowing = function () {

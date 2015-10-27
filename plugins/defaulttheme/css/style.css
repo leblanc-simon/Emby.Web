@@ -630,3 +630,11 @@ paper-item-body .overview {
     background-size: auto 28px;
     background-image: url(images/rotten.png);
 }
+
+.contentScrollSlider .horizontalSection:not(.hide):last-child .cardColumn:last-child .card {
+    nav-right: auto;
+}
+
+.card {
+    nav-right: auto!important;
+}

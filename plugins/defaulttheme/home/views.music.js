@@ -47,7 +47,8 @@
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
                 shape: 'autoHome',
-                width: DefaultTheme.CardBuilder.homePortraitWidth
+                width: DefaultTheme.CardBuilder.homePortraitWidth,
+                showTitle: true
             });
         });
     }

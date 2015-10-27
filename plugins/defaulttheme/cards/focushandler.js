@@ -224,8 +224,8 @@ define([], function () {
 
         self.destroy = function () {
 
-            parent.addEventListener('focus', onFocusIn, true);
-            parent.addEventListener('blur', onFocusOut, true);
+            parent.removeEventListener('focus', onFocusIn, true);
+            parent.removeEventListener('blur', onFocusOut, true);
         };
     }
 

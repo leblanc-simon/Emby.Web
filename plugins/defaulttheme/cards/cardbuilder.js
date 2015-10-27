@@ -153,6 +153,8 @@
                     }
 
                     if (hasOpenSection) {
+                        //html += '<paper-button>...</paper-button>';
+
                         html += '</div>';
                         hasOpenSection = false;
                     }

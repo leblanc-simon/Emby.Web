@@ -456,6 +456,8 @@
 
             var keyframes;
 
+            animation.to = round(animation.to);
+
             if (o.horizontal) {
                 keyframes = [
                                { transform: 'translate3d(' + (-round(pos.cur || animation.from)) + 'px, 0, 0)', offset: 0 },
