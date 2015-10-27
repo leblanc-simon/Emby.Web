@@ -73,6 +73,10 @@
 
         function loadViewContent(page, id) {
 
+            if (self.listController) {
+                self.listController.destroy();
+            }
+
             var pageParams = this.params;
 
             var autoFocus = false;
