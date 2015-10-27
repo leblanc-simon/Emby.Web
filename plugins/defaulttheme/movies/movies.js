@@ -65,42 +65,47 @@
 
         function loadViewContent(page, id, type) {
 
-            if (self.listController) {
-                self.listController.destroy();
-            }
+            var tabbedPage = this;
 
-            var pageParams = this.params;
+            return new Promise(function (resolve, reject) {
 
-            var autoFocus = false;
+                if (self.listController) {
+                    self.listController.destroy();
+                }
 
-            if (!this.hasLoaded) {
-                autoFocus = true;
-                this.hasLoaded = true;
-            }
+                var pageParams = tabbedPage.params;
 
-            switch (id) {
+                var autoFocus = false;
 
-                case 'movies':
-                    renderMovies(page, pageParams, autoFocus, this.bodySlyFrame);
-                    break;
-                case 'years':
-                    renderYears(page, pageParams, autoFocus, this.bodySlyFrame);
-                    break;
-                case 'collections':
-                    renderCollections(page, pageParams, autoFocus, this.bodySlyFrame);
-                    break;
-                case 'favorites':
-                    renderFavorites(page, pageParams, autoFocus, this.bodySlyFrame);
-                    break;
-                case 'genres':
-                    renderGenres(page, pageParams, autoFocus, this.bodySlyFrame);
-                    break;
-                default:
-                    break;
-            }
+                if (!tabbedPage.hasLoaded) {
+                    autoFocus = true;
+                    tabbedPage.hasLoaded = true;
+                }
+
+                switch (id) {
+
+                    case 'movies':
+                        renderMovies(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
+                        break;
+                    case 'years':
+                        renderYears(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
+                        break;
+                    case 'collections':
+                        renderCollections(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
+                        break;
+                    case 'favorites':
+                        renderFavorites(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
+                        break;
+                    case 'genres':
+                        renderGenres(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
+                        break;
+                    default:
+                        break;
+                }
+            });
         }
 
-        function renderGenres(page, pageParams, autoFocus, slyFrame) {
+        function renderGenres(page, pageParams, autoFocus, slyFrame, resolve) {
 
             self.listController = new DefaultTheme.HorizontalList({
 
@@ -124,13 +129,19 @@
                 autoFocus: autoFocus,
                 selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
                 selectedIndexElement: page.querySelector('.selectedIndex'),
-                slyFrame: slyFrame
+                slyFrame: slyFrame,
+                onRender: function () {
+                    if (resolve) {
+                        resolve();
+                        resolve = null;
+                    }
+                }
             });
 
             self.listController.render();
         }
 
-        function renderFavorites(page, pageParams, autoFocus, slyFrame) {
+        function renderFavorites(page, pageParams, autoFocus, slyFrame, resolve) {
 
             self.listController = new DefaultTheme.HorizontalList({
 
@@ -151,13 +162,19 @@
                 autoFocus: autoFocus,
                 selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
                 selectedIndexElement: page.querySelector('.selectedIndex'),
-                slyFrame: slyFrame
+                slyFrame: slyFrame,
+                onRender: function () {
+                    if (resolve) {
+                        resolve();
+                        resolve = null;
+                    }
+                }
             });
 
             self.listController.render();
         }
 
-        function renderMovies(page, pageParams, autoFocus, slyFrame) {
+        function renderMovies(page, pageParams, autoFocus, slyFrame, resolve) {
 
             self.listController = new DefaultTheme.HorizontalList({
 
@@ -177,13 +194,19 @@
                 autoFocus: autoFocus,
                 selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
                 selectedIndexElement: page.querySelector('.selectedIndex'),
-                slyFrame: slyFrame
+                slyFrame: slyFrame,
+                onRender: function () {
+                    if (resolve) {
+                        resolve();
+                        resolve = null;
+                    }
+                }
             });
 
             self.listController.render();
         }
 
-        function renderCollections(page, pageParams, autoFocus, slyFrame) {
+        function renderCollections(page, pageParams, autoFocus, slyFrame, resolve) {
 
             self.listController = new DefaultTheme.HorizontalList({
 
@@ -200,13 +223,19 @@
                 autoFocus: autoFocus,
                 selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
                 selectedIndexElement: page.querySelector('.selectedIndex'),
-                slyFrame: slyFrame
+                slyFrame: slyFrame,
+                onRender: function () {
+                    if (resolve) {
+                        resolve();
+                        resolve = null;
+                    }
+                }
             });
 
             self.listController.render();
         }
 
-        function renderYears(page, pageParams, autoFocus, slyFrame) {
+        function renderYears(page, pageParams, autoFocus, slyFrame, resolve) {
 
             self.listController = new DefaultTheme.HorizontalList({
 
@@ -230,7 +259,13 @@
                 autoFocus: autoFocus,
                 selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
                 selectedIndexElement: page.querySelector('.selectedIndex'),
-                slyFrame: slyFrame
+                slyFrame: slyFrame,
+                onRender: function() {
+                    if (resolve) {
+                        resolve();
+                        resolve = null;
+                    }
+                }
             });
 
             self.listController.render();

@@ -25,7 +25,11 @@
                 var animation = fadeIn(backdropImage, 1);
                 currentAnimation = animation;
                 animation.onfinish = function () {
-                    if (existingBackdropImage && existingBackdropImage.parentNode && !isDestroyed) {
+
+                    if (animation == currentAnimation) {
+                        currentAnimation = null;
+                    }
+                    if (existingBackdropImage && existingBackdropImage.parentNode) {
                         existingBackdropImage.parentNode.removeChild(existingBackdropImage);
                     }
                 };
@@ -55,6 +59,7 @@
 
         self.destroy = function () {
 
+            isDestroyed = true;
             cancelAnimation();
         };
     }

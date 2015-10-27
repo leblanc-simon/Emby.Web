@@ -40,15 +40,6 @@
         return false;
     }
 
-    function isFocusContainer(elem) {
-
-        if (focusableContainerTagNames.indexOf(elem.tagName) != -1) {
-            return true;
-        }
-
-        return false;
-    }
-
     function focusableParent(elem) {
 
         while (!isFocusable(elem)) {
@@ -85,8 +76,23 @@
         globalScope.Emby = {};
     }
 
-    function getFocusContainer(elem) {
-        while (!isFocusContainer(elem)) {
+    function isFocusContainer(elem, direction) {
+
+        if (focusableContainerTagNames.indexOf(elem.tagName) != -1) {
+            return true;
+        }
+
+        if (direction < 2) {
+            if (elem.classList.contains('focuscontainer-x')) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function getFocusContainer(elem, direction) {
+        while (!isFocusContainer(elem, direction)) {
             elem = elem.parentNode;
 
             if (!elem) {
@@ -146,44 +152,20 @@
             && typeof t.scrollTop == 'number' ? t : document.body).scrollTop;
     }
 
-    function validateNav(originalElement, direction) {
-
-        switch (direction) {
-
-            case 0:
-                // left
-                //return !originalElement.classList.contains('noNavLeft');
-                return true;
-            case 1:
-                // right
-                return true;
-            case 2:
-                return true;
-            case 3:
-                return true;
-            default:
-                return true;
-        }
-    }
-
     function nav(originalElement, direction) {
 
         originalElement = originalElement || document.activeElement;
-
-        if (!validateNav(originalElement, direction)) {
-            return;
-        }
 
         require(['nearestElements'], function (nearestElements, soundeffects) {
 
             var activeElement = document.activeElement;
 
             if (activeElement) {
-                activeElement = Emby.FocusManager.focusableParent(activeElement);
+                activeElement = focusableParent(activeElement);
             }
 
-            var container = activeElement ? Emby.FocusManager.getFocusContainer(activeElement) : document.body;
-            var focusable = Emby.FocusManager.getFocusableElements(container);
+            var container = activeElement ? getFocusContainer(activeElement, direction) : document.body;
+            var focusable = getFocusableElements(container);
 
             if (!activeElement) {
                 if (focusable.length) {
@@ -280,7 +262,6 @@
         focus: focus,
         focusableParent: focusableParent,
         getFocusableElements: getFocusableElements,
-        getFocusContainer: getFocusContainer,
         moveLeft: function (sourceElement) {
             nav(sourceElement, 0);
         },

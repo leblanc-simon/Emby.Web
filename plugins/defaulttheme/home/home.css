@@ -3,9 +3,8 @@
     height: 271.125px;
 }
 
-.miniSpotlightCard .cardImageContainer {
+.horizontalPageContent .miniSpotlightCard .cardImageContainer {
     width: 238px;
-    height: 133.875px;
 }
 
 /* 720p */
@@ -16,9 +15,8 @@
         height: 271.125px;
     }
 
-    .miniSpotlightCard .cardImageContainer {
+    .horizontalPageContent .miniSpotlightCard .cardImageContainer {
         width: 238px;
-        height: 133.875px;
     }
 }
 
@@ -26,13 +24,12 @@
 @media all and (min-height: 1080px) {
 
     .wideSpotlightCard .cardImageContainer {
-        width: 813px;
+        width: 810px;
         height: 419px;
     }
 
-    .miniSpotlightCard .cardImageContainer {
+    .horizontalPageContent .miniSpotlightCard .cardImageContainer {
         width: 398px;
-        height: 207px;
     }
 }
 
@@ -44,9 +41,8 @@
         height: 570.9375px;
     }
 
-    .miniSpotlightCard .cardImageContainer {
+    .horizontalPageContent .miniSpotlightCard .cardImageContainer {
         width: 503px;
-        height: 282.9375px;
     }
 }
 

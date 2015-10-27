@@ -21,7 +21,8 @@
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
                 shape: 'autoHome',
-                autoFocus: autoFocus
+                autoFocus: autoFocus,
+                showTitle: true
             });
         });
     }

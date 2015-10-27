@@ -14,13 +14,13 @@
             if (soundeffectPlugin) {
 
                 effects = soundeffectPlugin.getEffects();
-                document.addEventListener('keydown', onKeyDown);
+                window.addEventListener('keydown', onKeyDown, true);
             }
         });
     }
 
     function unload() {
-        document.removeEventListener('keydown', onKeyDown);
+        window.removeEventListener('keydown', onKeyDown);
         effects = null;
     }
 

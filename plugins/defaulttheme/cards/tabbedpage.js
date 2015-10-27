@@ -72,7 +72,24 @@
 
         self.bodySlyFrame.slideTo(0, true);
 
-        self.loadViewContent.call(self, page, id, btn.getAttribute('data-type'));
+        page.querySelector('.contentScrollSlider').innerHTML = '';
+        var promise = self.loadViewContent.call(self, page, id, btn.getAttribute('data-type'));
+
+        if (promise) {
+            promise.then(function () {
+                fadeInRight(page.querySelector('.contentScrollSlider'));
+            });
+        }
+    }
+
+    function fadeInRight(elem, iterations) {
+
+        var translateX = Math.round(window.innerWidth / 100);
+        var keyframes = [
+          { opacity: '0', transform: 'translate3d(' + translateX + 'px, 0, 0)', offset: 0 },
+          { opacity: '1', transform: 'none', offset: 1 }];
+        var timing = { duration: 300, iterations: iterations };
+        elem.animate(keyframes, timing);
     }
 
     function tabbedPage(page, pageOptions) {
@@ -83,6 +100,7 @@
         // lock the height so that the location of the top tabs won't fluctuate
         var contentScrollSlider = page.querySelector('.contentScrollSlider');
         contentScrollSlider.style.minHeight = contentScrollSlider.offsetHeight + 'px';
+        contentScrollSlider.classList.add('focuscontainer-x');
 
         var selectedItemInfoInner = page.querySelector('.selectedItemInfoInner');
         var selectedIndexElement = page.querySelector('.selectedIndex');

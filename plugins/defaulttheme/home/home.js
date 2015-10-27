@@ -82,48 +82,52 @@
 
         function loadViewContent(page, id, type) {
 
-            type = (type || '').toLowerCase();
+            return new Promise(function (resolve, reject) {
 
-            var viewName = '';
+                type = (type || '').toLowerCase();
 
-            switch (type) {
-                case 'tvshows':
-                    viewName = 'tv';
-                    break;
-                case 'movies':
-                    viewName = 'movies';
-                    break;
-                case 'channels':
-                    viewName = 'channels';
-                    break;
-                case 'music':
-                    viewName = 'music';
-                    break;
-                case 'playlists':
-                    viewName = 'playlists';
-                    break;
-                case 'boxsets':
-                    viewName = 'collections';
-                    break;
-                case 'livetv':
-                    viewName = 'livetv';
-                    break;
-                default:
-                    viewName = 'generic';
-                    break;
-            }
+                var viewName = '';
 
-            require(['httpclient'], function (httpclient) {
-                httpclient.request({
+                switch (type) {
+                    case 'tvshows':
+                        viewName = 'tv';
+                        break;
+                    case 'movies':
+                        viewName = 'movies';
+                        break;
+                    case 'channels':
+                        viewName = 'channels';
+                        break;
+                    case 'music':
+                        viewName = 'music';
+                        break;
+                    case 'playlists':
+                        viewName = 'playlists';
+                        break;
+                    case 'boxsets':
+                        viewName = 'collections';
+                        break;
+                    case 'livetv':
+                        viewName = 'livetv';
+                        break;
+                    default:
+                        viewName = 'generic';
+                        break;
+                }
 
-                    url: Emby.PluginManager.mapResource('defaulttheme', 'home/views.' + viewName + '.html'),
-                    type: 'GET',
-                    dataType: 'html'
+                require(['httpclient'], function (httpclient) {
+                    httpclient.request({
 
-                }).then(function (html) {
+                        url: Emby.PluginManager.mapResource('defaulttheme', 'home/views.' + viewName + '.html'),
+                        type: 'GET',
+                        dataType: 'html'
 
-                    loadViewHtml(page, id, html, viewName, isFirstLoad);
-                    isFirstLoad = false;
+                    }).then(function (html) {
+
+                        loadViewHtml(page, id, html, viewName, isFirstLoad);
+                        isFirstLoad = false;
+                        resolve();
+                    });
                 });
             });
         }
@@ -136,33 +140,11 @@
         html = html;
         homeScrollContent.innerHTML = Globalize.translateHtml(html);
 
-        if (homeScrollContent.animate) {
-            fadeInRight(homeScrollContent, 1);
-        }
-
         require([Emby.PluginManager.mapRequire('defaulttheme', 'home/views.' + viewName + '.js')], function () {
 
             var homePanel = homeScrollContent;
             new DefaultTheme[viewName + 'View'](homePanel, parentId, autoFocus);
         });
-    }
-
-    function fadeInRight(elem, iterations) {
-        var keyframes = [
-          { opacity: '0', transform: 'translate3d(10px, 0, 0)', offset: 0 },
-          { opacity: '1', transform: 'none', offset: 1 }];
-        var timing = { duration: 300, iterations: iterations };
-        elem.animate(keyframes, timing).onfinish = function () {
-            //document.dispatchEvent(new CustomEvent("scroll", {}));
-        };
-    }
-
-    function fadeIn(elem, iterations) {
-        var keyframes = [
-          { opacity: '0', offset: 0 },
-          { opacity: '1', offset: 1 }];
-        var timing = { duration: 300, iterations: iterations };
-        return elem.animate(keyframes, timing);
     }
 
 })();

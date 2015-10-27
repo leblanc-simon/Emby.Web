@@ -52,6 +52,10 @@
 
                     loading.hide();
 
+                    if (options.onRender) {
+                        options.onRender();
+                    }
+
                     if (options.autoFocus !== false) {
                         setTimeout(function () {
                             var firstCard = options.itemsContainer.querySelector('.card');
@@ -68,6 +72,7 @@
 
             if (self.focusHandler) {
                 self.focusHandler.destroy();
+                self.focusHandler = null;
             }
 
             if (options.selectedItemInfoElement) {

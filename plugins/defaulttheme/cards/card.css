@@ -59,7 +59,7 @@ button.card {
 
 .card .cardBox {
     padding: 0 !important;
-    margin: 2px;
+    margin: 0;
     transition: none !important;
     border-radius: 0 !important;
     border: 3px solid transparent;
