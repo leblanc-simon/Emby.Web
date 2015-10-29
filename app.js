@@ -225,15 +225,10 @@
                 'bower_components/sly/src/sly': {
                     //These script dependencies should be loaded before loading
                     //backbone.js
-                    deps: ['jquery.easing'],
+                    deps: [],
                     //Once loaded, use the global 'Backbone' as the
                     //module value.
                     exports: 'Sly'
-                },
-                'bower_components/jquery.easing/js/jquery.easing.min': {
-                    //These script dependencies should be loaded before loading
-                    //backbone.js
-                    deps: ['bower_components/jquery/dist/jquery.min']
                 }
             }
         };
