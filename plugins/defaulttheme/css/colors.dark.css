@@ -8,8 +8,8 @@ html {
 
 .themeContainer.withBackdrop {
     background: rgba(6, 6, 6, .88);
-    background: radial-gradient(circle, rgba(26,26,26,.78), rgba(6,6,6,.92));
-    background: -webkit-radial-gradient(circle, rgba(26,26,26,.82), rgba(6,6,6,.92));
+    /*background: radial-gradient(circle, rgba(26,26,26,.78), rgba(6,6,6,.92));
+    background: -webkit-radial-gradient(circle, rgba(26,26,26,.82), rgba(6,6,6,.92));*/
 }
 
 .header .logo {

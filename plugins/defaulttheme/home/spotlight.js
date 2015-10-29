@@ -66,7 +66,7 @@
                 return;
             }
 
-            if (!Emby.Dom.visibleInViewport(card, true, 0)) {
+            if (!Emby.Dom.visibleInViewport(card, false, 0)) {
                 // If it's not visible on screen, skip it
                 return;
             }

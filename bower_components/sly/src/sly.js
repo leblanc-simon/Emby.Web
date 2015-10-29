@@ -1,5 +1,5 @@
 
-; (function ($, w, undefined) {
+; (function (w, undefined) {
     'use strict';
 
     var pluginName = 'sly';
@@ -56,7 +56,7 @@
         if (!(this instanceof Sly)) return new Sly(frame, options, callbackMap);
 
         // Extend options
-        var o = $.extend({}, Sly.defaults, options);
+        var o = extend({}, Sly.defaults, options);
 
         // Private variables
         var self = this;
@@ -64,7 +64,7 @@
 
         // Frame
         var frameElement = frame;
-        var slideeElement = o.slidee ? o.slidee : $(frameElement).children().eq(0)[0];
+        var slideeElement = o.slidee ? o.slidee : sibling(frameElement.firstChild)[0];
         var frameSize = 0;
         var slideeSize = 0;
         var pos = {
@@ -75,19 +75,12 @@
             dest: 0
         };
 
-        // Scrollbar
-        var sb = o.scrollBar;
-        var handle = $(sb).children().eq(0)[0];
-        var sbSize = 0;
-        var handleSize = 0;
         var hPos = {
             start: 0,
             end: 0,
             cur: 0
         };
 
-        // Pagesbar
-        var pagesBar = o.pagesBar;
         var pagesElements = [];
         var pages = [];
 
@@ -105,8 +98,6 @@
         // Styles
         var frameStyles = new StyleRestorer(frameElement);
         var slideeStyles = new StyleRestorer(slideeElement);
-        var sbStyles = new StyleRestorer(sb);
-        var handleStyles = new StyleRestorer(handle);
 
         // Navigation type booleans
         var basicNav = o.itemNav === 'basic';
@@ -116,13 +107,7 @@
 
         // Miscellaneous
         var scrollSource = o.scrollSource ? o.scrollSource : frameElement;
-        var $dragSource = o.dragSource ? $(o.dragSource) : $(frameElement);
-        var $forwardButton = $(o.forward);
-        var $backwardButton = $(o.backward);
-        var $prevButton = $(o.prev);
-        var $nextButton = $(o.next);
-        var $prevPageButton = $(o.prevPage);
-        var $nextPageButton = $(o.nextPage);
+        var dragSourceElement = o.dragSource ? o.dragSource : frameElement;
         var callbacks = {};
         var last = {};
         var animation = {};
@@ -158,6 +143,17 @@
         self.options = o;
         self.dragging = dragging;
 
+        function sibling( n, elem ) {
+            var matched = [];
+
+            for ( ; n; n = n.nextSibling ) {
+                if ( n.nodeType === 1 && n !== elem ) {
+                    matched.push( n );
+                }
+            }
+            return matched;
+        }
+
         /**
 		 * Loading function.
 		 *
@@ -172,11 +168,10 @@
             var lastPagesCount = pages.length;
 
             // Save old position
-            pos.old = $.extend({}, pos);
+            pos.old = extend({}, pos);
 
             // Reset global variables
-            frameSize = parallax ? 0 : $(frameElement)[o.horizontal ? 'width' : 'height']();
-            sbSize = $(sb)[o.horizontal ? 'width' : 'height']();
+            frameSize = parallax ? 0 : getWidthOrHeight(frameElement, o.horizontal ? 'width' : 'height');
             slideeSize = parallax ? frame : slideeElement[o.horizontal ? 'offsetWidth' : 'offsetHeight'];
             pages.length = 0;
 
@@ -197,8 +192,16 @@
                 var slideeComputedStyle = getComputedStyle(slideeElement, null);
                 var paddingStart = getStylePx(slideeComputedStyle, o.horizontal ? 'padding-left' : 'padding-top');
                 var paddingEnd = getStylePx(slideeComputedStyle, o.horizontal ? 'padding-right' : 'padding-bottom');
-                var borderBox = $(itemElements).css('boxSizing') === 'border-box';
-                var areFloated = $(itemElements).css('float') !== 'none';
+
+                var borderBox = true;
+                var areFloated = false;
+
+                if (itemElements.length) {
+                    var itemComputedStyle = getComputedStyle(itemElements[0], null);
+                    borderBox = itemComputedStyle.getPropertyValue('box-sizing') === 'border-box';
+                    areFloated = itemComputedStyle.getPropertyValue('float') !== 'none';
+                }
+
                 var ignoredMargin = 0;
                 var lastItemIndex = itemElements.length - 1;
                 var lastItem;
@@ -285,24 +288,6 @@
             // Update relative positions
             updateRelatives();
 
-            // Scrollbar
-            if (handle && sbSize > 0) {
-                // Stretch scrollbar handle to represent the visible area
-                if (o.dynamicHandle) {
-                    handleSize = pos.start === pos.end ? sbSize : round(sbSize * frameSize / slideeSize);
-                    handleSize = within(handleSize, o.minHandleSize, sbSize);
-                    handle.style[o.horizontal ? 'width' : 'height'] = handleSize + 'px';
-                } else {
-                    handleSize = $(handle)[o.horizontal ? 'outerWidth' : 'outerHeight']();
-                }
-
-                hPos.end = sbSize - handleSize;
-
-                if (!renderID) {
-                    syncScrollbar();
-                }
-            }
-
             // Pages
             if (!parallax && frameSize > 0) {
                 var tempPagePos = pos.start;
@@ -310,7 +295,7 @@
 
                 // Populate pages array
                 if (itemNav) {
-                    $.each(items, function (i, item) {
+                    items.forEach(function (item) {
                         if (forceCenteredNav) {
                             pages.push(item.center);
                         } else if (item.start + item.size > tempPagePos && tempPagePos <= pos.end) {
@@ -328,23 +313,11 @@
                         tempPagePos += frameSize;
                     }
                 }
-
-                // Pages bar
-                if (pagesBar && lastPagesCount !== pages.length) {
-                    for (var i = 0; i < pages.length; i++) {
-                        pagesHtml += o.pageBuilder.call(self, i);
-                    }
-                    pagesBar.innerHTML = pagesHtml;
-                    pagesElements = $(pagesBar).children().get();
-                    pagesElements[rel.activePage].classList.add(o.activeClass);
-                }
             }
 
             // Extend relative variables object with some useful info
             rel.slideeSize = slideeSize;
             rel.frameSize = frameSize;
-            rel.sbSize = sbSize;
-            rel.handleSize = handleSize;
 
             // Activate requested position
             if (itemNav) {
@@ -367,6 +340,93 @@
             // Trigger load event
             trigger('load');
         }
+
+        var pnum = (/[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/).source;
+        var rnumnonpx = new RegExp("^(" + pnum + ")(?!px)[a-z%]+$", "i");
+        function getWidthOrHeight(elem, name, extra) {
+
+            // Start with offset property, which is equivalent to the border-box value
+            var valueIsBorderBox = true,
+                val = name === "width" ? elem.offsetWidth : elem.offsetHeight,
+                styles = getComputedStyle(elem, null),
+                isBorderBox = styles.getPropertyValue("box-sizing") === "border-box";
+
+            // Some non-html elements return undefined for offsetWidth, so check for null/undefined
+            // svg - https://bugzilla.mozilla.org/show_bug.cgi?id=649285
+            // MathML - https://bugzilla.mozilla.org/show_bug.cgi?id=491668
+            if (val <= 0 || val == null) {
+                // Fall back to computed then uncomputed css if necessary
+                //val = curCSS(elem, name, styles);
+                if (val < 0 || val == null) {
+                    val = elem.style[name];
+                }
+
+                // Computed unit is not pixels. Stop here and return.
+                if (rnumnonpx.test(val)) {
+                    return val;
+                }
+
+                // Check for style in case a browser which returns unreliable values
+                // for getComputedStyle silently falls back to the reliable elem.style
+                valueIsBorderBox = isBorderBox &&
+                    (support.boxSizingReliable() || val === elem.style[name]);
+
+                // Normalize "", auto, and prepare for extra
+                val = parseFloat(val) || 0;
+            }
+
+            // Use the active box-sizing model to add/subtract irrelevant styles
+            return (val +
+                augmentWidthOrHeight(
+                    elem,
+                    name,
+                    extra || (isBorderBox ? "border" : "content"),
+                    valueIsBorderBox,
+                    styles
+                )
+            );
+        }
+
+        var cssExpand = ["Top", "Right", "Bottom", "Left"];
+        function augmentWidthOrHeight(elem, name, extra, isBorderBox, styles) {
+            var i = extra === (isBorderBox ? "border" : "content") ?
+                // If we already have the right measurement, avoid augmentation
+                4 :
+                // Otherwise initialize for horizontal or vertical properties
+                name === "width" ? 1 : 0,
+
+                val = 0;
+
+            for (; i < 4; i += 2) {
+                // Both box models exclude margin, so add it if we want it
+                if (extra === "margin") {
+                    //val += jQuery.css(elem, extra + cssExpand[i], true, styles);
+                }
+
+                if (isBorderBox) {
+                    // border-box includes padding, so remove it if we want content
+                    if (extra === "content") {
+                        //val -= jQuery.css(elem, "padding" + cssExpand[i], true, styles);
+                    }
+
+                    // At this point, extra isn't border nor margin, so remove border
+                    if (extra !== "margin") {
+                        //val -= jQuery.css(elem, "border" + cssExpand[i] + "Width", true, styles);
+                    }
+                } else {
+                    // At this point, extra isn't content, so add padding
+                    //val += jQuery.css(elem, "padding" + cssExpand[i], true, styles);
+
+                    // At this point, extra isn't content nor padding, so add border
+                    if (extra !== "padding") {
+                        //val += jQuery.css(elem, "border" + cssExpand[i] + "Width", true, styles);
+                    }
+                }
+            }
+
+            return val;
+        }
+
         self.reload = function () { load(); };
 
         /**
@@ -442,8 +502,6 @@
 
             // Synchronize states
             updateRelatives();
-            updateButtonsState();
-            syncPagesbar();
         }
 
         function renderAnimate() {
@@ -522,7 +580,7 @@
                 // Use tweening for basic animations with known end point
             else {
                 animation.time = min(+new Date() - animation.start, o.speed);
-                pos.cur = animation.from + animation.delta * $.easing[o.easing](animation.time / o.speed, animation.time, 0, 1, o.speed);
+                pos.cur = animation.from + animation.delta * jQuery.easing[o.easing](animation.time / o.speed, animation.time, 0, 1, o.speed);
             }
 
             // If there is nothing more to render break the rendering loop, otherwise request new animation frame.
@@ -547,45 +605,6 @@
             // When animation reached the end, and dragging is not active, trigger moveEnd
             if (!renderID && dragging.released) {
                 trigger('moveEnd');
-            }
-
-            syncScrollbar();
-        }
-
-        /**
-		 * Synchronizes scrollbar with the SLIDEE.
-		 *
-		 * @return {Void}
-		 */
-        function syncScrollbar() {
-            if (handle) {
-                hPos.cur = pos.start === pos.end ? 0 : (((dragging.init && !dragging.slidee) ? pos.dest : pos.cur) - pos.start) / (pos.end - pos.start) * hPos.end;
-                hPos.cur = within(round(hPos.cur), hPos.start, hPos.end);
-                if (last.hPos !== hPos.cur) {
-                    last.hPos = hPos.cur;
-                    if (transform) {
-                        handle.style[transform] = gpuAcceleration + (o.horizontal ? 'translateX' : 'translateY') + '(' + hPos.cur + 'px)';
-                    } else {
-                        handle.style[o.horizontal ? 'left' : 'top'] = hPos.cur + 'px';
-                    }
-                }
-            }
-        }
-
-        /**
-		 * Synchronizes pagesbar with SLIDEE.
-		 *
-		 * @return {Void}
-		 */
-        function syncPagesbar() {
-            if (pagesElements[0] && last.page !== rel.activePage) {
-                last.page = rel.activePage;
-
-                pagesElements.forEach(function(page) {
-                    page.classList.remove(o.activeClass);
-                });
-                pagesElements[rel.activePage].classList.add(o.activeClass)
-                trigger('activePage', last.page);
             }
         }
 
@@ -704,42 +723,6 @@
                 dragging.init = 0;
                 dragging.released = 1;
             }
-        };
-
-        /**
-		 * Activate previous item.
-		 *
-		 * @return {Void}
-		 */
-        self.prev = function () {
-            self.activate(rel.activeItem == null ? 0 : rel.activeItem - 1);
-        };
-
-        /**
-		 * Activate next item.
-		 *
-		 * @return {Void}
-		 */
-        self.next = function () {
-            self.activate(rel.activeItem == null ? 0 : rel.activeItem + 1);
-        };
-
-        /**
-		 * Activate previous page.
-		 *
-		 * @return {Void}
-		 */
-        self.prevPage = function () {
-            self.activatePage(rel.activePage - 1);
-        };
-
-        /**
-		 * Activate next page.
-		 *
-		 * @return {Void}
-		 */
-        self.nextPage = function () {
-            self.activatePage(rel.activePage + 1);
         };
 
         /**
@@ -898,7 +881,6 @@
 
                 last.active = rel.activeItem = index;
 
-                updateButtonsState();
                 trigger('active', index);
             }
 
@@ -1018,72 +1000,15 @@
 		 * @return {Void}
 		 */
         function updateRelatives(newPos) {
-            $.extend(rel, getRelatives(newPos));
+            extend(rel, getRelatives(newPos));
         }
 
-        /**
-		 * Disable navigation buttons when needed.
-		 *
-		 * Adds disabledClass, and when the button is <button> or <input>, activates :disabled state.
-		 *
-		 * @return {Void}
-		 */
-        function updateButtonsState() {
-            var isStart = pos.dest <= pos.start;
-            var isEnd = pos.dest >= pos.end;
-            var slideePosState = (isStart ? 1 : 0) | (isEnd ? 2 : 0);
-
-            // Update paging buttons only if there has been a change in SLIDEE position
-            if (last.slideePosState !== slideePosState) {
-                last.slideePosState = slideePosState;
-
-                if ($prevPageButton.is('button,input')) {
-                    $prevPageButton.prop('disabled', isStart);
-                }
-
-                if ($nextPageButton.is('button,input')) {
-                    $nextPageButton.prop('disabled', isEnd);
-                }
-
-                $prevPageButton.add($backwardButton)[isStart ? 'addClass' : 'removeClass'](o.disabledClass);
-                $nextPageButton.add($forwardButton)[isEnd ? 'addClass' : 'removeClass'](o.disabledClass);
-            }
-
-            // Forward & Backward buttons need a separate state caching because we cannot "property disable"
-            // them while they are being used, as disabled buttons stop emitting mouse events.
-            if (last.fwdbwdState !== slideePosState && dragging.released) {
-                last.fwdbwdState = slideePosState;
-
-                if ($backwardButton.is('button,input')) {
-                    $backwardButton.prop('disabled', isStart);
-                }
-
-                if ($forwardButton.is('button,input')) {
-                    $forwardButton.prop('disabled', isEnd);
-                }
-            }
-
-            // Item navigation
-            if (itemNav && rel.activeItem != null) {
-                var isFirst = rel.activeItem === 0;
-                var isLast = rel.activeItem >= items.length - 1;
-                var itemsButtonState = (isFirst ? 1 : 0) | (isLast ? 2 : 0);
-
-                if (last.itemsButtonState !== itemsButtonState) {
-                    last.itemsButtonState = itemsButtonState;
-
-                    if ($prevButton.is('button,input')) {
-                        $prevButton.prop('disabled', isFirst);
-                    }
-
-                    if ($nextButton.is('button,input')) {
-                        $nextButton.prop('disabled', isLast);
-                    }
-
-                    $prevButton[isFirst ? 'addClass' : 'removeClass'](o.disabledClass);
-                    $nextButton[isLast ? 'addClass' : 'removeClass'](o.disabledClass);
-                }
-            }
+        function extend() {
+            for (var i = 1; i < arguments.length; i++)
+                for (var key in arguments[i])
+                    if (arguments[i].hasOwnProperty(key))
+                        arguments[0][key] = arguments[i][key];
+            return arguments[0];
         }
 
         /**
@@ -1147,22 +1072,6 @@
 		 */
         self.toggle = function () {
             self[cycleID ? 'pause' : 'resume']();
-        };
-
-        /**
-		 * Updates a signle or multiple option values.
-		 *
-		 * @param {Mixed} name  Name of the option that should be updated, or object that will extend the options.
-		 * @param {Mixed} value New option value.
-		 *
-		 * @return {Void}
-		 */
-        self.set = function (name, value) {
-            if ($.isPlainObject(name)) {
-                $.extend(o, name);
-            } else if (o.hasOwnProperty(name)) {
-                o[name] = value;
-            }
         };
 
         /**
@@ -1272,17 +1181,6 @@
         }
 
         /**
-		 * Calculate SLIDEE representation of handle position.
-		 *
-		 * @param  {Int} handlePos
-		 *
-		 * @return {Int}
-		 */
-        function handleToSlidee(handlePos) {
-            return round(within(handlePos, hPos.start, hPos.end) / hPos.end * (pos.end - pos.start)) + pos.start;
-        }
-
-        /**
 		 * Keeps track of a dragging delta history.
 		 *
 		 * @return {Void}
@@ -1308,10 +1206,6 @@
             dragging.slidee = source === 'slidee';
         }
 
-        function dragInitHandle(event) {
-            dragInit(event, 'handle');
-        }
-
         function dragInitSlidee(event) {
             dragInit(event, 'slidee');
         }
@@ -1329,11 +1223,6 @@
 
             // Ignore when already in progress, or interactive element in non-touch navivagion
             if (dragging.init || !isTouch && isInteractive(event.target)) {
-                return;
-            }
-
-            // Handle dragging conditions
-            if (source === 'handle' && (!o.dragHandle || hPos.start === hPos.end)) {
                 return;
             }
 
@@ -1383,8 +1272,6 @@
             // Add dragging class
             if (isSlidee) {
                 slideeElement.classList.add(o.draggedClass);
-            } else {
-                handle.classList.add(o.draggedClass);
             }
 
             // Trigger moveStart event
@@ -1477,9 +1364,7 @@
 
             if (dragging.slidee) {
                 slideeElement.classList.remove(o.draggedClass);
-            } else {
-                handle.classList.remove(o.draggedClass);
-            }
+            } 
 
             // Make sure that disableOneEvent is not active in next tick.
             setTimeout(function () {
@@ -1515,41 +1400,6 @@
         function movementReleaseHandler() {
             self.stop();
             document.removeEventListener('mouseup', movementReleaseHandler);
-        }
-
-        /**
-		 * Buttons navigation handler.
-		 *
-		 * @param  {Event} event
-		 *
-		 * @return {Void}
-		 */
-        function buttonsHandler(event) {
-            /*jshint validthis:true */
-            stopDefault(event);
-            switch (this) {
-                case $forwardButton[0]:
-                case $backwardButton[0]:
-                    self.moveBy($forwardButton.is(this) ? o.moveBy : -o.moveBy);
-                    document.addEventListener('mouseup', movementReleaseHandler);
-                    break;
-
-                case $prevButton[0]:
-                    self.prev();
-                    break;
-
-                case $nextButton[0]:
-                    self.next();
-                    break;
-
-                case $prevPageButton[0]:
-                    self.prevPage();
-                    break;
-
-                case $nextPageButton[0]:
-                    self.nextPage();
-                    break;
-            }
         }
 
         /**
@@ -1610,23 +1460,6 @@
         }
 
         /**
-		 * Scrollbar click handler.
-		 *
-		 * @param  {Event} event
-		 *
-		 * @return {Void}
-		 */
-        function scrollbarHandler(event) {
-            // Only clicks on scroll bar. Ignore the handle.
-            if (o.clickBar && event.target === sb) {
-                stopDefault(event);
-                // Calculate new handle position and sync SLIDEE to it
-                var sbOffset = getOffset(sb);
-                slideTo(handleToSlidee((o.horizontal ? event.pageX - sbOffset.left : event.pageY - sbOffset.top) - handleSize / 2));
-            }
-        }
-
-        /**
 		 * Keyboard input handler.
 		 *
 		 * @param  {Event} event
@@ -1680,22 +1513,6 @@
         }
 
         /**
-		 * Click on page button handler.
-		 *
-		 * @param {Event} event
-		 *
-		 * @return {Void}
-		 */
-        function activatePageHandler() {
-            /*jshint validthis:true */
-            // Accept only events from direct pages bar children.
-            var elem = e.target;
-            if (elem.parentNode === pagesBar) {
-                self.activatePage(pagesElements.indexOf(elem));
-            }
-        }
-
-        /**
 		 * Pause on hover handler.
 		 *
 		 * @param  {Event} event
@@ -1743,47 +1560,11 @@
 
             scrollSource.removeEventListener(wheelEvent, scrollHandler);
 
-            // Unbind all events
-            $(scrollSource)
-				.add($forwardButton)
-				.add($backwardButton)
-				.add($prevButton)
-				.add($nextButton)
-				.add($prevPageButton)
-				.add($nextPageButton)
-				.off('.' + namespace);
-
-            if (sb) {
-                sb.removeEventListener(clickEvent, scrollbarHandler);
-            }
-
-            dragInitEventNames.forEach(function (eventName) {
-                handle.removeEventListener(eventName, dragInitHandle);
-            });
-
             // Unbinding specifically as to not nuke out other instances
             document.removeEventListener('keydown', keyboardHandler);
 
-            // Remove classes
-            $prevButton
-				.add($nextButton)
-				.add($prevPageButton)
-				.add($nextPageButton)
-				.removeClass(o.disabledClass);
-
             if (itemElements && rel.activeItem != null) {
                 itemElements[rel.activeItem].classList.remove(o.activeClass);
-            }
-
-            // Remove page items
-            if (pagesBar) {
-                pagesBar.innerHTML = '';
-
-                if (o.activatePageOn) {
-                    o.activateOn.split(' ').forEach(function (eventName) {
-                        pagesBar.removeEventListener(eventName, activatePageHandler);
-                    });
-                }
             }
 
             if (!parallax) {
@@ -1800,10 +1581,6 @@
                 // Restore original styles
                 frameStyles.restore();
                 slideeStyles.restore();
-                sbStyles.restore();
-                handleStyles.restore();
-                // Remove the instance from element data storage
-                $.removeData(frame, namespace);
             }
 
             // Clean up collections
@@ -1838,12 +1615,10 @@
             var holderProps = ['overflow', 'position'];
             var movableProps = ['position', 'webkitTransform', 'msTransform', 'transform', 'left', 'top', 'width', 'height'];
             frameStyles.save.apply(frameStyles, holderProps);
-            sbStyles.save.apply(sbStyles, holderProps);
             slideeStyles.save.apply(slideeStyles, movableProps);
-            handleStyles.save.apply(handleStyles, movableProps);
 
             // Set required styles
-            var movables = [handle];
+            var movables = [];
             if (!parallax) {
 
                 if (slideeElement) {
@@ -1863,41 +1638,13 @@
                     });
                 }
             } else {
-                if (getComputedStyle(sb, null).getPropertyValue('position') === 'static') {
-                    sb.style.position = 'relative';
-                }
                 movables.forEach(function (m) {
                     m.style.position = 'absolute';
                 });
             }
 
-            // Navigation buttons
-            if (o.forward) {
-                $forwardButton.on(mouseDownEvent, buttonsHandler);
-            }
-            if (o.backward) {
-                $backwardButton.on(mouseDownEvent, buttonsHandler);
-            }
-            if (o.prev) {
-                $prevButton.on(clickEvent, buttonsHandler);
-            }
-            if (o.next) {
-                $nextButton.on(clickEvent, buttonsHandler);
-            }
-            if (o.prevPage) {
-                $prevPageButton.on(clickEvent, buttonsHandler);
-            }
-            if (o.nextPage) {
-                $nextPageButton.on(clickEvent, buttonsHandler);
-            }
-
             // Scrolling navigation
             scrollSource.addEventListener(wheelEvent, scrollHandler);
-
-            // Clicking on scrollbar navigation
-            if (sb) {
-                sb.addEventListener(clickEvent, scrollbarHandler);
-            }
 
             // Click on items navigation
             if (itemNav) {
@@ -1908,22 +1655,9 @@
                 }
             }
 
-            // Pages navigation
-            if (pagesBar && o.activatePageOn) {
-                o.activateOn.split(' ').forEach(function (eventName) {
-                    pagesBar.addEventListener(eventName, activatePageHandler, true);
-                });
-            }
-
-            // Dragging navigation
-            $dragSource.on(dragInitEvents, dragInitSlidee);
-
-            // Scrollbar dragging navigation
-            if (handle) {
-                dragInitEventNames.forEach(function (eventName) {
-                    handle.addEventListener(eventName, dragInitHandle);
-                });
-            }
+            dragInitEventNames.forEach(function (eventName) {
+                dragSourceElement.addEventListener(eventName, dragInitSlidee);
+            });
 
             // Keyboard navigation
             document.addEventListener('keydown', keyboardHandler);
@@ -1953,15 +1687,15 @@
     }
 
     Sly.getInstance = function (element) {
-        return $.data(element, namespace);
+        return element[namespace];
     };
 
     Sly.storeInstance = function (element, sly) {
-        return $.data(element, namespace, sly);
+        element[namespace] = sly;
     };
 
     Sly.removeInstance = function (element) {
-        return $.removeData(element, namespace);
+        element[namespace] = null;
     };
 
     /**
@@ -2036,7 +1770,6 @@
     /**
 	 * Parse style to pixels.
 	 *
-	 * @param {Object}   $item    jQuery object with element.
 	 * @param {Property} property CSS property to get the pixels from.
 	 *
 	 * @return {Int}
@@ -2177,21 +1910,11 @@
         clickBar: false, // Enable navigation by clicking on scrollbar.
         syncSpeed: 0.5,   // Handle => SLIDEE synchronization speed, where: 1 = instant, 0 = infinite.
 
-        // Pagesbar
-        pagesBar: null, // Selector or DOM element for pages bar container.
         activatePageOn: null, // Event used to activate page. Can be: click, mouseenter, ...
         pageBuilder:          // Page item generator.
 			function (index) {
 			    return '<li>' + (index + 1) + '</li>';
 			},
-
-        // Navigation buttons
-        forward: null, // Selector or DOM element for "forward movement" button.
-        backward: null, // Selector or DOM element for "backward movement" button.
-        prev: null, // Selector or DOM element for "previous item" button.
-        next: null, // Selector or DOM element for "next item" button.
-        prevPage: null, // Selector or DOM element for "previous page" button.
-        nextPage: null, // Selector or DOM element for "next page" button.
 
         // Automated cycling
         cycleBy: null,  // Enable automatic cycling by 'items' or 'pages'.
@@ -2211,4 +1934,4 @@
         activeClass: 'active',  // Class for active items and pages.
         disabledClass: 'disabled' // Class for disabled navigation elements.
     };
-}(jQuery, window));
+}(window));
