@@ -35,8 +35,7 @@ define([], function () {
 
                 var now = new Date().getTime();
 
-                var threshold = options.animateFocus ? 50 : 50;
-                var animate = (now - lastFocus) > threshold;
+                var animate = (now - lastFocus) > 50;
                 options.slyFrame.toCenter(focused, !animate);
                 lastFocus = now;
                 startZoomTimer();
