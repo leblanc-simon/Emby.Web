@@ -534,12 +534,18 @@
 
             if (!animation.immediate) {
                 animationConfig.easing = 'ease-in-out-sine';
+
+            } else {
+                //slideeElement.style.transform = 'translate3d(' + (-round(animation.to)) + 'px, 0, 0)';
+                //pos.cur = animation.to;
+                //return;
             }
 
             var animationInstance = slideeElement.animate(keyframes, animationConfig);
 
             animationInstance.finished.then(function () {
 
+                //slideeElement.style.transform = 'translate3d(' + (-round(animation.to)) + 'px, 0, 0)';
                 pos.cur = animation.to;
             });
         }
@@ -1633,9 +1639,9 @@
             }
             if (transform) {
                 if (gpuAcceleration) {
-                    movables.forEach(function (m) {
-                        m.style.transform = gpuAcceleration;
-                    });
+                    //movables.forEach(function (m) {
+                    //    m.style.transform = gpuAcceleration;
+                    //});
                 }
             } else {
                 movables.forEach(function (m) {
