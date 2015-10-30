@@ -129,10 +129,10 @@ a {
 
 .pageContainer {
     position: absolute;
-    top: 90px;
+    top: 0;
     left: 0;
     right: 0;
-    bottom: 20px;
+    bottom: 0;
     overflow: hidden;
     display: -ms-flex;
     display: -webkit-flex;
@@ -161,14 +161,6 @@ a {
 
 .itemScrollFrame.scrollFrameY {
     height: 100%;
-}
-
-@media all and (min-height: 720px) {
-
-    .pageContainer {
-        top: 132px;
-        bottom: 132px;
-    }
 }
 
 /* 1080p */
@@ -598,6 +590,7 @@ paper-item-body .overview {
     width: 80%;
     margin: 1em auto 0;
     bottom: 0;
+    top: 12%;
 }
 
 .playlistIndexIndicatorImage {
