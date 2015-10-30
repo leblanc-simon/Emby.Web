@@ -86,7 +86,6 @@ button.card {
 .transformCard .cardBox {
     animation: scaleCardUp .4s;
     animation-fill-mode: both;
-    z-index: 9999;
 }
 
 @keyframes scaleCardUp {
