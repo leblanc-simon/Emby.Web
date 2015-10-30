@@ -877,7 +877,7 @@
             for (var i = 0, textLinesLength = textlines.length; i < textLinesLength; i++) {
 
                 if (i == 0 && isLargeStyle) {
-                    html += '<h2>';
+                    html += '<h2 class="listItemTitle">';
                 }
                 else if (i == 0) {
                     html += '<div>';

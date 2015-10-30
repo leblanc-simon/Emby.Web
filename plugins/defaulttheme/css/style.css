@@ -153,6 +153,9 @@ a {
 
 .itemScrollFrame.scrollFrameX {
     padding-left: 70px;
+}
+
+.homePageContainer .itemScrollFrame.scrollFrameX {
     padding-bottom: 30px;
 }
 
@@ -369,6 +372,10 @@ paper-item-body .paperIconItemMediaInfo {
         margin-left: -3px;
     }
 
+h2.listItemTitle {
+    margin: 0;
+}
+
 .starRatingContainer {
     display: inline-block;
     vertical-align: middle;
@@ -390,7 +397,7 @@ paper-item-body .overview {
 
 .selectedItemInfo {
     position: fixed;
-    bottom: 30px;
+    bottom: 25px;
     left: 0;
     right: 10%;
     max-width: 60%;
@@ -398,6 +405,7 @@ paper-item-body .overview {
 
 .homePageContainer .selectedItemInfo {
     right: 2%;
+    bottom: 25px;
 }
 
 .selectedItemInfo h2 {
@@ -636,5 +644,9 @@ paper-item-body .overview {
 }
 
 .card {
-    nav-right: auto!important;
+    nav-right: auto !important;
+}
+
+.alphaPicker {
+    text-align: center;
 }
