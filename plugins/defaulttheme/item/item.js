@@ -112,7 +112,10 @@
 
         var url = Emby.Models.logoImageUrl(item, {});
 
-        if (url) {
+        if (item.Type == 'BoxSet') {
+            Emby.Page.setTitle(item.Name);
+        }
+        else if (url) {
 
             var pageTitle = document.querySelector('.pageTitle');
             pageTitle.style.backgroundImage = "url('" + url + "')";
@@ -171,7 +174,11 @@
 
         var nameContainer = view.querySelector('.nameContainer');
 
-        nameContainer.innerHTML = '<h1>' + DefaultTheme.CardBuilder.getDisplayName(item) + '</h1>';
+        if (item.Type == 'BoxSet') {
+            nameContainer.classList.add('hide');
+        } else {
+            nameContainer.innerHTML = '<h1>' + DefaultTheme.CardBuilder.getDisplayName(item) + '</h1>';
+        }
     }
 
     function renderImage(view, item) {
@@ -227,7 +234,7 @@
 
             var detailImage = view.querySelector('.detailImageContainer');
 
-            if (url && item.Type != "Season") {
+            if (url && item.Type != "Season" && item.Type != "BoxSet") {
                 detailImage.classList.remove('hide');
                 detailImage.innerHTML = '<img class="detailImage" src="' + url + '" />' + DefaultTheme.CardBuilder.getProgressBarHtml(item);
             } else {
@@ -312,17 +319,17 @@
 
         var mainSection = view.querySelector('.mainSection');
 
-        if (item.Type != "Season" && item.Type != "MusicArtist" && item.Type != "MusicAlbum") {
+        if (item.Type != "Season" && item.Type != "MusicArtist" && item.Type != "MusicAlbum" && item.Type != "BoxSet") {
             mainSection.style.minHeight = (Math.round(view.querySelector('.itemPageContainer').offsetHeight * .72)) + 'px';
             mainSection.classList.add('smallBottomMargin');
         } else {
             mainSection.classList.remove('smallBottomMargin');
         }
 
-        if (item.Type == "Season") {
+        if (item.Type == "Season" || item.Type == "BoxSet") {
             mainSection.classList.add('seasonMainSection');
         }
-        else if (item.Type == "MusicArtist" || item.Type == "BoxSet" || enableTrackList(item)) {
+        else if (item.Type == "MusicArtist" || enableTrackList(item)) {
             mainSection.classList.add('miniMainSection');
         }
         else {
@@ -338,7 +345,7 @@
         }
 
         var overviewElem = view.querySelector('.overview')
-        if (item.Overview && item.Type != 'MusicArtist' && item.Type != 'MusicAlbum' && item.Type != 'Season') {
+        if (item.Overview && item.Type != 'MusicArtist' && item.Type != 'MusicAlbum' && item.Type != 'Season' && item.Type != 'BoxSet') {
             overviewElem.classList.remove('hide');
             overviewElem.innerHTML = item.Overview;
         } else {
@@ -357,7 +364,7 @@
             view.querySelector('.btnPlay').classList.add('hide');
         }
 
-        var mediaInfoHtml = item.Type == 'Season' ? '' : DefaultTheme.CardBuilder.getMediaInfoHtml(item);
+        var mediaInfoHtml = item.Type == 'Season' || item.Type == 'BoxSet' ? '' : DefaultTheme.CardBuilder.getMediaInfoHtml(item);
         var mediaInfoElem = view.querySelector('.mediaInfo');
         var sideMediaInfoElem = view.querySelector('.sideMediaInfo');
 
@@ -586,6 +593,9 @@
             headerText.classList.remove('hide');
 
         } else if (item.Type == "MusicAlbum") {
+            headerText.classList.add('hide');
+
+        } else if (item.Type == "BoxSet") {
             headerText.classList.add('hide');
 
         } else {
