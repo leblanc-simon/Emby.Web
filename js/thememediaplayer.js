@@ -74,7 +74,12 @@
 
             if (item) {
                 loadThemeMedia(item);
-            } else {
+            }
+            else if (e.detail.id == 'defaulttheme-nowplaying') {
+                // Do nothing here, allow it to keep playing
+                // TODO: Make this modular for other themes
+            }
+            else {
                 playThemeSongs([], null);
             }
         }

@@ -56,6 +56,8 @@
 
                 Emby.Backdrop.clear();
             }
+
+            updatePlaylist();
         }
 
         function onPlaybackStart(e, player) {
@@ -85,6 +87,7 @@
             updateVolume(player);
             updateTime(player);
             updatePlaystate(player);
+            updatePlaylist();
         }
 
         function releasePlayer() {
@@ -110,6 +113,7 @@
 
         function onPlaystateChange(e) {
             updatePlaystate(this);
+            updatePlaylist();
         }
 
         function updatePlaystate(player) {
@@ -149,6 +153,17 @@
                 view.querySelector('.buttonMute').icon = 'volume-off';
             } else {
                 view.querySelector('.buttonMute').icon = 'volume-up';
+            }
+        }
+
+        function updatePlaylist() {
+
+            var items = Emby.PlaybackManager.playlist();
+
+            if (items.length > 1) {
+                view.querySelector('.btnPlaylist').disabled = false;
+            } else {
+                view.querySelector('.btnPlaylist').disabled = true;
             }
         }
 
