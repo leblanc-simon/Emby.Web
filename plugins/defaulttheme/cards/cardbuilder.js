@@ -792,6 +792,8 @@
         var groupTitle = '';
         var action = options.action || 'link';
 
+        var isLargeStyle = options.imageSize == 'large';
+
         outerHtml += items.map(function (item) {
 
             var html = '';
@@ -800,7 +802,7 @@
 
             var downloadWidth = 80;
 
-            if (options.imageSize == 'large') {
+            if (isLargeStyle) {
                 cssClass += " largeImage";
                 downloadWidth = 500;
             }
@@ -874,13 +876,20 @@
 
             for (var i = 0, textLinesLength = textlines.length; i < textLinesLength; i++) {
 
-                if (i == 0) {
+                if (i == 0 && isLargeStyle) {
+                    html += '<h2>';
+                }
+                else if (i == 0) {
                     html += '<div>';
                 } else {
                     html += '<div secondary>';
                 }
                 html += textlines[i] || '&nbsp;';
-                html += '</div>';
+                if (i == 0 && isLargeStyle) {
+                    html += '</h2>';
+                } else {
+                    html += '</div>';
+                }
             }
 
             if (!options.enableSideMediaInfo) {
