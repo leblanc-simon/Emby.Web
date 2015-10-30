@@ -508,8 +508,10 @@
 
         var tagName = 'button';
 
+        var prefix = (item.SortName || item.Name)[0];
+
         return '\
-<' + tagName + ' data-index="' + index + '" data-action="' + action + '" data-isfolder="' + item.IsFolder + '" data-id="' + item.Id + '" data-type="' + item.Type + '" raised class="' + className + '"> \
+<' + tagName + ' data-index="' + index + '" data-action="' + action + '" data-isfolder="' + item.IsFolder + '" data-id="' + item.Id + '" data-type="' + item.Type + '" data-prefix="' + prefix + '" raised class="' + className + '"> \
 ' + cardImageContainerOpen + innerCardFooter + data + cardImageContainerClose + '\
 </' + tagName + '>';
     }

@@ -2,10 +2,10 @@
 
     document.addEventListener("viewinit-defaulttheme-movies", function (e) {
 
-        new musicPage(e.detail.element, e.detail.params);
+        new moviesPage(e.detail.element, e.detail.params);
     });
 
-    function musicPage(view, params) {
+    function moviesPage(view, params) {
 
         var self = this;
 
@@ -30,9 +30,21 @@
             if (self.tabbedPage) {
                 self.tabbedPage.destroy();
             }
+            if (self.alphaPicker) {
+                self.alphaPicker.destroy();
+            }
         });
 
         function renderTabs(view, initialTabId, pageInstance, params) {
+
+            require(['alphapicker'], function (alphaPicker) {
+
+                self.alphaPicker = new alphaPicker({
+                    element: view.querySelector('.alphaPicker'),
+                    itemsContainer: view.querySelector('.contentScrollSlider'),
+                    itemClass: 'card'
+                });
+            });
 
             var tabs = [
             {
@@ -82,9 +94,12 @@
                     tabbedPage.hasLoaded = true;
                 }
 
+                var showAlphaPicker = false;
+
                 switch (id) {
 
                     case 'movies':
+                        showAlphaPicker = true;
                         renderMovies(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
                         break;
                     case 'years':
@@ -101,6 +116,11 @@
                         break;
                     default:
                         break;
+                }
+
+                if (self.alphaPicker) {
+                    self.alphaPicker.visible(showAlphaPicker);
+                    self.alphaPicker.enabled(showAlphaPicker);
                 }
             });
         }
@@ -260,7 +280,7 @@
                 selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
                 selectedIndexElement: page.querySelector('.selectedIndex'),
                 slyFrame: slyFrame,
-                onRender: function() {
+                onRender: function () {
                     if (resolve) {
                         resolve();
                         resolve = null;

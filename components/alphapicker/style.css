@@ -1,0 +1,24 @@
+.alphaPicker {
+    text-align: center;
+}
+
+.alphaPickerButton {
+    min-width: initial;
+    margin: 0;
+    padding: .1em .4em !important;
+    color: #888;
+    display: inline-block;
+    width: auto;
+    border-radius: 2px;
+    font-weight: inherit;
+}
+
+    .alphaPickerButton.selected {
+        color: #52B54B;
+        background-color: transparent;
+    }
+
+    .alphaPickerButton:focus {
+        background-color: #52B54B;
+        color: #fff;
+    }
