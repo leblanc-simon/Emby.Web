@@ -196,6 +196,7 @@
             actionsheet: "components/actionsheet",
             playmenu: "components/playmenu",
             inputreceiver: "components/inputreceiver",
+            alphapicker: "components/alphapicker/alphapicker",
             paperdialoghelper: "components/paperdialoghelper",
             slideshow: "components/slideshow/slideshow",
             howler: 'bower_components/howler.js/howler.min'
