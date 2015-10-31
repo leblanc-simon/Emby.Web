@@ -432,16 +432,17 @@ paper-item-body .overview {
     }
 
 .selectedItemInfoInnerWithLogo {
+    padding-left: 18%;
 }
 
 .selectedItemInfoLogo {
     position: absolute;
-    top: 10%;
-    left: -18%;
+    top: 12.5%;
     width: 16%;
-    bottom: 10%;
+    bottom: 12.5%;
+    left: 0;
     background-repeat: no-repeat;
-    background-position: center center;
+    background-position: right center;
     background-size: contain;
 }
 
