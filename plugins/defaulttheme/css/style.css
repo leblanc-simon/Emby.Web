@@ -166,7 +166,7 @@ a {
 }
 
 .homePageContainer {
-    top: 14%;
+    top: 13%;
 }
 
 .itemScrollFrame.scrollFrameY {
@@ -502,8 +502,8 @@ paper-item-body .overview {
     }
 
     .horizontalPageContent .portraitCard .cardImageContainer {
-        width: 209px;
-        height: 313.5px;
+        width: 208px;
+        height: 312px;
     }
 
     .horizontalPageContent .loginSquareCard {
