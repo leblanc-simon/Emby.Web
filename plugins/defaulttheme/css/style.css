@@ -648,8 +648,8 @@ paper-dialog.dialog {
     right: 0;
     bottom: 0;
     position: fixed;
-    max-width: none;
-    max-height: none;
+    max-width: none !important;
+    max-height: none !important;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -2,6 +2,11 @@
     <div class="centeredPageContent">
         <form class="connectLoginForm" style="text-align: left; margin: 0 auto;">
 
+            <div style="display: none;">
+                <!-- Terrible, but this hidden field prevents the yellow background in chrome -->
+                <input type="text" id="PreventChromeAutocomplete" name="PreventChromeAutocomplete" autocomplete="address-level4" />
+            </div>
+
             <h1 style="text-align: left;">${HeaderSignInWithConnect}</h1>
             <div>
                 <paper-input autofocus class="txtConnectUserName" label="${LabelEnterConnectUserName}" required="required"></paper-input>

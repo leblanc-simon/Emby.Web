@@ -443,7 +443,8 @@
 
         }).join('');
 
-        view.querySelector('.scrollSlider').innerHTML = html;
+        var scrollSlider = view.querySelector('.scrollSlider');
+        scrollSlider.innerHTML = html;
 
         require(["Sly", 'loading'], function (Sly, loading) {
 
@@ -452,6 +453,8 @@
             if (initScroller) {
                 createHorizontalScroller(view, Sly);
             }
+
+            Emby.FocusManager.autoFocus(scrollSlider, true);
         });
     }
 
@@ -506,7 +509,8 @@
 
                 require(['alert'], function (alert) {
                     alert({
-                        text: Globalize.translate('MessageInvalidUser')
+                        text: Globalize.translate('MessageInvalidUser'),
+                        title: Globalize.translate('SignInError')
                     });
                 });
             });
