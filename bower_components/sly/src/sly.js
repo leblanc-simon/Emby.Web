@@ -504,6 +504,7 @@
             updateRelatives();
         }
 
+        var scrollEvent = new CustomEvent("scroll");
         function renderAnimate() {
 
             var obj = getComputedStyle(slideeElement, null).getPropertyValue('transform').match(/([-+]?(?:\d*\.)?\d+)\D*, ([-+]?(?:\d*\.)?\d+)\D*\)/);
@@ -547,6 +548,7 @@
 
                 //slideeElement.style.transform = 'translate3d(' + (-round(animation.to)) + 'px, 0, 0)';
                 pos.cur = animation.to;
+                document.dispatchEvent(scrollEvent);
             });
         }
 

@@ -123,6 +123,21 @@
         page.querySelector('.viewsScrollSlider').classList.add('focusable');
         page.querySelector('.viewsScrollSlider').focus = focusViewSlider;
 
+        function onAlphaPickerValueChanged() {
+
+            var value = pageOptions.alphaPicker.value();
+
+            var card = contentScrollSlider.querySelector('.card[data-prefix^=\'' + value + '\']');
+
+            if (card) {
+                self.bodySlyFrame.toCenter(card, false);
+            }
+        }
+
+        if (pageOptions.alphaPicker) {
+            pageOptions.alphaPicker.on('alphavaluechanged', onAlphaPickerValueChanged);
+        }
+
         function focusViewSlider() {
 
             var selected = this.querySelector('.selected');
@@ -218,6 +233,11 @@
         }
 
         self.destroy = function () {
+
+            if (pageOptions.alphaPicker) {
+                pageOptions.alphaPicker.off('alphavaluechanged', onAlphaPickerValueChanged);
+            }
+
             if (self.focusHandler) {
                 self.focusHandler.destroy();
                 self.focusHandler = null
