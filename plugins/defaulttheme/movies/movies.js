@@ -44,35 +44,38 @@
                     itemsContainer: view.querySelector('.contentScrollSlider'),
                     itemClass: 'card'
                 });
+
+                var tabs = [
+                {
+                    Name: Globalize.translate('Movies'),
+                    Id: "movies"
+                },
+                {
+                    Name: Globalize.translate('Collections'),
+                    Id: "collections"
+                },
+                {
+                    Name: Globalize.translate('Genres'),
+                    Id: "genres"
+                },
+                {
+                    Name: Globalize.translate('Years'),
+                    Id: "years"
+                },
+                {
+                    Name: Globalize.translate('Favorites'),
+                    Id: "favorites"
+                }];
+
+                var tabbedPage = new DefaultTheme.TabbedPage(view, {
+                    alphaPicker: self.alphaPicker
+                });
+
+                tabbedPage.loadViewContent = loadViewContent;
+                tabbedPage.params = params;
+                tabbedPage.renderTabs(tabs, initialTabId);
+                pageInstance.tabbedPage = tabbedPage;
             });
-
-            var tabs = [
-            {
-                Name: Globalize.translate('Movies'),
-                Id: "movies"
-            },
-            {
-                Name: Globalize.translate('Collections'),
-                Id: "collections"
-            },
-            {
-                Name: Globalize.translate('Genres'),
-                Id: "genres"
-            },
-            {
-                Name: Globalize.translate('Years'),
-                Id: "years"
-            },
-            {
-                Name: Globalize.translate('Favorites'),
-                Id: "favorites"
-            }];
-
-            var tabbedPage = new DefaultTheme.TabbedPage(view);
-            tabbedPage.loadViewContent = loadViewContent;
-            tabbedPage.params = params;
-            tabbedPage.renderTabs(tabs, initialTabId);
-            pageInstance.tabbedPage = tabbedPage;
         }
 
         function loadViewContent(page, id, type) {
@@ -206,7 +209,8 @@
                         ParentId: pageParams.parentid,
                         IncludeItemTypes: "Movie",
                         Recursive: true,
-                        SortBy: "SortName"
+                        SortBy: "SortName",
+                        Fields: "SortName"
                     });
                 },
                 listCountElement: page.querySelector('.listCount'),

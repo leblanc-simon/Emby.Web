@@ -174,67 +174,75 @@
                 return;
             }
 
+            var focusableContainer = Emby.Dom.parentWithClass(originalElement, 'focusable');
+
             var rect = getViewportBoundingClientRect(activeElement);
             var focusableElements = [];
 
             for (var i = 0, length = focusable.length; i < length; i++) {
                 var curr = focusable[i];
-                if (curr != activeElement) {
 
-                    var elementRect = getViewportBoundingClientRect(curr);
-
-                    switch (direction) {
-
-                        case 0:
-                            // left
-                            if (elementRect.left >= rect.left) {
-                                continue;
-                            }
-                            if (elementRect.right == rect.right) {
-                                continue;
-                            }
-                            if (elementRect.right > rect.left + 10) {
-                                continue;
-                            }
-                            break;
-                        case 1:
-                            // right
-                            if (elementRect.right <= rect.right) {
-                                continue;
-                            }
-                            if (elementRect.left == rect.left) {
-                                continue;
-                            }
-                            if (elementRect.left < rect.right - 10) {
-                                continue;
-                            }
-                            break;
-                        case 2:
-                            // up
-                            if (elementRect.top >= rect.top) {
-                                continue;
-                            }
-                            if (elementRect.bottom >= rect.bottom) {
-                                continue;
-                            }
-                            break;
-                        case 3:
-                            // down
-                            if (elementRect.bottom <= rect.bottom) {
-                                continue;
-                            }
-                            if (elementRect.top <= rect.top) {
-                                continue;
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                    focusableElements.push({
-                        element: curr,
-                        clientRect: elementRect
-                    });
+                if (curr == activeElement) {
+                    continue;
                 }
+                // Don't refocus into the same container
+                if (curr == focusableContainer) {
+                    continue;
+                }
+
+                var elementRect = getViewportBoundingClientRect(curr);
+
+                switch (direction) {
+
+                    case 0:
+                        // left
+                        if (elementRect.left >= rect.left) {
+                            continue;
+                        }
+                        if (elementRect.right == rect.right) {
+                            continue;
+                        }
+                        if (elementRect.right > rect.left + 10) {
+                            continue;
+                        }
+                        break;
+                    case 1:
+                        // right
+                        if (elementRect.right <= rect.right) {
+                            continue;
+                        }
+                        if (elementRect.left == rect.left) {
+                            continue;
+                        }
+                        if (elementRect.left < rect.right - 10) {
+                            continue;
+                        }
+                        break;
+                    case 2:
+                        // up
+                        if (elementRect.top >= rect.top) {
+                            continue;
+                        }
+                        if (elementRect.bottom >= rect.bottom) {
+                            continue;
+                        }
+                        break;
+                    case 3:
+                        // down
+                        if (elementRect.bottom <= rect.bottom) {
+                            continue;
+                        }
+                        if (elementRect.top <= rect.top) {
+                            continue;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                focusableElements.push({
+                    element: curr,
+                    clientRect: elementRect
+                });
             }
 
             var nearest = window.nearest(focusableElements, {

@@ -171,11 +171,11 @@ define([], function () {
                 html += '</div>';
             }
 
-            if (item.Overview && item.Type != 'MusicAlbum' && item.Type != 'MusicArtist') {
-                html += '<div class="overview">';
-                html += item.Overview;
-                html += '</div>';
-            }
+            //if (item.Overview && item.Type != 'MusicAlbum' && item.Type != 'MusicArtist') {
+            //    html += '<div class="overview">';
+            //    html += item.Overview;
+            //    html += '</div>';
+            //}
 
             var logoImageUrl = Emby.Models.logoImageUrl(item, {
             });

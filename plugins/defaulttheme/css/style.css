@@ -159,6 +159,12 @@ a {
     padding-bottom: 30px;
 }
 
+.tabbedPageContainer {
+    top: 12%;
+    align-items: initial;
+    justify-content: initial;
+}
+
 .itemScrollFrame.scrollFrameY {
     height: 100%;
 }
@@ -397,19 +403,17 @@ paper-item-body .overview {
 
 .homePageContainer .selectedItemInfo {
     right: 2%;
-    bottom: 25px;
+    bottom: 30px;
 }
 
 .selectedItemInfo h2 {
     margin: 0;
-    display: inline-block;
 }
 
 .selectedItemMediaInfo {
     display: inline-block;
     vertical-align: bottom;
     font-size: 90%;
-    margin-left: 1em;
     position: relative;
 }
 
@@ -421,10 +425,6 @@ paper-item-body .overview {
     .selectedItemMediaInfo .starRatingContainer iron-icon {
         width: 32px;
         height: 32px;
-    }
-
-    .selectedItemMediaInfo .criticRating {
-        display: none;
     }
 
 .selectedItemInfoInnerWithLogo {
@@ -632,14 +632,6 @@ paper-item-body .overview {
     background-image: url(images/rotten.png);
 }
 
-.contentScrollSlider .horizontalSection:not(.hide):last-child .cardColumn:last-child .card {
-    nav-right: auto;
-}
-
-.card {
-    nav-right: auto !important;
-}
-
 .alphaPicker {
-    margin-top: -20px;
+    margin-top: 1em;
 }
