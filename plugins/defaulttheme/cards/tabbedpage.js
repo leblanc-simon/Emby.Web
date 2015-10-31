@@ -119,8 +119,10 @@
             createHorizontalScroller(page);
         };
 
-        page.querySelector('.viewsScrollSlider').classList.add('focusable');
-        page.querySelector('.viewsScrollSlider').focus = focusViewSlider;
+        var viewsScrollSlider = page.querySelector('.viewsScrollSlider');
+        viewsScrollSlider.classList.add('focusable');
+        viewsScrollSlider.classList.add('focuscontainer-x');
+        viewsScrollSlider.focus = focusViewSlider;
 
         function onAlphaPickerValueChanged() {
 
