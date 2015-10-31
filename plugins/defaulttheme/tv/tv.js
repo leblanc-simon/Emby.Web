@@ -171,7 +171,8 @@
                         ParentId: pageParams.parentid,
                         IncludeItemTypes: "Series",
                         Recursive: true,
-                        SortBy: "SortName"
+                        SortBy: "SortName",
+                        Fields: "SortName"
                     });
                 },
                 listCountElement: page.querySelector('.listCount'),
