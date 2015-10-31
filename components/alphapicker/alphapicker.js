@@ -27,8 +27,8 @@ define(['css!components/alphapicker/style.css'], function () {
 
         element.querySelector('.alphaPickerButton').classList.add('selected');
 
-        //element.classList.add('focusable');
-        //element.focus = focus;
+        element.classList.add('focusable');
+        element.focus = focus;
     }
 
     function alphaPicker(options) {
@@ -39,6 +39,14 @@ define(['css!components/alphapicker/style.css'], function () {
         var itemsContainer = options.itemsContainer;
         var itemClass = options.itemClass;
 
+        var focusValue;
+        var focusTimeout;
+
+        function onFocusTimeout() {
+            focusTimeout = null;
+            self.value(focusValue);
+        }
+
         function onItemsFocusIn(e) {
 
             var item = Emby.Dom.parentWithClass(e.target, itemClass);
@@ -46,7 +54,12 @@ define(['css!components/alphapicker/style.css'], function () {
             if (item) {
                 var prefix = item.getAttribute('data-prefix');
                 if (prefix && prefix.length) {
-                    self.value(prefix[0]);
+
+                    focusValue = prefix[0];
+                    if (focusTimeout) {
+                        clearTimeout(focusTimeout);
+                    }
+                    focusTimeout = setTimeout(onFocusTimeout, 100);
                 }
             }
         }

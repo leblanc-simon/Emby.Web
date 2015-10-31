@@ -10,12 +10,12 @@
     display: inline-block;
     width: auto;
     border-radius: 2px;
-    font-weight: inherit;
+    font-weight: normal;
 }
 
     .alphaPickerButton.selected {
-        color: #52B54B;
-        background-color: transparent;
+        color: #fff;
+        background-color: #666;
     }
 
     .alphaPickerButton:focus {
