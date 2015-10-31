@@ -20,7 +20,7 @@
 
                         loading.hide();
 
-                        handleConnectionResult(result);
+                        handleConnectionResult(result, element);
                     });
                 });
             });
@@ -56,7 +56,7 @@
 
                     var serverId = params.serverid;
 
-                    authenticateUser(serverId, username, password);
+                    authenticateUser(element, serverId, username, password);
                 });
 
                 e.preventDefault();
@@ -115,7 +115,7 @@
 
                         loading.hide();
 
-                        handleConnectionResult(result);
+                        handleConnectionResult(result, element);
                     });
                 });
 
@@ -175,7 +175,7 @@
                         if (result.State == MediaBrowser.ConnectionState.ConnectSignIn) {
                             Emby.Page.show('/startup/manualserver.html');
                         } else {
-                            handleConnectionResult(result);
+                            handleConnectionResult(result, element);
                         }
                     });
                 });
@@ -227,17 +227,22 @@
         });
     }
 
-    function onServerUserSignedIn() {
-        Emby.ThemeManager.loadUserTheme();
+    function onServerUserSignedIn(view) {
+
+        var horizontalPageContent = view.querySelector('.horizontalPageContent');
+        zoomOut(horizontalPageContent, 1).onfinish = function () {
+            Emby.ThemeManager.loadUserTheme();
+
+        };
     }
 
-    function handleConnectionResult(result) {
+    function handleConnectionResult(result, view) {
 
         switch (result.State) {
 
             case MediaBrowser.ConnectionState.SignedIn:
                 {
-                    onServerUserSignedIn();
+                    onServerUserSignedIn(view);
                 }
                 break;
             case MediaBrowser.ConnectionState.ServerSignIn:
@@ -320,7 +325,7 @@
                     if (url) {
                         Emby.Page.show(url);
                     } else {
-                        authenticateUser(card.getAttribute('data-serverid'), card.getAttribute('data-name'));
+                        authenticateUser(element, card.getAttribute('data-serverid'), card.getAttribute('data-name'));
                     }
                 });
             });
@@ -455,39 +460,34 @@
         var card = Emby.Dom.parentWithClass(e.target, 'card');
 
         if (card) {
-            flipElement(card, function () {
-                callback(card);
-            });
+            callback(card);
         }
     }
 
-    function flipElement(elem, callback) {
-
-        // Switch to SequenceEffect once that api is a little more mature
-        flipElementWithDuration(elem, 900, function () {
-            callback();
-        });
-    }
-
-    function flipElementWithDuration(elem, duration, callback) {
-
-        // Switch to SequenceEffect once that api is a little more mature
+    function zoomOut(elem, iterations) {
         var keyframes = [
-                 { transform: 'perspective(400px) rotate3d(0, 1, 0, -360deg)', offset: 0 },
-                 { transform: 'perspective(400px) translate3d(0, 0, -50px) rotate3d(0, 1, 0, -190deg)', offset: 0.4 },
-                 { transform: 'perspective(400px) translate3d(0, 0, -50px) rotate3d(0, 1, 0, -170deg)', offset: 0.5 },
-                 { transform: 'perspective(400px) scale3d(.95, .95, .95)', offset: 0.8 },
-                 { transform: 'perspective(400px)', offset: 1 }];
-        var timing = { duration: duration, iterations: 1, easing: 'ease-in' };
 
-        if (elem.animate) {
-            elem.animate(keyframes, timing).onfinish = callback;
-        } else {
-            callback();
-        }
+          { transform: 'none', opacity: '1', transformOrigin: 'center', offset: 0 },
+          { transform: 'scale3d(.7, .7, .7)  ', opacity: '.7', transformOrigin: 'center', offset: .3 },
+          { transform: 'scale3d(.3, .3, .3)  rotate3d(0, 0, 1, -180deg)', opacity: '0', transformOrigin: 'center', offset: 1 }
+
+        ];
+
+        var timing = { duration: 1000, iterations: iterations, fill: 'both' };
+
+        return elem.animate(keyframes, timing);
     }
 
-    function authenticateUser(serverId, username, password) {
+    function rotateOut(elem, iterations) {
+        var transformOrigin = elem.style['transform-origin'];
+        var keyframes = [{ transform: 'none', opacity: '1', transformOrigin: 'center', offset: 0 },
+          { transform: 'rotate3d(0, 0, 1, -180deg)', opacity: '.2', transformOrigin: 'center', offset: 1 }];
+        var timing = { duration: 900, iterations: iterations, fill: 'both' };
+        return elem.animate(keyframes, timing);
+
+    }
+
+    function authenticateUser(view, serverId, username, password) {
 
         require(['connectionManager', 'loading'], function (connectionManager, loading) {
 
@@ -498,7 +498,7 @@
 
                 loading.hide();
 
-                onServerUserSignedIn();
+                onServerUserSignedIn(view);
 
             }).fail(function (result) {
 
@@ -563,8 +563,7 @@
                             connectionManager.connectToServer(server).done(function (result) {
 
                                 loading.hide();
-
-                                handleConnectionResult(result);
+                                handleConnectionResult(result, element);
                             });
                         });
                     }

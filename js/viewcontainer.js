@@ -142,12 +142,11 @@ define([], function () {
 
     function reset() {
 
-        var views = document.querySelectorAll(".page-view");
+        var views = document.querySelectorAll(".mainAnimatedPage:not(.iron-selected) .page-view");
 
         for (var i = 0, length = views.length; i < length; i++) {
 
             var view = views[i];
-
             triggerDestroy(view);
             view.parentNode.removeChild(view);
         }
