@@ -14,8 +14,8 @@
 }
 
     .alphaPickerButton.selected {
-        color: #fff;
-        background-color: #666;
+        color: #000;
+        background-color: #bbb;
     }
 
     .alphaPickerButton:focus {
