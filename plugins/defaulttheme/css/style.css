@@ -403,6 +403,7 @@ paper-item-body .overview {
     left: 0;
     right: 10%;
     max-width: 60%;
+    font-size: 90%;
 }
 
 .homePageContainer .selectedItemInfo {
@@ -417,7 +418,6 @@ paper-item-body .overview {
 .selectedItemMediaInfo {
     display: inline-block;
     vertical-align: bottom;
-    font-size: 90%;
     position: relative;
 }
 
@@ -638,7 +638,7 @@ paper-item-body .overview {
 }
 
 .alphaPicker {
-    margin-top: 1.5em;
+    margin-top: 1.25em;
 }
 
 paper-dialog.dialog {

@@ -156,6 +156,11 @@ define([], function () {
 
             html += '<div>';
             html += '<div>';
+
+            if (item.AlbumArtist) {
+                html += item.AlbumArtist + " - ";
+            }
+
             html += DefaultTheme.CardBuilder.getDisplayName(item);
             html += '</div>';
             if (mediaInfo) {
@@ -164,12 +169,6 @@ define([], function () {
                 html += '</div>';
             }
             html += '</div>';
-
-            if (item.AlbumArtist) {
-                html += '<div class="selectedItemSecondaryInfo">';
-                html += item.AlbumArtist;
-                html += '</div>';
-            }
 
             //if (item.Overview && item.Type != 'MusicAlbum' && item.Type != 'MusicArtist') {
             //    html += '<div class="overview">';

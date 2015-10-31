@@ -62,10 +62,10 @@ button.card {
 
 .card .cardBox {
     padding: 0 !important;
-    margin: 2px !important;
+    margin: 0px !important;
     transition: none !important;
     border-radius: 0 !important;
-    border: 0 solid transparent;
+    border: 2px solid transparent;
 }
 
 .card[focused], .card:focus {
@@ -74,9 +74,9 @@ button.card {
 }
 
     .card[focused] .cardBox, .card:focus .cardBox {
-        /*border-color: #fff;*/
-        -moz-box-shadow: #fff 0px 0px 1px 4px;
-        box-shadow: #fff 0px 0px 1px 4px;
+        border-color: #fff;
+        /*-moz-box-shadow: #fff 0px 0px 1px 4px;
+        box-shadow: #fff 0px 0px 1px 4px;*/
         /*border-radius: 5px!important;*/
     }
 
