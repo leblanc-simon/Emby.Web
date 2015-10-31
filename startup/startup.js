@@ -229,7 +229,7 @@
 
     function onServerUserSignedIn(view) {
 
-        var horizontalPageContent = view.querySelector('.horizontalPageContent');
+        var horizontalPageContent = view.querySelector('.pageContainer');
         zoomOut(horizontalPageContent, 1).onfinish = function () {
             Emby.ThemeManager.loadUserTheme();
 
