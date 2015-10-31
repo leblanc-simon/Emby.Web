@@ -9,7 +9,10 @@
     box-shadow: none !important;
     outline: none !important;
     cursor: pointer;
-    font-weight: inherit;
+}
+
+.card,.card:focus {
+    font-weight: inherit !important;
 }
 
 button.card {
