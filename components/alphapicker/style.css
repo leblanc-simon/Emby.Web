@@ -6,19 +6,20 @@
     min-width: initial;
     margin: 0;
     padding: .1em .4em !important;
-    color: #888;
     display: inline-block;
     width: auto;
     border-radius: 2px;
     font-weight: normal;
+    opacity: .25;
 }
 
     .alphaPickerButton.selected {
         color: #000;
         background-color: #bbb;
+        opacity: 1;
     }
 
     .alphaPickerButton:focus {
         background-color: #52B54B;
-        color: #fff;
+        opacity: 1;
     }

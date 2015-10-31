@@ -403,12 +403,11 @@ paper-item-body .overview {
     left: 0;
     right: 10%;
     max-width: 60%;
-    font-size: 90%;
 }
 
 .homePageContainer .selectedItemInfo {
     right: 2%;
-    bottom: 30px;
+    bottom: 4.63%;
 }
 
 .selectedItemInfo h2 {
@@ -419,6 +418,7 @@ paper-item-body .overview {
     display: inline-block;
     vertical-align: bottom;
     position: relative;
+    font-size: 90%;
 }
 
     .selectedItemMediaInfo iron-icon {
@@ -451,18 +451,6 @@ paper-item-body .overview {
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.selectedItemInfoInner .overview {
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    max-width: 100%;
-    font-size: 90%;
-    /* TODO: Need fallback for max number of lines*/
 }
 
 /* 720p */
