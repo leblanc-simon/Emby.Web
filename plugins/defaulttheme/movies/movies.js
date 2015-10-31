@@ -209,7 +209,8 @@
                         ParentId: pageParams.parentid,
                         IncludeItemTypes: "Movie",
                         Recursive: true,
-                        SortBy: "SortName"
+                        SortBy: "SortName",
+                        Fields: "SortName"
                     });
                 },
                 listCountElement: page.querySelector('.listCount'),

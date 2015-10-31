@@ -260,7 +260,6 @@
             });
 
             if (nearest.length) {
-                document.title = nearest[0].className;
                 focus(nearest[0]);
             }
         });

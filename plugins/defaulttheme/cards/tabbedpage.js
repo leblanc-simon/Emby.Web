@@ -99,7 +99,6 @@
 
         // lock the height so that the location of the top tabs won't fluctuate
         var contentScrollSlider = page.querySelector('.contentScrollSlider');
-        contentScrollSlider.style.minHeight = contentScrollSlider.offsetHeight + 'px';
         contentScrollSlider.classList.add('focuscontainer-x');
 
         var selectedItemInfoInner = page.querySelector('.selectedItemInfoInner');
