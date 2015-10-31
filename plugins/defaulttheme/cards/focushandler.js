@@ -155,9 +155,9 @@ define([], function () {
             var mediaInfo = DefaultTheme.CardBuilder.getMediaInfoHtml(item);
 
             html += '<div>';
-            html += '<h2>';
+            html += '<div>';
             html += DefaultTheme.CardBuilder.getDisplayName(item);
-            html += '</h2>';
+            html += '</div>';
             if (mediaInfo) {
                 html += '<div class="selectedItemMediaInfo">';
                 html += mediaInfo;

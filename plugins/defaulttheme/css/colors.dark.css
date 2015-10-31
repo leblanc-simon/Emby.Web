@@ -95,21 +95,9 @@ paper-button[raised][focused] {
     }
 
 paper-dialog {
-    background: #303030 !important;
-    border-radius: 3px;
+    background: #1c1c1c !important;
     color: #fff !important;
 }
-
-
-    paper-dialog paper-button {
-        color: #bbb !important;
-    }
-
-
-        paper-dialog paper-button[focused] {
-            background-color: #52B54B !important;
-            color: #fff !important;
-        }
 
 .albumsCard .cardImageContainer, .recordingsCard .cardImageContainer {
     background: #38c;
