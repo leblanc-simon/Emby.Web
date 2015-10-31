@@ -186,6 +186,7 @@
             confirm: "components/" + componentType + "/confirm",
             toast: "components/" + componentType + "/toast",
             loading: "components/" + componentType + "/loading",
+            dialog: "components/" + componentType + "/dialog",
             soundeffects: "components/soundeffects",
             apphost: "components/apphost",
             screensaverManager: "js/screensavermanager",

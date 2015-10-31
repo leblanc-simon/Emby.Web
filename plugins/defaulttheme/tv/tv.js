@@ -27,70 +27,101 @@
             if (self.tabbedPage) {
                 self.tabbedPage.destroy();
             }
+            if (self.alphaPicker) {
+                self.alphaPicker.destroy();
+            }
+            if (self.listController) {
+                self.listController.destroy();
+            }
         });
 
         function renderTabs(view, initialTabId, pageInstance, params) {
 
-            var tabs = [
-            {
-                Name: Globalize.translate('Series'),
-                Id: "series"
-            },
-            {
-                Name: Globalize.translate('Upcoming'),
-                Id: "upcoming"
-            },
-            {
-                Name: Globalize.translate('Genres'),
-                Id: "genres"
-            },
-            {
-                Name: Globalize.translate('Favorites'),
-                Id: "favorites"
-            }];
+            require(['alphapicker'], function (alphaPicker) {
 
-            var tabbedPage = new DefaultTheme.TabbedPage(view);
-            tabbedPage.loadViewContent = loadViewContent;
-            tabbedPage.params = params;
-            tabbedPage.renderTabs(tabs, initialTabId);
-            pageInstance.tabbedPage = tabbedPage;
+                self.alphaPicker = new alphaPicker({
+                    element: view.querySelector('.alphaPicker'),
+                    itemsContainer: view.querySelector('.contentScrollSlider'),
+                    itemClass: 'card'
+                });
+
+                var tabs = [
+                {
+                    Name: Globalize.translate('Series'),
+                    Id: "series"
+                },
+                {
+                    Name: Globalize.translate('Upcoming'),
+                    Id: "upcoming"
+                },
+                {
+                    Name: Globalize.translate('Genres'),
+                    Id: "genres"
+                },
+                {
+                    Name: Globalize.translate('Favorites'),
+                    Id: "favorites"
+                }];
+
+                var tabbedPage = new DefaultTheme.TabbedPage(view, {
+                    alphaPicker: self.alphaPicker
+                });
+
+                tabbedPage.loadViewContent = loadViewContent;
+                tabbedPage.params = params;
+                tabbedPage.renderTabs(tabs, initialTabId);
+                pageInstance.tabbedPage = tabbedPage;
+            });
         }
 
         function loadViewContent(page, id, type) {
 
-            if (self.listController) {
-                self.listController.destroy();
-            }
+            var tabbedPage = this;
 
-            var pageParams = this.params;
+            return new Promise(function (resolve, reject) {
 
-            var autoFocus = false;
+                if (self.listController) {
+                    self.listController.destroy();
+                }
 
-            if (!this.hasLoaded) {
-                autoFocus = true;
-                this.hasLoaded = true;
-            }
+                var pageParams = tabbedPage.params;
 
-            switch (id) {
+                var autoFocus = false;
 
-                case 'series':
-                    renderSeries(page, pageParams, autoFocus, this.bodySlyFrame);
-                    break;
-                case 'genres':
-                    renderGenres(page, pageParams, autoFocus, this.bodySlyFrame);
-                    break;
-                case 'upcoming':
-                    renderUpcoming(page, pageParams, autoFocus, this.bodySlyFrame);
-                    break;
-                case 'favorites':
-                    renderFavorites(page, pageParams, autoFocus, this.bodySlyFrame);
-                    break;
-                default:
-                    break;
-            }
+                if (!tabbedPage.hasLoaded) {
+                    autoFocus = true;
+                    tabbedPage.hasLoaded = true;
+                }
+
+                var showAlphaPicker = false;
+
+                switch (id) {
+
+                    case 'series':
+                        showAlphaPicker = true;
+                        renderSeries(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
+                        break;
+                    case 'genres':
+                        renderGenres(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
+                        break;
+                    case 'upcoming':
+                        renderUpcoming(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
+                        break;
+                    case 'favorites':
+                        renderFavorites(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
+                        break;
+                    default:
+                        break;
+                }
+
+                if (self.alphaPicker) {
+                    self.alphaPicker.visible(showAlphaPicker);
+                    self.alphaPicker.enabled(showAlphaPicker);
+                }
+            });
         }
 
-        function renderUpcoming(page, pageParams, autoFocus, slyFrame) {
+        function renderUpcoming(page, pageParams, autoFocus, slyFrame, resolve) {
 
             self.listController = new DefaultTheme.HorizontalList({
 
@@ -116,13 +147,19 @@
                 },
                 selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
                 selectedIndexElement: page.querySelector('.selectedIndex'),
-                slyFrame: slyFrame
+                slyFrame: slyFrame,
+                onRender: function () {
+                    if (resolve) {
+                        resolve();
+                        resolve = null;
+                    }
+                }
             });
 
             self.listController.render();
         }
 
-        function renderSeries(page, pageParams, autoFocus, slyFrame) {
+        function renderSeries(page, pageParams, autoFocus, slyFrame, resolve) {
 
             self.listController = new DefaultTheme.HorizontalList({
 
@@ -142,13 +179,19 @@
                 autoFocus: autoFocus,
                 selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
                 selectedIndexElement: page.querySelector('.selectedIndex'),
-                slyFrame: slyFrame
+                slyFrame: slyFrame,
+                onRender: function () {
+                    if (resolve) {
+                        resolve();
+                        resolve = null;
+                    }
+                }
             });
 
             self.listController.render();
         }
 
-        function renderGenres(page, pageParams, autoFocus, slyFrame) {
+        function renderGenres(page, pageParams, autoFocus, slyFrame, resolve) {
 
             self.listController = new DefaultTheme.HorizontalList({
                 itemsContainer: page.querySelector('.contentScrollSlider'),
@@ -171,13 +214,19 @@
                 autoFocus: autoFocus,
                 selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
                 selectedIndexElement: page.querySelector('.selectedIndex'),
-                slyFrame: slyFrame
+                slyFrame: slyFrame,
+                onRender: function () {
+                    if (resolve) {
+                        resolve();
+                        resolve = null;
+                    }
+                }
             });
 
             self.listController.render();
         }
 
-        function renderFavorites(page, pageParams, autoFocus, slyFrame) {
+        function renderFavorites(page, pageParams, autoFocus, slyFrame, resolve) {
 
             self.listController = new DefaultTheme.HorizontalList({
 
@@ -198,7 +247,13 @@
                 autoFocus: autoFocus,
                 selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
                 selectedIndexElement: page.querySelector('.selectedIndex'),
-                slyFrame: slyFrame
+                slyFrame: slyFrame,
+                onRender: function () {
+                    if (resolve) {
+                        resolve();
+                        resolve = null;
+                    }
+                }
             });
 
             self.listController.render();

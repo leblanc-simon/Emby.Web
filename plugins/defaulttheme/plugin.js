@@ -53,10 +53,10 @@ define([], function () {
                 Emby.PluginManager.mapRequire(self, 'cards/horizontallist.js')
             ];
 
+            list.push('css!' + Emby.PluginManager.mapRequire(self, 'css/fonts'));
+
             if (navigator.userAgent.toLowerCase().indexOf('windows') != -1) {
                 list.push('css!' + Emby.PluginManager.mapRequire(self, 'css/fonts.windows'));
-            } else {
-                list.push('css!' + Emby.PluginManager.mapRequire(self, 'css/fonts'));
             }
 
             if (Emby.Dom.supportsWebComponents()) {

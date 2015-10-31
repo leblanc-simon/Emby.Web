@@ -155,9 +155,9 @@ define([], function () {
             var mediaInfo = DefaultTheme.CardBuilder.getMediaInfoHtml(item);
 
             html += '<div>';
-            html += '<h2>';
+            html += '<div>';
             html += DefaultTheme.CardBuilder.getDisplayName(item);
-            html += '</h2>';
+            html += '</div>';
             if (mediaInfo) {
                 html += '<div class="selectedItemMediaInfo">';
                 html += mediaInfo;
@@ -192,7 +192,7 @@ define([], function () {
             selectedItemInfoInner.innerHTML = html;
 
             var rect = card.getBoundingClientRect();
-            selectedItemInfoInner.parentNode.style.left = (Math.max(rect.left - 0, 290)) + 'px';
+            selectedItemInfoInner.parentNode.style.left = (Math.max(rect.left - 0, 70)) + 'px';
 
             if (html) {
                 fadeIn(selectedItemInfoInner, 1);

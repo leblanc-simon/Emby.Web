@@ -165,6 +165,10 @@ a {
     justify-content: initial;
 }
 
+.homePageContainer {
+    top: 14%;
+}
+
 .itemScrollFrame.scrollFrameY {
     height: 100%;
 }
@@ -428,16 +432,17 @@ paper-item-body .overview {
     }
 
 .selectedItemInfoInnerWithLogo {
+    padding-left: 18%;
 }
 
 .selectedItemInfoLogo {
     position: absolute;
-    top: 10%;
-    left: -18%;
+    top: 12.5%;
     width: 16%;
-    bottom: 10%;
+    bottom: 12.5%;
+    left: 0;
     background-repeat: no-repeat;
-    background-position: center center;
+    background-position: right center;
     background-size: contain;
 }
 
@@ -633,5 +638,39 @@ paper-item-body .overview {
 }
 
 .alphaPicker {
-    margin-top: 1em;
+    margin-top: 1.5em;
+}
+
+paper-dialog.dialog {
+    margin: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    max-width: none;
+    max-height: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialogContent {
+    max-width: 50%;
+    text-align: center;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+    .dialogContent paper-button {
+        width: 50%;
+        margin: .25em auto;
+    }
+
+.dialogMessage {
+    margin: 1.5em 0;
+}
+
+.dialogTitle {
+    margin-top: 0;
 }

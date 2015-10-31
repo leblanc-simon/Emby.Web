@@ -1,4 +1,4 @@
-define(['paperdialoghelper'], function (paperdialoghelper) {
+define(['dialog'], function (dialog) {
 
     return function (options) {
 
@@ -9,48 +9,8 @@ define(['paperdialoghelper'], function (paperdialoghelper) {
             };
         }
 
-        var message = options.text;
-        var title = options.title;
-        var callback = options.callback;
+        options.buttons = [Globalize.translate('ButtonOk')];
 
-        var dlg = paperdialoghelper.createDialog();
-
-        var html = '';
-        html += '<h1>' + title + '</h1>';
-        html += '<div>' + message + '</div>';
-        html += '<div class="buttons">';
-
-        html += '<paper-button class="btnDialogOption" data-result="ok">' + Globalize.translate('ButtonOk') + '</paper-button>';
-
-        html += '</div>';
-
-        dlg.innerHTML = html;
-        document.body.appendChild(dlg);
-
-        var activeElement = document.activeElement;
-
-        // Has to be assigned a z-index after the call to .open() 
-        dlg.addEventListener('iron-overlay-closed', function (e) {
-
-            this.parentNode.removeChild(this);
-
-            activeElement.focus();
-
-            if (callback) {
-                callback();
-            }
-        });
-
-        dlg.addEventListener('click', function (e) {
-
-            var actionSheetMenuItem = Emby.Dom.parentWithClass(e.target, 'btnDialogOption');
-
-            if (actionSheetMenuItem) {
-
-                paperdialoghelper.close(dlg);
-            }
-        });
-
-        paperdialoghelper.open(dlg);
+        dialog(options);
     };
 });
