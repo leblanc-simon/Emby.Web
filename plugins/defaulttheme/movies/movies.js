@@ -11,8 +11,6 @@
 
         view.addEventListener('viewshow', function (e) {
 
-            document.documentElement.classList.add('blurBackdrop');
-
             require(['loading'], function (loading) {
 
                 if (!self.tabbedPage) {
