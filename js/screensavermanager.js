@@ -18,10 +18,10 @@ define([], function () {
             activeScreenSaver = screensaver;
 
             if (screensaver.hideOnClick !== false) {
-                window.addEventListener('click', hide);
+                window.addEventListener('click', hide, true);
             }
             if (screensaver.hideOnMouse !== false) {
-                window.addEventListener('mousemove', hide);
+                window.addEventListener('mousemove', hide, true);
             }
             if (screensaver.hideOnKey !== false) {
                 window.addEventListener('keydown', hide, true);

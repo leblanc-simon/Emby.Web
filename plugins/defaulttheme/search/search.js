@@ -9,13 +9,40 @@
 
         var self = this;
 
+        function initAlphaPicker(view) {
+
+            require(['alphapicker'], function (alphaPicker) {
+
+                self.alphaPicker = new alphaPicker({
+                    element: view.querySelector('.alphaPicker'),
+                    enableSelectedValue: false
+                });
+            });
+        }
+
         view.addEventListener('viewshow', function (e) {
 
-            Emby.Page.setTitle(Globalize.translate('Search'));
+            Emby.Page.setTitle('');
+            Emby.Backdrop.clear();
+            document.querySelector('.headerSearchButton').classList.add('hide');
+
+            var isRestored = e.detail.isRestored;
+
+            if (!isRestored) {
+                initAlphaPicker(e.detail.element);
+            }
+        });
+
+        view.addEventListener('viewhide', function () {
+
+            document.querySelector('.headerSearchButton').classList.remove('hide');
         });
 
         view.addEventListener('viewdestroy', function () {
 
+            if (self.alphaPicker) {
+                self.alphaPicker.destroy();
+            }
         });
     }
 

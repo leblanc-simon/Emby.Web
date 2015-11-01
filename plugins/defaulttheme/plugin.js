@@ -171,7 +171,8 @@ define([], function () {
                 id: 'defaulttheme-search',
                 transition: 'slide',
                 dependencies: [
-                    Emby.PluginManager.mapRequire(self, 'search/search.js')
+                    Emby.PluginManager.mapRequire(self, 'search/search.js'),
+                    'css!' + Emby.PluginManager.mapRequire(self, 'search/search.css')
                 ]
             });
 
@@ -413,7 +414,8 @@ define([], function () {
                 document.querySelector('.headerBackButton').classList.add('hide');
             }
 
-            blurBackdrop(viewId != 'defaulttheme-item');
+            var enableBlur = viewId != 'defaulttheme-item' && viewId != 'defaulttheme-nowplaying' && viewId != 'defaulttheme-nowplayingplaylist';
+            blurBackdrop(enableBlur);
         }
 
         function blurBackdrop(enabled) {

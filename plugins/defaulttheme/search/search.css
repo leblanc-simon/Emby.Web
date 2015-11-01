@@ -1,0 +1,35 @@
+.searchPageContainer {
+    display: flex;
+    flex-flow: column;
+    position: absolute;
+    top: 10%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.searchFields {
+    text-align: center;
+}
+
+    .searchFields .alphaPicker {
+        margin-top: 1em;
+    }
+
+.searchResults {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iconSearch {
+    vertical-align: middle;
+    margin-top: 1em;
+}
+
+.txtSearch {
+    display: inline-block;
+    width: 40%;
+    vertical-align: middle;
+}

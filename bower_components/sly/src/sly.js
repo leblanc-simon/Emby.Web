@@ -1468,33 +1468,6 @@
         }
 
         /**
-		 * Keyboard input handler.
-		 *
-		 * @param  {Event} event
-		 *
-		 * @return {Void}
-		 */
-        function keyboardHandler(event) {
-            if (!o.keyboardNavBy) {
-                return;
-            }
-
-            switch (event.which) {
-                // Left or Up
-                case o.horizontal ? 37 : 38:
-                    stopDefault(event);
-                    self[o.keyboardNavBy === 'pages' ? 'prevPage' : 'prev']();
-                    break;
-
-                    // Right or Down
-                case o.horizontal ? 39 : 40:
-                    stopDefault(event);
-                    self[o.keyboardNavBy === 'pages' ? 'nextPage' : 'next']();
-                    break;
-            }
-        }
-
-        /**
 		 * Click on item activation handler.
 		 *
 		 * @param  {Event} event
@@ -1567,9 +1540,6 @@
             Sly.removeInstance(frame);
 
             scrollSource.removeEventListener(wheelEvent, scrollHandler);
-
-            // Unbinding specifically as to not nuke out other instances
-            document.removeEventListener('keydown', keyboardHandler);
 
             if (itemElements && rel.activeItem != null) {
                 itemElements[rel.activeItem].classList.remove(o.activeClass);
@@ -1666,9 +1636,6 @@
             dragInitEventNames.forEach(function (eventName) {
                 dragSourceElement.addEventListener(eventName, dragInitSlidee);
             });
-
-            // Keyboard navigation
-            document.addEventListener('keydown', keyboardHandler);
 
             if (!parallax) {
                 // Pause on hover

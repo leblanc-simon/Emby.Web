@@ -39,18 +39,32 @@
 
             if ((evt.target.isContentEditable || tag === 'INPUT' || tag === 'TEXTAREA')) {
 
-                var keyboard = getKeyboard();
+                if (enableKeyboard(evt.target)) {
+                    var keyboard = getKeyboard();
 
-                if (keyboard) {
+                    if (keyboard) {
 
-                    keyboard.show(evt.target);
-                    evt.stopPropagation();
-                    evt.preventDefault();
-                    return false;
+                        keyboard.show(evt.target);
+                        evt.preventDefault();
+                        return false;
+                    }
                 }
             }
 
         }, true);
+    }
+
+    function enableKeyboard(elem) {
+
+        while (elem) {
+            if (elem.getAttribute('data-keyboard') == 'false') {
+                return false;
+            }
+
+            elem = elem.parentNode;
+        }
+
+        return true;
     }
 
     function getKeyboard() {

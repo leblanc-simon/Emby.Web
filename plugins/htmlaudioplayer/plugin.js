@@ -303,9 +303,13 @@ define([], function () {
 
         self.stop = function () {
             if (mediaElement) {
+
+                var originalVolume = self.volume();
+
                 startFadeOut(mediaElement, function () {
 
                     mediaElement.pause();
+                    self.volume(originalVolume);
                     onEnded();
                 });
             }
