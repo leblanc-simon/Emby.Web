@@ -12,12 +12,38 @@ html {
     background: -webkit-radial-gradient(circle, rgba(26,26,26,.82), rgba(6,6,6,.92));*/
 }
 
-.blurBackdrop .backdropContainer {
-    -webkit-filter: blur(50px);
+.blurBackdropIn .themeContainer.withBackdrop {
+    background: rgba(6, 6, 6, .82);
 }
 
-.blurBackdrop .themeContainer.withBackdrop{
-    background: rgba(6, 6, 6, .80);
+.blurBackdropIn .backdropContainer {
+    animation: blurBackdropIn 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes blurBackdropIn {
+    from {
+        -webkit-filter: initial;
+    }
+
+    to {
+        -webkit-filter: blur(50px);
+    }
+}
+
+.blurBackdropOut .backdropContainer {
+    animation: blurBackdropOut 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes blurBackdropOut {
+    from {
+        -webkit-filter: blur(50px);
+    }
+
+    to {
+        -webkit-filter: initial;
+    }
 }
 
 .header .logo {

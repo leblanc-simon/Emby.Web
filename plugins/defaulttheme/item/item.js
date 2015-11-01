@@ -13,7 +13,6 @@
         view.addEventListener('viewshow', function (e) {
 
             var isRestored = e.detail.isRestored;
-            document.documentElement.classList.remove('blurBackdrop');
 
             require(['loading'], function (loading) {
 
