@@ -434,37 +434,5 @@ define([], function () {
                 }
             }
         }
-
-        function transitionInBlur() {
-
-            var elem = document.querySelector('.backdropContainer');
-
-            var keyframes = [
-               { filter: 'blur(0)', offset: 0 },
-               { filter: 'blur(50px)', offset: 1 }
-            ];
-            document.title = new Date().getTime();
-            if (elem.animate) {
-                var timing = { duration: 1000, iterations: 1, fill: 'forwards', easing: 'ease-in' };
-                elem.animate(keyframes, timing).onfinish = function () {
-                    document.documentElement.classList.add('blurBackdrop');
-                };
-            }
-        }
-
-        function transitionOutBlur() {
-
-            var elem = document.querySelector('.backdropContainer');
-
-            var keyframes = [
-               { transform: 'scale(' + zoomScale + ')  ', offset: 0 },
-               { transform: 'scale(1)', offset: 1 }
-            ];
-
-            if (elem.animate) {
-                var timing = { duration: zoomDuration, iterations: 1, fill: 'both', easing: 'ease-in' };
-                elem.animate(keyframes, timing);
-            }
-        }
     }
 });
