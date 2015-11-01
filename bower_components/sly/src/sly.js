@@ -172,7 +172,7 @@
 
             // Reset global variables
             frameSize = parallax ? 0 : getWidthOrHeight(frameElement, o.horizontal ? 'width' : 'height');
-            slideeSize = parallax ? frame : slideeElement[o.horizontal ? 'offsetWidth' : 'offsetHeight'];
+            slideeSize = parallax ? frame : o.scrollWidth || slideeElement[o.horizontal ? 'offsetWidth' : 'offsetHeight'];
             pages.length = 0;
 
             // Set position limits & relatives

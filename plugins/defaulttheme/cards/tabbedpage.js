@@ -202,7 +202,8 @@
                     dragHandle: 1,
                     dynamicHandle: 1,
                     clickBar: 1,
-                    centerOffset: window.innerWidth * .15
+                    centerOffset: window.innerWidth * .15,
+                    scrollWidth: 200000
                 };
 
                 slyScroller.create(scrollFrame, options).then(function (slyFrame) {

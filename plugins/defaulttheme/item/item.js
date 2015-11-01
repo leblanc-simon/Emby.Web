@@ -13,6 +13,7 @@
         view.addEventListener('viewshow', function (e) {
 
             var isRestored = e.detail.isRestored;
+            document.documentElement.classList.remove('blurBackdrop');
 
             require(['loading'], function (loading) {
 
@@ -42,16 +43,22 @@
                         createVerticalScroller(view, self);
 
                         var mainSection = view.querySelector('.mainSection');
+                        var itemScrollFrame = view.querySelector('.itemScrollFrame');
 
                         if (enableTrackList(item)) {
                             mainSection.classList.remove('focusable');
+                            itemScrollFrame.classList.add('clippedLeft');
+                            view.querySelector('.itemPageFixedLeft').classList.remove('hide');
                         } else {
                             mainSection.classList.add('focusable');
+                            itemScrollFrame.classList.remove('clippedLeft');
+                            view.querySelector('.itemPageFixedLeft').classList.add('hide');
                         }
                         focusMainSection.call(mainSection);
                     }
 
-                    view.querySelector('.itemPageUserDataIcons').innerHTML = DefaultTheme.UserData.getIconsHtml(item, true, "mediumPaperIconButton");
+                    var userDataIconsSelector = enableTrackList(item) ? '.itemPageFixedLeft .itemPageUserDataIcons' : '.mainSection .itemPageUserDataIcons';
+                    view.querySelector(userDataIconsSelector).innerHTML = DefaultTheme.UserData.getIconsHtml(item, true, "mediumPaperIconButton");
 
                     // Always refresh this
                     renderNextUp(view, item);
@@ -63,10 +70,14 @@
             if (!isRestored) {
                 view.querySelector('.mainSection').focus = focusMainSection;
 
-                view.querySelector('.btnPlay').addEventListener('click', play);
+                view.querySelector('.itemPageFixedLeft .btnPlay').addEventListener('click', play);
+                view.querySelector('.mainSection .btnPlay').addEventListener('click', play);
+
                 view.querySelector('.btnTrailer').addEventListener('click', playTrailer);
                 view.querySelector('.btnInstantMix').addEventListener('click', instantMix);
-                view.querySelector('.btnShuffle').addEventListener('click', shuffle);
+
+                view.querySelector('.itemPageFixedLeft .btnShuffle').addEventListener('click', shuffle);
+                view.querySelector('.mainSection .btnShuffle').addEventListener('click', shuffle);
             }
         });
 
@@ -172,12 +183,19 @@
 
     function renderName(view, item) {
 
-        var nameContainer = view.querySelector('.nameContainer');
+        var itemTitle = view.querySelector('.itemTitle');
 
         if (item.Type == 'BoxSet') {
-            nameContainer.classList.add('hide');
+            itemTitle.classList.add('hide');
         } else {
-            nameContainer.innerHTML = '<h1>' + DefaultTheme.CardBuilder.getDisplayName(item) + '</h1>';
+            itemTitle.classList.remove('hide');
+            itemTitle.innerHTML = DefaultTheme.CardBuilder.getDisplayName(item);
+        }
+
+        if (enableTrackList(item)) {
+            itemTitle.classList.add('albumTitle');
+        } else {
+            itemTitle.classList.remove('albumTitle');
         }
     }
 
@@ -232,7 +250,7 @@
                 });
             }
 
-            var detailImage = view.querySelector('.detailImageContainer');
+            var detailImage = enableTrackList(item) ? view.querySelector('.leftFixedDetailImageContainer') : view.querySelector('.detailImageContainer');
 
             if (url && item.Type != "Season" && item.Type != "BoxSet") {
                 detailImage.classList.remove('hide');
@@ -330,10 +348,7 @@
             mainSection.classList.add('seasonMainSection');
         }
         else if (item.Type == "MusicArtist" || enableTrackList(item)) {
-            mainSection.classList.add('miniMainSection');
-        }
-        else {
-            mainSection.classList.remove('miniMainSection');
+            mainSection.classList.add('albumMainSection');
         }
 
         var taglineElem = view.querySelector('.tagline')
@@ -359,27 +374,29 @@
         }
 
         if (Emby.PlaybackManager.canPlay(item)) {
-            view.querySelector('.btnPlay').classList.remove('hide');
+            view.querySelector('.itemPageFixedLeft .btnPlay').classList.remove('hide');
+            view.querySelector('.mainSection .btnPlay').classList.remove('hide');
         } else {
-            view.querySelector('.btnPlay').classList.add('hide');
+            view.querySelector('.itemPageFixedLeft .btnPlay').classList.add('hide');
+            view.querySelector('.mainSection .btnPlay').classList.add('hide');
+        }
+
+        if (enableTrackList(item)) {
+            view.querySelector('.itemPageFixedLeft .itemPageButtons').classList.remove('hide');
+            view.querySelector('.mainSection .itemPageButtons').classList.add('hide');
+        } else {
+            view.querySelector('.itemPageFixedLeft .itemPageButtons').classList.add('hide');
+            view.querySelector('.mainSection .itemPageButtons').classList.remove('hide');
         }
 
         var mediaInfoHtml = item.Type == 'Season' || item.Type == 'BoxSet' ? '' : DefaultTheme.CardBuilder.getMediaInfoHtml(item);
         var mediaInfoElem = view.querySelector('.mediaInfo');
-        var sideMediaInfoElem = view.querySelector('.sideMediaInfo');
 
         if (!mediaInfoHtml) {
             mediaInfoElem.classList.add('hide');
-            sideMediaInfoElem.classList.add('hide');
-        }
-        else if (enableTrackList(item)) {
-            mediaInfoElem.classList.add('hide');
-            sideMediaInfoElem.innerHTML = mediaInfoHtml;
-            sideMediaInfoElem.classList.remove('hide');
         } else {
             mediaInfoElem.classList.remove('hide');
             mediaInfoElem.innerHTML = mediaInfoHtml;
-            sideMediaInfoElem.classList.add('hide');
         }
 
         var genres = [];
@@ -390,30 +407,26 @@
         }).join('<span class="bulletSeparator"> &bull; </span>');
 
         var genresElem = view.querySelector('.genres')
-        var sideGenresElem = view.querySelector('.sideGenres');
 
         if (!genresHtml) {
             genresElem.classList.add('hide');
-            sideGenresElem.classList.add('hide');
-        }
-        else if (enableTrackList(item)) {
-            genresElem.classList.add('hide');
-            sideGenresElem.innerHTML = genresHtml;
-            sideGenresElem.classList.remove('hide');
         } else {
             genresElem.classList.remove('hide');
             genresElem.innerHTML = genresHtml;
-            sideGenresElem.classList.add('hide');
         }
 
         if (item.IsFolder) {
 
-            view.querySelector('.btnPlayText').innerHTML = Globalize.translate("PlayAll");
-            view.querySelector('.btnShuffle').classList.remove('hide');
+            view.querySelector('.itemPageFixedLeft .btnPlayText').innerHTML = Globalize.translate("PlayAll");
+            view.querySelector('.mainSection .btnPlayText').innerHTML = Globalize.translate("PlayAll");
+            view.querySelector('.itemPageFixedLeft .btnShuffle').classList.remove('hide');
+            view.querySelector('.mainSection .btnShuffle').classList.remove('hide');
 
         } else {
-            view.querySelector('.btnPlayText').innerHTML = Globalize.translate("Play");
-            view.querySelector('.btnShuffle').classList.add('hide');
+            view.querySelector('.itemPageFixedLeft .btnPlayText').innerHTML = Globalize.translate("Play");
+            view.querySelector('.mainSection .btnPlayText').innerHTML = Globalize.translate("Play");
+            view.querySelector('.itemPageFixedLeft .btnShuffle').classList.add('hide');
+            view.querySelector('.mainSection .btnShuffle').classList.add('hide');
         }
 
         if (item.Type == "MusicArtist" || item.Type == "MusicAlbum" || item.Type == "MusicGenre" || item.Type == "Playlist" || item.MediaType == "Audio") {

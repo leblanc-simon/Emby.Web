@@ -65,7 +65,7 @@ button.card {
     margin: 0px !important;
     transition: none !important;
     border-radius: 0 !important;
-    border: 2px solid transparent;
+    border: 3px solid transparent;
 }
 
 .card[focused], .card:focus {
@@ -126,6 +126,10 @@ button.card {
     align-items: center;
     justify-content: center;
     position: relative;
+}
+
+.emptyCardImageContainer {
+    background-clip: content-box !important;
 }
 
 .scalableCard .cardImageContainer {

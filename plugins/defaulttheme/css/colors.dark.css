@@ -12,6 +12,14 @@ html {
     background: -webkit-radial-gradient(circle, rgba(26,26,26,.82), rgba(6,6,6,.92));*/
 }
 
+.blurBackdrop .backdropContainer {
+    -webkit-filter: blur(50px);
+}
+
+.blurBackdrop .themeContainer.withBackdrop{
+    background: rgba(6, 6, 6, .80);
+}
+
 .header .logo {
     background-image: url(images/logowhite.png);
 }
@@ -125,7 +133,7 @@ paper-dialog {
 }
 
 .emptyCardImageContainer {
-    background: #333;
+    background-color: #333;
 }
 
 .nowPlayingInfoContainer #progressContainer {
