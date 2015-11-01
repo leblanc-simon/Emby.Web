@@ -14,7 +14,7 @@
             if (soundeffectPlugin) {
 
                 effects = soundeffectPlugin.getEffects();
-                window.addEventListener('keydown', onKeyDown, true);
+                window.addEventListener('keydown', onKeyDown);
             }
         });
     }

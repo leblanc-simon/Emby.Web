@@ -10,7 +10,7 @@ define(['css!components/alphapicker/style.css'], function () {
         }
     }
 
-    function render(element) {
+    function render(element, options) {
 
         element.classList.add('alphaPicker');
         element.classList.add('focuscontainer-x');
@@ -25,7 +25,9 @@ define(['css!components/alphapicker/style.css'], function () {
 
         element.innerHTML = html;
 
-        element.querySelector('.alphaPickerButton').classList.add('selected');
+        if (options.enableSelectedValue !== false) {
+            element.querySelector('.alphaPickerButton').classList.add('selected');
+        }
 
         element.classList.add('focusable');
         element.focus = focus;
@@ -96,15 +98,24 @@ define(['css!components/alphapicker/style.css'], function () {
         self.enabled = function (enabled) {
 
             if (enabled) {
-                itemsContainer.addEventListener('focus', onItemsFocusIn, true);
+
+                if (itemsContainer) {
+                    itemsContainer.addEventListener('focus', onItemsFocusIn, true);
+                }
+
                 element.addEventListener('focus', onAlphaPickerFocusIn, true);
+
             } else {
-                itemsContainer.removeEventListener('focus', onItemsFocusIn);
+
+                if (itemsContainer) {
+                    itemsContainer.removeEventListener('focus', onItemsFocusIn);
+                }
+
                 element.removeEventListener('focus', onAlphaPickerFocusIn);
             }
         };
 
-        self.on = function(name, fn) {
+        self.on = function (name, fn) {
             element.addEventListener(name, fn);
         };
 
@@ -131,14 +142,16 @@ define(['css!components/alphapicker/style.css'], function () {
                 value = value.toUpperCase();
                 currentValue = value;
 
-                var selected = element.querySelector('.selected');
-                var btn = element.querySelector('.alphaPickerButton[data-value=\'' + value + '\']');
+                if (options.enableSelectedValue !== false) {
+                    var selected = element.querySelector('.selected');
+                    var btn = element.querySelector('.alphaPickerButton[data-value=\'' + value + '\']');
 
-                if (btn && btn != selected) {
-                    btn.classList.add('selected');
-                }
-                if (selected && selected != btn) {
-                    selected.classList.remove('selected');
+                    if (btn && btn != selected) {
+                        btn.classList.add('selected');
+                    }
+                    if (selected && selected != btn) {
+                        selected.classList.remove('selected');
+                    }
                 }
 
                 if (applyValue) {
@@ -155,7 +168,7 @@ define(['css!components/alphapicker/style.css'], function () {
 
         };
 
-        render(element);
+        render(element, options);
 
         self.enabled(true);
         self.visible(true);

@@ -2,7 +2,6 @@ define([], function () {
 
     function getMinIdleTime() {
         // Returns the minimum amount of idle time required before the screen saver can be displayed
-        return 3000;
         return 180000;
     }
 
@@ -19,13 +18,13 @@ define([], function () {
             activeScreenSaver = screensaver;
 
             if (screensaver.hideOnClick !== false) {
-                window.addEventListener('click', hide);
+                window.addEventListener('click', hide, true);
             }
             if (screensaver.hideOnMouse !== false) {
-                window.addEventListener('mousemove', hide);
+                window.addEventListener('mousemove', hide, true);
             }
             if (screensaver.hideOnKey !== false) {
-                window.addEventListener('keydown', hide);
+                window.addEventListener('keydown', hide, true);
             }
         }
 

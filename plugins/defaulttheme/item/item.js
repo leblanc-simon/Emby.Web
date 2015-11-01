@@ -58,7 +58,7 @@
                     }
 
                     var userDataIconsSelector = enableTrackList(item) || item.Type == 'MusicArtist' ? '.itemPageFixedLeft .itemPageUserDataIcons' : '.mainSection .itemPageUserDataIcons';
-                    view.querySelector(userDataIconsSelector).innerHTML = DefaultTheme.UserData.getIconsHtml(item, true, "mediumPaperIconButton");
+                    view.querySelector(userDataIconsSelector).innerHTML = DefaultTheme.UserData.getIconsHtml(item, true, "mediumSizeIcon");
 
                     // Always refresh this
                     renderNextUp(view, item);

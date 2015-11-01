@@ -1,4 +1,4 @@
-.mediumPaperIconButton {
+paper-icon-button.mediumSizeIcon {
     height: 40px;
     width: 40px;
 }
@@ -16,9 +16,14 @@
 /* 1080p */
 @media all and (min-height: 1080px) {
 
-    .mediumPaperIconButton {
+    paper-icon-button.mediumSizeIcon {
         height: 50px;
         width: 50px;
+    }
+
+    iron-icon.mediumSizeIcon {
+        height: 40px !important;
+        width: 40px !important;
     }
 
     .largePaperIconButton {
@@ -41,9 +46,14 @@
 /* 2560 * 1440 */
 @media all and (min-height: 1440px) {
 
-    .mediumPaperIconButton {
+    paper-icon-button.mediumSizeIcon {
         width: 64px;
         height: 64px;
+    }
+
+    iron-icon.mediumSizeIcon {
+        height: 48px !important;
+        width: 48px !important;
     }
 
     .largePaperIconButton {

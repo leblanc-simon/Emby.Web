@@ -46,36 +46,32 @@
             case leftAlias:
                 // left
                 evt.preventDefault();
-                evt.stopPropagation();
                 sendCommand('left', evt.target);
-                return false;
+                return ;
             case 38:
             case upAlias:
                 // up
                 evt.preventDefault();
-                evt.stopPropagation();
                 sendCommand('up', evt.target);
-                return false;
+                return ;
             case 39:
             case rightAlias:
                 // right
                 evt.preventDefault();
-                evt.stopPropagation();
                 sendCommand('right', evt.target);
-                return false;
+                return ;
             case 40:
             case downAlias:
                 // down
                 evt.preventDefault();
-                evt.stopPropagation();
                 sendCommand('down', evt.target);
-                return false;
+                return ;
             default:
                 // No command will be executed, but notify the app that input was received
                 notifyApp();
                 break;
         }
 
-    }, true);
+    });
 
 })(this, document);

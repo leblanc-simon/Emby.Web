@@ -665,16 +665,6 @@ function isInput (el) {
 /**
  * Automatically shows the IME on focus if settings permit
  */
-document.addEventListener('focus', function (evt) {
-    var tag = evt.target.tagName;
-
-    if (!exports.config.noauto && (evt.target.isContentEditable || tag === 'INPUT' || tag === 'TEXTAREA'))
-        showIME();
-}, true);
-
-/**
- * Automatically shows the IME on focus if settings permit
- */
 document.addEventListener('blur', function () {
     if (visible)
         hideIME();
