@@ -44,7 +44,7 @@
                         var mainSection = view.querySelector('.mainSection');
                         var itemScrollFrame = view.querySelector('.itemScrollFrame');
 
-                        if (enableTrackList(item)) {
+                        if (enableTrackList(item) || item.Type == 'MusicArtist') {
                             mainSection.classList.remove('focusable');
                             itemScrollFrame.classList.add('clippedLeft');
                             view.querySelector('.itemPageFixedLeft').classList.remove('hide');
@@ -52,11 +52,12 @@
                             mainSection.classList.add('focusable');
                             itemScrollFrame.classList.remove('clippedLeft');
                             view.querySelector('.itemPageFixedLeft').classList.add('hide');
+                            mainSection.focus = focusMainSection;
                         }
                         focusMainSection.call(mainSection);
                     }
 
-                    var userDataIconsSelector = enableTrackList(item) ? '.itemPageFixedLeft .itemPageUserDataIcons' : '.mainSection .itemPageUserDataIcons';
+                    var userDataIconsSelector = enableTrackList(item) || item.Type == 'MusicArtist' ? '.itemPageFixedLeft .itemPageUserDataIcons' : '.mainSection .itemPageUserDataIcons';
                     view.querySelector(userDataIconsSelector).innerHTML = DefaultTheme.UserData.getIconsHtml(item, true, "mediumPaperIconButton");
 
                     // Always refresh this
@@ -67,7 +68,6 @@
             });
 
             if (!isRestored) {
-                view.querySelector('.mainSection').focus = focusMainSection;
 
                 view.querySelector('.itemPageFixedLeft .btnPlay').addEventListener('click', play);
                 view.querySelector('.mainSection .btnPlay').addEventListener('click', play);
@@ -191,7 +191,7 @@
             itemTitle.innerHTML = DefaultTheme.CardBuilder.getDisplayName(item);
         }
 
-        if (enableTrackList(item)) {
+        if (enableTrackList(item) || item.Type == 'MusicArtist') {
             itemTitle.classList.add('albumTitle');
         } else {
             itemTitle.classList.remove('albumTitle');
@@ -249,7 +249,7 @@
                 });
             }
 
-            var detailImage = enableTrackList(item) ? view.querySelector('.leftFixedDetailImageContainer') : view.querySelector('.detailImageContainer');
+            var detailImage = enableTrackList(item) || item.Type == 'MusicArtist' ? view.querySelector('.leftFixedDetailImageContainer') : view.querySelector('.detailImageContainer');
 
             if (url && item.Type != "Season" && item.Type != "BoxSet") {
                 detailImage.classList.remove('hide');
@@ -336,7 +336,7 @@
 
         var mainSection = view.querySelector('.mainSection');
 
-        if (item.Type != "Season" && item.Type != "MusicArtist" && item.Type != "MusicAlbum" && item.Type != "BoxSet") {
+        if (item.Type != "Season" && item.Type != "MusicArtist" && item.Type != "MusicAlbum" && item.Type != "BoxSet" && item.Type != "Playlist") {
             mainSection.style.minHeight = (Math.round(view.querySelector('.itemPageContainer').offsetHeight * .72)) + 'px';
             mainSection.classList.add('smallBottomMargin');
         } else {
@@ -380,7 +380,7 @@
             view.querySelector('.mainSection .btnPlay').classList.add('hide');
         }
 
-        if (enableTrackList(item)) {
+        if (enableTrackList(item) || item.Type == 'MusicArtist') {
             view.querySelector('.itemPageFixedLeft .itemPageButtons').classList.remove('hide');
             view.querySelector('.mainSection .itemPageButtons').classList.add('hide');
         } else {
