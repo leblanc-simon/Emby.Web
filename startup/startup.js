@@ -7,6 +7,7 @@
         var isRestored = e.detail.isRestored;
 
         Emby.Page.setTitle(null);
+        Emby.Backdrop.clear();
 
         require(['loading'], function (loading) {
             loading.hide();
@@ -34,6 +35,7 @@
         var isRestored = e.detail.isRestored;
 
         Emby.Page.setTitle(null);
+        Emby.Backdrop.clear();
 
         element.querySelector('.txtUserName').value = params.user || '';
         element.querySelector('.txtPassword').value = '';
@@ -93,6 +95,7 @@
         var isRestored = e.detail.isRestored;
 
         Emby.Page.setTitle(null);
+        Emby.Backdrop.clear();
 
         element.querySelector('.txtServerHost').value = '';
         element.querySelector('.txtServerPort').value = '8096';
@@ -153,6 +156,7 @@
         var isRestored = e.detail.isRestored;
 
         Emby.Page.setTitle(null);
+        Emby.Backdrop.clear();
 
         if (!isRestored) {
             element.querySelector('form').addEventListener('submit', function (e) {
@@ -298,6 +302,7 @@
         var serverId = params.serverid;
 
         Emby.Page.setTitle(null);
+        Emby.Backdrop.clear();
 
         require(['connectionManager', 'loading'], function (connectionManager, loading) {
 
@@ -525,6 +530,7 @@
         var servers = [];
 
         Emby.Page.setTitle(null);
+        Emby.Backdrop.clear();
 
         require(['connectionManager', 'loading'], function (connectionManager, loading) {
 
