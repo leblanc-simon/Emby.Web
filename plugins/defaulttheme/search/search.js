@@ -11,11 +11,14 @@
 
         view.addEventListener('viewshow', function (e) {
 
-            Emby.Page.setTitle(Globalize.translate('Search'));
+            Emby.Page.setTitle('');
+            Emby.Backdrop.clear();
+            document.querySelector('.headerSearchButton').classList.add('hide');
         });
 
         view.addEventListener('viewdestroy', function () {
 
+            document.querySelector('.headerSearchButton').classList.remove('hide');
         });
     }
 
