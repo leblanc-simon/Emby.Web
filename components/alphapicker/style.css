@@ -22,4 +22,5 @@
     .alphaPickerButton:focus {
         background-color: #52B54B;
         opacity: 1;
+        color: #fff;
     }

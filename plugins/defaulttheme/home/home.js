@@ -13,6 +13,8 @@
 
             var isRestored = e.detail.isRestored;
 
+            document.documentElement.classList.add('blurBackdrop');
+
             Emby.Page.setTitle(null);
 
             if (!isRestored) {

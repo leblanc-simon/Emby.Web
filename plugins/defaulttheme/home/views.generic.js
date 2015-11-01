@@ -1,28 +1,29 @@
 (function (globalScope) {
 
-    function loadLatest(element, parentId, autoFocus) {
+    function loadAll(element, parentId, autoFocus) {
 
         var options = {
 
-            Limit: 24,
             ParentId: parentId,
             EnableImageTypes: "Primary,Backdrop,Thumb"
         };
 
-        Emby.Models.latestItems(options).then(function (result) {
+        Emby.Models.items(options).then(function (result) {
 
-            var section = element.querySelector('.latestSection');
+            var section = element.querySelector('.allSection');
 
             // Needed in case the view has been destroyed
             if (!section) {
                 return;
             }
 
-            DefaultTheme.CardBuilder.buildCards(result, {
+            DefaultTheme.CardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
                 shape: 'autoHome',
-                autoFocus: autoFocus
+                autoFocus: autoFocus,
+                coverImage: true,
+                showTitle: true
             });
         });
     }
@@ -30,14 +31,7 @@
     function view(element, parentId, autoFocus) {
         var self = this;
 
-        loadLatest(element, parentId, autoFocus);
-
-        var allGenericCard = element.querySelector('.allGenericCard');
-        allGenericCard.setAttribute('data-id', parentId);
-        allGenericCard.setAttribute('data-type', 'Folder');
-        allGenericCard.setAttribute('data-isfolder', 'true');
-        allGenericCard.setAttribute('data-action', 'link');
-        allGenericCard.classList.add('itemAction');
+        loadAll(element, parentId, autoFocus);
 
         self.destroy = function () {
 
