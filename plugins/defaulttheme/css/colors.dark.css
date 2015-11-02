@@ -181,7 +181,7 @@ paper-item-body [secondary] {
 }
 
 paper-icon-item[focused] {
-    background-color: rgba(0,0,0,.6);
+    background-color: rgba(50,50,50,.9);
     outline: none !important;
 }
 

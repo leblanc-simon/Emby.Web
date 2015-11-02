@@ -130,7 +130,7 @@
 }
 
     .itemPageFixedLeft .itemPageButtons paper-button:not(:focus) {
-        background-color: rgba(56, 56, 56, .7);
+        background-color: rgba(56, 56, 56, .85);
     }
 
 .detailImageContainer {
@@ -155,7 +155,7 @@
     top: 0;
     left: 0;
     width: 25%;
-    padding-top: 1em;
+    padding-top: 1.25em;
 }
 
 .leftFixedDetailImageContainer .detailImage {
