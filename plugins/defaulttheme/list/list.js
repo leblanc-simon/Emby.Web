@@ -93,7 +93,10 @@
             listNumbersElement: view.querySelector('.listNumbers'),
             selectedItemInfoElement: view.querySelector('.selectedItemInfoInner'),
             selectedIndexElement: view.querySelector('.selectedIndex'),
-            slyFrame: instance.slyFrame
+            slyFrame: instance.slyFrame,
+            cardOptions: {
+                coverImage: true
+            }
         });
 
         instance.listController.render();

@@ -126,6 +126,7 @@ button.card {
     align-items: center;
     justify-content: center;
     position: relative;
+    background-clip: content-box !important;
 }
 
 .emptyCardImageContainer {
