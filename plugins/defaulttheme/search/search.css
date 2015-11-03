@@ -2,7 +2,7 @@
     display: flex;
     flex-flow: column;
     position: absolute;
-    top: 8%;
+    top: 7%;
     left: 0;
     right: 0;
     bottom: 0;
@@ -13,23 +13,39 @@
 }
 
     .searchFields .alphaPicker {
-        margin-top: 1em;
+        margin-top: .7em;
     }
 
 .searchResults {
     flex: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding-left: 3em;
+    padding-right: 3em;
 }
+
+    .searchResults h1 {
+        margin-bottom: .25em;
+    }
 
 .iconSearch {
     vertical-align: middle;
     margin-top: 1em;
+    opacity: .5;
 }
 
 .txtSearch {
     display: inline-block;
     width: 40%;
     vertical-align: middle;
+}
+
+.searchResults .backdropCard {
+    width: 25%;
+}
+
+.searchResults .squareCard {
+    width: 16.66666666666666667%;
+}
+
+.searchResults .portraitCard {
+    width: 16.66666666666666667%;
 }

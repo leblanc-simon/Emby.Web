@@ -294,6 +294,20 @@
             if (options.preferThumb && options.showTitle !== false) {
                 forceName = true;
             }
+        } else if (item.PrimaryImageTag) {
+
+            height = width && primaryImageAspectRatio ? Math.round(width / primaryImageAspectRatio) : null;
+
+            imgUrl = apiClient.getImageUrl(item.Id || item.ItemId, {
+                type: "Primary",
+                height: height,
+                width: width,
+                tag: item.PrimaryImageTag
+            });
+
+            if (options.preferThumb && options.showTitle !== false) {
+                forceName = true;
+            }
         }
         else if (item.ParentPrimaryImageTag) {
 
@@ -405,12 +419,15 @@
     function getPlayedIndicator(item) {
 
         if (item.Type == "Series" || item.Type == "Season" || item.Type == "BoxSet" || item.MediaType == "Video" || item.MediaType == "Game" || item.MediaType == "Book") {
-            if (item.UserData.UnplayedItemCount) {
-                return '<div class="cardCountIndicator">' + item.UserData.UnplayedItemCount + '</div>';
+
+            var userData = item.UserData || {};
+
+            if (userData.UnplayedItemCount) {
+                return '<div class="cardCountIndicator">' + userData.UnplayedItemCount + '</div>';
             }
 
             if (item.Type != 'TvChannel') {
-                if (item.UserData.PlayedPercentage && item.UserData.PlayedPercentage >= 100 || (item.UserData && item.UserData.Played)) {
+                if (userData.PlayedPercentage && userData.PlayedPercentage >= 100 || (userData.Played)) {
                     return '<div class="playedIndicator"><iron-icon icon="check"></iron-icon></div>';
                 }
             }
@@ -500,7 +517,7 @@
         var data = '';
 
         if (options.addImageData) {
-            var primaryImageTag = (item.ImageTags || {}).Primary || '';
+            var primaryImageTag = (item.ImageTags || {}).Primary || item.PrimaryImageTag || '';
             data += '<input type="hidden" class="primaryImageTag" value="' + primaryImageTag + '" />';
         }
 
