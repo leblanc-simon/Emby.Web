@@ -10,22 +10,32 @@ define(['css!components/alphapicker/style.css'], function () {
         }
     }
 
+    function getLetterButton(l) {
+        return '<button data-value="' + l + '" class="clearButton alphaPickerButton">' + l + '</button>';
+    }
+
     function render(element, options) {
 
         element.classList.add('alphaPicker');
         element.classList.add('focuscontainer-x');
 
-        var letters = ['#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+        var html = '';
+        var letters;
 
-        var html = letters.map(function (l) {
+        if (options.mode == 'keyboard') {
+            letters = ['#'];
+            html += letters.map(getLetterButton).join('');
+        } else {
+            letters = ['#'];
+            html += letters.map(getLetterButton).join('');
+        }
 
-            return '<button data-value="' + l + '" class="clearButton alphaPickerButton">' + l + '</button>';
-
-        }).join('');
+        letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+        html += letters.map(getLetterButton).join('');
 
         element.innerHTML = html;
 
-        if (options.enableSelectedValue !== false) {
+        if (options.mode != 'keyboard') {
             element.querySelector('.alphaPickerButton').classList.add('selected');
         }
 
@@ -142,7 +152,7 @@ define(['css!components/alphapicker/style.css'], function () {
                 value = value.toUpperCase();
                 currentValue = value;
 
-                if (options.enableSelectedValue !== false) {
+                if (options.mode != 'keyboard') {
                     var selected = element.querySelector('.selected');
                     var btn = element.querySelector('.alphaPickerButton[data-value=\'' + value + '\']');
 
@@ -164,8 +174,8 @@ define(['css!components/alphapicker/style.css'], function () {
             return currentValue;
         };
 
-        self.setDefault = function () {
-
+        self.focus = function () {
+            Emby.FocusManager.autoFocus(element, true);
         };
 
         render(element, options);

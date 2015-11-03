@@ -6,45 +6,41 @@ html {
     background-attachment: fixed;
 }
 
-.themeContainer.withBackdrop:not(.staticBackdrop) {
+.themeContainer.withBackdrop {
     background: rgba(6, 6, 6, .88);
     /*background: radial-gradient(circle, rgba(26,26,26,.78), rgba(6,6,6,.92));
     background: -webkit-radial-gradient(circle, rgba(26,26,26,.82), rgba(6,6,6,.92));*/
 }
 
-.blurBackdropIn .themeContainer.withBackdrop {
-    background: rgba(6, 6, 6, .82);
-}
-
-.blurBackdropIn .backdropContainer {
-    animation: blurBackdropIn 1s;
+.themeContainer.withBackdrop.listBackdropIn {
+    animation: listBackdropIn 1s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-in;
 }
 
-@keyframes blurBackdropIn {
+@keyframes listBackdropIn {
     from {
-        -webkit-filter: initial;
+        background: rgba(6, 6, 6, .88);
     }
 
     to {
-        -webkit-filter: blur(50px);
+        background: rgba(6, 6, 6, .94);
     }
 }
 
-.blurBackdropOut .backdropContainer {
-    animation: blurBackdropOut 1s;
+.themeContainer.withBackdrop.listBackdropOut {
+    animation: listBackdropOut .8s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
 }
 
-@keyframes blurBackdropOut {
+@keyframes listBackdropOut {
     from {
-        -webkit-filter: blur(50px);
+        background: rgba(6, 6, 6, .94);
     }
 
     to {
-        -webkit-filter: initial;
+        background: rgba(6, 6, 6, .88);
     }
 }
 
