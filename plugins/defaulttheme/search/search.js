@@ -43,17 +43,6 @@
             searchType(value, {
 
                 searchTerm: value,
-                IncludePeople: true,
-                IncludeMedia: false,
-                IncludeGenres: false,
-                IncludeStudios: false,
-                IncludeArtists: false
-
-            }, '.peopleResults');
-
-            searchType(value, {
-
-                searchTerm: value,
                 IncludePeople: false,
                 IncludeMedia: true,
                 IncludeGenres: false,
@@ -78,27 +67,38 @@
             searchType(value, {
 
                 searchTerm: value,
+                IncludePeople: true,
+                IncludeMedia: false,
+                IncludeGenres: false,
+                IncludeStudios: false,
+                IncludeArtists: false
+
+            }, '.peopleResults', true);
+
+            searchType(value, {
+
+                searchTerm: value,
                 IncludePeople: false,
                 IncludeMedia: false,
                 IncludeGenres: false,
                 IncludeStudios: false,
                 IncludeArtists: true
 
-            }, '.artistResults');
+            }, '.artistResults', true);
         }
 
-        function searchType(value, query, section) {
+        function searchType(value, query, section, coverImage) {
 
             query.Limit = 6;
 
             Emby.Models.search(query).then(function (result) {
 
-                populateResults(result, section);
+                populateResults(result, section, coverImage);
 
             });
         }
 
-        function populateResults(result, section) {
+        function populateResults(result, section, coverImage) {
 
             section = view.querySelector(section);
 
@@ -115,7 +115,8 @@
             DefaultTheme.CardBuilder.buildCards(items, {
                 itemsContainer: itemsContainer,
                 shape: 'autoVertical',
-                scalable: true
+                scalable: true,
+                coverImage: coverImage
             });
         }
 
