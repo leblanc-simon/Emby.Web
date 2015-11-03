@@ -11,6 +11,8 @@
 
         view.addEventListener('viewshow', function (e) {
 
+            DefaultTheme.Backdrop.setStaticBackdrop();
+
             require(['loading'], function (loading) {
 
                 if (!self.tabbedPage) {
