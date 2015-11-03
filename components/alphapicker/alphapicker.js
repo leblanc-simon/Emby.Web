@@ -23,8 +23,7 @@ define(['css!components/alphapicker/style.css'], function () {
         var letters;
 
         if (options.mode == 'keyboard') {
-            letters = ['#'];
-            html += letters.map(getLetterButton).join('');
+            html += '<paper-icon-button data-value=" " icon="space-bar" class="alphaPickerButton"></paper-icon-button>';
         } else {
             letters = ['#'];
             html += letters.map(getLetterButton).join('');
@@ -32,6 +31,13 @@ define(['css!components/alphapicker/style.css'], function () {
 
         letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
         html += letters.map(getLetterButton).join('');
+
+        if (options.mode == 'keyboard') {
+            letters = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+            html += '<paper-icon-button data-value="backspace" icon="backspace" class="alphaPickerButton"></paper-icon-button>';
+            html += '<br/>';
+            html += letters.map(getLetterButton).join('');
+        }
 
         element.innerHTML = html;
 
@@ -70,6 +76,21 @@ define(['css!components/alphapicker/style.css'], function () {
                 var value = alphaFocusedElement.getAttribute('data-value');
 
                 self.value(value, true);
+            }
+        }
+
+        function onAlphaPickerClick(e) {
+
+            var alphaPickerButton = Emby.Dom.parentWithClass(e.target, 'alphaPickerButton');
+
+            if (alphaPickerButton) {
+                var value = alphaPickerButton.getAttribute('data-value');
+
+                element.dispatchEvent(new CustomEvent("alphavalueclicked", {
+                    detail: {
+                        value: value
+                    }
+                }));
             }
         }
 
@@ -113,6 +134,10 @@ define(['css!components/alphapicker/style.css'], function () {
                     itemsContainer.addEventListener('focus', onItemsFocusIn, true);
                 }
 
+                if (options.mode == 'keyboard') {
+                    element.addEventListener('click', onAlphaPickerClick);
+                }
+
                 element.addEventListener('focus', onAlphaPickerFocusIn, true);
 
             } else {
@@ -121,6 +146,7 @@ define(['css!components/alphapicker/style.css'], function () {
                     itemsContainer.removeEventListener('focus', onItemsFocusIn);
                 }
 
+                element.removeEventListener('click', onAlphaPickerClick);
                 element.removeEventListener('focus', onAlphaPickerFocusIn);
             }
         };

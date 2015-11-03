@@ -354,6 +354,24 @@
         });
     }
 
+    function search(options) {
+
+        return new Promise(function (resolve, reject) {
+
+            require(['connectionManager'], function (connectionManager) {
+
+                var apiClient = connectionManager.currentApiClient();
+
+                options = options || {};
+
+                normalizeOptions(options);
+                options.UserId = apiClient.getCurrentUserId();
+
+                apiClient.getSearchHints(options).done(resolve, reject);
+            });
+        });
+    }
+
     function collections(options) {
 
         return new Promise(function (resolve, reject) {
@@ -705,7 +723,8 @@
         likes: likes,
         played: played,
         favorite: favorite,
-        clearLike: clearLike
+        clearLike: clearLike,
+        search: search
     };
 
 })(this, document);
