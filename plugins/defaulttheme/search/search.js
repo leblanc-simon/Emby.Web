@@ -15,8 +15,10 @@
 
                 self.alphaPicker = new alphaPicker({
                     element: view.querySelector('.alphaPicker'),
-                    enableSelectedValue: false
+                    mode: 'keyboard'
                 });
+
+                self.alphaPicker.focus();
             });
         }
 

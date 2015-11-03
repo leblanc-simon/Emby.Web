@@ -54,7 +54,12 @@
                             view.querySelector('.itemPageFixedLeft').classList.add('hide');
                             mainSection.focus = focusMainSection;
                         }
-                        focusMainSection.call(mainSection);
+
+                        if (enableTrackList(item)) {
+                            Emby.FocusManager.autoFocus(view, true);
+                        } else {
+                            focusMainSection.call(mainSection);
+                        }
                     }
 
                     var userDataIconsSelector = enableTrackList(item) || item.Type == 'MusicArtist' ? '.itemPageFixedLeft .itemPageUserDataIcons' : '.mainSection .itemPageUserDataIcons';
