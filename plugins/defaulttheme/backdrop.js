@@ -6,9 +6,8 @@
 
     function setStaticBackdrop() {
 
-        return;
         //var path = Emby.PluginManager.mapPath('defaulttheme', 'css/images/blur' + getRandomInt(1, 6) + '.png');
-        var path = Emby.PluginManager.mapPath('defaulttheme', 'css/images/blur7.png');
+        var path = Emby.PluginManager.mapPath('defaulttheme', 'css/images/bg1.jpg');
         Emby.Backdrop.setBackdrop(path);
 
         setTimeout(function() {
@@ -21,6 +20,7 @@
         var themeContainer = document.querySelector('.themeContainer');
 
         if (isFocused) {
+            return;
             if (!themeContainer.classList.contains('listBackdropIn')) {
                 themeContainer.classList.add('listBackdropIn');
                 themeContainer.classList.remove('listBackdropOut');
@@ -31,7 +31,7 @@
                 themeContainer.classList.add('listBackdropOut');
             }
         }
-        //document.querySelector('.themeContainer').classList.remove('staticBackdrop');
+        document.querySelector('.themeContainer').classList.remove('staticBackdrop');
         Emby.Backdrop.setBackdrops(items);
     }
 

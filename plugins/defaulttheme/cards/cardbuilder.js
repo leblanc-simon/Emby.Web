@@ -525,7 +525,7 @@
 
         var tagName = 'button';
 
-        var prefix = (item.SortName || item.Name)[0];
+        var prefix = (item.SortName || item.Name || '')[0];
 
         if (prefix) {
             prefix = prefix.toUpperCase();

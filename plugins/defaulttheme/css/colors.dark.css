@@ -12,6 +12,10 @@ html {
     background: -webkit-radial-gradient(circle, rgba(26,26,26,.82), rgba(6,6,6,.92));*/
 }
 
+.themeContainer.withBackdrop.staticBackdrop {
+    background: rgba(6, 6, 6, .78);
+}
+
 .themeContainer.withBackdrop.listBackdropIn {
     animation: listBackdropIn 1s;
     animation-fill-mode: forwards;
