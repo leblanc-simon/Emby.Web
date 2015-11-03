@@ -26,7 +26,7 @@
 
                     // If it's a person, leave the backdrop image from wherever we came from
                     if (item.Type != 'Person') {
-                        Emby.Backdrop.setBackdrops([item]);
+                        DefaultTheme.Backdrop.setBackdrops([item]);
                         setTitle(item);
                     }
 

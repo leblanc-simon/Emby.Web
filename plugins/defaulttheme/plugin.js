@@ -47,6 +47,7 @@ define([], function () {
                 'css!' + Emby.PluginManager.mapRequire(self, 'css/colors.dark'),
                 'css!' + Emby.PluginManager.mapRequire(self, 'css/paperstyles'),
                 'css!' + Emby.PluginManager.mapRequire(self, 'css/papericonbutton'),
+                Emby.PluginManager.mapRequire(self, 'backdrop.js'),
                 Emby.PluginManager.mapRequire(self, 'cards/cardbuilder.js'),
                 Emby.PluginManager.mapRequire(self, 'cards/userdata.js'),
                 Emby.PluginManager.mapRequire(self, 'cards/tabbedpage.js'),
@@ -414,8 +415,9 @@ define([], function () {
                 document.querySelector('.headerBackButton').classList.add('hide');
             }
 
-            var enableBlur = viewId != 'defaulttheme-item' && viewId != 'defaulttheme-nowplaying' && viewId != 'defaulttheme-nowplayingplaylist';
-            blurBackdrop(enableBlur);
+            //var enableBlur = viewId != 'defaulttheme-item' && viewId != 'defaulttheme-nowplaying' && viewId != 'defaulttheme-nowplayingplaylist';
+            //blurBackdrop(enableBlur);
+            //Emby.Backdrop.setBackdrop(Emby.PluginManager.mapPath(self, 'css/skin-dark/blur6.png'));
         }
 
         function blurBackdrop(enabled) {

@@ -143,7 +143,7 @@ define([], function () {
             }
 
             Emby.Models.item(id).then(function (item) {
-                Emby.Backdrop.setBackdrops([item]);
+                //Emby.Backdrop.setBackdrops([item]);
                 setSelectedInfo(card, item);
             });
         }

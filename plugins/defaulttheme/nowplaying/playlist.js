@@ -12,10 +12,10 @@
         function setCurrentItem(item) {
 
             if (item) {
-                Emby.Backdrop.setBackdrops([item]);
+                DefaultTheme.Backdrop.setBackdrops([item]);
 
             } else {
-                Emby.Backdrop.clear();
+                DefaultTheme.Backdrop.setBackdrops([]);
             }
             updateCurrentPlaylistItem();
         }

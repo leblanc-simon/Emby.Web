@@ -15,9 +15,9 @@
 
             Emby.Page.setTitle(null);
 
-            if (!isRestored) {
+            DefaultTheme.Backdrop.setStaticBackdrop();
 
-                Emby.Backdrop.clear();
+            if (!isRestored) {
 
                 require(['loading'], function (loading) {
 

@@ -17,7 +17,7 @@
         function setCurrentItem(item) {
 
             if (item) {
-                Emby.Backdrop.setBackdrops([item]);
+                DefaultTheme.Backdrop.setBackdrops([item]);
 
                 DefaultTheme.CardBuilder.buildCards([item], {
                     shape: 'squareCard',
@@ -54,7 +54,7 @@
                 nowPlayingVolumeSlider.disabled = true;
                 nowPlayingPositionSlider.disabled = true;
 
-                Emby.Backdrop.clear();
+                DefaultTheme.Backdrop.setBackdrops([]);
             }
 
             updatePlaylist();

@@ -6,7 +6,7 @@ html {
     background-attachment: fixed;
 }
 
-.themeContainer.withBackdrop {
+.themeContainer.withBackdrop:not(.staticBackdrop) {
     background: rgba(6, 6, 6, .88);
     /*background: radial-gradient(circle, rgba(26,26,26,.78), rgba(6,6,6,.92));
     background: -webkit-radial-gradient(circle, rgba(26,26,26,.82), rgba(6,6,6,.92));*/
