@@ -124,7 +124,7 @@
             'exit': {
                 name: 'fade-out-animation',
                 node: dlg,
-                timing: { duration: options.exitAnimationDuration || 100 }
+                timing: { duration: options.exitAnimationDuration || 400, easing: 'ease-in' }
             }
         };
 

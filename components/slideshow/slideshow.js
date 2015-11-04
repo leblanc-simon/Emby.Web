@@ -9,7 +9,7 @@ define(['paperdialoghelper', 'css!components/slideshow/style'], function (paperd
         }
 
         var dlg = paperdialoghelper.createDialog({
-            exitAnimationDuration: 1000
+            exitAnimationDuration: 800
         });
 
         dlg.classList.add('slideshowDialog');
