@@ -8,7 +8,7 @@
     function listPage(view, params) {
 
         var self = this;
-        var itemPromise;
+        var currentItem;
 
         view.addEventListener('viewshow', function (e) {
 
@@ -18,11 +18,14 @@
 
                 if (!isRestored) {
                     loading.show();
+
+                    view.querySelector('.scrollSlider').addEventListener('click', onItemsContainerClick);
                 }
 
                 Emby.Models.item(params.parentid).then(function (item) {
 
                     Emby.Page.setTitle(item.Name);
+                    currentItem = item;
 
                     if (!isRestored) {
                         createHorizontalScroller(self, view, item, loading);
@@ -40,6 +43,57 @@
                 self.listController.destroy();
             }
         });
+
+        function onItemsContainerClick(e) {
+            var card = Emby.Dom.parentWithClass(e.target, 'card');
+
+            if (!card) {
+                return;
+            }
+
+            var startItemId = card.getAttribute('data-id');
+            showSlideshow(startItemId);
+
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+
+        function showSlideshow(startItemId) {
+
+            Emby.Models.children(currentItem, {
+
+                MediaTypes: 'Photo',
+                Filters: 'IsNotFolder'
+
+            }).then(function (result) {
+
+                var items = result.Items;
+
+                var index = items.map(function (i) {
+                    return i.Id;
+
+                }).indexOf(startItemId);
+
+                if (index == -1) {
+                    index = 0;
+                }
+
+                require(['slideshow'], function (slideshow) {
+
+                    var newSlideShow = new slideshow({
+                        showTitle: false,
+                        cover: false,
+                        items: items,
+                        startIndex: index,
+                        interval: 5000
+                    });
+
+                    newSlideShow.show();
+                });
+
+            });
+        }
     }
 
     function createHorizontalScroller(instance, view, item, loading) {

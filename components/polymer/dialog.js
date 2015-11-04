@@ -37,15 +37,12 @@ define(['paperdialoghelper'], function (paperdialoghelper) {
         dlg.innerHTML = html;
         document.body.appendChild(dlg);
 
-        var activeElement = document.activeElement;
         var resultIndex = -1;
 
         // Has to be assigned a z-index after the call to .open() 
         dlg.addEventListener('iron-overlay-closed', function (e) {
 
             this.parentNode.removeChild(this);
-
-            activeElement.focus();
 
             if (callback) {
                 callback(resultIndex);

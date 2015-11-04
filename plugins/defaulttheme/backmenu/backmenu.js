@@ -70,8 +70,6 @@
             dlg.innerHTML = html;
             document.body.appendChild(dlg);
 
-            var activeElement = document.activeElement;
-
             dlg.addEventListener('focus', onFocusIn, true);
 
             // Has to be assigned a z-index after the call to .open() 
@@ -79,7 +77,6 @@
 
                 this.parentNode.removeChild(this);
 
-                activeElement.focus();
                 var cancelled = false;
 
                 switch (dialogResult) {

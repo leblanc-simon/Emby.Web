@@ -1,27 +1,41 @@
-define(['css!components/slideshow/style'], function () {
+define(['paperdialoghelper', 'css!components/slideshow/style'], function (paperdialoghelper) {
 
     function createElements() {
 
-        var elem = document.querySelector('.slideshowContainer');
+        var elem = document.querySelector('.slideshowDialog');
 
         if (elem) {
             return elem;
         }
 
-        elem = document.createElement('div');
-        elem.classList.add('slideshowContainer');
+        var dlg = paperdialoghelper.createDialog({
+            exitAnimationDuration: 1000
+        });
+
+        dlg.classList.add('slideshowDialog');
 
         var html = '';
-
+        html += '<div class="dialogContent">';
         html += '<div class="slideshowImage"></div><h1 class="slideshowImageText"></h1>';
+        html += '</div>';
 
-        elem.innerHTML = html;
+        dlg.innerHTML = html;
 
-        document.body.appendChild(elem);
+        // Has to be assigned a z-index after the call to .open() 
+        dlg.addEventListener('iron-overlay-closed', function (e) {
+
+            stopInterval();
+            this.parentNode.removeChild(this);
+        });
+
+        document.body.appendChild(dlg);
+
+        paperdialoghelper.open(dlg);
+
+        return dlg;
     }
 
     var currentInterval;
-    var animateTimeout;
     function startInterval(options) {
 
         var items = options.items;
@@ -29,29 +43,13 @@ define(['css!components/slideshow/style'], function () {
         stopInterval();
         createElements();
 
-        var index = 0;
-
-        var changeImage = function () {
-
-            if (index >= items.length) {
-                index = 0;
-            }
-
-            var delay = index == 0 ? 0 : 2000;
-
-            showItemImage(items[index], delay, options);
-            index++;
-
-        };
-
-        currentInterval = setInterval(changeImage, 8000);
-
-        changeImage();
+        var index = options.startIndex || 0;
+        showNextImage(items, index, false, (options.interval || 6000), options);
     }
 
+    function showNextImage(items, index, preload, interval, options) {
 
-    function showItemImage(item, delay, options) {
-
+        var item = items[index];
         var imgUrl;
 
         if (item.BackdropImageTags && item.BackdropImageTags.length) {
@@ -65,20 +63,20 @@ define(['css!components/slideshow/style'], function () {
             });
         }
 
-        var cardImageContainer = document.querySelector('.slideshowImage');
+        var onSrcLoaded = function () {
+            var cardImageContainer = document.querySelector('.slideshowImage');
 
-        var newCardImageContainer = document.createElement('div');
-        newCardImageContainer.className = cardImageContainer.className;
+            var newCardImageContainer = document.createElement('div');
+            newCardImageContainer.className = cardImageContainer.className;
 
-        if (options.cover) {
-            newCardImageContainer.classList.add('cover');
-        }
+            if (options.cover) {
+                newCardImageContainer.classList.add('cover');
+            }
 
-        newCardImageContainer.style.backgroundImage = "url('" + imgUrl + "')";
-        newCardImageContainer.classList.add('hide');
-        cardImageContainer.parentNode.appendChild(newCardImageContainer);
+            newCardImageContainer.style.backgroundImage = "url('" + imgUrl + "')";
+            newCardImageContainer.classList.add('hide');
+            cardImageContainer.parentNode.appendChild(newCardImageContainer);
 
-        animateTimeout = setTimeout(function () {
             if (options.showTitle) {
                 document.querySelector('.slideshowImageText').innerHTML = item.Name;
             } else {
@@ -105,26 +103,25 @@ define(['css!components/slideshow/style'], function () {
                 onAnimationFinished();
             }
 
-        }, delay);
+            currentInterval = setTimeout(function() {
+                showNextImage(items, index + 1, true, interval, options);
+            }, interval);
+        };
+
+        if (preload) {
+            var img = new Image();
+            img.onload = onSrcLoaded;
+            img.src = imgUrl;
+        } else {
+            onSrcLoaded();
+        }
     }
 
     function stopInterval() {
         if (currentInterval) {
-            clearInterval(currentInterval);
+            clearTimeout(currentInterval);
             currentInterval = null;
         }
-        if (animateTimeout) {
-            clearTimeout(animateTimeout);
-            animateTimeout = null;
-        }
-    }
-
-    function fadeOut(elem, iterations) {
-        var keyframes = [
-          { opacity: '1', offset: 0 },
-          { opacity: '0', offset: 1 }];
-        var timing = { duration: 900, iterations: iterations };
-        return elem.animate(keyframes, timing);
     }
 
     function slideshow(options) {
@@ -137,22 +134,10 @@ define(['css!components/slideshow/style'], function () {
 
         self.hide = function () {
 
-            stopInterval();
+            var dlg = document.querySelector('.slideshowDialog');
+            if (dlg) {
 
-            var elem = document.querySelector('.slideshowContainer');
-
-            if (elem) {
-
-                var onAnimationFinish = function () {
-                    elem.parentNode.removeChild(elem);
-                };
-
-                if (elem.animate) {
-                    var animation = fadeOut(elem, 1);
-                    animation.onfinish = onAnimationFinish;
-                } else {
-                    onAnimationFinish();
-                }
+                paperdialoghelper.close(dlg);
             }
         };
     }

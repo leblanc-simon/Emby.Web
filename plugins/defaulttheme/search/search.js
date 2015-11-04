@@ -139,7 +139,6 @@
         view.addEventListener('viewshow', function (e) {
 
             Emby.Page.setTitle('');
-            Emby.Backdrop.clear();
             document.querySelector('.headerSearchButton').classList.add('hide');
 
             var isRestored = e.detail.isRestored;
