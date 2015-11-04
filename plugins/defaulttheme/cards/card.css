@@ -129,10 +129,6 @@ button.card {
     background-clip: content-box !important;
 }
 
-.emptyCardImageContainer {
-    background-clip: content-box !important;
-}
-
 .scalableCard .cardImageContainer {
     position: absolute;
     top: 0;

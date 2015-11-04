@@ -160,8 +160,24 @@ paper-dialog {
     opacity: 1;
 }
 
-.emptyCardImageContainer {
-    background-color: #333;
+.defaultCardColor1 {
+    background-color: #009688;
+}
+
+.defaultCardColor2 {
+    background-color: #D32F2F;
+}
+
+.defaultCardColor3 {
+    background-color: #0288D1;
+}
+
+.defaultCardColor4 {
+    background-color: #388E3C;
+}
+
+.defaultCardColor5 {
+    background-color: #F57F17;
 }
 
 .nowPlayingInfoContainer #progressContainer {

@@ -65,6 +65,10 @@
                     Id: "years"
                 },
                 {
+                    Name: Globalize.translate('TopRated'),
+                    Id: "toprated"
+                },
+                {
                     Name: Globalize.translate('Favorites'),
                     Id: "favorites"
                 }];
@@ -109,6 +113,9 @@
                         break;
                     case 'years':
                         renderYears(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
+                        break;
+                    case 'toprated':
+                        renderTopRated(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
                         break;
                     case 'collections':
                         renderCollections(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
@@ -279,6 +286,42 @@
                 },
                 cardOptions: {
                     indexBy: 'ProductionYear'
+                },
+                listCountElement: page.querySelector('.listCount'),
+                listNumbersElement: page.querySelector('.listNumbers'),
+                autoFocus: autoFocus,
+                selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
+                selectedIndexElement: page.querySelector('.selectedIndex'),
+                slyFrame: slyFrame,
+                onRender: function () {
+                    if (resolve) {
+                        resolve();
+                        resolve = null;
+                    }
+                }
+            });
+
+            self.listController.render();
+        }
+
+        function renderTopRated(page, pageParams, autoFocus, slyFrame, resolve) {
+
+            self.listController = new DefaultTheme.HorizontalList({
+
+                itemsContainer: page.querySelector('.contentScrollSlider'),
+                getItemsMethod: function (startIndex, limit) {
+                    return Emby.Models.items({
+                        StartIndex: startIndex,
+                        Limit: limit,
+                        ParentId: pageParams.parentid,
+                        IncludeItemTypes: "Movie",
+                        Recursive: true,
+                        SortBy: "CommunityRating,SortName",
+                        SortOrder: "Descending"
+                    });
+                },
+                cardOptions: {
+                    indexBy: 'CommunityRating'
                 },
                 listCountElement: page.querySelector('.listCount'),
                 listNumbersElement: page.querySelector('.listNumbers'),

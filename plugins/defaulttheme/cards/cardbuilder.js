@@ -144,6 +144,10 @@
                     newIndexValue = item.ProductionYear;
                 }
 
+                else if (options.indexBy == 'CommunityRating') {
+                    newIndexValue = item.CommunityRating ? (Math.floor(item.CommunityRating) + (item.CommunityRating % 1 >= .5 ? .5 : 0)) + '+' : null;
+                }
+
                 if (newIndexValue != currentIndexValue) {
 
                     if (hasOpenRow) {
@@ -436,6 +440,10 @@
         return '';
     }
 
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
     function buildCard(index, item, apiClient, options, className) {
 
         className += " itemAction";
@@ -453,7 +461,7 @@
         }
 
         if (!imgUrl) {
-            cardImageContainerClass += ' emptyCardImageContainer';
+            cardImageContainerClass += ' emptyCardImageContainer defaultCardColor' + getRandomInt(1, 5);
         }
 
         var separateCardBox = options.scalable;
