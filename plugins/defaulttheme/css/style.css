@@ -494,6 +494,21 @@ paper-item-body .overview {
         height: 312px;
     }
 
+    .listPageContent .squareCard .cardImageContainer {
+        width: 230px;
+        height: 230px;
+    }
+
+    .listPageContent .backdropCard .cardImageContainer {
+        width: 409px;
+        height: 230px;
+    }
+
+    .listPageContent .portraitCard .cardImageContainer {
+        width: 230px;
+        height: 345px;
+    }
+
     .horizontalPageContent .loginSquareCard {
         width: 340px;
     }
