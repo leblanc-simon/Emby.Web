@@ -33,3 +33,24 @@
     z-index: 1002;
     font-weight: 400;
 }
+
+.btnSlideshowExit {
+    z-index: 1002;
+    position: absolute;
+    top: .5em;
+    right: .5em;
+    color: #bbb;
+}
+
+.slideshowControlBar {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1002;
+    background: rgba(0,0,0,.5);
+}
+
+.mouseIdle .btnSlideshowExit, .mouseIdle .slideshowControlBar {
+    display: none;
+}

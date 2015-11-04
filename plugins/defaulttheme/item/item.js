@@ -55,7 +55,7 @@
                             mainSection.focus = focusMainSection;
                         }
 
-                        if (enableTrackList(item)) {
+                        if (enableTrackList(item) || item.Type == 'MusicArtist') {
                             Emby.FocusManager.autoFocus(view, true);
                         } else {
                             focusMainSection.call(mainSection);
@@ -735,7 +735,8 @@
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
                 shape: 'autoVertical',
-                scalable: true
+                scalable: true,
+                coverImage: item.Type == 'MusicArtist' || item.Type == 'MusicAlbum'
             });
         });
     }

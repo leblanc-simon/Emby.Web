@@ -276,6 +276,7 @@
         define("fade-out-animation", ['html!bower_components/neon-animation/animations/fade-out-animation.html']);
 
         define("scale-up-animation", ['html!bower_components/neon-animation/animations/scale-up-animation.html']);
+        define("scale-down-animation", ['html!bower_components/neon-animation/animations/scale-down-animation.html']);
     }
 
     function enableWebComponents() {
