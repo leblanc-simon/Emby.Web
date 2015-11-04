@@ -26,10 +26,10 @@
                 themeContainer.classList.remove('listBackdropOut');
             }
         } else {
-            if (!themeContainer.classList.contains('listBackdropOut')) {
-                themeContainer.classList.remove('listBackdropIn');
-                themeContainer.classList.add('listBackdropOut');
-            }
+            //if (!themeContainer.classList.contains('listBackdropOut')) {
+            //    themeContainer.classList.remove('listBackdropIn');
+            //    themeContainer.classList.add('listBackdropOut');
+            //}
         }
         document.querySelector('.themeContainer').classList.remove('staticBackdrop');
         Emby.Backdrop.setBackdrops(items);
