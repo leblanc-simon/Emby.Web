@@ -46,8 +46,7 @@
 
         require(["slyScroller", 'loading'], function (slyScroller, loading) {
 
-            var horizontalPageContent = view.querySelector('.horizontalPageContent');
-            var scrollFrame = horizontalPageContent.querySelector('.scrollFrame');
+            var scrollFrame = view.querySelector('.scrollFrame');
 
             scrollFrame.style.display = 'block';
 
@@ -56,11 +55,11 @@
                 itemNav: 0,
                 mouseDragging: 1,
                 touchDragging: 1,
-                slidee: horizontalPageContent.querySelector('.scrollSlider'),
+                slidee: view.querySelector('.scrollSlider'),
                 itemSelector: '.card',
                 smart: true,
                 releaseSwing: true,
-                scrollBar: horizontalPageContent.querySelector('.scrollbar'),
+                scrollBar: view.querySelector('.scrollbar'),
                 scrollBy: 200,
                 speed: 270,
                 elasticBounds: 1,
