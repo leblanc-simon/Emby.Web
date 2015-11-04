@@ -51,6 +51,11 @@
                 return;
             }
 
+            var type = card.getAttribute('data-type');
+            if (type != 'Photo') {
+                return;
+            }
+
             var startItemId = card.getAttribute('data-id');
             showSlideshow(startItemId);
 
