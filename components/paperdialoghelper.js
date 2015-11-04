@@ -19,6 +19,8 @@
             //}
         }
 
+        var activeElement = document.activeElement;
+
         function onDialogClosed() {
 
             if (lockDocumentScroll !== false) {
@@ -35,6 +37,8 @@
                     history.back();
                 }
             }
+
+            activeElement.focus();
         }
 
         var self = this;
@@ -108,6 +112,21 @@
 
         dlg.entryAnimation = options.entryAnimation || 'scale-up-animation';
         dlg.exitAnimation = 'fade-out-animation';
+
+        dlg.animationConfig = {
+            // scale up
+            'entry': {
+                name: options.entryAnimation || 'scale-up-animation',
+                node: dlg,
+                timing: { duration: options.entryAnimationDuration || 300, easing: 'ease-out' }
+            },
+            // fade out
+            'exit': {
+                name: 'fade-out-animation',
+                node: dlg,
+                timing: { duration: options.exitAnimationDuration || 100 }
+            }
+        };
 
         dlg.classList.add('popupEditor');
 

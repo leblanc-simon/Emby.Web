@@ -62,12 +62,9 @@
         dlg.innerHTML = html;
         document.body.appendChild(dlg);
 
-        var activeElement = document.activeElement;
-
         // Has to be assigned a z-index after the call to .open() 
         dlg.addEventListener('iron-overlay-closed', function () {
             this.parentNode.removeChild(this);
-            activeElement.focus();
         });
 
         // Seeing an issue in some non-chrome browsers where this is requiring a double click
