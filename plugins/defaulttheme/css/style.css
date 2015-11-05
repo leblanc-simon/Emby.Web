@@ -705,16 +705,27 @@ paper-dialog.dialog {
     min-width: initial;
 }
 
+.tagline {
+    color: #FFEB3B;
+}
+
 .selectedItemPanel {
     position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
-    width: 16%;
-    background-color: rgb(26, 26, 26);
+    width: 18%;
+    background-color: rgb(20, 20, 20);
     z-index: 1;
-    padding: 1em;
 }
-.selectedItemPanel img {
-    max-width: 100%;
+
+    .selectedItemPanelImage {
+        height: 20%;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+
+.selectedItemPanelContent {
+    padding: 1em;
 }
