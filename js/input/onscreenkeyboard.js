@@ -57,7 +57,7 @@
     function enableKeyboard(elem) {
 
         while (elem) {
-            if (elem.getAttribute('data-keyboard') == 'false') {
+            if (elem.getAttribute && elem.getAttribute('data-keyboard') == 'false') {
                 return false;
             }
 
