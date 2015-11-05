@@ -166,7 +166,7 @@ a {
 }
 
 .homePageContainer {
-    top: 12%;
+    top: 13%;
 }
 
 .itemScrollFrame.scrollFrameY {
@@ -703,4 +703,18 @@ paper-dialog.dialog {
     padding: .3em .7em;
     font-size: 84%;
     min-width: initial;
+}
+
+.selectedItemPanel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 16%;
+    background-color: rgb(26, 26, 26);
+    z-index: 1;
+    padding: 1em;
+}
+.selectedItemPanel img {
+    max-width: 100%;
 }

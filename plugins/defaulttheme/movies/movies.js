@@ -242,7 +242,8 @@
                         resolve();
                         resolve = null;
                     }
-                }
+                },
+                selectedItemMode: 'panel'
             });
 
             self.listController.render();

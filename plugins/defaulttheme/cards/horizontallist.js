@@ -15,7 +15,8 @@
                         parent: options.itemsContainer,
                         selectedItemInfoInner: options.selectedItemInfoElement,
                         selectedIndexElement: options.selectedIndexElement,
-                        slyFrame: options.slyFrame
+                        slyFrame: options.slyFrame,
+                        selectedItemMode: options.selectedItemMode
                     });
 
                 });
