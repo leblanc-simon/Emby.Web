@@ -75,7 +75,8 @@ define([], function () {
             if (selectedMediaInfoTimeout) {
                 clearTimeout(selectedMediaInfoTimeout);
             }
-            selectedMediaInfoTimeout = setTimeout(onSelectedMediaInfoTimeout, 1200);
+            var delay = enableSelectedItemPanel ? 1500 : 1200;
+            selectedMediaInfoTimeout = setTimeout(onSelectedMediaInfoTimeout, delay);
         }
 
         function onZoomTimeout() {
@@ -215,11 +216,29 @@ define([], function () {
 
             var thumbImage = Emby.Models.thumbImageUrl(item);
 
+            var html = '';
+
             if (thumbImage) {
 
-                elem.innerHTML = '<img src="' + thumbImage + '" />';
-
+                html += '<div class="selectedItemPanelImage lazy" data-src="' + thumbImage + '"></div>';
             }
+
+            html += '<div class="selectedItemPanelContent">';
+
+            html += '<div>';
+            html += item.Name;
+            html += '</div>';
+
+            if (item.Taglines && item.Taglines.length) {
+                html += '<p class="tagline">';
+                html += item.Taglines[0];
+                html += '</p>';
+            }
+
+            html += '</div>';
+
+            elem.innerHTML = html;
+            Emby.ImageLoader.lazyChildren(elem);
         }
 
         function clearSelectedItemInfo() {
@@ -242,7 +261,7 @@ define([], function () {
                 { transform: 'translate3d(0, 0, 0)', offset: 1 }
             ];
 
-            var timing = { duration: 200, iterations: 1, fill: 'both', easing: 'ease-out' };
+            var timing = { duration: 200, iterations: 1, fill: 'forwards', easing: 'ease-out' };
             elem.animate(keyframes, timing);
         }
 
@@ -253,7 +272,7 @@ define([], function () {
                 { transform: 'translate3d(100%, 0, 0)', offset: 1 }
             ];
 
-            var timing = { duration: 100, iterations: 1, fill: 'both', easing: 'ease-out' };
+            var timing = { duration: 100, iterations: 1, fill: 'forwards', easing: 'ease-out' };
             elem.animate(keyframes, timing).onfinish = function () {
                 elem.parentNode.removeChild(elem);
             };
