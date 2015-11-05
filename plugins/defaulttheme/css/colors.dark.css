@@ -2,7 +2,6 @@ html {
     color: #fff;
     background: #161616;
     background: radial-gradient(circle, #202020, #101010);
-    background: -webkit-radial-gradient(circle, #202020, #101010);
     background-attachment: fixed;
 }
 
@@ -12,15 +11,15 @@ html {
     background: -webkit-radial-gradient(circle, rgba(26,26,26,.82), rgba(6,6,6,.92));*/
 }
 
-.themeContainer.withBackdrop.staticBackdrop {
-    background: rgba(6, 6, 6, .70);
-}
+    .themeContainer.withBackdrop.staticBackdrop {
+        background: rgba(6, 6, 6, .70);
+    }
 
-.themeContainer.withBackdrop.listBackdropIn {
-    animation: listBackdropIn 1s;
-    animation-fill-mode: forwards;
-    animation-timing-function: ease-in;
-}
+    .themeContainer.withBackdrop.listBackdropIn {
+        animation: listBackdropIn 1s;
+        animation-fill-mode: forwards;
+        animation-timing-function: ease-in;
+    }
 
 @keyframes listBackdropIn {
     from {
@@ -28,7 +27,7 @@ html {
     }
 
     to {
-        background: rgba(6, 6, 6, .90);
+        background: rgba(6, 6, 6, .92);
     }
 }
 
@@ -40,7 +39,7 @@ html {
 
 @keyframes listBackdropOut {
     from {
-        background: rgba(6, 6, 6, .90);
+        background: rgba(6, 6, 6, .92);
     }
 
     to {

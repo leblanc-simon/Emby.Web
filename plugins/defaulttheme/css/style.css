@@ -166,7 +166,7 @@ a {
 }
 
 .homePageContainer {
-    top: 13%;
+    top: 12%;
 }
 
 .itemScrollFrame.scrollFrameY {
@@ -293,6 +293,7 @@ a {
         text-transform: none !important;
         margin-top: 0;
         padding-top: .25em;
+        font-weight: inherit !important;
     }
 
     .userViewNames .scrollSlider {
@@ -700,6 +701,6 @@ paper-dialog.dialog {
 .listItemsMoreButton {
     margin: .25em .25em .25em 0;
     padding: .3em .7em;
-    font-size: 90%;
+    font-size: 84%;
     min-width: initial;
 }

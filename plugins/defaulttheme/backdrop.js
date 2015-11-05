@@ -18,21 +18,40 @@
 
     function setBackdrops(items, isFocused) {
 
-        var themeContainer = document.querySelector('.themeContainer');
+        //var themeContainer = document.querySelector('.themeContainer');
 
-        if (isFocused) {
-            if (!themeContainer.classList.contains('listBackdropIn')) {
-                themeContainer.classList.add('listBackdropIn');
-                themeContainer.classList.remove('listBackdropOut');
+        //if (isFocused) {
+        //    if (!themeContainer.classList.contains('listBackdropIn')) {
+        //        themeContainer.classList.add('listBackdropIn');
+        //        themeContainer.classList.remove('listBackdropOut');
+        //    }
+        //} else {
+        //    if (!themeContainer.classList.contains('listBackdropOut')) {
+        //        themeContainer.classList.remove('listBackdropIn');
+        //        themeContainer.classList.add('listBackdropOut');
+        //    }
+        //}
+        //document.querySelector('.themeContainer').classList.remove('staticBackdrop');
+        Emby.Backdrop.setBackdrops(items);
+    }
+
+    function subdued(isSubdued) {
+        
+        var elem = document.querySelector('.themeContainer');
+        if (isSubdued) {
+
+            if (!elem.classList.contains('listBackdropIn')) {
+                elem.classList.remove('listBackdropOut');
+                elem.classList.add('listBackdropIn');
             }
+
         } else {
-            if (!themeContainer.classList.contains('listBackdropOut')) {
-                themeContainer.classList.remove('listBackdropIn');
-                themeContainer.classList.add('listBackdropOut');
+
+            if (elem.classList.contains('listBackdropIn')) {
+                elem.classList.remove('listBackdropIn');
+                elem.classList.add('listBackdropOut');
             }
         }
-        document.querySelector('.themeContainer').classList.remove('staticBackdrop');
-        Emby.Backdrop.setBackdrops(items);
     }
 
     if (!globalScope.DefaultTheme) {
@@ -41,7 +60,8 @@
 
     globalScope.DefaultTheme.Backdrop = {
         setStaticBackdrop: setStaticBackdrop,
-        setBackdrops: setBackdrops
+        setBackdrops: setBackdrops,
+        subdued: subdued
     };
 
 })(this);

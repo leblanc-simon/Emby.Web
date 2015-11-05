@@ -23,11 +23,11 @@ define(['paperdialoghelper', 'css!components/slideshow/style'], function (paperd
             html += '<div class="slideshowImage"></div><h1 class="slideshowImageText"></h1>';
 
             if (options.interactive) {
-                html += '<paper-icon-button icon="close" class="btnSlideshowExit largePaperIconButton"></paper-icon-button>';
+                html += '<paper-icon-button icon="close" class="btnSlideshowExit largeIcon"></paper-icon-button>';
 
                 html += '<div class="slideshowControlBar">';
-                html += '<paper-icon-button icon="arrow-back" class="btnSlideshowPrevious largePaperIconButton"></paper-icon-button>';
-                html += '<paper-icon-button icon="arrow-forward" class="btnSlideshowNext largePaperIconButton"></paper-icon-button>';
+                html += '<paper-icon-button icon="arrow-back" class="btnSlideshowPrevious largeIcon"></paper-icon-button>';
+                html += '<paper-icon-button icon="arrow-forward" class="btnSlideshowNext largeIcon"></paper-icon-button>';
                 html += '</div>';
             }
 

@@ -56,10 +56,6 @@ define([], function () {
 
             list.push('css!' + Emby.PluginManager.mapRequire(self, 'css/fonts'));
 
-            if (navigator.userAgent.toLowerCase().indexOf('windows') != -1) {
-                list.push('css!' + Emby.PluginManager.mapRequire(self, 'css/fonts.windows'));
-            }
-
             if (Emby.Dom.supportsWebComponents()) {
                 list.push('html!' + Emby.PluginManager.mapRequire(self, 'icons.html'));
                 list.push('paper-button');
@@ -415,7 +411,8 @@ define([], function () {
                 document.querySelector('.headerBackButton').classList.add('hide');
             }
 
-            //var enableBlur = viewId != 'defaulttheme-item' && viewId != 'defaulttheme-nowplaying' && viewId != 'defaulttheme-nowplayingplaylist';
+            var enableSubduedBackdrop = viewId != 'defaulttheme-item' && viewId != 'defaulttheme-nowplaying' && viewId != 'defaulttheme-nowplayingplaylist';
+            DefaultTheme.Backdrop.subdued(enableSubduedBackdrop);
             //blurBackdrop(enableBlur);
             //Emby.Backdrop.setBackdrop(Emby.PluginManager.mapPath(self, 'css/skin-dark/blur6.png'));
         }

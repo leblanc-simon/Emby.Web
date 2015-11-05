@@ -174,7 +174,7 @@
                     cardOptions: {
                         indexBy: 'Genres',
                         genres: genresResult.Items,
-                        indexLimit: 6
+                        indexLimit: 4
                     }
                 });
 
