@@ -699,6 +699,7 @@ paper-dialog.dialog {
 
 .listItemsMoreButton {
     margin: .25em .25em .25em 0;
-    padding: .3em .15em;
+    padding: .3em .7em;
     font-size: 90%;
+    min-width: initial;
 }
