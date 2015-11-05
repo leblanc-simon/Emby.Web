@@ -160,7 +160,7 @@ a {
 }
 
 .tabbedPageContainer {
-    top: 12%;
+    top: 11%;
     align-items: initial;
     justify-content: initial;
 }
@@ -319,7 +319,7 @@ a {
 .sectionTitle {
     text-transform: uppercase;
     padding-left: .25em;
-    font-size: 86%;
+    font-size: 90%;
 }
 
 .horizontalPageContent .squareCard .cardImageContainer {
@@ -399,7 +399,7 @@ paper-item-body .overview {
 
 .selectedItemInfo {
     position: fixed;
-    bottom: 25px;
+    bottom: 2%;
     left: 0;
     right: 10%;
     max-width: 60%;
@@ -480,16 +480,31 @@ paper-item-body .overview {
 @media all and (min-height: 1080px) {
 
     .horizontalPageContent .squareCard .cardImageContainer {
+        width: 211px;
+        height: 211px;
+    }
+
+    .horizontalPageContent .backdropCard .cardImageContainer {
+        width: 119px;
+        height: 211px;
+    }
+
+    .horizontalPageContent .portraitCard .cardImageContainer {
+        width: 211px;
+        height: 317px;
+    }
+
+    .homePageContent .squareCard .cardImageContainer {
         width: 207px;
         height: 207px;
     }
 
-    .horizontalPageContent .backdropCard .cardImageContainer {
+    .homePageContent .backdropCard .cardImageContainer {
         width: 366.222222222px;
         height: 206px;
     }
 
-    .horizontalPageContent .portraitCard .cardImageContainer {
+    .homePageContent .portraitCard .cardImageContainer {
         width: 208px;
         height: 312px;
     }
@@ -683,8 +698,7 @@ paper-dialog.dialog {
 }
 
 .listItemsMoreButton {
-    margin: 0 .25em 0 0;
-    padding: .4em .25em;
-    font-weight: 300;
+    margin: .25em .25em .25em 0;
+    padding: .3em .15em;
     font-size: 90%;
 }

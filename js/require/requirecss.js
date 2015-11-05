@@ -54,9 +54,10 @@ define(function () {
             link.setAttribute('type', 'text/css');
             link.setAttribute('href', url + "?" + config.urlArgs);
             document.head.appendChild(link);
+            setTimeout(load, 100);
+        } else {
+            load();
         }
-
-        load();
     }
 
     window.requireCss = {
