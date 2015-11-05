@@ -19,6 +19,9 @@ define([], function () {
 
         var selectedItemInfoInner = options.selectedItemInfoInner;
         var selectedIndexElement = options.selectedIndexElement;
+        var selectedItemPanel;
+
+        var enableSelectedItemPanel = options.selectedItemMode == 'panel';
 
         function onFocusIn(e) {
             var focused = Emby.FocusManager.focusableParent(e.target);
@@ -43,7 +46,7 @@ define([], function () {
         }
 
         function onFocusOut(e) {
-            selectedItemInfoInner.innerHTML = '';
+            clearSelectedItemInfo();
 
             var focused = focusedElement;
             focusedElement = null;
@@ -150,6 +153,16 @@ define([], function () {
 
         function setSelectedInfo(card, item) {
 
+            if (enableSelectedItemPanel) {
+                var div = document.createElement('div');
+                div.classList.add('selectedItemPanel');
+                document.body.appendChild(div);
+                selectedItemPanel = div;
+                fillSelectedItemPanel(div, item);
+                slideInLeft(div);
+                return;
+            }
+
             var html = '';
 
             var mediaInfo = DefaultTheme.CardBuilder.getMediaInfoHtml(item);
@@ -196,6 +209,54 @@ define([], function () {
             if (html) {
                 fadeIn(selectedItemInfoInner, 1);
             }
+        }
+
+        function fillSelectedItemPanel(elem, item) {
+
+            var thumbImage = Emby.Models.thumbImageUrl(item);
+
+            if (thumbImage) {
+
+                elem.innerHTML = '<img src="' + thumbImage + '" />';
+
+            }
+        }
+
+        function clearSelectedItemInfo() {
+
+            if (enableSelectedItemPanel) {
+                var panel = selectedItemPanel;
+                if (panel) {
+                    selectedItemPanel = null;
+                    slideOutRightAndRemove(panel);
+                }
+            } else {
+                selectedItemInfoInner.innerHTML = '';
+            }
+        }
+
+        function slideInLeft(elem) {
+
+            var keyframes = [
+                { transform: 'translate3d(100%, 0, 0)', offset: 0 },
+                { transform: 'translate3d(0, 0, 0)', offset: 1 }
+            ];
+
+            var timing = { duration: 200, iterations: 1, fill: 'both', easing: 'ease-out' };
+            elem.animate(keyframes, timing);
+        }
+
+        function slideOutRightAndRemove(elem) {
+
+            var keyframes = [
+                { transform: 'translate3d(0, 0, 0)', offset: 0 },
+                { transform: 'translate3d(100%, 0, 0)', offset: 1 }
+            ];
+
+            var timing = { duration: 100, iterations: 1, fill: 'both', easing: 'ease-out' };
+            elem.animate(keyframes, timing).onfinish = function () {
+                elem.parentNode.removeChild(elem);
+            };
         }
 
         function zoomOut(elem) {
