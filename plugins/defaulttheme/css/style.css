@@ -677,3 +677,14 @@ paper-dialog.dialog {
 .dialogTitle {
     margin-top: 0;
 }
+
+.listItemsMoreButtonContainer {
+    text-align: right;
+}
+
+.listItemsMoreButton {
+    margin: 0 .25em 0 0;
+    padding: .4em .25em;
+    font-weight: 300;
+    font-size: 90%;
+}

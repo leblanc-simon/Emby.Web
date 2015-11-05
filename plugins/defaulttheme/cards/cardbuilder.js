@@ -98,8 +98,6 @@
 
     function buildCardsHtmlInternal(items, apiClient, options) {
 
-        var className = 'card';
-
         if (options.shape == 'autoHome') {
             setShapeHome(items, options);
         }
@@ -110,13 +108,18 @@
             setShapeHome(items, options);
         }
 
+        if (options.indexBy == 'Genres') {
+            return buildCardsByGenreHtmlInternal(items, apiClient, options);
+        }
+
+        var className = 'card';
+
         if (options.shape) {
             className += ' ' + options.shape;
         }
 
         var html = '';
         var itemsInRow = 0;
-        var lastRowStartIndex = options.rows ? ((items.length % options.rows) || items.length - options.rows) : 0;
 
         var currentIndexValue;
         var hasOpenRow;
@@ -138,6 +141,10 @@
                         } catch (err) {
                         }
                     }
+                }
+
+                else if (options.indexBy == 'Genres') {
+                    newIndexValue = item.Name;
                 }
 
                 else if (options.indexBy == 'ProductionYear') {
@@ -182,15 +189,6 @@
             }
 
             var cardClass = className;
-            if (options.rows) {
-                if (options.enableleftNavGuard && i < options.rows) {
-                    cardClass += " noNavLeft";
-                }
-                else if (options.enableRightNavGuard && i >= lastRowStartIndex) {
-                    cardClass += " noNavRight";
-                }
-            }
-
             html += buildCard(i, item, apiClient, options, cardClass);
 
             itemsInRow++;
@@ -207,6 +205,89 @@
         }
 
         if (hasOpenSection) {
+            html += '</div>';
+        }
+
+        return html;
+    }
+
+    function buildCardsByGenreHtmlInternal(items, apiClient, options) {
+
+        var className = 'card';
+
+        if (options.shape) {
+            className += ' ' + options.shape;
+        }
+
+        var html = '';
+
+        var loopItems = options.genres;
+
+        for (var i = 0, length = loopItems.length; i < length; i++) {
+
+            var item = loopItems[i];
+
+            html += '<div class="horizontalSection">';
+            html += '<div class="sectionTitle">' + item.Name + '</div>';
+
+            var genreLower = item.Name.toLowerCase();
+            var renderItems = items.filter(function (currentItem) {
+
+                return currentItem.Genres.filter(function (g) {
+
+                    return g.toLowerCase() == genreLower;
+
+                }).length > 0;
+            });
+
+            var showMoreButton = false;
+            if (renderItems.length > options.indexLimit) {
+                renderItems.length = Math.min(renderItems.length, options.indexLimit);
+                showMoreButton = true;
+            }
+
+            var itemsInRow = 0;
+            var hasOpenRow = false;
+            var hasOpenSection = false;
+
+            html += renderItems.map(function (renderItem) {
+
+                var currentItemHtml = '';
+
+                if (options.rows && itemsInRow == 0) {
+
+                    if (hasOpenRow) {
+                        currentItemHtml += '</div>';
+                        hasOpenRow = false;
+                    }
+
+                    currentItemHtml += '<div class="cardColumn">';
+                    hasOpenRow = true;
+                }
+
+                var cardClass = className;
+                currentItemHtml += buildCard(i, renderItem, apiClient, options, cardClass);
+
+                itemsInRow++;
+
+                if (options.rows && itemsInRow >= options.rows) {
+                    currentItemHtml += '</div>';
+                    hasOpenRow = false;
+                    itemsInRow = 0;
+                }
+
+                return currentItemHtml;
+
+            }).join('');
+
+
+            if (showMoreButton) {
+                html += '<div class="listItemsMoreButtonContainer">';
+                html += '<paper-button class="listItemsMoreButton" data-indextype="Genres" data-indexvalue="' + item.Id + '" raised>MORE</paper-button>';
+                html += '</div>';
+            }
+
+            html += '</div>';
             html += '</div>';
         }
 
