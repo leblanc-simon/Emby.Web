@@ -136,6 +136,7 @@
             pageTitle.style.backgroundImage = "url('" + url + "')";
             pageTitle.classList.add('pageTitleWithLogo');
             pageTitle.innerHTML = '';
+            document.querySelector('.logo').classList.add('hide');
         } else {
             Emby.Page.setTitle('');
         }
