@@ -53,6 +53,10 @@
                     Id: "movies"
                 },
                 {
+                    Name: Globalize.translate('Unwatched'),
+                    Id: "unwatched"
+                },
+                {
                     Name: Globalize.translate('Collections'),
                     Id: "collections"
                 },
@@ -110,6 +114,10 @@
                     case 'movies':
                         showAlphaPicker = true;
                         renderMovies(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
+                        break;
+                    case 'unwatched':
+                        showAlphaPicker = true;
+                        renderUnwatchedMovies(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
                         break;
                     case 'years':
                         renderYears(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
@@ -174,7 +182,8 @@
                     cardOptions: {
                         indexBy: 'Genres',
                         genres: genresResult.Items,
-                        indexLimit: 4
+                        indexLimit: 4,
+                        parentId: pageParams.parentid
                     }
                 });
 
@@ -242,8 +251,41 @@
                         resolve();
                         resolve = null;
                     }
+                }
+            });
+
+            self.listController.render();
+        }
+
+        function renderUnwatchedMovies(page, pageParams, autoFocus, slyFrame, resolve) {
+
+            self.listController = new DefaultTheme.HorizontalList({
+
+                itemsContainer: page.querySelector('.contentScrollSlider'),
+                getItemsMethod: function (startIndex, limit) {
+                    return Emby.Models.items({
+                        StartIndex: startIndex,
+                        Limit: limit,
+                        ParentId: pageParams.parentid,
+                        IncludeItemTypes: "Movie",
+                        Recursive: true,
+                        SortBy: "SortName",
+                        Fields: "SortName",
+                        IsPlayed: false
+                    });
                 },
-                selectedItemMode: 'panel'
+                listCountElement: page.querySelector('.listCount'),
+                listNumbersElement: page.querySelector('.listNumbers'),
+                autoFocus: autoFocus,
+                selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
+                selectedIndexElement: page.querySelector('.selectedIndex'),
+                slyFrame: slyFrame,
+                onRender: function () {
+                    if (resolve) {
+                        resolve();
+                        resolve = null;
+                    }
+                }
             });
 
             self.listController.render();

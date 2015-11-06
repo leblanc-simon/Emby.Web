@@ -188,8 +188,7 @@
                         resolve();
                         resolve = null;
                     }
-                },
-                selectedItemMode: 'panel'
+                }
             });
 
             self.listController.render();
@@ -232,7 +231,8 @@
                     cardOptions: {
                         indexBy: 'Genres',
                         genres: genresResult.Items,
-                        indexLimit: 4
+                        indexLimit: 4,
+                        parentId: pageParams.parentid
                     }
                 });
 

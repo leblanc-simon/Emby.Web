@@ -75,7 +75,7 @@ define([], function () {
             if (selectedMediaInfoTimeout) {
                 clearTimeout(selectedMediaInfoTimeout);
             }
-            var delay = enableSelectedItemPanel ? 1500 : 1200;
+            var delay = enableSelectedItemPanel ? 2000 : 1200;
             selectedMediaInfoTimeout = setTimeout(onSelectedMediaInfoTimeout, delay);
         }
 
