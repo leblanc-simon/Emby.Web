@@ -283,7 +283,7 @@
 
             if (showMoreButton) {
                 html += '<div class="listItemsMoreButtonContainer">';
-                html += '<paper-button class="listItemsMoreButton" data-indextype="Genres" data-indexvalue="' + item.Id + '" raised>MORE</paper-button>';
+                html += '<paper-button class="listItemsMoreButton" data-parentid="' + options.parentId + '" data-indextype="Genres" data-indexvalue="' + item.Id + '" raised>MORE</paper-button>';
                 html += '</div>';
             }
 
@@ -655,7 +655,24 @@
             if (options.autoFocus) {
                 Emby.FocusManager.autoFocus(options.itemsContainer, true);
             }
+
+            if (options.indexBy == 'Genres') {
+                options.itemsContainer.addEventListener('click', onItemsContainerClick);
+            }
         });
+    }
+
+    function onItemsContainerClick(e) {
+
+        var listItemsMoreButton = Emby.Dom.parentWithClass(e.target, 'listItemsMoreButton');
+
+        if (listItemsMoreButton) {
+
+            var value = listItemsMoreButton.getAttribute('data-indexvalue');
+            var parentid = listItemsMoreButton.getAttribute('data-parentid');
+
+            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'list/list.html') + '?parentid=' + parentid + '&genreId=' + value);
+        }
     }
 
     function getMediaInfoHtml(item) {

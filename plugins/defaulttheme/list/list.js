@@ -8,6 +8,7 @@
     function listPage(view, params) {
 
         var self = this;
+        self.params = params;
         var currentItem;
 
         view.addEventListener('viewshow', function (e) {
@@ -24,13 +25,22 @@
 
                 Emby.Models.item(params.parentid).then(function (item) {
 
-                    Emby.Page.setTitle(item.Name);
+                    if (!params.genreId) {
+                        Emby.Page.setTitle(item.Name);
+                    }
                     currentItem = item;
 
                     if (!isRestored) {
                         createHorizontalScroller(self, view, item, loading);
                     }
                 });
+
+                if (params.genreId) {
+                    Emby.Models.item(params.genreId).then(function (item) {
+
+                        Emby.Page.setTitle(item.Name);
+                    });
+                }
             });
         });
 
@@ -143,6 +153,19 @@
 
             itemsContainer: view.querySelector('.scrollSlider'),
             getItemsMethod: function (startIndex, limit) {
+
+                if (instance.params.genreId) {
+
+                    return Emby.Models.items({
+                        StartIndex: startIndex,
+                        Limit: limit,
+                        Recursive: true,
+                        GenreIds: instance.params.genreId,
+                        ParentId: item.Id,
+                        IncludeItemTypes: item.CollectionType == 'tvshows' ? 'Series' : (item.CollectionType == 'movies' ? 'Movie' : 'MusicAlbum')
+                    });
+
+                }
                 return Emby.Models.children(item, {
                     StartIndex: startIndex,
                     Limit: limit
