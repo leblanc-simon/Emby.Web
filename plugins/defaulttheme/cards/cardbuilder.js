@@ -227,7 +227,7 @@
 
             var item = loopItems[i];
 
-            html += '<div class="horizontalSection">';
+            html += '<div class="horizontalSection focuscontainer-down">';
             html += '<div class="sectionTitle">' + item.Name + '</div>';
 
             var genreLower = item.Name.toLowerCase();

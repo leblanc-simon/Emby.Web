@@ -87,6 +87,11 @@
                 return true;
             }
         }
+        else if (direction  == 3) {
+            if (elem.classList.contains('focuscontainer-down')) {
+                return true;
+            }
+        }
 
         return false;
     }
