@@ -243,6 +243,12 @@ define([], function () {
 
         self.setTitle = function (title) {
 
+            if (title == null) {
+                document.querySelector('.logo').classList.remove('hide');
+            } else {
+                document.querySelector('.logo').classList.add('hide');
+            }
+
             title = title || '&nbsp;';
 
             var pageTitle = document.querySelector('.pageTitle');
