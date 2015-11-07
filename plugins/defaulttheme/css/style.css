@@ -454,6 +454,10 @@ paper-item-body .overview {
     text-overflow: ellipsis;
 }
 
+.alphaPicker {
+    margin-top: 1.25em;
+}
+
 /* 720p */
 @media all and (min-height: 720px) {
 
@@ -533,19 +537,53 @@ paper-item-body .overview {
 /* 2560 * 1440 */
 @media all and (min-height: 1440px) {
 
+    .alphaPicker {
+        margin-top: 0;
+    }
+
     .horizontalPageContent .squareCard .cardImageContainer {
-        width: 260px;
-        height: 260px;
+        width: 280px;
+        height: 280px;
     }
 
     .horizontalPageContent .backdropCard .cardImageContainer {
-        width: 449.5px;
-        height: 252.84375px;
+        width: 498px;
+        height: 280px;
     }
 
     .horizontalPageContent .portraitCard .cardImageContainer {
-        width: 260px;
-        height: 390px;
+        width: 282px;
+        height: 423px;
+    }
+
+    .homePageContent .squareCard .cardImageContainer {
+        width: 280px;
+        height: 280px;
+    }
+
+    .homePageContent .backdropCard .cardImageContainer {
+        width: 498px;
+        height: 280px;
+    }
+
+    .homePageContent .portraitCard .cardImageContainer {
+        width: 282px;
+        height: 423px;
+    }
+
+    .listPageContent .squareCard .cardImageContainer {
+        width: 290px;
+        height: 290px;
+    }
+
+    .listPageContent .backdropCard .cardImageContainer {
+        width: 516px;
+        height: 290px;
+    }
+
+    .listPageContent .portraitCard .cardImageContainer {
+        width: 290px;
+        height: 435px;
     }
 
     .horizontalPageContent .loginSquareCard {
@@ -656,10 +694,6 @@ paper-item-body .overview {
     background-image: url(images/rotten.png);
 }
 
-.alphaPicker {
-    margin-top: 1.25em;
-}
-
 paper-dialog.dialog {
     margin: 0;
     top: 0;
@@ -719,12 +753,12 @@ paper-dialog.dialog {
     z-index: 1;
 }
 
-    .selectedItemPanelImage {
-        height: 18%;
-        background-size: cover;
-        background-position: center center;
-        background-repeat: no-repeat;
-    }
+.selectedItemPanelImage {
+    height: 18%;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
 
 .selectedItemPanelContent {
     padding: 1em;
