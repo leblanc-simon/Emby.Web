@@ -41,6 +41,8 @@ define([], function () {
             case 'back':
                 Emby.Page.back();
                 break;
+            case 'forward':
+                break;
             case 'select':
                 select();
                 break;
@@ -86,6 +88,14 @@ define([], function () {
             case 'changezoom':
                 break;
             case 'changeaudiotrack':
+                break;
+            case 'search':
+                break;
+            case 'favorites':
+                break;
+            case 'fastforward':
+                break;
+            case 'rewind':
                 break;
             default:
                 break;
