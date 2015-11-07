@@ -358,7 +358,10 @@
 
         var mainSection = view.querySelector('.mainSection');
 
-        if (item.Type != "Season" && item.Type != "MusicArtist" && item.Type != "MusicAlbum" && item.Type != "BoxSet" && item.Type != "Playlist") {
+        if (item.Type == "Person") {
+            mainSection.classList.add('smallBottomMargin');
+        }
+        else if (item.Type != "Season" && item.Type != "MusicArtist" && item.Type != "MusicAlbum" && item.Type != "BoxSet" && item.Type != "Playlist") {
             mainSection.style.minHeight = (Math.round(view.querySelector('.itemPageContainer').offsetHeight * .72)) + 'px';
             mainSection.classList.add('smallBottomMargin');
         } else {
