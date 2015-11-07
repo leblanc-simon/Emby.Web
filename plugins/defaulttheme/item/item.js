@@ -83,6 +83,8 @@
                 view.querySelector('.itemPageFixedLeft .btnPlay').addEventListener('click', play);
                 view.querySelector('.mainSection .btnPlay').addEventListener('click', play);
 
+                view.querySelector('.itemPageFixedLeft .btnQueue').addEventListener('click', queue);
+
                 view.querySelector('.btnTrailer').addEventListener('click', playTrailer);
                 view.querySelector('.btnInstantMix').addEventListener('click', instantMix);
 
@@ -113,6 +115,13 @@
                     playmenu.show(currentItem);
                 });
             }
+        }
+
+        function queue() {
+
+            Emby.PlaybackManager.queue({
+                items: [currentItem]
+            });
         }
 
         function instantMix() {
@@ -391,6 +400,12 @@
         } else {
             view.querySelector('.itemPageFixedLeft .btnPlay').classList.add('hide');
             view.querySelector('.mainSection .btnPlay').classList.add('hide');
+        }
+
+        if (Emby.PlaybackManager.canQueue(item)) {
+            view.querySelector('.itemPageFixedLeft .btnQueue').classList.remove('hide');
+        } else {
+            view.querySelector('.itemPageFixedLeft .btnQueue').classList.add('hide');
         }
 
         if (enableTrackList(item) || item.Type == 'MusicArtist') {

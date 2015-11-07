@@ -293,7 +293,7 @@
     function loadApiClientDependencies(callback) {
 
         var list = [
-           'bower_components/bean/bean.min',
+           'bower_components/bean/bean',
            'apiclient/logger',
            'apiclient/md5',
            'apiclient/credentials',
@@ -308,7 +308,7 @@
 
         require(list, function (bean) {
 
-            window.bean = bean;
+            //window.bean = bean;
 
             define("httpclient", [], function () {
                 return window.HttpClient;
