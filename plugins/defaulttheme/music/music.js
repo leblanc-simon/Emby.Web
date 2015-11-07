@@ -47,6 +47,8 @@
                     itemClass: 'card'
                 });
 
+                self.alphaPicker.visible(false);
+
                 var tabs = [
                     {
                         Name: Globalize.translate('Albums'),

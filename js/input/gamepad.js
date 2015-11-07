@@ -61,11 +61,13 @@
                 case 'HOME':
                     sendCommand('home');
                     break;
-                case 'FACE_0':
+                case 'FACE_1':
+                case 'FACE_3':
                 case 'SELECT_BACK':
                     sendCommand('back');
                     break;
-                case 'FACE_1':
+                case 'FACE_2':
+                case 'FACE_4':
                 case 'START_FORWARD':
                     sendCommand('select');
                     break;

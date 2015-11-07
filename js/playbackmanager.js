@@ -185,7 +185,11 @@
             changeStream(ticks);
         };
 
-        self.showPlayMenu = function (item) {
+        self.fastForward = function () {
+
+        };
+
+        self.rewind = function () {
 
         };
 
