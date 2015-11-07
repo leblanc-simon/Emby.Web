@@ -63,6 +63,14 @@
             }).length;
         };
 
+        self.canQueue = function (item) {
+
+            if (item.Type == 'MusicAlbum' || item.Type == 'MusicArtist' || item.Type == 'MusicGenre') {
+                return self.canQueueMediaType('Audio');
+            }
+            return self.canQueueMediaType(item.MediaType);
+        };
+
         self.canQueueMediaType = function (mediaType) {
 
             if (currentPlayer) {
