@@ -659,8 +659,7 @@
                     MediaTypes: "",
                     IncludeItemTypes: "Movie",
                     PersonTypes: "",
-                    ArtistIds: "",
-                    Limit: 10
+                    ArtistIds: ""
                 }, {
                     shape: "autoVertical"
                 });
@@ -671,8 +670,7 @@
                     MediaTypes: "",
                     IncludeItemTypes: "MusicVideo",
                     PersonTypes: "",
-                    ArtistIds: "",
-                    Limit: 10
+                    ArtistIds: ""
                 }, {
                     shape: "autoVertical",
                     showTitle: true
@@ -684,8 +682,7 @@
                     MediaTypes: "",
                     IncludeItemTypes: "Game",
                     PersonTypes: "",
-                    ArtistIds: "",
-                    Limit: 10
+                    ArtistIds: ""
                 }, {
                     shape: "autoVertical"
                 });
@@ -696,8 +693,7 @@
                     MediaTypes: "",
                     IncludeItemTypes: "Trailer",
                     PersonTypes: "",
-                    ArtistIds: "",
-                    Limit: 10
+                    ArtistIds: ""
                 }, {
                     shape: "autoVertical"
                 });
@@ -708,8 +704,7 @@
                     MediaTypes: "",
                     IncludeItemTypes: "Series",
                     PersonTypes: "",
-                    ArtistIds: "",
-                    Limit: 10
+                    ArtistIds: ""
                 }, {
                     shape: "autoVertical"
                 });
@@ -720,8 +715,7 @@
                     MediaTypes: "",
                     IncludeItemTypes: "MusicAlbum",
                     PersonTypes: "",
-                    ArtistIds: "",
-                    Limit: 8
+                    ArtistIds: ""
                 }, {
                     shape: "autoVertical",
                     playFromHere: true
@@ -734,7 +728,7 @@
                     IncludeItemTypes: "Episode",
                     PersonTypes: "",
                     ArtistIds: "",
-                    Limit: 6
+                    Limit: 50
                 }, {
                     shape: "autoVertical",
                     showTitle: true,
