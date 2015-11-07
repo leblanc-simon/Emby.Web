@@ -644,8 +644,7 @@
                     ArtistIds: "",
                     Limit: 10
                 }, {
-                    shape: "autoVertical",
-                    showTitle: true
+                    shape: "autoVertical"
                 });
                 break;
 
@@ -670,8 +669,7 @@
                     ArtistIds: "",
                     Limit: 10
                 }, {
-                    shape: "autoVertical",
-                    showTitle: true
+                    shape: "autoVertical"
                 });
                 break;
 
@@ -683,8 +681,7 @@
                     ArtistIds: "",
                     Limit: 10
                 }, {
-                    shape: "autoVertical",
-                    showTitle: true
+                    shape: "autoVertical"
                 });
                 break;
 
@@ -696,8 +693,7 @@
                     ArtistIds: "",
                     Limit: 10
                 }, {
-                    shape: "autoVertical",
-                    showTitle: true
+                    shape: "autoVertical"
                 });
                 break;
 
@@ -710,9 +706,7 @@
                     Limit: 8
                 }, {
                     shape: "autoVertical",
-                    playFromHere: true,
-                    showTitle: true,
-                    showParentTitle: true
+                    playFromHere: true
                 });
                 break;
 
