@@ -52,13 +52,11 @@ define([], function () {
                 break;
             case 'menu':
                 break;
-            case 'nexttrack':
-                break;
-            case 'previoustrack':
-                break;
             case 'next':
+                Emby.PlaybackManager.nextTrack();
                 break;
             case 'previous':
+                Emby.PlaybackManager.previousTrack();
                 break;
             case 'guide':
                 break;
@@ -69,16 +67,21 @@ define([], function () {
             case 'livetv':
                 break;
             case 'togglemute':
+                Emby.PlaybackManager.toggleMute();
                 break;
             case 'volumedown':
+                Emby.PlaybackManager.volumeDown();
                 break;
             case 'volumeup':
+                Emby.PlaybackManager.volumeUp();
                 break;
             case 'play':
                 break;
             case 'playpause':
+                Emby.PlaybackManager.playPause();
                 break;
             case 'stop':
+                Emby.PlaybackManager.stop();
                 break;
             case 'changezoom':
                 break;
