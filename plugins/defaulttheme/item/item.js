@@ -55,6 +55,12 @@
                             mainSection.focus = focusMainSection;
                         }
 
+                        if (item.Type == 'Person') {
+                            mainSection.classList.add('miniMainSection');
+                        } else {
+                            mainSection.classList.remove('miniMainSection');
+                        }
+
                         if (enableTrackList(item) || item.Type == 'MusicArtist') {
                             Emby.FocusManager.autoFocus(view, true);
                         } else {
@@ -161,7 +167,8 @@
                 speed: 270,
                 dragHandle: 1,
                 dynamicHandle: 1,
-                clickBar: 1
+                clickBar: 1,
+                scrollWidth: 50000
             };
 
             slyScroller.create(scrollFrame, options).then(function (slyFrame) {
@@ -439,6 +446,23 @@
         } else {
             view.querySelector('.btnInstantMix').classList.add('hide');
         }
+
+        var birthDateElem = view.querySelector('.birthDate');
+        if (item.PremiereDate && item.Type == 'Person') {
+            birthDateElem.classList.remove('hide');
+            var dateString = Emby.DateTime.parseISO8601Date(item.PremiereDate).toDateString();
+            birthDateElem.innerHTML = Globalize.translate('BornValue', dateString);
+        } else {
+            birthDateElem.classList.add('hide');
+        }
+
+        var birthPlaceElem = view.querySelector('.birthPlace');
+        if (item.Type == "Person" && item.ProductionLocations && item.ProductionLocations.length) {
+            birthPlaceElem.classList.remove('hide');
+            birthPlaceElem.innerHTML = Globalize.translate('BirthPlaceValue').replace('{0}', item.ProductionLocations[0]);
+        } else {
+            birthPlaceElem.classList.add('hide');
+        }
     }
 
     function renderNextUp(view, item) {
@@ -504,6 +528,232 @@
             });
 
             Emby.ImageLoader.lazyChildren(section);
+        });
+    }
+
+    function renderPeopleItems(view, item) {
+
+        var section = view.querySelector('.peopleItems');
+
+        if (item.Type != "Person") {
+            section.classList.add('hide');
+            return;
+        }
+        section.classList.remove('hide');
+
+        var sections = [];
+
+        if (item.MovieCount) {
+
+            sections.push({
+                name: Globalize.translate('Movies'),
+                type: 'Movie'
+            });
+        }
+
+        if (item.SeriesCount) {
+
+            sections.push({
+                name: Globalize.translate('Series'),
+                type: 'Series'
+            });
+        }
+
+        if (item.EpisodeCount) {
+
+            sections.push({
+                name: Globalize.translate('Episodes'),
+                type: 'Episode'
+            });
+        }
+
+        if (item.TrailerCount) {
+
+            sections.push({
+                name: Globalize.translate('Trailers'),
+                type: 'Trailer'
+            });
+        }
+
+        if (item.GameCount) {
+
+            sections.push({
+                name: Globalize.translate('Games'),
+                type: 'Game'
+            });
+        }
+
+        if (item.AlbumCount) {
+
+            sections.push({
+                name: Globalize.translate('Albums'),
+                type: 'MusicAlbum'
+            });
+        }
+
+        if (item.SongCount) {
+
+            sections.push({
+                name: Globalize.translate('Songs'),
+                type: 'Audio'
+            });
+        }
+
+        if (item.MusicVideoCount) {
+
+            sections.push({
+                name: Globalize.translate('MusicVideos'),
+                type: 'MusicVideo'
+            });
+        }
+
+        section.innerHTML = sections.map(function (section) {
+
+            var html = '';
+
+            html += '<div class="itemSection personSection" data-type="' + section.type + '">';
+
+            html += '<h2>';
+            html += section.name;
+            html += '</h2>';
+
+            html += '<div class="itemsContainer">';
+            html += '</div>';
+
+            html += '</div>';
+
+            return html;
+
+        }).join('');
+
+        var sectionElems = section.querySelectorAll('.personSection');
+        for (var i = 0, length = sectionElems.length; i < length; i++) {
+            renderPersonSection(view, item, sectionElems[i], sectionElems[i].getAttribute('data-type'));
+        }
+    }
+
+    function renderPersonSection(view, item, element, type) {
+
+        switch (type) {
+
+            case 'Movie':
+                loadPeopleItems(element, item, type, {
+                    MediaTypes: "",
+                    IncludeItemTypes: "Movie",
+                    PersonTypes: "",
+                    ArtistIds: "",
+                    Limit: 10
+                }, {
+                    shape: "autoVertical",
+                    showTitle: true
+                });
+                break;
+
+            case 'MusicVideo':
+                loadPeopleItems(element, item, type, {
+                    MediaTypes: "",
+                    IncludeItemTypes: "MusicVideo",
+                    PersonTypes: "",
+                    ArtistIds: "",
+                    Limit: 10
+                }, {
+                    shape: "autoVertical",
+                    showTitle: true
+                });
+                break;
+
+            case 'Game':
+                loadPeopleItems(element, item, type, {
+                    MediaTypes: "",
+                    IncludeItemTypes: "Game",
+                    PersonTypes: "",
+                    ArtistIds: "",
+                    Limit: 10
+                }, {
+                    shape: "autoVertical",
+                    showTitle: true
+                });
+                break;
+
+            case 'Trailer':
+                loadPeopleItems(element, item, type, {
+                    MediaTypes: "",
+                    IncludeItemTypes: "Trailer",
+                    PersonTypes: "",
+                    ArtistIds: "",
+                    Limit: 10
+                }, {
+                    shape: "autoVertical",
+                    showTitle: true
+                });
+                break;
+
+            case 'Series':
+                loadPeopleItems(element, item, type, {
+                    MediaTypes: "",
+                    IncludeItemTypes: "Series",
+                    PersonTypes: "",
+                    ArtistIds: "",
+                    Limit: 10
+                }, {
+                    shape: "autoVertical",
+                    showTitle: true
+                });
+                break;
+
+            case 'MusicAlbum':
+                loadPeopleItems(element, item, type, {
+                    MediaTypes: "",
+                    IncludeItemTypes: "MusicAlbum",
+                    PersonTypes: "",
+                    ArtistIds: "",
+                    Limit: 8
+                }, {
+                    shape: "autoVertical",
+                    playFromHere: true,
+                    showTitle: true,
+                    showParentTitle: true
+                });
+                break;
+
+            case 'Episode':
+                loadPeopleItems(element, item, type, {
+                    MediaTypes: "",
+                    IncludeItemTypes: "Episode",
+                    PersonTypes: "",
+                    ArtistIds: "",
+                    Limit: 6
+                }, {
+                    shape: "autoVertical",
+                    showTitle: true,
+                    showParentTitle: true
+                });
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    function loadPeopleItems(element, item, type, query, listOptions) {
+
+        query.SortBy = "SortName";
+        query.SortOrder = "Ascending";
+        query.Recursive = true;
+        query.CollapseBoxSetItems = false;
+
+        query.PersonIds = item.Id;
+
+        Emby.Models.items(query).then(function (result) {
+
+            DefaultTheme.CardBuilder.buildCards(result.Items, {
+                parentContainer: element,
+                itemsContainer: element.querySelector('.itemsContainer'),
+                shape: listOptions.shape,
+                scalable: true,
+                showTitle: listOptions.showTitle,
+                showParentTitle: listOptions.showParentTitle
+            });
         });
     }
 
@@ -589,6 +839,7 @@
 
         renderTrackList(view, item);
         renderEpisodes(view, item);
+        renderPeopleItems(view, item);
 
         var section = view.querySelector('.childrenSection');
 
