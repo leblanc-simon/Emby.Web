@@ -6,7 +6,7 @@
 (function (name, context, definition) {
   if (typeof module != 'undefined' && module.exports) module.exports = definition()
   else if (typeof define == 'function' && define.amd) define(definition)
-  context[name] = definition()
+  else context[name] = definition()
 })('bean', this, function (name, context) {
   name    = name    || 'bean'
   context = context || this
