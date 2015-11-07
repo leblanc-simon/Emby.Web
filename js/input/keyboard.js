@@ -102,15 +102,29 @@
             case 66:
                 // b
                 if (evt.ctrlKey) {
-                    sendCommand('previous', evt.target);
-                    return;
+                    if (!!evt.shiftKey) {
+                        // control-shift
+                        sendCommand('rewind', evt.target);
+                        return;
+                    } else {
+                        // control
+                        sendCommand('previous', evt.target);
+                        return;
+                    }
                 }
                 break;
             case 70:
                 // f
                 if (evt.ctrlKey) {
-                    sendCommand('next', evt.target);
-                    return;
+                    if (!!evt.shiftKey) {
+                        // control-shift
+                        sendCommand('fastforward', evt.target);
+                        return;
+                    } else {
+                        // control
+                        sendCommand('next', evt.target);
+                        return;
+                    }
                 }
                 break;
             case 71:
