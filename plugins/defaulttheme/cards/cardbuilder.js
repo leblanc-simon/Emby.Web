@@ -761,7 +761,7 @@
             }
         }
 
-        if (item.Type != "Series" && item.Type != "Episode" && item.MediaType != 'Photo') {
+        if (item.Type != "Series" && item.Type != "Episode" && item.Type != "Person" && item.MediaType != 'Photo') {
 
             if (item.ProductionYear) {
 

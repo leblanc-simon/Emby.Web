@@ -73,6 +73,10 @@
     display: none;
 }
 
+.miniMainSection .itemPageLeft {
+    max-width: 20%;
+}
+
 .seasonMainSection .itemPageMain {
     text-align: center;
 }
@@ -106,8 +110,8 @@
         font-size: 90%;
     }
 
-.mainSection .itemPageUserDataIcons {
-    margin-left: 1em;
+.mainSection .itemPageButtons {
+    margin-right: 1em;
 }
 
 .itemPageFixedLeft .itemPageUserDataIcons {
