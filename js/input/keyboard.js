@@ -99,9 +99,6 @@
                 // end
                 sendCommand('menu', evt.target);
                 return;
-            case nextTrackAlias:
-                sendCommand('nexttrack', evt.target);
-                return;
             case 66:
                 // b
                 if (evt.ctrlKey) {
@@ -144,19 +141,28 @@
                     return;
                 }
                 break;
-            case previousTrackAlias:
-                sendCommand('previoustrack', evt.target);
-                return;
             case 119:
                 // f8
+                sendCommand('togglemute', evt.target);
+                return;
+            case 173:
+                // mute key
                 sendCommand('togglemute', evt.target);
                 return;
             case 120:
                 // f9
                 sendCommand('volumedown', evt.target);
                 return;
+            case 175:
+                // volume down key
+                sendCommand('volumedown', evt.target);
+                return;
             case 121:
                 // f10
+                sendCommand('volumeup', evt.target);
+                return;
+            case 174:
+                // volume up key
                 sendCommand('volumeup', evt.target);
                 return;
             case 80:
@@ -203,13 +209,26 @@
                     }
                 }
                 break;
+            case nextTrackAlias:
+            case 176:
+                // next key
+                sendCommand('next', evt.target);
+                break;
+            case previousTrackAlias:
+            case 177:
+                // previous key
+                sendCommand('previous', evt.target);
+                break;
+            case 178:
+                // stop key
+                sendCommand('stop', evt.target);
+                break;
             default:
                 break;
         }
 
         // No command will be executed, but notify the app that input was received
         notifyApp();
-        alert(evt.keyCode);
 
     });
 
