@@ -106,6 +106,9 @@
 
                 var showAlphaPicker = false;
 
+                var contentScrollSlider = page.querySelector('.contentScrollSlider');
+                contentScrollSlider.removeEventListener('click', onMusicGenresContainerClick);
+
                 switch (id) {
 
                     case 'albumartists':
@@ -128,6 +131,7 @@
                         break;
                     case 'genres':
                         renderGenres(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
+                        contentScrollSlider.addEventListener('click', onMusicGenresContainerClick);
                         break;
                     default:
                         break;
@@ -175,6 +179,24 @@
             });
 
             self.listController.render();
+        }
+
+        function onMusicGenresContainerClick(e) {
+
+            var card = Emby.Dom.parentWithClass(e.target, 'card');
+
+            if (card) {
+
+                var value = card.getAttribute('data-id');
+                var parentid = params.parentid;
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'list/list.html') + '?parentid=' + parentid + '&genreId=' + value);
+
+                return false;
+            }
         }
 
         function renderPlaylists(page, pageParams, autoFocus, slyFrame, resolve) {

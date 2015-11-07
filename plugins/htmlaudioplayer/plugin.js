@@ -302,47 +302,53 @@ define([], function () {
         };
 
         self.stop = function () {
-            if (mediaElement) {
 
-                var originalVolume = self.volume();
+            cancelFadeTimeout();
 
-                startFadeOut(mediaElement, function () {
+            var elem = mediaElement;
+            var src = currentSrc;
 
-                    mediaElement.pause();
-                    self.volume(originalVolume);
+            if (elem && src) {
+
+                if (elem.paused) {
+                    onEnded();
+                    return;
+                }
+
+                var originalVolume = elem.volume;
+
+                fade(elem, function () {
+
+                    if (!elem.paused) {
+                        elem.pause();
+                    }
+
+                    elem.volume = originalVolume;
                     onEnded();
                 });
             }
         };
 
-        var fadeOutInterval;
-        function startFadeOut(elem, callback) {
+        var fadeTimeout;
+        function fade(elem, callback) {
 
-            stopFadeOut();
+            elem.volume = Math.max(0, elem.volume - .1);
+
             if (!elem.volume) {
                 callback();
                 return;
             }
-
-            var decrement = self.volume() >= 60 ? 15 : 10;
-
-            fadeOutInterval = setInterval(function () {
-
-                if (!elem.volume) {
-                    stopFadeOut();
-                    callback();
-                    return;
-                }
-
-                self.volume(Math.max(0, self.volume() - decrement));
-
+            cancelFadeTimeout();
+            fadeTimeout = setTimeout(function () {
+                fade(elem, callback);
             }, 100);
         }
 
-        function stopFadeOut() {
-            if (fadeOutInterval) {
-                clearInterval(fadeOutInterval);
-                fadeOutInterval = null;
+        function cancelFadeTimeout() {
+            var timeout = fadeTimeout;
+            if (timeout) {
+                clearTimeout(timeout);
+                fadeTimeout = null;
             }
         }
 
@@ -411,7 +417,7 @@ define([], function () {
 
         function onVolumeChange() {
 
-            if (!fadeOutInterval) {
+            if (!fadeOutTimeout) {
                 Events.trigger(self, 'volumechange');
             }
         }
