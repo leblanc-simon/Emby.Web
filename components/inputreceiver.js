@@ -21,19 +21,22 @@ define([], function () {
     function handleCommand(name, options) {
 
         notify();
+
+        var sourceElement = (options ? options.sourceElement : null);
+
         switch (name) {
 
             case 'up':
-                Emby.FocusManager.moveUp((options ? options.sourceElement : null));
+                Emby.FocusManager.moveUp(sourceElement);
                 break;
             case 'down':
-                Emby.FocusManager.moveDown((options ? options.sourceElement : null));
+                Emby.FocusManager.moveDown(sourceElement);
                 break;
             case 'left':
-                Emby.FocusManager.moveLeft((options ? options.sourceElement : null));
+                Emby.FocusManager.moveLeft(sourceElement);
                 break;
             case 'right':
-                Emby.FocusManager.moveRight((options ? options.sourceElement : null));
+                Emby.FocusManager.moveRight(sourceElement);
                 break;
             case 'home':
                 Emby.Page.goHome();
@@ -53,6 +56,7 @@ define([], function () {
             case 'end':
                 break;
             case 'menu':
+            case 'info':
                 break;
             case 'next':
                 Emby.PlaybackManager.nextTrack();
@@ -89,13 +93,17 @@ define([], function () {
                 break;
             case 'changeaudiotrack':
                 break;
+            case 'changesubtitletrack':
+                break;
             case 'search':
                 break;
             case 'favorites':
                 break;
             case 'fastforward':
+                Emby.PlaybackManager.fastForward();
                 break;
             case 'rewind':
+                Emby.PlaybackManager.rewind();
                 break;
             default:
                 break;

@@ -165,6 +165,29 @@
             case 'APPCOMMAND_MEDIA_CHANNEL_DOWN':
                 sendCommand('channeldown');
                 break;
+            case 'APPCOMMAND_OPENRECORDED':
+                sendCommand('recordedtv');
+                break;
+            case 'APPCOMMAND_LIVETV':
+                sendCommand('livetv');
+                break;
+            case 'APPCOMMAND_MENU':
+                sendCommand('menu');
+                break;
+            case 'APPCOMMAND_GUIDEMENU':
+            case 'APPCOMMAND_EPG':
+            case 'APPCOMMAND_CHANNELS':
+                sendCommand('guide');
+                break;
+            case 'APPCOMMAND_ASP_TOGGLE':
+                sendCommand('changezoom');
+                break;
+            case 'APPCOMMAND_CC':
+                sendCommand('changesubtitletrack');
+                break;
+            case 'APPCOMMAND_INFO':
+                sendCommand('info');
+                break;
             default:
                 break;
         }
