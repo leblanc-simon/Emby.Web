@@ -21,7 +21,6 @@ define([], function () {
     function handleCommand(name, options) {
 
         notify();
-
         switch (name) {
 
             case 'up':
@@ -44,6 +43,46 @@ define([], function () {
                 break;
             case 'select':
                 select();
+                break;
+            case 'pageup':
+                break;
+            case 'pagedown':
+                break;
+            case 'end':
+                break;
+            case 'menu':
+                break;
+            case 'nexttrack':
+                break;
+            case 'previoustrack':
+                break;
+            case 'next':
+                break;
+            case 'previous':
+                break;
+            case 'guide':
+                break;
+            case 'recordedtv':
+                break;
+            case 'record':
+                break;
+            case 'livetv':
+                break;
+            case 'togglemute':
+                break;
+            case 'volumedown':
+                break;
+            case 'volumeup':
+                break;
+            case 'play':
+                break;
+            case 'playpause':
+                break;
+            case 'stop':
+                break;
+            case 'changezoom':
+                break;
+            case 'changeaudiotrack':
                 break;
             default:
                 break;
