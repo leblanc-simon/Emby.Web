@@ -155,7 +155,8 @@ paper-dialog {
 }
 
 .userViewNames paper-button[focused] {
-    color: #52B54B !important;
+    background-color: #52B54B !important;
+    color: #fff !important;
     opacity: 1;
 }
 
