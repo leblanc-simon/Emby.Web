@@ -280,7 +280,7 @@ a {
     }
 
 .userViewNames {
-    margin-bottom: 1em;
+    margin-bottom: 1.45em;
 }
 
     .userViewNames h2 {
@@ -292,7 +292,8 @@ a {
         min-width: initial;
         text-transform: none !important;
         margin-top: 0;
-        padding-top: .25em;
+        padding-top: .15em;
+        padding-bottom: .3em;
         font-weight: inherit !important;
     }
 
@@ -765,11 +766,8 @@ paper-dialog.dialog {
 }
 
 .listPageButtons {
-    position: absolute;
     text-align: center;
-    top: 11%;
-    left: 0;
-    right: 0;
+    margin-bottom: 1.5em;
 }
 
     .listPageButtons paper-button {
