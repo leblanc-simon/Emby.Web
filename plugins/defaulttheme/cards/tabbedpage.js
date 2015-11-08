@@ -1,12 +1,12 @@
 (function (globalScope) {
 
-    function createHeaderScroller(view, initialTabId) {
+    function createHeaderScroller(view, instance, initialTabId) {
 
         require(['slyScroller', 'loading'], function (slyScroller, loading) {
 
-            view = view.querySelector('.userViewNames');
+            var userViewNames = view.querySelector('.userViewNames');
 
-            var scrollFrame = view.querySelector('.scrollFrame');
+            var scrollFrame = userViewNames.querySelector('.scrollFrame');
 
             scrollFrame.style.display = 'block';
 
@@ -15,12 +15,11 @@
                 itemNav: 'centered',
                 mouseDragging: 1,
                 touchDragging: 1,
-                slidee: view.querySelector('.scrollSlider'),
+                slidee: userViewNames.querySelector('.scrollSlider'),
                 itemSelector: '.btnUserViewHeader',
                 activateOn: 'focus',
                 smart: true,
                 releaseSwing: true,
-                scrollBar: view.querySelector('.scrollbar'),
                 scrollBy: 200,
                 speed: 500,
                 elasticBounds: 1,
@@ -33,12 +32,12 @@
                 slyFrame.init();
                 loading.hide();
 
-                var initialTab = initialTabId ? view.querySelector('.btnUserViewHeader[data-id=\'' + initialTabId + '\']') : null;
+                var initialTab = initialTabId ? userViewNames.querySelector('.btnUserViewHeader[data-id=\'' + initialTabId + '\']') : null;
 
                 if (!initialTab) {
-                    initialTab = view.querySelector('.btnUserViewHeader');
+                    initialTab = userViewNames.querySelector('.btnUserViewHeader');
                 }
-                Emby.FocusManager.focus(initialTab);
+                instance.setFocusDelay(view, initialTab);
             });
         });
     }
@@ -114,7 +113,7 @@
 
             }).join('');
 
-            createHeaderScroller(page, initialTabId);
+            createHeaderScroller(page, self, initialTabId);
             initEvents(page, self);
             createHorizontalScroller(page);
         };
@@ -151,6 +150,7 @@
         }
 
         var focusTimeout;
+        var focusDelay = 0;
         self.setFocusDelay = function (view, elem) {
 
             var viewId = elem.getAttribute('data-id');
@@ -174,7 +174,10 @@
 
                 selectUserView(view, viewId, self);
 
-            }, 700);
+            }, focusDelay);
+
+            // No delay the first time
+            focusDelay = 700;
         };
 
         function createHorizontalScroller(view) {
