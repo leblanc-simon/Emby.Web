@@ -1,15 +1,20 @@
-.themeContainer {
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eaeaea), color-stop(10%, #ffffff), color-stop(90%, #ffffff), color-stop(100%, #eaeaea));
-    background: -webkit-linear-gradient(#eaeaea,#ffffff 10%,#ffffff 90%,#eaeaea);
-    background: -moz-linear-gradient(#eaeaea,#ffffff 10%,#ffffff 90%,#e6e6e6);
-    background: -o-linear-gradient(#eaeaea,#ffffff 10%,#ffffff 90%,#eaeaea);
-    background: linear-gradient(#eaeaea,#ffffff 10%,#ffffff 90%,#eaeaea);
-    background-color: white;
-    font-weight: 400;
+html {
     /*background: #fcfcfc;*/
-    color: #333;
-    background-repeat: no-repeat;
+    color: #000;
+    background: #f8f8f8;
+    background: radial-gradient(circle, #c8c8c8, #fff);
     background-attachment: fixed;
+    font-weight: 400 !important;
+}
+
+.themeContainer.withBackdrop {
+    background: radial-gradient(circle, #c8c8c8, #fff);
+    background-attachment: fixed;
+}
+
+h1, h2 {
+    color: #444;
+    font-weight: 400 !important;
 }
 
 .header .logo {
@@ -17,67 +22,139 @@
 }
 
 .fieldDescription {
-    color: #555;
+    color: #444;
 }
 
 paper-input label {
-    color: #333 !important;
-}
-
-paper-input input {
-    color: #000 !important;
+    color: #444 !important;
 }
 
 paper-input .focused-line {
     background-color: #52B54B !important;
 }
 
-paper-button {
-    background: #f0f0f0;
+.paperRaised, paper-button[raised] {
+    background: #f8f8f8;
 }
 
-    paper-button iron-icon {
-        color: #000;
-    }
-
-    paper-button[focused] {
+    .paperRaised:focus, paper-button[raised][focused] {
         background: #52B54B;
+        color: #fff;
     }
 
-        paper-button[focused], paper-button[focused] iron-icon {
-            background: #52B54B;
-            color: #fff;
-        }
+.cardBox {
+}
 
 .cardFooter {
     background-color: #fff;
 }
 
-.scrollbar .handle {
-    background: #888;
-}
-
-.cardText {
-    color: #000;
-}
-
-    .cardText.dim {
-        color: #555;
+    .cardFooter:not(.innerCardFooter), .card {
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
     }
 
+.cardText.dim {
+    color: #444;
+}
+
+.card[focused] .cardBox, .card:focus .cardBox {
+    border-color: #52B54B;
+    /*border-color: rgba(0, 0, 0, .6);*/
+}
 
 .card[data-cardtype='embyconnect'] .cardImageContainer {
     background-color: #52B54B;
 }
 
-.card[data-cardtype='manuallogin'] .cardImageContainer {
-    background-color: #444;
-}
-
-.card[data-cardtype='changeserver'] .cardImageContainer {
-    background-color: #444;
-}
-
 .headerBackButton {
-    color: #bbb;
+    color: #444;
+}
+
+.userViewNames paper-button.flat {
+    opacity: .4;
+}
+
+    .userViewNames paper-button.flat.selected {
+        color: #000;
+        opacity: 1;
+    }
+
+paper-dialog {
+    background: #1c1c1c !important;
+    color: #fff !important;
+}
+
+.albumsCard .cardImageContainer, .recordingsCard .cardImageContainer {
+    background: #38c;
+}
+
+.allGenericCard .cardImageContainer, .artistsCard .cardImageContainer {
+    background: #4CAF50;
+}
+
+.genresCard .cardImageContainer, .scheduledLiveTvCard .cardImageContainer {
+    background: #F44336;
+}
+
+.emptyStar {
+    color: #bbb !important;
+}
+
+.userViewNames paper-button[focused] {
+    background-color: #52B54B !important;
+    color: #fff !important;
+    opacity: 1;
+}
+
+.defaultCardColor1 {
+    background-color: #009688;
+}
+
+.defaultCardColor2 {
+    background-color: #D32F2F;
+}
+
+.defaultCardColor3 {
+    background-color: #0288D1;
+}
+
+.defaultCardColor4 {
+    background-color: #388E3C;
+}
+
+.defaultCardColor5 {
+    background-color: #F57F17;
+}
+
+.nowPlayingInfoContainer #progressContainer {
+    background-color: #666 !important;
+}
+
+paper-item-body [secondary] {
+    color: #999 !important;
+}
+
+.selectedItemSecondaryInfo {
+    color: #ddd !important;
+}
+
+.paperIconItemMediaInfo {
+    color: #bbb !important;
+}
+
+paper-icon-item[focused] {
+    background-color: rgba(50,50,50,.9);
+    outline: none !important;
+}
+
+paper-icon-item:focus::before {
+    display: none;
+}
+
+.btnUserData {
+    color: #888;
+}
+
+.btnUserDataOn {
+    color: #cc3333;
 }

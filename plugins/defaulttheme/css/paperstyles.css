@@ -58,6 +58,10 @@ input.paperLike {
         border-color: #52B54B !important;
     }
 
+paper-input input {
+    color: inherit !important;
+}
+
 button.flat, paper-button {
     font-weight: 400;
     vertical-align: middle;

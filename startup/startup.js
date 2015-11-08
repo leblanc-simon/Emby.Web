@@ -436,7 +436,7 @@
 '+ innerOpening + '<div class="cardScalable">\
 <div class="cardPadder"></div>\
 <div class="cardContent">\
-<div class="cardImageContainer coveredImage">\
+<div class="cardImageContainer coveredImage defaultCardColor'+ getRandomInt(1, 5) + '">\
 '+ cardImageContainer + '</div>\
 </div>\
 </div>\
@@ -461,6 +461,10 @@
 
             Emby.FocusManager.autoFocus(scrollSlider, true);
         });
+    }
+
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     function onScrollSliderClick(e, callback) {
@@ -683,7 +687,7 @@
 '+ innerOpening + '<div class="cardScalable">\
 <div class="cardPadder"></div>\
 <div class="cardContent">\
-<div class="cardImageContainer">\
+<div class="cardImageContainer coveredImage defaultCardColor' + getRandomInt(1, 5) + '">\
 '+ cardImageContainer + '</div>\
 </div>\
 </div>\
