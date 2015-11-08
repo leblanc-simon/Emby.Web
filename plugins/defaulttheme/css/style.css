@@ -280,7 +280,7 @@ a {
     }
 
 .userViewNames {
-    margin-bottom: 1.45em;
+    margin-bottom: 1.55em;
 }
 
     .userViewNames h2 {
@@ -292,8 +292,8 @@ a {
         min-width: initial;
         text-transform: none !important;
         margin-top: 0;
-        padding-top: .15em;
-        padding-bottom: .3em;
+        padding-top: .1em;
+        padding-bottom: .25em;
         font-weight: inherit !important;
     }
 
@@ -665,14 +665,6 @@ paper-item-body .overview {
     color: #52B54B;
 }
 
-.btnUserData {
-    color: #aaa;
-}
-
-.btnUserDataOn {
-    color: #cc3333;
-}
-
 .actionSheetMenuItem {
     padding: .5em 1em;
     margin: 0;
@@ -738,10 +730,6 @@ paper-dialog.dialog {
     padding: .3em .7em;
     font-size: 84%;
     min-width: initial;
-}
-
-.tagline {
-    color: #FFEB3B;
 }
 
 .selectedItemPanel {

@@ -7,13 +7,7 @@ html {
 
 .themeContainer.withBackdrop {
     background: rgba(6, 6, 6, .86);
-    /*background: radial-gradient(circle, rgba(26,26,26,.78), rgba(6,6,6,.92));
-    background: -webkit-radial-gradient(circle, rgba(26,26,26,.82), rgba(6,6,6,.92));*/
 }
-
-    .themeContainer.withBackdrop.staticBackdrop {
-        background: rgba(6, 6, 6, .70);
-    }
 
     .themeContainer.withBackdrop.listBackdropIn {
         animation: listBackdropIn 1s;
@@ -51,10 +45,6 @@ html {
     background-image: url(images/logowhite.png);
 }
 
-.controlBox {
-    color: #ccc;
-}
-
 .fieldDescription {
     color: #ccc;
 }
@@ -63,56 +53,34 @@ paper-input label {
     color: #ccc !important;
 }
 
-paper-input input {
-    color: #fff !important;
-}
-
 paper-input .focused-line {
     background-color: #52B54B !important;
 }
 
-.paperRaised {
-    background: #404040 !important;
-}
-
-paper-button[raised] {
+.paperRaised, paper-button[raised] {
     background: #383838;
 }
 
-.paperRaised:focus {
-    background: #52B54B !important;
-}
-
-paper-button[raised][focused] {
-    background: #52B54B;
-}
+    .paperRaised:focus, paper-button[raised][focused] {
+        background: #52B54B;
+        color: #fff;
+    }
 
 .cardFooter {
     background-color: #333;
 }
 
-.scrollbar .handle {
-    background: #888;
+.cardText.dim {
+    color: #aaa;
 }
 
-.cardText {
-    color: #fff;
+.card[focused] .cardBox, .card:focus .cardBox {
+    border-color: #fff;
+    /*border-color: rgba(0, 0, 0, .6);*/
 }
-
-    .cardText.dim {
-        color: #aaa;
-    }
 
 .card[data-cardtype='embyconnect'] .cardImageContainer {
     background-color: #52B54B;
-}
-
-.card[data-cardtype='manuallogin'] .cardImageContainer {
-    background-color: #444;
-}
-
-.card[data-cardtype='changeserver'] .cardImageContainer {
-    background-color: #444;
 }
 
 .headerBackButton {
@@ -144,10 +112,6 @@ paper-dialog {
 
 .genresCard .cardImageContainer, .scheduledLiveTvCard .cardImageContainer {
     background: #F44336;
-}
-
-.loginSquareCard .cardImageContainer {
-    background: #38c;
 }
 
 .emptyStar {
@@ -203,4 +167,16 @@ paper-icon-item[focused] {
 
 paper-icon-item:focus::before {
     display: none;
+}
+
+.btnUserData {
+    color: #aaa;
+}
+
+.btnUserDataOn {
+    color: #cc3333;
+}
+
+.tagline {
+    color: #FFEB3B;
 }

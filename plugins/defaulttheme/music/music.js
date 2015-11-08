@@ -226,6 +226,9 @@
                         resolve();
                         resolve = null;
                     }
+                },
+                cardOptions: {
+                    showTitle: true
                 }
             });
 

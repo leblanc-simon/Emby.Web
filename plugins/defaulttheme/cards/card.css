@@ -62,7 +62,7 @@ button.card {
 
 .card .cardBox {
     padding: 0 !important;
-    margin: 0px !important;
+    margin: 0px;
     transition: none !important;
     border-radius: 0 !important;
     border: 3px solid transparent;
@@ -175,6 +175,14 @@ button.card {
         padding-top: .1em;
     }
 
+.cardText {
+    color: inherit;
+}
+
+.innerCardFooter .cardText, .cardImageContainer .cardText {
+    color: #fff;
+}
+
 .cardCenteredText {
     white-space: normal;
 }
@@ -212,6 +220,7 @@ button.card {
     justify-content: center;
     font-size: 80%;
     font-weight: normal;
+    color: #fff;
 }
 
 .playedIndicator {
@@ -227,6 +236,7 @@ button.card {
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #fff;
 }
 
 .emptyCardImageContainer {

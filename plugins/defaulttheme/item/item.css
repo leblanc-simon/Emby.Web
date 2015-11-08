@@ -129,10 +129,6 @@
     padding-bottom: .45em;
 }
 
-    .itemPageFixedLeft .itemPageButtons paper-button:not(:focus) {
-        background-color: rgba(56, 56, 56, .85);
-    }
-
 .detailImageContainer {
     margin-bottom: 1em;
     /* Eliminates the gap of space between the image and progress bar*/

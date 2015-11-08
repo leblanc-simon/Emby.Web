@@ -55,7 +55,7 @@
         var options = {
 
             IncludeItemTypes: "Episode",
-            Limit: 9,
+            Limit: 12,
             Fields: "PrimaryImageAspectRatio",
             ParentId: parentId,
             ImageTypeLimit: 1,
