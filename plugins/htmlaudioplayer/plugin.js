@@ -417,7 +417,7 @@ define([], function () {
 
         function onVolumeChange() {
 
-            if (!fadeOutTimeout) {
+            if (!fadeTimeout) {
                 Events.trigger(self, 'volumechange');
             }
         }

@@ -451,7 +451,6 @@
         presentationDependencies.push('js/input/mouse');
         presentationDependencies.push('js/input/onscreenkeyboard');
         presentationDependencies.push('js/input/keyboard');
-        presentationDependencies.push('js/input/windowskeys');
 
         require(presentationDependencies, function () {
 
