@@ -763,3 +763,14 @@ paper-dialog.dialog {
 .selectedItemPanelContent {
     padding: 1em;
 }
+
+.listPageButtons {
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+    .listPageButtons paper-button {
+        padding: .2em .6em .35em;
+        text-transform: none;
+        font-size: 86%;
+    }

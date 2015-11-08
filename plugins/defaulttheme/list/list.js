@@ -33,16 +33,57 @@
                     if (!isRestored) {
                         createHorizontalScroller(self, view, item, loading);
                     }
+
+                    if (!params.genreId) {
+                        view.querySelector('.listPageButtons').classList.add('hide');
+                    }
                 });
 
                 if (params.genreId) {
                     Emby.Models.item(params.genreId).then(function (item) {
 
+                        currentItem = item;
                         Emby.Page.setTitle(item.Name);
+
+                        if (item.Type == 'MusicGenre') {
+                            view.querySelector('.listPageButtons').classList.remove('hide');
+                        } else {
+                            view.querySelector('.listPageButtons').classList.add('hide');
+                        }
                     });
                 }
             });
+
+            if (!isRestored) {
+                view.querySelector('.btnPlay').addEventListener('click', play);
+                view.querySelector('.btnQueue').addEventListener('click', queue);
+                view.querySelector('.btnInstantMix').addEventListener('click', instantMix);
+                view.querySelector('.btnShuffle').addEventListener('click', shuffle);
+            }
+
         });
+
+        function play() {
+
+            Emby.PlaybackManager.play({
+                items: [currentItem]
+            });
+        }
+
+        function queue() {
+
+            Emby.PlaybackManager.queue({
+                items: [currentItem]
+            });
+        }
+
+        function instantMix() {
+            Emby.PlaybackManager.instantMix(currentItem.Id);
+        }
+
+        function shuffle() {
+            Emby.PlaybackManager.shuffle(currentItem.Id);
+        }
 
         view.addEventListener('viewdestroy', function () {
 
