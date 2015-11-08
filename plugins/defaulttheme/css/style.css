@@ -314,7 +314,7 @@ a {
 .horizontalSection {
     display: inline-block;
     vertical-align: top;
-    margin-right: 1em;
+    margin-right: 1.25em;
 }
 
 .sectionTitle {
