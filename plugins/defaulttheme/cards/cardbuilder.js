@@ -322,6 +322,7 @@
         var primaryImageAspectRatio = Emby.ImageLoader.getPrimaryImageAspectRatio([item]);
         var forceName = false;
         var imgUrl = null;
+        var coverImage = false;
 
         if (options.preferThumb && item.ImageTags && item.ImageTags.Thumb) {
 
@@ -371,34 +372,38 @@
 
             imgUrl = apiClient.getImageUrl(item.Id, {
                 type: "Primary",
-                height: height,
-                width: width,
+                maxHeight: height,
+                maxWidth: width,
                 tag: item.ImageTags.Primary
             });
 
             if (options.preferThumb && options.showTitle !== false) {
                 forceName = true;
             }
+
+            coverImage = height != null;
+
         } else if (item.PrimaryImageTag) {
 
             height = width && primaryImageAspectRatio ? Math.round(width / primaryImageAspectRatio) : null;
 
             imgUrl = apiClient.getImageUrl(item.Id || item.ItemId, {
                 type: "Primary",
-                height: height,
-                width: width,
+                maxHeight: height,
+                maxWidth: width,
                 tag: item.PrimaryImageTag
             });
 
             if (options.preferThumb && options.showTitle !== false) {
                 forceName = true;
             }
+            coverImage = width != null;
         }
         else if (item.ParentPrimaryImageTag) {
 
             imgUrl = apiClient.getImageUrl(item.ParentPrimaryImageItemId, {
                 type: "Primary",
-                width: width,
+                maxWidth: width,
                 tag: item.ParentPrimaryImageTag
             });
         }
@@ -408,11 +413,12 @@
 
             imgUrl = apiClient.getScaledImageUrl(item.AlbumId, {
                 type: "Primary",
-                height: height,
-                width: width,
+                maxHeight: height,
+                maxWidth: width,
                 tag: item.AlbumPrimaryImageTag
             });
 
+            coverImage = width != null;
         }
         else if (item.Type == 'Season' && item.ImageTags && item.ImageTags.Thumb) {
 
@@ -459,7 +465,8 @@
 
         return {
             imgUrl: imgUrl,
-            forceName: forceName
+            forceName: forceName,
+            coverImage: coverImage
         };
     }
 
@@ -537,7 +544,7 @@
         var imgUrl = imgInfo.imgUrl;
 
         var cardImageContainerClass = 'cardImageContainer';
-        if (options.coverImage) {
+        if (options.coverImage || imgInfo.coverImage) {
             cardImageContainerClass += ' coveredImage';
         }
 
