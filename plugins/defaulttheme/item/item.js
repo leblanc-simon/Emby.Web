@@ -74,6 +74,12 @@
                     // Always refresh this
                     renderNextUp(view, item);
 
+                    if (Emby.PlaybackManager.canQueue(item)) {
+                        view.querySelector('.itemPageFixedLeft .btnQueue').classList.remove('hide');
+                    } else {
+                        view.querySelector('.itemPageFixedLeft .btnQueue').classList.add('hide');
+                    }
+
                     loading.hide();
                 });
             });
@@ -403,12 +409,6 @@
         } else {
             view.querySelector('.itemPageFixedLeft .btnPlay').classList.add('hide');
             view.querySelector('.mainSection .btnPlay').classList.add('hide');
-        }
-
-        if (Emby.PlaybackManager.canQueue(item)) {
-            view.querySelector('.itemPageFixedLeft .btnQueue').classList.remove('hide');
-        } else {
-            view.querySelector('.itemPageFixedLeft .btnQueue').classList.add('hide');
         }
 
         if (enableTrackList(item) || item.Type == 'MusicArtist') {

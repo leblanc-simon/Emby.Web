@@ -314,7 +314,7 @@ a {
 .horizontalSection {
     display: inline-block;
     vertical-align: top;
-    margin-right: 40px;
+    margin-right: 1em;
 }
 
 .sectionTitle {
@@ -765,8 +765,11 @@ paper-dialog.dialog {
 }
 
 .listPageButtons {
-    margin-bottom: 1em;
+    position: absolute;
     text-align: center;
+    top: 11%;
+    left: 0;
+    right: 0;
 }
 
     .listPageButtons paper-button {
