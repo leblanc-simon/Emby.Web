@@ -528,7 +528,7 @@
             }
 
             var animationConfig = {
-                duration: animation.immediate ? (o.immediateSpeed || 5) : o.speed,
+                duration: animation.immediate ? (o.immediateSpeed || 1) : o.speed,
                 iterations: 1,
                 fill: 'both'
             };
