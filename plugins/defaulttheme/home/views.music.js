@@ -60,7 +60,7 @@
             SortBy: "DatePlayed",
             SortOrder: "Descending",
             IncludeItemTypes: "Audio",
-            Limit: 9,
+            Limit: 6,
             Recursive: true,
             Fields: "PrimaryImageAspectRatio",
             Filters: "IsPlayed",
@@ -90,7 +90,7 @@
             SortBy: "PlayCount",
             SortOrder: "Descending",
             IncludeItemTypes: "Audio",
-            Limit: 9,
+            Limit: 6,
             Recursive: true,
             Fields: "PrimaryImageAspectRatio",
             Filters: "IsPlayed",
@@ -113,6 +113,90 @@
         });
     }
 
+    function loadFavoriteSongs(element, parentId) {
+
+        var options = {
+
+            SortBy: "Random",
+            IncludeItemTypes: "Audio",
+            Limit: 6,
+            Recursive: true,
+            Fields: "PrimaryImageAspectRatio",
+            Filters: "IsFavorite",
+            ParentId: parentId,
+            ImageTypeLimit: 1,
+            EnableImageTypes: "Primary,Backdrop,Thumb"
+        };
+
+        Emby.Models.items(options).then(function (result) {
+
+            var section = element.querySelector('.favoriteSongsSection');
+
+            DefaultTheme.CardBuilder.buildCards(result.Items, {
+                parentContainer: section,
+                itemsContainer: section.querySelector('.itemsContainer'),
+                shape: 'autoHome',
+                width: DefaultTheme.CardBuilder.homePortraitWidth,
+                action: 'instantmix'
+            });
+        });
+    }
+
+    function loadFavoriteAlbums(element, parentId) {
+
+        var options = {
+
+            SortBy: "Random",
+            IncludeItemTypes: "MusicAlbum",
+            Limit: 6,
+            Recursive: true,
+            Fields: "PrimaryImageAspectRatio",
+            Filters: "IsFavorite",
+            ParentId: parentId,
+            ImageTypeLimit: 1,
+            EnableImageTypes: "Primary,Backdrop,Thumb"
+        };
+
+        Emby.Models.items(options).then(function (result) {
+
+            var section = element.querySelector('.favoriteAlbumsSection');
+
+            DefaultTheme.CardBuilder.buildCards(result.Items, {
+                parentContainer: section,
+                itemsContainer: section.querySelector('.itemsContainer'),
+                shape: 'autoHome',
+                width: DefaultTheme.CardBuilder.homePortraitWidth
+            });
+        });
+    }
+
+    function loadFavoriteArtists(element, parentId) {
+
+        var options = {
+
+            SortBy: "Random",
+            Limit: 6,
+            Recursive: true,
+            Fields: "PrimaryImageAspectRatio",
+            Filters: "IsFavorite",
+            ParentId: parentId,
+            ImageTypeLimit: 1,
+            EnableImageTypes: "Primary,Backdrop,Thumb"
+        };
+
+        Emby.Models.artists(options).then(function (result) {
+
+            var section = element.querySelector('.favoriteArtistsSection');
+
+            DefaultTheme.CardBuilder.buildCards(result.Items, {
+                parentContainer: section,
+                itemsContainer: section.querySelector('.itemsContainer'),
+                shape: 'autoHome',
+                width: DefaultTheme.CardBuilder.homePortraitWidth
+            });
+        });
+    }
+
     function gotoMusicView(tab, parentId) {
 
         Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'music/music.html?tab=' + tab + "&parentid=" + parentId));
@@ -129,6 +213,9 @@
         loadPlaylists(element, parentId);
         loadRecentlyPlayed(element, parentId);
         loadFrequentlyPlayed(element, parentId);
+        loadFavoriteSongs(element, parentId);
+        loadFavoriteAlbums(element, parentId);
+        loadFavoriteArtists(element, parentId);
 
         element.querySelector('.artistsCard').addEventListener('click', function () {
             gotoMusicView('albumartists', parentId);

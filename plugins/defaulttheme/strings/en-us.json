@@ -94,5 +94,8 @@
     "TopRated": "Top Rated",
     "BornValue": "Born: {0}",
     "BirthPlaceValue": "Birth place: {0}",
-    "MoviesAndTV": "Movies & TV"
+    "MoviesAndTV": "Movies & TV",
+    "FavoriteAlbums": "Favorite Albums",
+    "FavoriteSongs": "Favorite Songs",
+    "FavoriteArtists": "Favorite Artists"
 }
