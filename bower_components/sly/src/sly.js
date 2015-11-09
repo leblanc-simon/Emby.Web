@@ -336,9 +336,6 @@
                     slideTo(within(pos.dest, pos.start, pos.end));
                 }
             }
-
-            // Trigger load event
-            trigger('load');
         }
 
         var pnum = (/[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/).source;
@@ -482,7 +479,6 @@
             // Start animation rendering
             if (newPos !== pos.dest) {
                 pos.dest = newPos;
-                trigger('change');
                 if (!renderID) {
 
                     if (!slideeElement.animate) {
@@ -565,9 +561,6 @@
             // If first render call, wait for next animationFrame
             if (!renderID) {
                 renderID = rAF(render);
-                if (dragging.released) {
-                    trigger('moveStart');
-                }
                 return;
             }
 
@@ -599,8 +592,6 @@
                 renderID = rAF(render);
             }
 
-            trigger('move');
-
             // Update SLIDEE position
             if (!parallax) {
                 if (transform) {
@@ -608,11 +599,6 @@
                 } else {
                     slideeElement.style[o.horizontal ? 'left' : 'top'] = -round(pos.cur) + 'px';
                 }
-            }
-
-            // When animation reached the end, and dragging is not active, trigger moveEnd
-            if (!renderID && dragging.released) {
-                trigger('moveEnd');
             }
         }
 
@@ -690,7 +676,6 @@
             continuousInit('button');
             dragging.init = 1;
             // Start movement
-            trigger('moveStart');
             cAF(continuousID);
             moveLoop();
         };
@@ -712,11 +697,7 @@
             move.pos = pos.cur + (move.now - move.lastTime) / 1000 * move.speed;
             // Slide
             slideTo(dragging.init ? move.pos : round(move.pos));
-            // Normally, this is triggered in render(), but if there
-            // is nothing to render, we have to do it manually here.
-            if (!dragging.init && pos.cur === pos.dest) {
-                trigger('moveEnd');
-            }
+
             // Update times for future iteration
             move.lastTime = move.now;
         }
@@ -888,8 +869,6 @@
                 itemElements[index].classList.add(o.activeClass);
 
                 last.active = rel.activeItem = index;
-
-                trigger('active', index);
             }
 
             return index;
@@ -1035,12 +1014,9 @@
 
             if (cycleID) {
                 cycleID = clearTimeout(cycleID);
-            } else {
-                trigger('resume');
             }
 
             cycleID = setTimeout(function () {
-                trigger('cycle');
                 switch (o.cycleBy) {
                     case 'items':
                         self.activate(rel.activeItem >= items.length - 1 ? 0 : rel.activeItem + 1);
@@ -1069,7 +1045,6 @@
 
             if (cycleID) {
                 cycleID = clearTimeout(cycleID);
-                trigger('pause');
             }
         };
 
@@ -1241,7 +1216,7 @@
 
             if (!isTouch) {
                 // prevents native image dragging in Firefox
-                stopDefault(event);
+                //stopDefault(event);
             }
 
             // Reset dragging object
@@ -1281,9 +1256,6 @@
             if (isSlidee) {
                 slideeElement.classList.add(o.draggedClass);
             }
-
-            // Trigger moveStart event
-            trigger('moveStart');
 
             // Keep track of a dragging path history. This is later used in the
             // dragging release swing calculation when dragging SLIDEE.
@@ -1378,12 +1350,6 @@
             setTimeout(function () {
                 dragging.source.removeEventListener('click', disableOneEvent);
             });
-
-            // Normally, this is triggered in render(), but if there
-            // is nothing to render, we have to do it manually here.
-            if (pos.cur === pos.dest && dragging.init) {
-                trigger('moveEnd');
-            }
 
             // Resume ongoing cycle
             self.resume(1);
@@ -1503,30 +1469,6 @@
         function pauseOnHoverHandler(event) {
             if (o.pauseOnHover) {
                 self[event.type === 'mouseenter' ? 'pause' : 'resume'](2);
-            }
-        }
-
-        /**
-		 * Trigger callbacks for event.
-		 *
-		 * @param  {String} name Event name.
-		 * @param  {Mixed}  argX Arguments passed to callbacks.
-		 *
-		 * @return {Void}
-		 */
-        function trigger(name, arg1) {
-            if (callbacks[name]) {
-                l = callbacks[name].length;
-                // Callbacks will be stored and executed from a temporary array to not
-                // break the execution queue when one of the callbacks unbinds itself.
-                tmpArray.length = 0;
-                for (i = 0; i < l; i++) {
-                    tmpArray.push(callbacks[name][i]);
-                }
-                // Execute the callbacks
-                for (i = 0; i < l; i++) {
-                    tmpArray[i].call(self, name, arg1);
-                }
             }
         }
 
