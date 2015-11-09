@@ -604,7 +604,7 @@
 
         var innerCardFooter = '';
 
-        if (nameHtml) {
+        if (nameHtml && imgUrl) {
             innerCardFooter += '<div class="' + innerCardFooterClass + '">';
             innerCardFooter += nameHtml;
             innerCardFooter += '</div>';
