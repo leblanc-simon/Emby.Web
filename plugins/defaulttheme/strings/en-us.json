@@ -92,6 +92,7 @@
     "SelectServer": "Select server",
     "SignOut": "Sign out",
     "TopRated": "Top Rated",
-    "BornValue":  "Born: {0}",
-    "BirthPlaceValue":  "Birth place: {0}"
+    "BornValue": "Born: {0}",
+    "BirthPlaceValue": "Birth place: {0}",
+    "MoviesAndTV": "Movies & TV"
 }

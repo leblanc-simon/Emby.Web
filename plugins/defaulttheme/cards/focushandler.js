@@ -146,10 +146,15 @@ define([], function () {
                 return;
             }
 
-            Emby.Models.item(id).then(function (item) {
-                DefaultTheme.Backdrop.setBackdrops([item], true);
-                setSelectedInfo(card, item);
-            });
+            if (options.enableBackdrops !== false || selectedItemInfoInner) {
+                Emby.Models.item(id).then(function (item) {
+
+                    if (options.enableBackdrops !== false) {
+                        DefaultTheme.Backdrop.setBackdrops([item], true);
+                    }
+                    setSelectedInfo(card, item);
+                });
+            }
         }
 
         function setSelectedInfo(card, item) {

@@ -187,7 +187,8 @@
                 dragHandle: 1,
                 dynamicHandle: 1,
                 clickBar: 1,
-                scrollWidth: 50000
+                scrollWidth: 50000,
+                immediateSpeed: 100
             };
 
             slyScroller.create(scrollFrame, options).then(function (slyFrame) {
@@ -205,7 +206,8 @@
             self.focusHandler = new focusHandler({
                 parent: view.querySelector('.scrollSlider'),
                 slyFrame: slyFrame,
-                zoomScale: '1.10'
+                zoomScale: '1.10',
+                enableBackdrops: false
             });
 
         });
