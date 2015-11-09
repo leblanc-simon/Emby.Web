@@ -1,6 +1,6 @@
 .itemPageContainer {
     display: block;
-    width: 90.5%;
+    width: 94.5%;
     margin: auto;
     bottom: 0;
     top: 12.2%;
@@ -14,21 +14,25 @@
     clear: both;
 }
 
-.itemScrollContent .backdropCard {
-    width: 25%;
+.itemScrollContent {
+    padding: 0 2%;
 }
 
-.itemScrollContent .squareCard {
-    width: 16.66666666666666667%;
-}
+    .itemScrollContent .backdropCard {
+        width: 25%;
+    }
 
-.itemScrollContent .portraitCard {
-    width: 16.66666666666666667%;
-}
+    .itemScrollContent .squareCard {
+        width: 16.66666666666666667%;
+    }
 
-.itemScrollContent .itemPersonThumb {
-    width: 14.285714285714285714285714285714%;
-}
+    .itemScrollContent .portraitCard {
+        width: 16.66666666666666667%;
+    }
+
+    .itemScrollContent .itemPersonThumb {
+        width: 14.285714285714285714285714285714%;
+    }
 
 .itemScrollFrame.clippedLeft {
     margin-left: 30%;

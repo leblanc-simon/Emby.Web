@@ -24,10 +24,12 @@
                 txtSearch.value += value;
             }
 
-            if (txtSearch.value) {
-                search(txtSearch.value);
-            } else {
+            search(txtSearch.value);
+        }
 
+        function search(value) {
+
+            if (!value) {
                 var emptyResult = {
                     SearchHints: []
                 };
@@ -36,10 +38,8 @@
                 populateResults(emptyResult, '.seriesResults');
                 populateResults(emptyResult, '.artistResults');
                 populateResults(emptyResult, '.albumResults');
+                return;
             }
-        }
-
-        function search(value) {
 
             searchType(value, {
 
@@ -157,6 +157,26 @@
             });
         }
 
+        var searchTimeout;
+        function searchOnTimeout() {
+
+            if (searchTimeout) {
+                clearTimeout(searchTimeout);
+                searchTimeout = null;
+            }
+
+            setTimeout(onSearchTimeout, 300);
+        }
+
+        function onSearchTimeout() {
+            search(view.querySelector('.txtSearch').value);
+        }
+
+        function onSearchKeyDown(e) {
+
+            searchOnTimeout();
+        }
+
         view.addEventListener('viewshow', function (e) {
 
             Emby.Page.setTitle('');
@@ -166,6 +186,8 @@
 
             if (!isRestored) {
                 initAlphaPicker(e.detail.element);
+
+                e.detail.element.querySelector('.txtSearch').addEventListener('keydown', onSearchKeyDown);
 
                 createVerticalScroller(e.detail.element, self);
             }
@@ -223,12 +245,12 @@
 
     function initFocusHandler(view, slyFrame) {
 
-        var scrollSlider = view.querySelector('.scrollSlider');
+        var searchResults = view.querySelector('.searchResults');
 
         require([Emby.PluginManager.mapPath('defaulttheme', 'cards/focushandler.js')], function (focusHandler) {
 
             self.focusHandler = new focusHandler({
-                parent: scrollSlider,
+                parent: searchResults,
                 slyFrame: slyFrame
             });
 

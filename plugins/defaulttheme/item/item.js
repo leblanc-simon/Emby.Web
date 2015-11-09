@@ -101,6 +101,10 @@
 
         view.addEventListener('viewdestroy', function () {
 
+            if (self.focusHandler) {
+                self.focusHandler.destroy();
+                self.focusHandler = null
+            }
             if (self.slyFrame) {
                 self.slyFrame.destroy();
             }
@@ -196,16 +200,15 @@
 
     function initFocusHandler(view, slyFrame) {
 
-        var scrollSlider = view.querySelector('.scrollSlider');
-        scrollSlider.addEventListener('focus', function (e) {
+        require([Emby.PluginManager.mapPath('defaulttheme', 'cards/focushandler.js')], function (focusHandler) {
 
-            var focused = Emby.FocusManager.focusableParent(e.target);
+            self.focusHandler = new focusHandler({
+                parent: view.querySelector('.scrollSlider'),
+                slyFrame: slyFrame,
+                zoomScale: '1.10'
+            });
 
-            if (focused) {
-                slyFrame.toCenter(focused);
-            }
-
-        }, true);
+        });
     }
 
     function renderName(view, item) {
