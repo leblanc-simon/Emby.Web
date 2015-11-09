@@ -914,7 +914,7 @@
 
         Emby.Models.itemPeople(item, {
 
-            limit: 24,
+            limit: 32,
             images: [
             {
                 type: 'Primary',
