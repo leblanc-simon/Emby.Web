@@ -69,6 +69,10 @@
                     {
                         Name: Globalize.translate('Playlists'),
                         Id: "playlists"
+                    },
+                    {
+                        Name: Globalize.translate('Favorites'),
+                        Id: "favorites"
                     }
                 ];
 
@@ -134,6 +138,9 @@
                     case 'genres':
                         renderGenres(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
                         contentScrollSlider.addEventListener('click', onMusicGenresContainerClick);
+                        break;
+                    case 'favorites':
+                        renderFavorites(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
                         break;
                     default:
                         break;
@@ -352,6 +359,43 @@
                         ParentId: pageParams.parentid,
                         SortBy: "SortName",
                         Fields: "CumulativeRunTimeTicks,SortName"
+                    });
+                },
+                listCountElement: page.querySelector('.listCount'),
+                listNumbersElement: page.querySelector('.listNumbers'),
+                autoFocus: autoFocus,
+                cardOptions: {
+                    coverImage: true
+                },
+                selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
+                selectedIndexElement: page.querySelector('.selectedIndex'),
+                slyFrame: slyFrame,
+                onRender: function () {
+                    if (resolve) {
+                        resolve();
+                        resolve = null;
+                    }
+                }
+            });
+
+            self.listController.render();
+        }
+
+        function renderFavorites(page, pageParams, autoFocus, slyFrame, resolve) {
+
+            self.listController = new DefaultTheme.HorizontalList({
+
+                itemsContainer: page.querySelector('.contentScrollSlider'),
+                getItemsMethod: function (startIndex, limit) {
+                    return Emby.Models.items({
+                        StartIndex: startIndex,
+                        Limit: limit,
+                        ParentId: pageParams.parentid,
+                        IncludeItemTypes: "MusicAlbum",
+                        Recursive: true,
+                        SortBy: "SortName",
+                        Fields: "CumulativeRunTimeTicks,SortName",
+                        Filters: "IsFavorite"
                     });
                 },
                 listCountElement: page.querySelector('.listCount'),
