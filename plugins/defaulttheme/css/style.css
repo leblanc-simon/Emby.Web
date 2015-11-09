@@ -320,8 +320,8 @@ a {
 
 .sectionTitle {
     text-transform: uppercase;
-    padding-left: .25em;
     font-size: 90%;
+    padding-left: .1em;
 }
 
 .horizontalPageContent .squareCard .cardImageContainer {
