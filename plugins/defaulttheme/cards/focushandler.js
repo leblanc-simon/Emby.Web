@@ -164,6 +164,10 @@ define([], function () {
                 return;
             }
 
+            if (!selectedItemInfoInner) {
+                return;
+            }
+
             var html = '';
 
             var mediaInfo = DefaultTheme.CardBuilder.getMediaInfoHtml(item);
@@ -249,7 +253,7 @@ define([], function () {
                     selectedItemPanel = null;
                     slideOutRightAndRemove(panel);
                 }
-            } else {
+            } else if (selectedItemInfoInner) {
                 selectedItemInfoInner.innerHTML = '';
             }
         }

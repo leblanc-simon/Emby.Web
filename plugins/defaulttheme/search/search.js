@@ -35,6 +35,7 @@
                 populateResults(emptyResult, '.movieResults');
                 populateResults(emptyResult, '.seriesResults');
                 populateResults(emptyResult, '.artistResults');
+                populateResults(emptyResult, '.albumResults');
             }
         }
 
@@ -73,7 +74,12 @@
                 IncludeStudios: false,
                 IncludeArtists: false
 
-            }, '.peopleResults', true);
+            }, '.peopleResults', {
+
+                coverImage: true,
+                showTitle: true,
+                overlayTitle: false
+            });
 
             searchType(value, {
 
@@ -84,21 +90,38 @@
                 IncludeStudios: false,
                 IncludeArtists: true
 
-            }, '.artistResults', true);
+            }, '.artistResults', {
+
+                coverImage: true,
+                showTitle: true,
+                overlayTitle: false
+            });
+
+            searchType(value, {
+
+                searchTerm: value,
+                IncludePeople: false,
+                IncludeMedia: true,
+                IncludeGenres: false,
+                IncludeStudios: false,
+                IncludeArtists: false,
+                IncludeItemTypes: "MusicAlbum"
+
+            }, '.albumResults');
         }
 
-        function searchType(value, query, section, coverImage) {
+        function searchType(value, query, section, cardOptions) {
 
             query.Limit = 6;
 
             Emby.Models.search(query).then(function (result) {
 
-                populateResults(result, section, coverImage);
+                populateResults(result, section, cardOptions);
 
             });
         }
 
-        function populateResults(result, section, coverImage) {
+        function populateResults(result, section, cardOptions) {
 
             section = view.querySelector(section);
 
@@ -110,14 +133,12 @@
                 section.classList.add('hide');
             }
 
-            var itemsContainer = section.querySelector('.items');
+            cardOptions = cardOptions || {};
+            cardOptions.itemsContainer = section.querySelector('.items');
+            cardOptions.shape = 'autoVertical';
+            cardOptions.scalable = true;
 
-            DefaultTheme.CardBuilder.buildCards(items, {
-                itemsContainer: itemsContainer,
-                shape: 'autoVertical',
-                scalable: true,
-                coverImage: coverImage
-            });
+            DefaultTheme.CardBuilder.buildCards(items, cardOptions);
         }
 
         function initAlphaPicker(view) {
@@ -157,6 +178,10 @@
 
         view.addEventListener('viewdestroy', function () {
 
+            if (self.focusHandler) {
+                self.focusHandler.destroy();
+                self.focusHandler = null
+            }
             if (self.alphaPicker) {
                 self.alphaPicker.destroy();
             }
@@ -199,15 +224,15 @@
     function initFocusHandler(view, slyFrame) {
 
         var scrollSlider = view.querySelector('.scrollSlider');
-        scrollSlider.addEventListener('focus', function (e) {
 
-            var focused = Emby.FocusManager.focusableParent(e.target);
+        require([Emby.PluginManager.mapPath('defaulttheme', 'cards/focushandler.js')], function (focusHandler) {
 
-            if (focused) {
-                slyFrame.toCenter(focused);
-            }
+            self.focusHandler = new focusHandler({
+                parent: scrollSlider,
+                slyFrame: slyFrame
+            });
 
-        }, true);
+        });
     }
 
 })();

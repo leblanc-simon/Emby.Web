@@ -1,14 +1,16 @@
 <div class="searchPageContainer">
-    <div class="searchFields">
-        <div>
-            <iron-icon icon="search" class="mediumSizeIcon iconSearch"></iron-icon>
-            <paper-input class="txtSearch" type="text" data-keyboard="false"></paper-input>
-        </div>
-        <div class="alphaPicker"></div>
-    </div>
     <div class="searchResults scrollFrame scrollFrameY itemScrollFrame">
 
         <div class="scrollSlider">
+
+            <div class="searchFields">
+                <div>
+                    <iron-icon icon="search" class="mediumSizeIcon iconSearch"></iron-icon>
+                    <paper-input class="txtSearch" type="text" data-keyboard="false"></paper-input>
+                </div>
+                <div class="alphaPicker"></div>
+            </div>
+
             <div class="movieResults hide">
                 <h1>${Movies}</h1>
                 <div class="items"></div>
@@ -23,6 +25,10 @@
             </div>
             <div class="artistResults hide">
                 <h1>${Artists}</h1>
+                <div class="items"></div>
+            </div>
+            <div class="albumResults hide">
+                <h1>${Albums}</h1>
                 <div class="items"></div>
             </div>
         </div>
