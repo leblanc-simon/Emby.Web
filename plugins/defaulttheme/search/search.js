@@ -35,7 +35,6 @@
                 };
                 populateResults(emptyResult, '.peopleResults');
                 populateResults(emptyResult, '.movieResults');
-                populateResults(emptyResult, '.seriesResults');
                 populateResults(emptyResult, '.artistResults');
                 populateResults(emptyResult, '.albumResults');
                 return;
@@ -49,21 +48,9 @@
                 IncludeGenres: false,
                 IncludeStudios: false,
                 IncludeArtists: false,
-                IncludeItemTypes: "Movie"
+                IncludeItemTypes: "Movie,Series"
 
             }, '.movieResults');
-
-            searchType(value, {
-
-                searchTerm: value,
-                IncludePeople: false,
-                IncludeMedia: true,
-                IncludeGenres: false,
-                IncludeStudios: false,
-                IncludeArtists: false,
-                IncludeItemTypes: "Series"
-
-            }, '.seriesResults');
 
             searchType(value, {
 
