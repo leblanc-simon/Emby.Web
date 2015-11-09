@@ -21,7 +21,7 @@
     var wheelEvent = (document.implementation.hasFeature('Event.wheel', '3.0') ? 'wheel' : 'mousewheel');
     var clickEvent = 'click.' + namespace;
     var mouseDownEvent = 'mousedown.' + namespace;
-    var interactiveElements = ['INPUT', 'SELECT', 'BUTTON', 'TEXTAREA'];
+    var interactiveElements = ['INPUT', 'SELECT', 'TEXTAREA'];
     var tmpArray = [];
     var time;
 
@@ -1216,7 +1216,7 @@
 
             if (!isTouch) {
                 // prevents native image dragging in Firefox
-                //stopDefault(event);
+                stopDefault(event);
             }
 
             // Reset dragging object
@@ -1363,6 +1363,15 @@
 		 * @return {Boolean}
 		 */
         function isInteractive(element) {
+
+            while (element) {
+
+                if (interactiveElements.indexOf(element.tagName) != -1) {
+                    return true;
+                }
+
+                element = element.parentNode;
+            }
             return false;
         }
 
