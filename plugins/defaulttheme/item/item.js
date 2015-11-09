@@ -301,16 +301,15 @@
     function renderMediaInfoIcons(view, item) {
 
         var showMediaInfoIcons = false;
-        var displayType = (item.DisplayMediaType || '').toLowerCase();
 
-        if (item.VideoType == 'Dvd' || displayType == 'dvd') {
+        if (item.VideoType == 'Dvd') {
             view.querySelector('.dvdIcon').classList.remove('hide');
             showMediaInfoIcons = true;
         } else {
             view.querySelector('.dvdIcon').classList.add('hide');
         }
 
-        if (item.VideoType == 'BluRay' || displayType == 'bluray') {
+        if (item.VideoType == 'BluRay') {
             view.querySelector('.blurayIcon').classList.remove('hide');
             showMediaInfoIcons = true;
         } else {
