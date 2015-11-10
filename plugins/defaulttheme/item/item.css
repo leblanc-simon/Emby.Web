@@ -206,34 +206,47 @@
 }
 
 .mediaInfoIcons {
-    margin-top: 1em;
+    margin-top: 1.25em;
 }
 
 .mediaInfoIcon {
-    height: 36px;
-    fill: currentColor;
+    height: 32px;
+    fill: #ccc;
+    color: #ccc;
     vertical-align: middle;
     margin-right: 1em;
-    opacity: .9;
 }
 
     .mediaInfoIcon path {
-        fill: currentColor;
+        fill: #ccc;
     }
 
 .dvdIcon {
     /* These have a lot of whitespace */
-    height: 64px;
+    height: 60px;
 }
 
 .blurayIcon {
     /* These have a lot of whitespace */
-    height: 60px;
+    height: 50px;
 }
 
 .dtsIcon {
     /* This one doesn't scale */
     height: 48px;
+}
+
+.mediaInfoChannels {
+    display: inline-block;
+    vertical-align: middle;
+    padding: .05em .5em;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: #000;
+    background: #ccc;
+    border-radius: 3px;
+    height: auto;
+    font-weight: normal;
 }
 
 .paperIconItemRightButton {

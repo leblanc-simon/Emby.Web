@@ -26,6 +26,9 @@
 
         view.addEventListener('viewdestroy', function () {
 
+            if (self.focusHandler) {
+                self.focusHandler.destroy();
+            }
             if (self.listController) {
                 self.listController.destroy();
             }
@@ -99,6 +102,9 @@
 
                 if (self.listController) {
                     self.listController.destroy();
+                }
+                if (self.focusHandler) {
+                    self.focusHandler.destroy();
                 }
 
                 var pageParams = tabbedPage.params;
@@ -383,39 +389,93 @@
 
         function renderFavorites(page, pageParams, autoFocus, slyFrame, resolve) {
 
-            self.listController = new DefaultTheme.HorizontalList({
+            require(['httpclient'], function (httpclient) {
+                httpclient.request({
 
-                itemsContainer: page.querySelector('.contentScrollSlider'),
-                getItemsMethod: function (startIndex, limit) {
-                    return Emby.Models.items({
-                        StartIndex: startIndex,
-                        Limit: limit,
-                        ParentId: pageParams.parentid,
-                        IncludeItemTypes: "MusicAlbum",
-                        Recursive: true,
-                        SortBy: "SortName",
-                        Fields: "CumulativeRunTimeTicks,SortName",
-                        Filters: "IsFavorite"
-                    });
-                },
-                listCountElement: page.querySelector('.listCount'),
-                listNumbersElement: page.querySelector('.listNumbers'),
-                autoFocus: autoFocus,
-                cardOptions: {
-                    coverImage: true
-                },
-                selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
-                selectedIndexElement: page.querySelector('.selectedIndex'),
-                slyFrame: slyFrame,
-                onRender: function () {
-                    if (resolve) {
-                        resolve();
-                        resolve = null;
-                    }
-                }
+                    url: Emby.PluginManager.mapResource('defaulttheme', 'music/views.favorites.html'),
+                    type: 'GET',
+                    dataType: 'html'
+
+                }).then(function (html) {
+
+                    var parent = page.querySelector('.contentScrollSlider');
+                    parent.innerHTML = Globalize.translateHtml(html);
+                    loadFavoriteArtists(parent, pageParams, autoFocus, resolve);
+                    loadFavoriteAlbums(parent, pageParams);
+                });
             });
 
-            self.listController.render();
+            require([Emby.PluginManager.mapPath('defaulttheme', 'cards/focushandler.js')], function (focusHandler) {
+
+                self.focusHandler = new focusHandler({
+                    parent: page.querySelector('.contentScrollSlider'),
+                    slyFrame: slyFrame,
+                    selectedItemInfoInner: page.querySelector('.selectedItemInfoInner')
+                });
+            });
+        }
+
+        function loadFavoriteArtists(parent, pageParams, autoFocus, resolve) {
+
+            Emby.Models.artists({
+                ParentId: pageParams.parentid,
+                Recursive: true,
+                Filters: "IsFavorite",
+                SortBy: "SortName"
+
+            }).then(function (result) {
+
+                var section = parent.querySelector('.favoriteArtistsSection');
+
+                if (result.Items.length) {
+                    section.classList.remove('hide');
+                } else {
+                    section.classList.add('hide');
+                }
+
+                DefaultTheme.CardBuilder.buildCards(result.Items, {
+                    itemsContainer: section.querySelector('.itemsContainer'),
+                    shape: 'auto',
+                    rows: 2
+                });
+
+                if (autoFocus) {
+                    setTimeout(function () {
+                        var firstCard = section.querySelector('.card');
+                        if (firstCard) {
+                            Emby.FocusManager.focus(firstCard);
+                        }
+                    }, 400);
+                }
+                resolve();
+            });
+        }
+
+        function loadFavoriteAlbums(parent, pageParams) {
+
+            Emby.Models.items({
+                ParentId: pageParams.parentid,
+                IncludeItemTypes: "MusicAlbum",
+                Recursive: true,
+                Filters: "IsFavorite",
+                SortBy: "SortName"
+
+            }).then(function (result) {
+
+                var section = parent.querySelector('.favoriteAlbumsSection');
+
+                if (result.Items.length) {
+                    section.classList.remove('hide');
+                } else {
+                    section.classList.add('hide');
+                }
+
+                DefaultTheme.CardBuilder.buildCards(result.Items, {
+                    itemsContainer: section.querySelector('.itemsContainer'),
+                    shape: 'auto',
+                    rows: 3
+                });
+            });
         }
     }
 

@@ -29,6 +29,9 @@
             if (self.tabbedPage) {
                 self.tabbedPage.destroy();
             }
+            if (self.focusHandler) {
+                self.focusHandler.destroy();
+            }
             if (self.alphaPicker) {
                 self.alphaPicker.destroy();
             }
@@ -84,6 +87,9 @@
 
                 if (self.listController) {
                     self.listController.destroy();
+                }
+                if (self.focusHandler) {
+                    self.focusHandler.destroy();
                 }
 
                 var pageParams = tabbedPage.params;
@@ -242,35 +248,94 @@
 
         function renderFavorites(page, pageParams, autoFocus, slyFrame, resolve) {
 
-            self.listController = new DefaultTheme.HorizontalList({
+            require(['httpclient'], function (httpclient) {
+                httpclient.request({
 
-                itemsContainer: page.querySelector('.contentScrollSlider'),
-                getItemsMethod: function (startIndex, limit) {
-                    return Emby.Models.items({
-                        StartIndex: startIndex,
-                        Limit: limit,
-                        ParentId: pageParams.parentid,
-                        IncludeItemTypes: "Series",
-                        Recursive: true,
-                        Filters: "IsFavorite",
-                        SortBy: "SortName"
-                    });
-                },
-                listCountElement: page.querySelector('.listCount'),
-                listNumbersElement: page.querySelector('.listNumbers'),
-                autoFocus: autoFocus,
-                selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
-                selectedIndexElement: page.querySelector('.selectedIndex'),
-                slyFrame: slyFrame,
-                onRender: function () {
-                    if (resolve) {
-                        resolve();
-                        resolve = null;
-                    }
-                }
+                    url: Emby.PluginManager.mapResource('defaulttheme', 'tv/views.favorites.html'),
+                    type: 'GET',
+                    dataType: 'html'
+
+                }).then(function (html) {
+
+                    var parent = page.querySelector('.contentScrollSlider');
+                    parent.innerHTML = Globalize.translateHtml(html);
+                    loadFavoriteSeries(parent, pageParams, autoFocus, resolve);
+                    loadFavoriteEpisodes(parent, pageParams);
+                });
             });
 
-            self.listController.render();
+            require([Emby.PluginManager.mapPath('defaulttheme', 'cards/focushandler.js')], function (focusHandler) {
+
+                self.focusHandler = new focusHandler({
+                    parent: page.querySelector('.contentScrollSlider'),
+                    slyFrame: slyFrame,
+                    selectedItemInfoInner: page.querySelector('.selectedItemInfoInner')
+                });
+            });
+        }
+
+        function loadFavoriteSeries(parent, pageParams, autoFocus, resolve) {
+
+            Emby.Models.items({
+                ParentId: pageParams.parentid,
+                IncludeItemTypes: "Series",
+                Recursive: true,
+                Filters: "IsFavorite",
+                SortBy: "SortName"
+
+            }).then(function (result) {
+
+                var section = parent.querySelector('.favoriteSeriesSection');
+
+                if (result.Items.length) {
+                    section.classList.remove('hide');
+                } else {
+                    section.classList.add('hide');
+                }
+
+                DefaultTheme.CardBuilder.buildCards(result.Items, {
+                    itemsContainer: section.querySelector('.itemsContainer'),
+                    shape: 'auto',
+                    rows: 2
+                });
+
+                if (autoFocus) {
+                    setTimeout(function () {
+                        var firstCard = section.querySelector('.card');
+                        if (firstCard) {
+                            Emby.FocusManager.focus(firstCard);
+                        }
+                    }, 400);
+                }
+                resolve();
+            });
+        }
+
+        function loadFavoriteEpisodes(parent, pageParams) {
+
+            Emby.Models.items({
+                ParentId: pageParams.parentid,
+                IncludeItemTypes: "Episode",
+                Recursive: true,
+                Filters: "IsFavorite",
+                SortBy: "SortName"
+
+            }).then(function (result) {
+
+                var section = parent.querySelector('.favoriteEpisodesSection');
+
+                if (result.Items.length) {
+                    section.classList.remove('hide');
+                } else {
+                    section.classList.add('hide');
+                }
+
+                DefaultTheme.CardBuilder.buildCards(result.Items, {
+                    itemsContainer: section.querySelector('.itemsContainer'),
+                    shape: 'auto',
+                    rows: 3
+                });
+            });
         }
     }
 
