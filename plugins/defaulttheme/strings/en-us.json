@@ -97,5 +97,7 @@
     "MoviesAndTV": "Movies & TV",
     "FavoriteAlbums": "Favorite Albums",
     "FavoriteSongs": "Favorite Songs",
-    "FavoriteArtists": "Favorite Artists"
+    "FavoriteArtists": "Favorite Artists",
+    "FavoriteSeries":  "Favorite Series",
+    "FavoriteEpisodes":  "Favorite Episodes"
 }

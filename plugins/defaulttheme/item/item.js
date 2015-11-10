@@ -342,11 +342,55 @@
 
         });
 
+        var channels = getChannels(item);
+        var mediaInfoChannels = view.querySelector('.mediaInfoChannels');
+        var channelText;
+
+        if (channels == 8) {
+
+            channelText = '7.1';
+
+        } else if (channels == 7) {
+
+            channelText = '6.1';
+
+        } else if (channels == 6) {
+
+            channelText = '5.1';
+
+        } else if (channels == 2) {
+
+            channelText = '2.0';
+        }
+
+        if (channelText) {
+            mediaInfoChannels.classList.remove('hide');
+            mediaInfoChannels.innerHTML = channelText;
+            showMediaInfoIcons = true;
+        } else {
+            mediaInfoChannels.classList.add('hide');
+        }
+
         if (showMediaInfoIcons) {
             view.querySelector('.mediaInfoIcons').classList.remove('hide');
         } else {
             view.querySelector('.mediaInfoIcons').classList.add('hide');
         }
+    }
+
+    function getChannels(item) {
+
+        if (!item.MediaSources || !item.MediaSources.length) {
+            return 0;
+        }
+
+        return item.MediaSources[0].MediaStreams.filter(function (i) {
+
+            return i.Type == 'Audio';
+
+        }).map(function (i) {
+            return i.Channels;
+        })[0];
 
     }
 
