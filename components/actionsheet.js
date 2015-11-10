@@ -62,11 +62,6 @@
         dlg.innerHTML = html;
         document.body.appendChild(dlg);
 
-        // Has to be assigned a z-index after the call to .open() 
-        dlg.addEventListener('iron-overlay-closed', function () {
-            this.parentNode.removeChild(this);
-        });
-
         // Seeing an issue in some non-chrome browsers where this is requiring a double click
         var eventName = 'click';//$.browser.chrome ? 'click' : 'mousedown';
 
@@ -92,7 +87,9 @@
 
         });
 
-        paperdialoghelper.open(dlg);
+        paperdialoghelper.open(dlg).then(function () {
+            dlg.parentNode.removeChild(dlg);
+        });
     }
 
     return {

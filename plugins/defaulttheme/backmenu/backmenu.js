@@ -72,10 +72,22 @@
 
             dlg.addEventListener('focus', onFocusIn, true);
 
-            // Has to be assigned a z-index after the call to .open() 
-            dlg.addEventListener('iron-overlay-closed', function (e) {
+            dlg.addEventListener('click', function (e) {
 
-                this.parentNode.removeChild(this);
+                var backMenuButton = Emby.Dom.parentWithClass(e.target, 'backMenuButton');
+
+                if (backMenuButton) {
+
+                    dialogResult = backMenuButton.getAttribute('data-option');
+
+                    paperdialoghelper.close(dlg);
+                }
+
+            });
+
+            paperdialoghelper.open(dlg).then(function () {
+
+                dlg.parentNode.removeChild(dlg);
 
                 var cancelled = false;
 
@@ -112,21 +124,6 @@
 
                 options.callback(cancelled);
             });
-
-            dlg.addEventListener('click', function (e) {
-
-                var backMenuButton = Emby.Dom.parentWithClass(e.target, 'backMenuButton');
-
-                if (backMenuButton) {
-
-                    dialogResult = backMenuButton.getAttribute('data-option');
-
-                    paperdialoghelper.close(dlg);
-                }
-
-            });
-
-            paperdialoghelper.open(dlg);
         });
     }
 

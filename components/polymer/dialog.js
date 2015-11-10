@@ -39,16 +39,6 @@ define(['paperdialoghelper'], function (paperdialoghelper) {
 
         var resultIndex = -1;
 
-        // Has to be assigned a z-index after the call to .open() 
-        dlg.addEventListener('iron-overlay-closed', function (e) {
-
-            this.parentNode.removeChild(this);
-
-            if (callback) {
-                callback(resultIndex);
-            }
-        });
-
         dlg.addEventListener('click', function (e) {
 
             var actionSheetMenuItem = Emby.Dom.parentWithClass(e.target, 'btnDialogOption');
@@ -60,6 +50,12 @@ define(['paperdialoghelper'], function (paperdialoghelper) {
             }
         });
 
-        paperdialoghelper.open(dlg);
+        paperdialoghelper.open(dlg).then(function() {
+            dlg.parentNode.removeChild(dlg);
+
+            if (callback) {
+                callback(resultIndex);
+            }
+        });
     };
 });

@@ -1,6 +1,6 @@
 ﻿define(['paper-dialog', 'scale-up-animation', 'fade-out-animation', 'fade-in-animation'], function () {
 
-    function paperDialogHashHandler(dlg, hash, lockDocumentScroll) {
+    function paperDialogHashHandler(dlg, hash, resolve, lockDocumentScroll) {
 
         function onHashChange(e) {
 
@@ -39,6 +39,9 @@
             }
 
             activeElement.focus();
+            //resolve();
+            // if we just called history.back(), then use a timeout to allow the history events to fire first
+            setTimeout(resolve, 1);
         }
 
         var self = this;
@@ -68,20 +71,17 @@
         return true;
     }
 
-    function openWithHash(dlg) {
+    function open(dlg) {
 
-        new paperDialogHashHandler(dlg, 'dlg' + new Date().getTime());
+        return new Promise(function (resolve, reject) {
+
+            new paperDialogHashHandler(dlg, 'dlg' + new Date().getTime(), resolve);
+        });
     }
 
     function close(dlg) {
 
-        if (enableHashChange()) {
-
-            if (dlg.opened) {
-                history.back();
-            }
-
-        } else {
+        if (dlg.opened) {
             dlg.close();
         }
     }
@@ -182,7 +182,7 @@
     }
 
     return {
-        open: openWithHash,
+        open: open,
         close: close,
         createDialog: createDialog,
         positionTo: positionTo
