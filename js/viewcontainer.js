@@ -7,11 +7,19 @@ define([], function () {
 
         return new Promise(function (resolve, reject) {
 
+            if (options.cancel) {
+                return;
+            }
+
             var animatedPages = document.querySelector('.mainAnimatedPages');
 
             animatedPages.cancelAnimation();
 
             setAnimationStyle(animatedPages, options.transition, options.isBack).then(function () {
+
+                if (options.cancel) {
+                    return;
+                }
 
                 var selected = animatedPages.selected;
                 var pageIndex = selected == null ? 0 : (selected + 1);
@@ -170,9 +178,18 @@ define([], function () {
                     }
                 }
                 if (index != -1) {
-                    var animatedPages = document.querySelector('.mainAnimatedPages');
 
+                    if (options.cancel) {
+                        return;
+                    }
+
+                    var animatedPages = document.querySelector('.mainAnimatedPages');
                     setAnimationStyle(animatedPages, options.transition, options.isBack).then(function () {
+
+                        if (options.cancel) {
+                            return;
+                        }
+
                         animatedPages.selected = index;
                         sendResolve(resolve, view);
                     });

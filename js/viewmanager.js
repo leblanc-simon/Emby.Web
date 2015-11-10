@@ -63,6 +63,10 @@ define([], function () {
 
     function tryRestoreInternal(viewcontainer, options, resolve, reject) {
 
+        if (options.cancel) {
+            return;
+        }
+
         viewcontainer.tryRestoreView(options).then(function (view) {
 
             onViewChange(view, options.id, options.url, options.state, true);
@@ -85,6 +89,11 @@ define([], function () {
             }
 
             require(['viewcontainer'], function (viewcontainer) {
+
+                if (options.cancel) {
+                    return;
+                }
+
                 viewcontainer.loadView(options).then(function (view) {
 
                     onViewChange(view, options.id, options.url, options.state);
@@ -94,6 +103,10 @@ define([], function () {
 
         self.tryRestoreView = function (options) {
             return new Promise(function (resolve, reject) {
+
+                if (options.cancel) {
+                    return;
+                }
 
                 // Record the element that has focus
                 if (currentView) {

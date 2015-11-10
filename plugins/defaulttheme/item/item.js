@@ -371,11 +371,58 @@
             mediaInfoChannels.classList.add('hide');
         }
 
+        var resolutionText = getResolutionText(item);
+
+        var mediaInfoResolution = view.querySelector('.mediaInfoResolution');
+        if (resolutionText) {
+            mediaInfoResolution.classList.remove('hide');
+            mediaInfoResolution.innerHTML = resolutionText;
+            showMediaInfoIcons = true;
+        } else {
+            mediaInfoResolution.classList.add('hide');
+        }
+
         if (showMediaInfoIcons) {
             view.querySelector('.mediaInfoIcons').classList.remove('hide');
         } else {
             view.querySelector('.mediaInfoIcons').classList.add('hide');
         }
+    }
+
+    function getResolutionText(item) {
+
+        if (!item.MediaSources || !item.MediaSources.length) {
+            return null;
+        }
+
+        return item.MediaSources[0].MediaStreams.filter(function (i) {
+
+            return i.Type == 'Video';
+
+        }).map(function (i) {
+
+            if (i.Height) {
+                
+                if (i.Height >= 2000) {
+                    return '4K';
+                }
+                if (i.Height >= 1400) {
+                    return '1440P';
+                }
+                if (i.Height >= 1060) {
+                    return '1080P';
+                }
+                if (i.Height >= 700) {
+                    return '720P';
+                }
+                if (i.Height >= 460) {
+                    return '480P';
+                }
+
+            }
+            return null;
+        })[0];
+
     }
 
     function getChannels(item) {

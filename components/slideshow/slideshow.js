@@ -35,13 +35,6 @@ define(['paperdialoghelper', 'css!components/slideshow/style'], function (paperd
 
             dlg.innerHTML = html;
 
-            // Has to be assigned a z-index after the call to .open() 
-            dlg.addEventListener('iron-overlay-closed', function (e) {
-
-                stopInterval();
-                this.parentNode.removeChild(this);
-            });
-
             if (options.interactive) {
                 dlg.querySelector('.btnSlideshowExit').addEventListener('click', function (e) {
 
@@ -61,7 +54,11 @@ define(['paperdialoghelper', 'css!components/slideshow/style'], function (paperd
 
             document.body.appendChild(dlg);
 
-            paperdialoghelper.open(dlg);
+            paperdialoghelper.open(dlg).then(function() {
+                
+                stopInterval();
+                dlg.parentNode.removeChild(dlg);
+            });
 
             return dlg;
         }

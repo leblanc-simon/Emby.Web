@@ -1,5 +1,12 @@
 (function (globalScope) {
 
+    var viewManager;
+    var httpClient;
+    require(['viewManager', 'httpclient'], function (viewManagerInstance, httpClientInstance) {
+        viewManager = viewManagerInstance;
+        httpClient = httpClientInstance;
+    });
+
     function isStartup(ctx) {
         var path = ctx.pathname;
 
@@ -88,26 +95,23 @@
 
     function loadContentUrl(ctx, next, route, isBackNav) {
 
-        require(['httpclient'], function (httpclient) {
+        var url = route.contentPath || route.path;
 
-            var url = route.contentPath || route.path;
+        if (url.toLowerCase().indexOf('http') != 0 && url.indexOf('file:') != 0) {
+            url = baseUrl() + '/' + url;
+        }
 
-            if (url.toLowerCase().indexOf('http') != 0 && url.indexOf('file:') != 0) {
-                url = baseUrl() + '/' + url;
-            }
+        httpClient.request({
 
-            httpclient.request({
+            url: url + '?t=' + new Date().getTime(),
+            type: 'GET',
+            dataType: 'html'
 
-                url: url + '?t=' + new Date().getTime(),
-                type: 'GET',
-                dataType: 'html'
+        }).then(function (html) {
 
-            }).then(function (html) {
+            loadContent(ctx, next, route, html, isBackNav);
 
-                loadContent(ctx, next, route, html, isBackNav);
-
-            }, next);
-        });
+        }, next);
     }
 
     function handleRoute(ctx, next, route) {
@@ -120,42 +124,54 @@
         });
     }
 
+    function cancelCurrentLoadRequest() {
+        var currentRequest = currentViewLoadRequest;
+        if (currentRequest) {
+            currentRequest.cancel = true;
+        }
+    }
+
+    var currentViewLoadRequest;
     function sendRouteToViewManager(ctx, next, route) {
 
-        require(['viewManager'], function (viewManager) {
-            var url = window.location.href;
+        cancelCurrentLoadRequest();
 
-            var isBackNav = ctx.isBack;
+        var url = window.location.href;
 
-            var onNewViewNeeded = function () {
-                if (typeof route.path === 'string') {
+        var isBackNav = ctx.isBack;
 
-                    loadContentUrl(ctx, next, route, isBackNav);
+        var onNewViewNeeded = function () {
+            if (typeof route.path === 'string') {
 
-                } else {
-                    // ? TODO
-                    next();
-                }
-            };
-            if (!isBackNav) {
-                onNewViewNeeded();
-                return;
+                loadContentUrl(ctx, next, route, isBackNav);
+
+            } else {
+                // ? TODO
+                next();
             }
-            viewManager.tryRestoreView({
+        };
 
-                id: route.id,
-                url: url,
-                transition: route.transition,
-                isBack: isBackNav,
-                state: ctx.state
+        if (!isBackNav) {
+            onNewViewNeeded();
+            return;
+        }
 
-            }).then(function () {
+        cancelCurrentLoadRequest();
 
-                // done
-                currentRoute = route;
+        var currentRequest = {
+            id: route.id,
+            url: url,
+            transition: route.transition,
+            isBack: isBackNav,
+            state: ctx.state
+        };
+        currentViewLoadRequest = currentRequest;
+        viewManager.tryRestoreView(currentRequest).then(function () {
 
-            }, onNewViewNeeded);
-        });
+            // done
+            currentRoute = route;
+
+        }, onNewViewNeeded);
     }
 
     var firstConnectionResult;
@@ -310,19 +326,20 @@
 
         html = Globalize.translateHtml(html);
 
-        require(['viewManager'], function (viewManager) {
+        cancelCurrentLoadRequest();
+        var currentRequest = {
+            id: route.id,
+            view: html,
+            url: window.location.href,
+            transition: route.transition,
+            isBack: isBackNav,
+            state: ctx.state
+        };
+        currentViewLoadRequest = currentRequest;
 
-            viewManager.loadView({
-                id: route.id,
-                view: html,
-                url: window.location.href,
-                transition: route.transition,
-                isBack: isBackNav,
-                state: ctx.state
-            });
-            currentRoute = route;
-            //next();
-        });
+        viewManager.loadView(currentRequest);
+        currentRoute = route;
+        //next();
 
         ctx.handled = true;
     }
