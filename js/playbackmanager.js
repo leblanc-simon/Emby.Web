@@ -141,7 +141,7 @@
         self.stop = function () {
             if (currentPlayer) {
                 playNextAfterEnded = false;
-                currentPlayer.stop();
+                currentPlayer.stop(true);
             }
         };
 

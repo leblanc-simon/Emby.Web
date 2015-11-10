@@ -301,7 +301,7 @@ define([], function () {
             return null;
         };
 
-        self.stop = function () {
+        self.stop = function (destroyPlayer) {
 
             cancelFadeTimeout();
 
@@ -311,6 +311,12 @@ define([], function () {
             if (elem && src) {
 
                 if (elem.paused) {
+                    onEnded();
+                    return;
+                }
+
+                if (!destroyPlayer) {
+                    elem.pause();
                     onEnded();
                     return;
                 }
