@@ -227,9 +227,6 @@
 
             var item = loopItems[i];
 
-            html += '<div class="horizontalSection focuscontainer-down">';
-            html += '<div class="sectionTitle">' + item.Name + '</div>';
-
             var genreLower = item.Name.toLowerCase();
             var renderItems = items.filter(function (currentItem) {
 
@@ -239,6 +236,13 @@
 
                 }).length > 0;
             });
+
+            if (!renderItems.length) {
+                continue;
+            }
+
+            html += '<div class="horizontalSection focuscontainer-down">';
+            html += '<div class="sectionTitle">' + item.Name + '</div>';
 
             var showMoreButton = false;
             if (renderItems.length > options.indexLimit) {
