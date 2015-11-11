@@ -1,0 +1,12 @@
+.videoPlayerDialog {
+    background: #000 !important;
+    overflow: hidden !important;
+    display: block;
+}
+
+    .videoPlayerDialog video {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100%;
+        height: auto;
+    }

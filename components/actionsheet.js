@@ -8,6 +8,8 @@
         // title
         var dlg = paperdialoghelper.createDialog();
 
+        dlg.classList.add('actionSheet');
+
         var html = '';
 
         if (options.title) {

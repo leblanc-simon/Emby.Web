@@ -2,24 +2,21 @@
 
     function paperDialogHashHandler(dlg, hash, resolve, lockDocumentScroll) {
 
+        var self = this;
+        self.originalUrl = window.location.href;
+        var activeElement = document.activeElement;
+
         function onHashChange(e) {
 
-            var state = e.state || {};
-            var isActive = state.dialogId == hash;
+            window.removeEventListener('popstate', onHashChange);
 
             var isBack = self.originalUrl == window.location.href;
 
-            //if (isBack) {
-            if (dlg) {
-                if (!isActive) {
-                    dlg.close();
-                    dlg = null;
-                }
+            if (isBack) {
+                self.closedByBack = true;
+                dlg.close();
             }
-            //}
         }
-
-        var activeElement = document.activeElement;
 
         function onDialogClosed() {
 
@@ -27,11 +24,9 @@
                 //Dashboard.onPopupClose();
             }
 
-            dlg = null;
-            if (enableHashChange()) {
+            window.removeEventListener('popstate', onHashChange);
 
-                window.removeEventListener('popstate', onHashChange);
-
+            if (!self.closedByBack) {
                 var state = history.state || {};
                 if (state.dialogId == hash) {
                     history.back();
@@ -39,14 +34,17 @@
             }
 
             activeElement.focus();
+
+            if (dlg.getAttribute('data-removeonclose') == 'true') {
+                dlg.parentNode.removeChild(dlg);
+            }
+
             //resolve();
             // if we just called history.back(), then use a timeout to allow the history events to fire first
-            setTimeout(resolve, 1);
+            setTimeout(function () {
+                resolve(dlg);
+            }, 1);
         }
-
-        var self = this;
-
-        self.originalUrl = window.location.href;
 
         dlg.addEventListener('iron-overlay-closed', onDialogClosed);
         dlg.open();
@@ -55,20 +53,8 @@
             //Dashboard.onPopupOpen();
         }
 
-        if (enableHashChange()) {
-
-            history.pushState({ dialogId: hash }, "Dialog", hash);
-
-            window.addEventListener('popstate', onHashChange);
-        }
-    }
-
-    function enableHashChange() {
-        // It's not firing popstate in response to hashbang changes
-        //if ($.browser.msie) {
-        //    return false;
-        //}
-        return true;
+        history.pushState({ dialogId: hash }, "Dialog", hash);
+        window.addEventListener('popstate', onHashChange);
     }
 
     function open(dlg) {
@@ -82,7 +68,7 @@
     function close(dlg) {
 
         if (dlg.opened) {
-            dlg.close();
+            history.back();
         }
     }
 
@@ -136,6 +122,10 @@
 
         dlg.classList.add('dialog');
         dlg.classList.add('smoothScrollY');
+
+        if (options.removeOnClose) {
+            dlg.setAttribute('data-removeonclose', 'true');
+        }
 
         dlg.addEventListener('iron-overlay-opened', onDialogOpened);
 
