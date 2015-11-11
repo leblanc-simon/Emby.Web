@@ -200,6 +200,7 @@
             alphapicker: "components/alphapicker/alphapicker",
             paperdialoghelper: "components/paperdialoghelper",
             slideshow: "components/slideshow/slideshow",
+            hlsjs: "components/hls.min",
             howler: 'bower_components/howler.js/howler.min'
         };
 

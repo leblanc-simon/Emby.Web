@@ -93,7 +93,7 @@
         }
     }
 
-    function loadContentUrl(ctx, next, route, isBackNav) {
+    function loadContentUrl(ctx, next, route, request) {
 
         var url = route.contentPath || route.path;
 
@@ -109,7 +109,7 @@
 
         }).then(function (html) {
 
-            loadContent(ctx, next, route, html, isBackNav);
+            loadContent(ctx, route, html, request);
 
         }, next);
     }
@@ -137,13 +137,21 @@
         cancelCurrentLoadRequest();
 
         var url = window.location.href;
-
         var isBackNav = ctx.isBack;
+
+        var currentRequest = {
+            id: route.id,
+            url: url,
+            transition: route.transition,
+            isBack: isBackNav,
+            state: ctx.state
+        };
+        currentViewLoadRequest = currentRequest;
 
         var onNewViewNeeded = function () {
             if (typeof route.path === 'string') {
 
-                loadContentUrl(ctx, next, route, isBackNav);
+                loadContentUrl(ctx, next, route, currentRequest);
 
             } else {
                 // ? TODO
@@ -156,16 +164,6 @@
             return;
         }
 
-        cancelCurrentLoadRequest();
-
-        var currentRequest = {
-            id: route.id,
-            url: url,
-            transition: route.transition,
-            isBack: isBackNav,
-            state: ctx.state
-        };
-        currentViewLoadRequest = currentRequest;
         viewManager.tryRestoreView(currentRequest).then(function () {
 
             // done
@@ -269,7 +267,7 @@
 
                 Logger.log('Emby.Page - user is authenticated');
 
-                if (ctx.isBack && (route.isDefaultRoute || isStartup(ctx))) {
+                if (ctx.isBack && (route.isDefaultRoute /*|| isStartup(ctx)*/)) {
                     handleBackToDefault();
                 }
                 else if (route.isDefaultRoute) {
@@ -322,22 +320,12 @@
         });
     }
 
-    function loadContent(ctx, next, route, html, isBackNav) {
+    function loadContent(ctx, route, html, request) {
 
         html = Globalize.translateHtml(html);
+        request.view = html;
 
-        cancelCurrentLoadRequest();
-        var currentRequest = {
-            id: route.id,
-            view: html,
-            url: window.location.href,
-            transition: route.transition,
-            isBack: isBackNav,
-            state: ctx.state
-        };
-        currentViewLoadRequest = currentRequest;
-
-        viewManager.loadView(currentRequest);
+        viewManager.loadView(request);
         currentRoute = route;
         //next();
 

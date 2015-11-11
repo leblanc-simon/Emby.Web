@@ -97,11 +97,6 @@
     margin: 0;
 }
 
-.mediaInfo .starRatingContainer iron-icon {
-    width: 40px;
-    height: 40px;
-}
-
 .mainSection .itemPageButtons, .mainSection .itemPageUserDataIcons {
     display: inline-block;
     vertical-align: middle;
