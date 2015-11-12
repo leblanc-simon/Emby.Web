@@ -325,10 +325,7 @@ define([], function () {
                     var startTime = getStartTime(val);
                     var playNow = false;
 
-                    if (hlsPlayer) {
-                        hlsPlayer.destroy();
-                        hlsPlayer = null;
-                    }
+                    destroyHlsPlayer();
 
                     var tracks = streamInfo.textTracks || [];
 
@@ -371,9 +368,7 @@ define([], function () {
                         elem.play();
                     }
 
-                    if (streamInfo.fullscreen) {
-                        setFullScreen(true);
-                    }
+                    setFullScreen(streamInfo.fullscreen);
 
                     resolve();
                 });
@@ -423,23 +418,9 @@ define([], function () {
 
             if (elem && src) {
 
-                if (!elem.paused) {
-                    elem.pause();
+                elem.pause();
 
-                    if (hlsPlayer) {
-                        //_currentTime = mediaElement.currentTime;
-
-                        // Sometimes this fails
-                        try {
-                            hlsPlayer.destroy();
-                        }
-                        catch (err) {
-                            Logger.log(err);
-                        }
-
-                        hlsPlayer = null;
-                    }
-                }
+                destroyHlsPlayer();
 
                 onEnded();
 
@@ -448,6 +429,20 @@ define([], function () {
                 }
             }
         };
+
+        function destroyHlsPlayer() {
+            var player = hlsPlayer;
+            if (player) {
+                try {
+                    player.destroy();
+                }
+                catch (err) {
+                    Logger.log(err);
+                }
+
+                hlsPlayer = null;
+            }
+        }
 
         self.pause = function () {
             if (mediaElement) {
@@ -546,12 +541,13 @@ define([], function () {
             Events.trigger(self, 'error');
         }
 
-        function onLoadedMetadata() {
+        function onLoadedMetadata(e) {
 
-            this.removeEventListener('loadedmetadata', onLoadedMetadata);
+            var mediaElem = e.target;
+            mediaElem.removeEventListener('loadedmetadata', onLoadedMetadata);
 
             if (!hlsPlayer) {
-                this.play();
+                mediaElem.play();
             }
         }
 
@@ -567,17 +563,11 @@ define([], function () {
         }
 
         function canPlayHls() {
+
             if (canPlayNativeHls()) {
                 return true;
             }
 
-            // Don't use viblast with windows phone, not working at the moment.
-            //if ($.browser.msie && $.browser.mobile) {
-            //    return false;
-            //}
-
-            // viblast can help us here
-            //return true;
             return window.MediaSource != null;
         }
 
@@ -589,7 +579,7 @@ define([], function () {
                 return true;
             }
 
-            return false; s
+            return false;
         }
 
         function getStartTime(url) {
@@ -759,7 +749,7 @@ define([], function () {
                         videoDialog = dlg;
                         mediaElement = videoElement;
 
-                        paperdialoghelper.open(dlg);
+                        paperdialoghelper.open(dlg).then(onPlayerClosed);
 
                         resolve(videoElement);
                     });
@@ -768,6 +758,13 @@ define([], function () {
                     resolve(dlg.querySelector('video'));
                 }
             });
+        }
+
+        function onPlayerClosed(result) {
+
+            if (result.closedByBack) {
+                Emby.PlaybackManager.stop();
+            }
         }
 
         function destroyElement() {

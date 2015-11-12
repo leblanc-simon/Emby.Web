@@ -1259,6 +1259,7 @@
             }
 
             var state = getPlayerStateInternal(player);
+
             reportPlayback(state, getPlayerState(player).streamInfo.item.ServerId, 'reportPlaybackStopped');
 
             clearProgressInterval(player);
