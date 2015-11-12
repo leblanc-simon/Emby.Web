@@ -80,7 +80,7 @@ define([], function () {
             return currentSrc;
         };
 
-        self.play = function (streamInfo) {
+        self.play = function (options) {
 
             started = false;
 
@@ -88,7 +88,7 @@ define([], function () {
 
                 var elem = createMediaElement();
 
-                var val = streamInfo.url;
+                var val = options.url;
 
                 elem.src = val;
                 currentSrc = val;
