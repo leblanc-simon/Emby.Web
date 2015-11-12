@@ -371,8 +371,26 @@ define([], function () {
                         elem.play();
                     }
 
+                    if (streamInfo.fullscreen) {
+                        setFullScreen(true);
+                    }
+
                     resolve();
                 });
+            });
+        }
+
+        function setFullScreen(enabled) {
+
+            require(['screenfull'], function () {
+
+                if (screenfull.enabled) {
+                    if (enabled) {
+                        screenfull.request(mediaElement);
+                    } else {
+                        screenfull.exit();
+                    }
+                }
             });
         }
 

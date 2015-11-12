@@ -743,6 +743,7 @@
 
                     streamInfo.item = item;
                     streamInfo.mediaSource = mediaSource;
+                    streamInfo.fullscreen = true;
 
                     getPlayerState(player).isChangingStream = false;
 
@@ -864,11 +865,39 @@
                     playMethod: playMethod,
                     playerStartPositionTicks: playerStartPositionTicks,
                     item: item,
-                    mediaSource: mediaSource
+                    mediaSource: mediaSource,
+                    textTracks: getTextTracks(apiClient, mediaSource)
                 };
 
                 resolve(resultInfo);
             });
+        }
+
+        function getTextTracks(apiClient, mediaSource) {
+
+            var subtitleStreams = mediaSource.MediaStreams.filter(function (s) {
+                return s.Type == 'Subtitle';
+            });
+
+            var textStreams = subtitleStreams.filter(function (s) {
+                return s.DeliveryMethod == 'External';
+            });
+
+            var tracks = [];
+
+            for (var i = 0, length = textStreams.length; i < length; i++) {
+
+                var textStream = textStreams[i];
+                var textStreamUrl = !textStream.IsExternalUrl ? apiClient.getUrl(textStream.DeliveryUrl) : textStream.DeliveryUrl;
+
+                tracks.push({
+                    url: textStreamUrl,
+                    language: (textStream.Language || 'und'),
+                    isDefault: textStream.Index == mediaSource.DefaultSubtitleStreamIndex
+                });
+            }
+
+            return tracks;
         }
 
         function tryStartPlayback(apiClient, deviceProfile, item, startPosition, callback) {
