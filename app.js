@@ -201,6 +201,7 @@
             paperdialoghelper: "components/paperdialoghelper",
             slideshow: "components/slideshow/slideshow",
             hlsjs: "components/hls.min",
+            browserdeviceprofile: "components/browserdeviceprofile",
             howler: 'bower_components/howler.js/howler.min',
             screenfull: 'bower_components/screenfull/dist/screenfull'
         };
