@@ -190,7 +190,7 @@
             soundeffects: "components/soundeffects",
             apphost: "components/apphost",
             screensaverManager: "js/screensavermanager",
-            viewManager: "js/viewmanager",
+            viewManager: "components/viewmanager",
             slyScroller: "components/slyscroller",
             appsettings: "components/appsettings",
             tvguide: "components/tvguide/guide",
@@ -207,9 +207,9 @@
         };
 
         if (enableWebComponents()) {
-            paths.viewcontainer = 'js/viewcontainer';
+            paths.viewcontainer = 'components/viewcontainer';
         } else {
-            paths.viewcontainer = 'js/viewcontainer-lite';
+            paths.viewcontainer = 'components/viewcontainer-lite';
         }
 
         var urlArgs = "t=" + new Date().getTime();
@@ -248,6 +248,8 @@
         config.baseUrl = baseRoute;
 
         requirejs.config(config);
+
+        define("videoplayerosd", ["js/videoplayerosd"]);
 
         define("cryptojs-sha1", ["apiclient/sha1"]);
         define("connectservice", ["apiclient/connectservice"]);

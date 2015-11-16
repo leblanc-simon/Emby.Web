@@ -175,12 +175,6 @@
             }
         };
 
-        self.nextTrack = function () {
-        };
-
-        self.previousTrack = function () {
-        };
-
         self.seek = function (ticks) {
             changeStream(ticks);
         };
@@ -701,7 +695,13 @@
                 return;
             }
 
-            require(['appsettings', 'connectionManager'], function (appSettings, connectionManager) {
+            var depends = ['appsettings', 'connectionManager'];
+
+            if (item.MediaType == 'Video') {
+                depends.push('videoplayerosd');
+            }
+
+            require(depends, function (appSettings, connectionManager) {
 
                 var apiClient = connectionManager.getApiClient(item.ServerId);
 
@@ -735,21 +735,22 @@
                 currentPlayer.stop(false);
             }
 
-            var deviceProfile = player.getDeviceProfile();
+            player.getDeviceProfile().then(function (deviceProfile) {
 
-            tryStartPlayback(apiClient, deviceProfile, item, startPosition, function (mediaSource) {
+                tryStartPlayback(apiClient, deviceProfile, item, startPosition, function (mediaSource) {
 
-                createStreamInfo(apiClient, item.MediaType, item, mediaSource, startPosition).then(function (streamInfo) {
+                    createStreamInfo(apiClient, item.MediaType, item, mediaSource, startPosition).then(function (streamInfo) {
 
-                    streamInfo.item = item;
-                    streamInfo.mediaSource = mediaSource;
-                    streamInfo.fullscreen = true;
+                        streamInfo.item = item;
+                        streamInfo.mediaSource = mediaSource;
+                        streamInfo.fullscreen = true;
 
-                    getPlayerState(player).isChangingStream = false;
+                        getPlayerState(player).isChangingStream = false;
 
-                    player.play(streamInfo).then(callback);
-                    currentPlayer = player;
-                    getPlayerState(player).streamInfo = streamInfo;
+                        player.play(streamInfo).then(callback);
+                        currentPlayer = player;
+                        getPlayerState(player).streamInfo = streamInfo;
+                    });
                 });
             });
         }
@@ -1268,6 +1269,7 @@
 
             if (playNextAfterEnded) {
                 self.nextTrack();
+                // TODO: destroy player if there's nothing to play
             }
         }
 
