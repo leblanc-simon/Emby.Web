@@ -1,8 +1,6 @@
 html {
     color: #fff;
-    background: #161616;
-    background: radial-gradient(circle, #202020, #000);
-    background-attachment: fixed;
+    background: #181818;
 }
 
 .themeContainer.withBackdrop {

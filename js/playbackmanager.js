@@ -394,6 +394,10 @@
         };
 
         function getPlayerState(player) {
+
+            if (!player) {
+                throw new Error('player cannot be null');
+            }
             var state = playerStates[player.name];
 
             if (!state) {

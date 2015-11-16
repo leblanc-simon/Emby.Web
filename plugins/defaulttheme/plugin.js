@@ -60,9 +60,9 @@ define([], function () {
                 list.push('html!' + Emby.PluginManager.mapRequire(self, 'icons.html'));
                 list.push('paper-button');
                 list.push('paper-icon-button');
-                list.push('html!bower_components/paper-input/paper-input.html');
-                list.push('html!bower_components/paper-fab/paper-fab.html');
-                list.push('html!bower_components/paper-slider/paper-slider.html');
+                list.push('paper-input');
+                list.push('paper-fab');
+                list.push('paper-slider');
                 list.push('html!bower_components/paper-item/paper-icon-item.html');
                 list.push('html!bower_components/paper-item/paper-item-body.html');
             }
