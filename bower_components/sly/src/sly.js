@@ -99,12 +99,6 @@
         var frameStyles = new StyleRestorer(frameElement);
         var slideeStyles = new StyleRestorer(slideeElement);
 
-        // Navigation type booleans
-        var basicNav = o.itemNav === 'basic';
-        var forceCenteredNav = o.itemNav === 'forceCentered';
-        var centeredNav = o.itemNav === 'centered' || forceCenteredNav;
-        var itemNav = !parallax && (basicNav || centeredNav || forceCenteredNav);
-
         // Miscellaneous
         var scrollSource = o.scrollSource ? o.scrollSource : frameElement;
         var dragSourceElement = o.dragSource ? o.dragSource : frameElement;
@@ -122,7 +116,6 @@
         };
         var renderID = 0;
         var historyID = 0;
-        var cycleID = 0;
         var continuousID = 0;
         var i, l;
 
@@ -139,7 +132,6 @@
         self.rel = rel;
         self.items = items;
         self.pages = pages;
-        self.isPaused = 0;
         self.options = o;
         self.dragging = dragging;
 
@@ -179,109 +171,6 @@
             pos.start = 0;
             pos.end = max(slideeSize - frameSize, 0);
 
-            // Sizes & offsets for item based navigations
-            if (itemNav) {
-                // Save the number of current items
-                lastItemsCount = items.length;
-
-                // Reset itemNav related variables
-                itemElements = slideeElement.querySelectorAll(o.itemSelector);
-                items.length = 0;
-
-                // Needed variables
-                var slideeComputedStyle = getComputedStyle(slideeElement, null);
-                var paddingStart = getStylePx(slideeComputedStyle, o.horizontal ? 'padding-left' : 'padding-top');
-                var paddingEnd = getStylePx(slideeComputedStyle, o.horizontal ? 'padding-right' : 'padding-bottom');
-
-                var borderBox = true;
-                var areFloated = false;
-
-                if (itemElements.length) {
-                    var itemComputedStyle = getComputedStyle(itemElements[0], null);
-                    borderBox = itemComputedStyle.getPropertyValue('box-sizing') === 'border-box';
-                    areFloated = itemComputedStyle.getPropertyValue('float') !== 'none';
-                }
-
-                var ignoredMargin = 0;
-                var lastItemIndex = itemElements.length - 1;
-                var lastItem;
-
-                // Reset slideeSize
-                slideeSize = 0;
-
-                var lastItemEnd;
-
-                var itemsArray = [];
-                for (var i = 0, itemsLength = itemElements.length; i < itemsLength; i++) {
-                    var element = itemElements[i];
-                    itemsArray.push(element);
-                    // Item
-                    var rect = element.getBoundingClientRect();
-                    var itemSize = round(o.horizontal ? rect.width || rect.right - rect.left : rect.height || rect.bottom - rect.top);
-                    var elementComputedStyle = getComputedStyle(element, null);
-                    var itemMarginStart = getStylePx(elementComputedStyle, o.horizontal ? 'margin-left' : 'margin-top');
-                    var itemMarginEnd = getStylePx(elementComputedStyle, o.horizontal ? 'margin-right' : 'margin-bottom');
-                    var itemSizeFull = itemSize + itemMarginStart + itemMarginEnd;
-                    var singleSpaced = !itemMarginStart || !itemMarginEnd;
-                    var item = {};
-                    item.el = element;
-                    item.size = singleSpaced ? itemSize : itemSizeFull;
-                    item.half = item.size / 2;
-                    item.start = slideeSize + (singleSpaced ? itemMarginStart : 0);
-                    item.center = item.start - round(frameSize / 2 - item.size / 2);
-                    item.end = item.start - frameSize + item.size;
-
-                    // Account for slidee padding
-                    if (!i) {
-                        slideeSize += paddingStart;
-                    }
-
-                    if (!lastItemEnd || lastItemEnd != item.end) {
-                        // Increment slidee size for size of the active element
-                        slideeSize += itemSizeFull;
-                    }
-
-                    lastItemEnd = item.end;
-
-                    // Try to account for vertical margin collapsing in vertical mode
-                    // It's not bulletproof, but should work in 99% of cases
-                    if (!o.horizontal && !areFloated) {
-                        // Subtract smaller margin, but only when top margin is not 0, and this is not the first element
-                        if (itemMarginEnd && itemMarginStart && i > 0) {
-                            slideeSize -= min(itemMarginStart, itemMarginEnd);
-                        }
-                    }
-
-                    // Things to be done on last item
-                    if (i === lastItemIndex) {
-                        item.end += paddingEnd;
-                        slideeSize += paddingEnd;
-                        ignoredMargin = singleSpaced ? itemMarginEnd : 0;
-                    }
-
-                    // Add item object to items array
-                    items.push(item);
-                    lastItem = item;
-
-                }
-
-                itemElements = itemsArray;
-
-                // Resize SLIDEE to fit all items
-                slideeElement.style[o.horizontal ? 'width' : 'height'] = (borderBox ? slideeSize : slideeSize - paddingStart - paddingEnd) + 'px';
-
-                // Adjust internal SLIDEE size for last margin
-                slideeSize -= ignoredMargin;
-
-                // Set limits
-                if (items.length) {
-                    pos.start = items[0][forceCenteredNav ? 'center' : 'start'];
-                    pos.end = forceCenteredNav ? lastItem.center : frameSize < slideeSize ? lastItem.end : pos.start;
-                } else {
-                    pos.start = pos.end = 0;
-                }
-            }
-
             // Calculate SLIDEE center position
             pos.center = round(pos.end / 2 + pos.start / 2);
 
@@ -293,25 +182,9 @@
                 var tempPagePos = pos.start;
                 var pagesHtml = '';
 
-                // Populate pages array
-                if (itemNav) {
-                    items.forEach(function (item) {
-                        if (forceCenteredNav) {
-                            pages.push(item.center);
-                        } else if (item.start + item.size > tempPagePos && tempPagePos <= pos.end) {
-                            tempPagePos = item.start;
-                            pages.push(tempPagePos);
-                            tempPagePos += frameSize;
-                            if (tempPagePos > pos.end && tempPagePos < pos.end + frameSize) {
-                                pages.push(pos.end);
-                            }
-                        }
-                    });
-                } else {
-                    while (tempPagePos - frameSize < pos.end) {
-                        pages.push(tempPagePos);
-                        tempPagePos += frameSize;
-                    }
+                while (tempPagePos - frameSize < pos.end) {
+                    pages.push(tempPagePos);
+                    tempPagePos += frameSize;
                 }
             }
 
@@ -319,22 +192,11 @@
             rel.slideeSize = slideeSize;
             rel.frameSize = frameSize;
 
-            // Activate requested position
-            if (itemNav) {
-                if (isInit && o.startAt != null) {
-                    activate(o.startAt);
-                    self[centeredNav ? 'toCenter' : 'toStart'](o.startAt);
-                }
-                // Fix possible overflowing
-                var activeItem = items[rel.activeItem];
-                slideTo(centeredNav && activeItem ? activeItem.center : within(pos.dest, pos.start, pos.end));
+            if (isInit) {
+                if (o.startAt != null) slideTo(o.startAt, 1);
             } else {
-                if (isInit) {
-                    if (o.startAt != null) slideTo(o.startAt, 1);
-                } else {
-                    // Fix possible overflowing
-                    slideTo(within(pos.dest, pos.start, pos.end));
-                }
+                // Fix possible overflowing
+                slideTo(within(pos.dest, pos.start, pos.end));
             }
         }
 
@@ -436,22 +298,6 @@
 		 * @return {Void}
 		 */
         function slideTo(newPos, immediate, dontAlign) {
-            // Align items
-            if (itemNav && dragging.released && !dontAlign) {
-                var tempRel = getRelatives(newPos);
-                var isNotBordering = newPos > pos.start && newPos < pos.end;
-
-                if (centeredNav) {
-                    if (isNotBordering) {
-                        newPos = items[tempRel.centerItem].center;
-                    }
-                    if (forceCenteredNav && o.activateMiddle) {
-                        activate(tempRel.centerItem);
-                    }
-                } else if (isNotBordering) {
-                    newPos = items[tempRel.firstItem].start;
-                }
-            }
 
             // Handle overflowing position limits
             if (dragging.init && dragging.slidee && o.elasticBounds) {
@@ -492,9 +338,6 @@
                     }
                 }
             }
-
-            // Reset next cycle timeout
-            resetCycle();
 
             // Synchronize states
             updateRelatives();
@@ -633,26 +476,20 @@
 		 * @return {Object}
 		 */
         self.getPos = function (item) {
-            if (itemNav) {
-                var index = getIndex(item);
-                return index !== -1 ? items[index] : false;
-            } else {
+            var slideeOffset = getOffset(slideeElement);
+            var itemOffset = getOffset(item);
 
-                var slideeOffset = getOffset(slideeElement);
-                var itemOffset = getOffset(item);
+            var offset = o.horizontal ? itemOffset.left - slideeOffset.left : itemOffset.top - slideeOffset.top;
+            var size = item[o.horizontal ? 'offsetWidth' : 'offsetHeight'];
 
-                var offset = o.horizontal ? itemOffset.left - slideeOffset.left : itemOffset.top - slideeOffset.top;
-                var size = item[o.horizontal ? 'offsetWidth' : 'offsetHeight'];
+            var centerOffset = o.centerOffset || 0;
 
-                var centerOffset = o.centerOffset || 0;
-
-                return {
-                    start: offset,
-                    center: offset + centerOffset - frameSize / 2 + size / 2,
-                    end: offset - frameSize + size,
-                    size: size
-                };
-            }
+            return {
+                start: offset,
+                center: offset + centerOffset - frameSize / 2 + size / 2,
+                end: offset - frameSize + size,
+                size: size
+            };
         };
 
         /**
@@ -726,13 +563,7 @@
             if (!delta) {
                 return;
             }
-            if (itemNav) {
-                self[centeredNav ? 'toCenter' : 'toStart'](
-					within((centeredNav ? rel.centerItem : rel.firstItem) + o.scrollBy * delta, 0, items.length)
-				);
-            } else {
-                slideTo(pos.dest + delta, immediate);
-            }
+            slideTo(pos.dest + delta, immediate);
         };
 
         /**
@@ -766,15 +597,10 @@
             if (item === undefined) {
                 slideTo(pos[location], immediate);
             } else {
-                // You can't align items to sides of the frame
-                // when centered navigation type is enabled
-                if (centeredNav && location !== 'center') {
-                    return;
-                }
 
                 var itemPos = self.getPos(item);
                 if (itemPos) {
-                    slideTo(itemPos[location], immediate, !centeredNav);
+                    slideTo(itemPos[location], immediate, true);
                 }
             }
         }
@@ -845,65 +671,6 @@
         }
 
         /**
-		 * Activates an item.
-		 *
-		 * @param  {Mixed} item Item DOM element, or index starting at 0.
-		 *
-		 * @return {Mixed} Activated item index or false on fail.
-		 */
-        function activate(item, force) {
-            var index = getIndex(item);
-
-            if (!itemNav || index < 0) {
-                return false;
-            }
-
-            // Update classes, last active index, and trigger active event only when there
-            // has been a change. Otherwise just return the current active index.
-            if (last.active !== index || force) {
-                // Update classes
-
-                if (rel.activeItem) {
-                    itemElements[rel.activeItem].classList.remove(o.activeClass);
-                }
-                itemElements[index].classList.add(o.activeClass);
-
-                last.active = rel.activeItem = index;
-            }
-
-            return index;
-        }
-
-        /**
-		 * Activates an item and helps with further navigation when o.smart is enabled.
-		 *
-		 * @param {Mixed} item      Item DOM element, or index starting at 0.
-		 * @param {Bool}  immediate Whether to reposition immediately in smart navigation.
-		 *
-		 * @return {Void}
-		 */
-        self.activate = function (item, immediate) {
-            var index = activate(item);
-
-            // Smart navigation
-            if (o.smart && index !== false) {
-                // When centeredNav is enabled, center the element.
-                // Otherwise, determine where to position the element based on its current position.
-                // If the element is currently on the far end side of the frame, assume that user is
-                // moving forward and animate it to the start of the visible frame, and vice versa.
-                if (centeredNav) {
-                    self.toCenter(index, immediate);
-                } else if (index >= rel.lastItem) {
-                    self.toStart(index, immediate);
-                } else if (index <= rel.firstItem) {
-                    self.toEnd(index, immediate);
-                } else {
-                    resetCycle();
-                }
-            }
-        };
-
-        /**
 		 * Activates a page.
 		 *
 		 * @param {Int}  index     Page index, starting from 0.
@@ -928,7 +695,7 @@
             slideePos = within(isNumber(slideePos) ? slideePos : pos.dest, pos.start, pos.end);
 
             var relatives = {};
-            var centerOffset = forceCenteredNav ? 0 : frameSize / 2;
+            var centerOffset = frameSize / 2;
 
             // Determine active page
             if (!parallax) {
@@ -945,37 +712,6 @@
                 }
             }
 
-            // Relative item indexes
-            if (itemNav) {
-                var first = false;
-                var last = false;
-                var center = false;
-
-                // From start
-                for (var i = 0, il = items.length; i < il; i++) {
-                    // First item
-                    if (first === false && slideePos <= items[i].start + items[i].half) {
-                        first = i;
-                    }
-
-                    // Center item
-                    if (center === false && slideePos <= items[i].center + items[i].half) {
-                        center = i;
-                    }
-
-                    // Last item
-                    if (i === il - 1 || slideePos <= items[i].end + items[i].half) {
-                        last = i;
-                        break;
-                    }
-                }
-
-                // Safe assignment, just to be sure the false won't be returned
-                relatives.firstItem = isNumber(first) ? first : 0;
-                relatives.centerItem = isNumber(center) ? center : relatives.firstItem;
-                relatives.lastItem = isNumber(last) ? last : relatives.centerItem;
-            }
-
             return relatives;
         }
 
@@ -987,7 +723,7 @@
 		 * @return {Void}
 		 */
         function updateRelatives(newPos) {
-            extend(rel, getRelatives(newPos));
+            //extend(rel, getRelatives(newPos));
         }
 
         function extend() {
@@ -997,65 +733,6 @@
                         arguments[0][key] = arguments[i][key];
             return arguments[0];
         }
-
-        /**
-		 * Resume cycling.
-		 *
-		 * @param {Int} priority Resume pause with priority lower or equal than this. Used internally for pauseOnHover.
-		 *
-		 * @return {Void}
-		 */
-        self.resume = function (priority) {
-            if (!o.cycleBy || !o.cycleInterval || o.cycleBy === 'items' && (!items[0] || rel.activeItem == null) || priority < self.isPaused) {
-                return;
-            }
-
-            self.isPaused = 0;
-
-            if (cycleID) {
-                cycleID = clearTimeout(cycleID);
-            }
-
-            cycleID = setTimeout(function () {
-                switch (o.cycleBy) {
-                    case 'items':
-                        self.activate(rel.activeItem >= items.length - 1 ? 0 : rel.activeItem + 1);
-                        break;
-
-                    case 'pages':
-                        self.activatePage(rel.activePage >= pages.length - 1 ? 0 : rel.activePage + 1);
-                        break;
-                }
-            }, o.cycleInterval);
-        };
-
-        /**
-		 * Pause cycling.
-		 *
-		 * @param {Int} priority Pause priority. 100 is default. Used internally for pauseOnHover.
-		 *
-		 * @return {Void}
-		 */
-        self.pause = function (priority) {
-            if (priority < self.isPaused) {
-                return;
-            }
-
-            self.isPaused = priority || 100;
-
-            if (cycleID) {
-                cycleID = clearTimeout(cycleID);
-            }
-        };
-
-        /**
-		 * Toggle cycling.
-		 *
-		 * @return {Void}
-		 */
-        self.toggle = function () {
-            self[cycleID ? 'pause' : 'resume']();
-        };
 
         /**
 		 * Registers callbacks.
@@ -1153,17 +830,6 @@
         }
 
         /**
-		 * Reset next cycle timeout.
-		 *
-		 * @return {Void}
-		 */
-        function resetCycle() {
-            if (dragging.released && !self.isPaused) {
-                self.resume();
-            }
-        }
-
-        /**
 		 * Keeps track of a dragging delta history.
 		 *
 		 * @return {Void}
@@ -1248,9 +914,6 @@
                     document.addEventListener(eventName, dragHandler);
                 });
             }
-
-            // Pause ongoing cycle
-            self.pause(1);
 
             // Add dragging class
             if (isSlidee) {
@@ -1351,9 +1014,6 @@
                 dragging.source.removeEventListener('click', disableOneEvent);
             });
 
-            // Resume ongoing cycle
-            self.resume(1);
-
             dragging.init = 0;
         }
 
@@ -1396,22 +1056,7 @@
             // wheelDelta needed only for IE8-
             scrolling.curDelta = ((o.horizontal ? event.deltaY || event.deltaX : event.deltaY) || -event.wheelDelta);
             scrolling.curDelta /= event.deltaMode === 1 ? 3 : 100;
-            if (!itemNav) {
-                return scrolling.curDelta;
-            }
-            time = +new Date();
-            if (scrolling.last < time - scrolling.resetTime) {
-                scrolling.delta = 0;
-            }
-            scrolling.last = time;
-            scrolling.delta += scrolling.curDelta;
-            if (abs(scrolling.delta) < 1) {
-                scrolling.finalDelta = 0;
-            } else {
-                scrolling.finalDelta = round(scrolling.delta / 1);
-                scrolling.delta %= 1;
-            }
-            return scrolling.finalDelta;
+            return scrolling.curDelta;
         }
 
         /**
@@ -1443,45 +1088,6 @@
         }
 
         /**
-		 * Click on item activation handler.
-		 *
-		 * @param  {Event} event
-		 *
-		 * @return {Void}
-		 */
-        function activateHandler(event) {
-            /*jshint validthis:true */
-
-            var elem = event.target;
-
-            // Ignore clicks on interactive elements.
-            if (isInteractive(elem)) {
-                event[namespace + 'ignore'] = true;
-                return;
-            }
-
-            // Ignore events that:
-            // - are not originating from direct SLIDEE children
-            // - originated from interactive elements
-            //if (this.parentNode !== slideeElement || event[namespace + 'ignore']) return;
-
-            self.activate(elem);
-        }
-
-        /**
-		 * Pause on hover handler.
-		 *
-		 * @param  {Event} event
-		 *
-		 * @return {Void}
-		 */
-        function pauseOnHoverHandler(event) {
-            if (o.pauseOnHover) {
-                self[event.type === 'mouseenter' ? 'pause' : 'resume'](2);
-            }
-        }
-
-        /**
 		 * Destroys instance and everything it created.
 		 *
 		 * @return {Void}
@@ -1497,14 +1103,6 @@
             }
 
             if (!parallax) {
-                // Unbind events from frame
-                if (o.activateOn) {
-                    o.activateOn.split(' ').forEach(function (eventName) {
-                        frameElement.removeEventListener(eventName, activateHandler);
-                    });
-                }
-                frameElement.removeEventListener('mouseenter', pauseOnHoverHandler);
-                frameElement.removeEventListener('mouseleave', pauseOnHoverHandler);
                 // Reset native FRAME element scroll
                 frameElement.removeEventListener('scroll', resetScroll);
                 // Restore original styles
@@ -1575,23 +1173,11 @@
             // Scrolling navigation
             scrollSource.addEventListener(wheelEvent, scrollHandler);
 
-            // Click on items navigation
-            if (itemNav) {
-                if (o.activateOn) {
-                    o.activateOn.split(' ').forEach(function (eventName) {
-                        frameElement.addEventListener(eventName, activateHandler, true);
-                    });
-                }
-            }
-
             dragInitEventNames.forEach(function (eventName) {
                 dragSourceElement.addEventListener(eventName, dragInitSlidee);
             });
 
             if (!parallax) {
-                // Pause on hover
-                frameElement.addEventListener('mouseenter', pauseOnHoverHandler);
-                frameElement.addEventListener('mouseleave', pauseOnHoverHandler);
                 // Reset native FRAME element scroll
                 frameElement.addEventListener('scroll', resetScroll);
             }
@@ -1601,11 +1187,6 @@
 
             // Load
             load(true);
-
-            // Initiate automatic cycling
-            if (o.cycleBy && !parallax) {
-                self[o.startPaused ? 'pause' : 'resume']();
-            }
 
             // Return instance
             return self;
@@ -1806,7 +1387,6 @@
         horizontal: false, // Switch to horizontal mode.
 
         // Item based navigation
-        itemNav: null,  // Item navigation type. Can be: 'basic', 'centered', 'forceCentered'.
         itemSelector: null,  // Select only items that match this selector.
         smart: false, // Repositions the activated item to help with further navigation.
         activateOn: null,  // Activate an item on this event. Can be: 'click', 'mouseenter', ...
@@ -1841,12 +1421,6 @@
 			function (index) {
 			    return '<li>' + (index + 1) + '</li>';
 			},
-
-        // Automated cycling
-        cycleBy: null,  // Enable automatic cycling by 'items' or 'pages'.
-        cycleInterval: 5000,  // Delay between cycles in milliseconds.
-        pauseOnHover: false, // Pause cycling when mouse hovers over the FRAME.
-        startPaused: false, // Whether to start in paused sate.
 
         // Mixed options
         moveBy: 300,     // Speed in pixels per second used by forward and backward buttons.

@@ -585,6 +585,10 @@ paper-item-body .overview {
     }
 }
 
+.paper-progress-0 #progressContainer.paper-progress, .paper-progress-0 .indeterminate.paper-progress:after {
+    height: 6px;
+}
+
 .nowPlayingCardContainer {
     width: 25%;
     margin-right: 1em;
