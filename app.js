@@ -249,7 +249,7 @@
 
         requirejs.config(config);
 
-        define("videoplayerosd", ["js/videoplayerosd"]);
+        define("videoplayerosd", ["components/videoplayerosd"]);
 
         define("cryptojs-sha1", ["apiclient/sha1"]);
         define("connectservice", ["apiclient/connectservice"]);
@@ -269,6 +269,9 @@
         define("paper-button", ['html!bower_components/paper-button/paper-button']);
         define("paper-icon-button", ['html!bower_components/paper-icon-button/paper-icon-button']);
         define("paper-menu-item", ['html!bower_components/paper-menu/paper-menu-item']);
+        define("paper-input", ['html!bower_components/paper-input/paper-input']);
+        define("paper-fab", ['html!bower_components/paper-fab/paper-fab']);
+        define("paper-slider", ['html!bower_components/paper-slider/paper-slider']);
 
         define("slide-from-right-animation", ['html!bower_components/neon-animation/animations/slide-from-right-animation.html']);
         define("slide-left-animation", ['html!bower_components/neon-animation/animations/slide-left-animation.html']);

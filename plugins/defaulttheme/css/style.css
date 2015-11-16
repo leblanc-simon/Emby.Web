@@ -43,8 +43,8 @@ a {
 @media all and (min-height: 720px) {
 
     .header .logo {
-        width: 165px;
-        height: 50px;
+        width: 132px;
+        height: 40px;
     }
 
     .pageTitle {
@@ -56,8 +56,8 @@ a {
 @media all and (min-height: 1440px) {
 
     .header .logo {
-        width: 264px;
-        height: 80px;
+        width: 231px;
+        height: 70px;
     }
 
     .pageTitle {
@@ -179,14 +179,6 @@ a {
     .centeredPageContent {
         /* If the content is small, try to prevent it from getting shoved too far down the screen*/
         min-height: 70%;
-    }
-}
-
-/* 2560 * 1440 */
-@media all and (min-height: 1440px) {
-
-    .itemScrollFrame.scrollFrameX {
-        padding-bottom: 60px;
     }
 }
 
@@ -402,7 +394,7 @@ paper-item-body .overview {
 
 .selectedItemInfo {
     position: fixed;
-    bottom: 2%;
+    bottom: 1.5%;
     left: 0;
     right: 10%;
     max-width: 60%;
@@ -559,18 +551,18 @@ paper-item-body .overview {
     }
 
     .homePageContent .squareCard .cardImageContainer {
-        width: 280px;
-        height: 280px;
+        width: 300px;
+        height: 300px;
     }
 
     .homePageContent .backdropCard .cardImageContainer {
-        width: 498px;
-        height: 280px;
+        width: 533px;
+        height: 300px;
     }
 
     .homePageContent .portraitCard .cardImageContainer {
-        width: 282px;
-        height: 423px;
+        width: 302px;
+        height: 453px;
     }
 
     .listPageContent .squareCard .cardImageContainer {
