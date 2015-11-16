@@ -12,7 +12,7 @@
 
             var options = {
                 horizontal: 1,
-                itemNav: 'centered',
+                itemNav: 'basic',
                 mouseDragging: 1,
                 touchDragging: 1,
                 slidee: userViewNames.querySelector('.scrollSlider'),
