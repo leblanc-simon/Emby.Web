@@ -42,7 +42,10 @@
             //resolve();
             // if we just called history.back(), then use a timeout to allow the history events to fire first
             setTimeout(function () {
-                resolve(dlg);
+                resolve({
+                    element: dlg,
+                    closedByBack: self.closedByBack
+                });
             }, 1);
         }
 

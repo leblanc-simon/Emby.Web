@@ -19,61 +19,10 @@ define([], function () {
 
         self.getDeviceProfile = function () {
 
-            var canPlayWebm = false;//self.canPlayWebm();
-            var canPlayAac = true;
+            return new Promise(function (resolve, reject) {
 
-            var profile = {};
-
-            profile.MaxStreamingBitrate = 10000000;
-            profile.MaxStaticBitrate = 8000000;
-            profile.MusicStreamingTranscodingBitrate = 192000;
-
-            profile.DirectPlayProfiles = [];
-
-            var preferAacAudio = false; // $.browser.safari
-
-            profile.DirectPlayProfiles.push({
-                Container: 'mp3',
-                Type: 'Audio'
+                require(['browserdeviceprofile'], resolve);
             });
-
-            if (canPlayAac) {
-                profile.DirectPlayProfiles.push({
-                    Container: 'aac',
-                    Type: 'Audio'
-                });
-            }
-
-            if (canPlayWebm) {
-                profile.DirectPlayProfiles.push({
-                    Container: 'webm,webma',
-                    Type: 'Audio'
-                });
-            }
-
-            profile.TranscodingProfiles = [];
-
-            profile.TranscodingProfiles.push({
-                Container: 'mp3',
-                Type: 'Audio',
-                AudioCodec: 'mp3',
-                Context: 'Streaming',
-                Protocol: 'http'
-            });
-
-            profile.ContainerProfiles = [];
-
-            profile.CodecProfiles = [];
-            profile.CodecProfiles.push({
-                Type: 'Audio',
-                Conditions: [{
-                    Condition: 'LessThanEqual',
-                    Property: 'AudioChannels',
-                    Value: '2'
-                }]
-            });
-
-            return profile;
         };
 
         self.currentSrc = function () {
@@ -151,6 +100,10 @@ define([], function () {
                     onEnded();
                 });
             }
+        };
+
+        self.destroy = function() {
+
         };
 
         var fadeTimeout;
