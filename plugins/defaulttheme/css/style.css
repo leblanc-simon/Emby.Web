@@ -410,7 +410,7 @@ paper-item-body .overview {
 
 .homePageContainer .selectedItemInfo {
     right: 2%;
-    bottom: 4.63%;
+    bottom: 3%;
 }
 
 .selectedItemInfo h2 {
@@ -487,33 +487,33 @@ paper-item-body .overview {
 @media all and (min-height: 1080px) {
 
     .horizontalPageContent .squareCard .cardImageContainer {
-        width: 211px;
-        height: 211px;
+        width: 220px;
+        height: 220px;
     }
 
     .horizontalPageContent .backdropCard .cardImageContainer {
-        width: 375px;
-        height: 211px;
+        width: 391px;
+        height: 220px;
     }
 
     .horizontalPageContent .portraitCard .cardImageContainer {
-        width: 211px;
-        height: 317px;
+        width: 220px;
+        height: 330px;
     }
 
     .homePageContent .squareCard .cardImageContainer {
-        width: 207px;
-        height: 207px;
+        width: 220px;
+        height: 220px;
     }
 
     .homePageContent .backdropCard .cardImageContainer {
-        width: 366.222222222px;
-        height: 206px;
+        width: 391px;
+        height: 220px;
     }
 
     .homePageContent .portraitCard .cardImageContainer {
-        width: 208px;
-        height: 312px;
+        width: 220px;
+        height: 330px;
     }
 
     .listPageContent .squareCard .cardImageContainer {

@@ -209,6 +209,11 @@
 
     function playlists(options) {
 
+        options = options || {};
+        options.parentId = null;
+        delete options.parentId;
+        options.recursive = true;
+
         return new Promise(function (resolve, reject) {
 
             require(['connectionManager'], function (connectionManager) {
