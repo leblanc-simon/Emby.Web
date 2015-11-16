@@ -320,7 +320,7 @@ a {
 
 .sectionTitle {
     text-transform: uppercase;
-    font-size: 90%;
+    font-size: 86%;
     padding-left: .1em;
 }
 
@@ -497,8 +497,8 @@ paper-item-body .overview {
     }
 
     .horizontalPageContent .portraitCard .cardImageContainer {
-        width: 220px;
-        height: 330px;
+        width: 222px;
+        height: 333px;
     }
 
     .homePageContent .squareCard .cardImageContainer {
@@ -512,23 +512,23 @@ paper-item-body .overview {
     }
 
     .homePageContent .portraitCard .cardImageContainer {
-        width: 220px;
-        height: 330px;
+        width: 222px;
+        height: 333px;
     }
 
     .listPageContent .squareCard .cardImageContainer {
-        width: 230px;
-        height: 230px;
+        width: 240px;
+        height: 240px;
     }
 
     .listPageContent .backdropCard .cardImageContainer {
-        width: 409px;
-        height: 230px;
+        width: 427px;
+        height: 240px;
     }
 
     .listPageContent .portraitCard .cardImageContainer {
-        width: 230px;
-        height: 345px;
+        width: 240px;
+        height: 360px;
     }
 
     .horizontalPageContent .loginSquareCard {
