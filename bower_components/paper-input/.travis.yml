@@ -3,7 +3,7 @@ sudo: false
 matrix:
   include:
   - node_js: stable
-    script: true || xvfb-run wct
+    script: xvfb-run wct
     addons:
       firefox: latest
       apt:
@@ -15,7 +15,7 @@ matrix:
     script:
     - |
       if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
-        true || wct -s 'default'
+        wct -s 'default'
       fi
 before_script:
 - npm install web-component-tester
@@ -24,5 +24,5 @@ before_script:
 - bower install
 env:
   global:
-  - secure: jFaXkmco40NlJT4VyFYM34Zv9D1XVfLXgixobnyHQyJDBKSXrNLcwDuvrGUpJx/pwBCxEhKAbvxeJ+PBMUv8QV08MAdw2S6QOsIe3CUxAehoNoOMJw5duhE8faWlz8qzmCWEowHVFUeVsd0ZUsgOu6RTspj2A51D/CztQuW0Ljw=
-  - secure: fKrO5yMx8kZM1WQ3k0bzo6MCREKGW2WkCl2suDjuEtb1SQ/SaZa9Tun0fcqIHVJqg9+jOS1Romt/+MN27Nc6IT1tv/NdLd+uWjtMA+OzLyv48gzcdu8Ls/TISUGm5Wb7XHkcvMAb1tRoBs5BOvQ/85FilZLEq1km8snG9ZsOOWI=
+  - secure: TcDqx+YdNCa/DRQjdKt9dgYCPgXtPl2EZ7Nnv6bRvbcmUjW2eSr7Zwb+e0fO8wgwms/RqFaVx+u5jo7D1lnC4Ybcg1HKiMOvCyzY36MjF9oB/VKSEUC+p4tMVQfw1IZ/RmK3dD+WEWaoT/EKmNfctz7v5kR+yk2lZo44D9I7rrc=
+  - secure: nh65tvhnhOrK05qKvDJKMV7Jm9yiCoG1wFkP3ZnqOHix9Ny+KmcTa41Bl6NXQdvYaMTFtzS7lMZX5cqIziyKyGWHVN30LzGMHJNz12fhcMi3nJ84trhQGcu/9qR9yDv16q9ouGlcz1VxnDOHaRAHnIKjLIbhN3aJtMtZBbnWihA=
