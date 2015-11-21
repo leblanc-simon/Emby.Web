@@ -35,7 +35,14 @@
 
         self.getPlayers = function () {
 
-            return Emby.PluginManager.ofType('mediaplayer');
+            var players = Emby.PluginManager.ofType('mediaplayer');
+
+            players.sort(function (a, b) {
+
+                return (a.priority || 0) - (b.priority || 0);
+            });
+
+            return players;
         };
 
         self.canPlay = function (item) {

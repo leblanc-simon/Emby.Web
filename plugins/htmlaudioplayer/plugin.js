@@ -8,6 +8,9 @@ define([], function () {
         self.type = 'mediaplayer';
         self.packageName = 'htmlaudioplayer';
 
+        // Let any players created by plugins take priority
+        self.priority = 1;
+
         var mediaElement;
         var currentSrc;
         var started = false;

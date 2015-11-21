@@ -175,7 +175,7 @@
         });
     }
 
-    function initRequire() {
+    function initRequire(customPaths) {
 
         console.log('Initializing requirejs');
 
@@ -188,7 +188,7 @@
             loading: "components/" + componentType + "/loading",
             dialog: "components/" + componentType + "/dialog",
             soundeffects: "components/soundeffects",
-            apphost: "components/apphost",
+            apphost: customPaths.apphost || "components/apphost",
             screensaverManager: "js/screensavermanager",
             viewManager: "components/viewmanager",
             slyScroller: "components/slyscroller",
@@ -379,7 +379,7 @@
         });
     }
 
-    function loadPlugins() {
+    function loadPlugins(externalPlugins) {
 
         console.log('Loading installed plugins');
 
@@ -397,6 +397,10 @@
 
         if (enableWebComponents()) {
             list.push('plugins/wmctheme/plugin.js');
+        }
+
+        for (var i = 0, length = externalPlugins.length; i < length; i++) {
+            list.push(externalPlugins[i]);
         }
 
         return Promise.all(list.map(loadPlugin));
@@ -431,18 +435,23 @@
         Emby.ThemeManager.loadTheme('defaulttheme', callback);
     }
 
-    function start(appStartInfo) {
+    function start() {
 
-        initRequire();
+        var startInfo = globalScope.appStartInfo || {};
+
+        initRequire(startInfo.paths || {});
 
         loadCoreDependencies(function () {
 
-            loadPlugins().then(function () {
+            loadPlugins(startInfo.plugins || []).then(function () {
 
                 defineCoreRoutes();
                 definePluginRoutes();
 
-                createConnectionManager().then(loadPresentation);
+                createConnectionManager().then(function () {
+
+                    require(startInfo.scripts || [], loadPresentation);
+                });
             });
         });
     }
