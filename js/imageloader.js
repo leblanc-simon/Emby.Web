@@ -228,4 +228,8 @@
     console.log('creating simpleImageStore');
     window.ImageStore = new simpleImageStore();
 
+    if (navigator.webkitPersistentStorage) {
+        require(['js/imagestore']);
+    }
+
 })();
