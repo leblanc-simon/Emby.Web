@@ -60,10 +60,10 @@
             }
 
             fetch(filtered[0].path, { mode: 'no-cors' }).then(function (response) {
-                if (response.status < 400) {
-                    dictionary = extend(dictionary, response.json());
-                    resolve();
-                }
+                return response.json();
+            }).then(function (json) {
+                dictionary = extend(dictionary, json);
+                resolve();
             });
         });
     }
