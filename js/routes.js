@@ -1,10 +1,8 @@
 (function (globalScope) {
 
     var viewManager;
-    var httpClient;
-    require(['viewManager', 'httpclient'], function (viewManagerInstance, httpClientInstance) {
+    require(['viewManager'], function (viewManagerInstance) {
         viewManager = viewManagerInstance;
-        httpClient = httpClientInstance;
     });
 
     function isStartup(ctx) {
@@ -101,17 +99,13 @@
             url = baseUrl() + '/' + url;
         }
 
-        httpClient.request({
+        url = url + '?t=' + new Date().getTime();
 
-            url: url + '?t=' + new Date().getTime(),
-            type: 'GET',
-            dataType: 'html'
-
-        }).then(function (html) {
-
-            loadContent(ctx, route, html, request);
-
-        }, next);
+        fetch(url, { mode: 'no-cors' }).then(function (response) {
+            return response.text();
+        }).then(function (body) {
+            loadContent(ctx, route, body, request);
+        }).catch(next);
     }
 
     function handleRoute(ctx, next, route) {

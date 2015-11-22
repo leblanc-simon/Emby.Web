@@ -356,6 +356,10 @@
                 list.push('bower_components/native-promise-only/lib/npo.src');
             }
 
+            if (!globalScope.fetch) {
+                list.push('bower_components/fetch/fetch');
+            }
+
             require(list, function (page) {
 
                 window.page = page;
