@@ -248,20 +248,14 @@
 
         function renderFavorites(page, pageParams, autoFocus, slyFrame, resolve) {
 
-            require(['httpclient'], function (httpclient) {
-                httpclient.request({
+            fetch(Emby.PluginManager.mapResource('defaulttheme', 'tv/views.favorites.html'), { mode: 'no-cors' }).then(function (response) {
+                return response.text();
+            }).then(function (html) {
 
-                    url: Emby.PluginManager.mapResource('defaulttheme', 'tv/views.favorites.html'),
-                    type: 'GET',
-                    dataType: 'html'
-
-                }).then(function (html) {
-
-                    var parent = page.querySelector('.contentScrollSlider');
-                    parent.innerHTML = Globalize.translateHtml(html);
-                    loadFavoriteSeries(parent, pageParams, autoFocus, resolve);
-                    loadFavoriteEpisodes(parent, pageParams);
-                });
+                var parent = page.querySelector('.contentScrollSlider');
+                parent.innerHTML = Globalize.translateHtml(html);
+                loadFavoriteSeries(parent, pageParams, autoFocus, resolve);
+                loadFavoriteEpisodes(parent, pageParams);
             });
 
             require([Emby.PluginManager.mapPath('defaulttheme', 'cards/focushandler.js')], function (focusHandler) {

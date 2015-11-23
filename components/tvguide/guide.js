@@ -597,12 +597,9 @@ define([], function () {
             });
         }
 
-        HttpClient.send({
-
-            type: 'GET',
-            url: Emby.Page.baseUrl() + '/components/tvguide/tvguide.template.html'
-
-        }).done(function (template) {
+        fetch(Emby.Page.baseUrl() + '/components/tvguide/tvguide.template.html', { mode: 'no-cors' }).then(function (response) {
+            return response.text();
+        }).then(function (template) {
 
             var tabContent = options.element;
             tabContent.innerHTML = template;

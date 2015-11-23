@@ -59,16 +59,11 @@
                 return;
             }
 
-            require(['httpclient'], function (httpclient) {
-                httpclient.request({
-                    url: filtered[0].path,
-                    type: 'GET',
-                    dataType: 'json'
-
-                }).then(function (response) {
-                    dictionary = extend(dictionary, response);
-                    resolve();
-                });
+            fetch(filtered[0].path, { mode: 'no-cors' }).then(function (response) {
+                return response.json();
+            }).then(function (json) {
+                dictionary = extend(dictionary, json);
+                resolve();
             });
         });
     }

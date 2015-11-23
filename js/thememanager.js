@@ -79,19 +79,14 @@
                 return;
             }
 
-            require(['httpclient'], function (httpclient) {
-                httpclient.request({
-
-                    url: theme.getHeaderTemplate(),
-                    type: 'GET',
-                    dataType: 'html'
-
-                }).then(function (html) {
-                    resolve(html);
-
-                }, function () {
+            fetch(theme.getHeaderTemplate(), { mode: 'no-cors' }).then(function (response) {
+                if (response.status < 400) {
+                    resolve(response.text());
+                } else {
                     resolve('');
-                });
+                }
+            }).catch(function () {
+                resolve('');
             });
         });
     }
