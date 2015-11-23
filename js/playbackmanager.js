@@ -30,6 +30,13 @@
         };
 
         self.isPlayingVideo = function () {
+            if (self.isPlaying()) {
+                var playerData = getPlayerState(currentPlayer);
+                var currentItem = playerData.streamInfo.item;
+
+                return currentItem.MediaType == 'Video';
+            }
+
             return false;
         };
 
