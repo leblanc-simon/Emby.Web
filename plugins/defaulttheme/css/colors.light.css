@@ -17,7 +17,7 @@ h1, h2 {
     font-weight: 400 !important;
 }
 
-.header .logo {
+.headerLogo {
     background-image: url(images/logo.png);
 }
 

@@ -161,7 +161,7 @@
             pageTitle.style.backgroundImage = "url('" + url + "')";
             pageTitle.classList.add('pageTitleWithLogo');
             pageTitle.innerHTML = '';
-            document.querySelector('.logo').classList.add('hide');
+            document.querySelector('.headerLogo').classList.add('hide');
         } else {
             Emby.Page.setTitle('');
         }
@@ -1022,7 +1022,7 @@
 
             section.classList.remove('hide');
 
-            require([Emby.PluginManager.mapRequire('defaulttheme', 'cards/peoplecardbuilder.js')], function () {
+            require([Emby.PluginManager.mapPath('defaulttheme', 'cards/peoplecardbuilder.js')], function () {
                 DefaultTheme.PeopleCardBuilder.buildPeopleCards(people, {
                     parentContainer: section,
                     itemsContainer: section.querySelector('.itemsContainer'),
@@ -1054,7 +1054,7 @@
 
             section.classList.remove('hide');
 
-            require([Emby.PluginManager.mapRequire('defaulttheme', 'cards/chaptercardbuilder.js')], function () {
+            require([Emby.PluginManager.mapPath('defaulttheme', 'cards/chaptercardbuilder.js')], function () {
                 DefaultTheme.ChapterCardBuilder.buildChapterCards(chapters, {
                     parentContainer: section,
                     itemsContainer: section.querySelector('.itemsContainer'),

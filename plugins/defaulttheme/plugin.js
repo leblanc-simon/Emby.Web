@@ -20,7 +20,7 @@ define([], function () {
             time = hour + ':' + minutes + suffix;
         }
 
-        var clock = document.querySelector('.clock');
+        var clock = document.querySelector('.headerClock');
 
         if (clock) {
             clock.innerHTML = time;
@@ -36,28 +36,28 @@ define([], function () {
         self.packageName = 'defaulttheme';
 
         self.getHeaderTemplate = function () {
-            return Emby.PluginManager.mapResource(self, 'header.html');
+            return Emby.PluginManager.mapPath(self, 'header.html');
         };
 
         self.getDependencies = function () {
 
             var list = [
-                'css!' + Emby.PluginManager.mapRequire(self, 'css/style'),
-                'css!' + Emby.PluginManager.mapRequire(self, 'cards/card'),
-                'css!' + Emby.PluginManager.mapRequire(self, 'css/colors.dark'),
-                'css!' + Emby.PluginManager.mapRequire(self, 'css/paperstyles'),
-                'css!' + Emby.PluginManager.mapRequire(self, 'css/papericonbutton'),
-                Emby.PluginManager.mapRequire(self, 'backdrop.js'),
-                Emby.PluginManager.mapRequire(self, 'cards/cardbuilder.js'),
-                Emby.PluginManager.mapRequire(self, 'cards/userdata.js'),
-                Emby.PluginManager.mapRequire(self, 'cards/tabbedpage.js'),
-                Emby.PluginManager.mapRequire(self, 'cards/horizontallist.js')
+                'css!' + Emby.PluginManager.mapPath(self, 'css/style'),
+                'css!' + Emby.PluginManager.mapPath(self, 'cards/card'),
+                'css!' + Emby.PluginManager.mapPath(self, 'css/colors.dark'),
+                'css!' + Emby.PluginManager.mapPath(self, 'css/paperstyles'),
+                'css!' + Emby.PluginManager.mapPath(self, 'css/papericonbutton'),
+                Emby.PluginManager.mapPath(self, 'backdrop.js'),
+                Emby.PluginManager.mapPath(self, 'cards/cardbuilder.js'),
+                Emby.PluginManager.mapPath(self, 'cards/userdata.js'),
+                Emby.PluginManager.mapPath(self, 'cards/tabbedpage.js'),
+                Emby.PluginManager.mapPath(self, 'cards/horizontallist.js')
             ];
 
-            list.push('css!' + Emby.PluginManager.mapRequire(self, 'css/fonts'));
+            list.push('css!' + Emby.PluginManager.mapPath(self, 'css/fonts'));
 
             if (Emby.Dom.supportsWebComponents()) {
-                list.push('html!' + Emby.PluginManager.mapRequire(self, 'icons.html'));
+                list.push('html!' + Emby.PluginManager.mapPath(self, 'icons.html'));
                 list.push('paper-button');
                 list.push('paper-icon-button');
                 list.push('paper-input');
@@ -76,7 +76,7 @@ define([], function () {
 
             files.push({
                 lang: 'en-us',
-                path: Emby.PluginManager.mapResource(self, 'strings/en-us.json')
+                path: Emby.PluginManager.mapPath(self, 'strings/en-us.json')
             });
 
             return files;
@@ -93,8 +93,8 @@ define([], function () {
                 transition: 'slide',
                 type: 'home',
                 dependencies: [
-                    Emby.PluginManager.mapRequire(self, 'home/home.js'),
-                    'css!' + Emby.PluginManager.mapRequire(self, 'home/home.css')
+                    Emby.PluginManager.mapPath(self, 'home/home.js'),
+                    'css!' + Emby.PluginManager.mapPath(self, 'home/home.css')
                 ]
             });
 
@@ -103,8 +103,8 @@ define([], function () {
                 id: 'defaulttheme-item',
                 transition: 'slide',
                 dependencies: [
-                    Emby.PluginManager.mapRequire(self, 'item/item.js'),
-                    'css!' + Emby.PluginManager.mapRequire(self, 'item/item.css')
+                    Emby.PluginManager.mapPath(self, 'item/item.js'),
+                    'css!' + Emby.PluginManager.mapPath(self, 'item/item.css')
                 ]
             });
 
@@ -113,7 +113,7 @@ define([], function () {
                 id: 'defaulttheme-list',
                 transition: 'slide',
                 dependencies: [
-                    Emby.PluginManager.mapRequire(self, 'list/list.js')
+                    Emby.PluginManager.mapPath(self, 'list/list.js')
                 ]
             });
 
@@ -122,7 +122,7 @@ define([], function () {
                 id: 'defaulttheme-music',
                 transition: 'slide',
                 dependencies: [
-                    Emby.PluginManager.mapRequire(self, 'music/music.js')
+                    Emby.PluginManager.mapPath(self, 'music/music.js')
                 ]
             });
 
@@ -131,7 +131,7 @@ define([], function () {
                 id: 'defaulttheme-movies',
                 transition: 'slide',
                 dependencies: [
-                    Emby.PluginManager.mapRequire(self, 'movies/movies.js')
+                    Emby.PluginManager.mapPath(self, 'movies/movies.js')
                 ]
             });
 
@@ -140,7 +140,7 @@ define([], function () {
                 id: 'defaulttheme-livetv',
                 transition: 'slide',
                 dependencies: [
-                    Emby.PluginManager.mapRequire(self, 'livetv/livetv.js')
+                    Emby.PluginManager.mapPath(self, 'livetv/livetv.js')
                 ]
             });
 
@@ -149,8 +149,8 @@ define([], function () {
                 id: 'defaulttheme-guide',
                 transition: 'slide',
                 dependencies: [
-                    Emby.PluginManager.mapRequire(self, 'livetv/guide.js'),
-                    'css!' + Emby.PluginManager.mapRequire(self, 'livetv/guide.css')
+                    Emby.PluginManager.mapPath(self, 'livetv/guide.js'),
+                    'css!' + Emby.PluginManager.mapPath(self, 'livetv/guide.css')
                 ]
             });
 
@@ -159,7 +159,7 @@ define([], function () {
                 id: 'defaulttheme-tv',
                 transition: 'slide',
                 dependencies: [
-                    Emby.PluginManager.mapRequire(self, 'tv/tv.js')
+                    Emby.PluginManager.mapPath(self, 'tv/tv.js')
                 ]
             });
 
@@ -168,8 +168,8 @@ define([], function () {
                 id: 'defaulttheme-search',
                 transition: 'slide',
                 dependencies: [
-                    Emby.PluginManager.mapRequire(self, 'search/search.js'),
-                    'css!' + Emby.PluginManager.mapRequire(self, 'search/search.css')
+                    Emby.PluginManager.mapPath(self, 'search/search.js'),
+                    'css!' + Emby.PluginManager.mapPath(self, 'search/search.css')
                 ]
             });
 
@@ -178,7 +178,7 @@ define([], function () {
                 id: 'defaulttheme-nowplaying',
                 transition: 'slide',
                 dependencies: [
-                    Emby.PluginManager.mapRequire(self, 'nowplaying/nowplaying.js')
+                    Emby.PluginManager.mapPath(self, 'nowplaying/nowplaying.js')
                 ]
             });
 
@@ -187,8 +187,8 @@ define([], function () {
                 id: 'defaulttheme-nowplayingplaylist',
                 transition: 'slide',
                 dependencies: [
-                    Emby.PluginManager.mapRequire(self, 'nowplaying/playlist.js'),
-                    'css!' + Emby.PluginManager.mapRequire(self, 'item/item.css')
+                    Emby.PluginManager.mapPath(self, 'nowplaying/playlist.js'),
+                    'css!' + Emby.PluginManager.mapPath(self, 'item/item.css')
                 ]
             });
 
@@ -244,9 +244,9 @@ define([], function () {
         self.setTitle = function (title) {
 
             if (title == null) {
-                document.querySelector('.logo').classList.remove('hide');
+                document.querySelector('.headerLogo').classList.remove('hide');
             } else {
-                document.querySelector('.logo').classList.add('hide');
+                document.querySelector('.headerLogo').classList.add('hide');
             }
 
             title = title || '&nbsp;';
@@ -290,7 +290,15 @@ define([], function () {
         function loadControlBox() {
 
             require(['apphost'], function (apphost) {
-                updateWindowState(apphost.getWindowState());
+
+                if (apphost.supports('windowstate')) {
+
+                    document.querySelector('.controlBox').classList.remove('hide');
+                    updateWindowState(apphost.getWindowState());
+                } else {
+
+                    document.querySelector('.controlBox').classList.add('hide');
+                }
             });
         }
 
@@ -366,18 +374,13 @@ define([], function () {
 
         function updateWindowState(windowState) {
 
-            if (windowState == 'Maximized') {
-                document.querySelector('.controlBox').classList.remove('hide');
-            } else {
-                document.querySelector('.controlBox').classList.add('hide');
-            }
         }
 
         function onLocalUserSignedIn(e) {
 
             var user = e.detail.user;
 
-            document.querySelector('.logo').classList.add('hide');
+            document.querySelector('.headerLogo').classList.add('hide');
 
             document.querySelector('.headerSearchButton').classList.remove('hide');
 
@@ -401,7 +404,7 @@ define([], function () {
         function onLocalUserSignedOut(e) {
 
             // Put the logo back in the page title
-            document.querySelector('.logo').classList.remove('hide');
+            document.querySelector('.headerLogo').classList.remove('hide');
 
             document.querySelector('.headerSearchButton').classList.add('hide');
             document.querySelector('.headerUserButton').classList.add('hide');

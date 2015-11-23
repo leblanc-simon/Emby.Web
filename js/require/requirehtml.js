@@ -26,7 +26,13 @@ define(function () {
 
             var link = document.createElement('link');
             link.rel = 'import';
-            link.href = url /*+ "?" + config.urlArgs*/;
+
+            if (url.toLowerCase().indexOf('bower_') == -1) {
+                url = url + "?" + config.urlArgs;
+            }
+
+            link.href = url;
+
             document.head.appendChild(link);
 
             // Unfortunately it's hard to know exactly when load is complete

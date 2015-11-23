@@ -118,7 +118,7 @@
                 require(['httpclient'], function (httpclient) {
                     httpclient.request({
 
-                        url: Emby.PluginManager.mapResource('defaulttheme', 'home/views.' + viewName + '.html'),
+                        url: Emby.PluginManager.mapPath('defaulttheme', 'home/views.' + viewName + '.html'),
                         type: 'GET',
                         dataType: 'html'
 
@@ -140,7 +140,7 @@
         html = html;
         homeScrollContent.innerHTML = Globalize.translateHtml(html);
 
-        require([Emby.PluginManager.mapRequire('defaulttheme', 'home/views.' + viewName + '.js')], function () {
+        require([Emby.PluginManager.mapPath('defaulttheme', 'home/views.' + viewName + '.js')], function () {
 
             var homePanel = homeScrollContent;
             new DefaultTheme[viewName + 'View'](homePanel, parentId, autoFocus);

@@ -39,7 +39,7 @@ html {
     }
 }
 
-.header .logo {
+.headerLogo {
     background-image: url(images/logowhite.png);
 }
 
@@ -91,14 +91,14 @@ paper-input .focused-line {
 }
 
 
-.userViewNames paper-button div {
-    border-bottom: 2px solid transparent;
-}
+    .userViewNames paper-button div {
+        border-bottom: 2px solid transparent;
+    }
 
-.userViewNames paper-button.selected {
-    color: #fff;
-    opacity: 1;
-}
+    .userViewNames paper-button.selected {
+        color: #fff;
+        opacity: 1;
+    }
 
 paper-dialog {
     background: #1c1c1c !important;
@@ -126,9 +126,9 @@ paper-dialog {
     opacity: 1;
 }
 
-.userViewNames paper-button[focused] div {
-    border-bottom-color: #52B54B;
-}
+    .userViewNames paper-button[focused] div {
+        border-bottom-color: #52B54B;
+    }
 
 .defaultCardColor1 {
     background-color: #009688;

@@ -70,6 +70,8 @@
         });
     }
 
+    var cacheParam = new Date().getTime();
+
     function getThemeHeader(theme) {
 
         return new Promise(function (resolve, reject) {
@@ -79,15 +81,23 @@
                 return;
             }
 
-            fetch(theme.getHeaderTemplate(), { mode: 'no-cors' }).then(function (response) {
-                if (response.status < 400) {
-                    resolve(response.text());
+            var xhr = new XMLHttpRequest();
+
+            var url = theme.getHeaderTemplate();
+            url += url.indexOf('?') == -1 ? '?' : '&';
+            url += 'v=' + cacheParam;
+
+            xhr.open('GET', url, true);
+
+            xhr.onload = function (e) {
+                if (this.status < 400) {
+                    resolve(this.response);
                 } else {
                     resolve('');
                 }
-            }).catch(function () {
-                resolve('');
-            });
+            };
+
+            xhr.send();
         });
     }
 
