@@ -6,19 +6,15 @@ a {
     display: none !important;
 }
 
-.header {
-    position: relative;
+.headerLogo {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 132px;
+    height: 40px;
+    vertical-align: middle;
+    display: inline-block;
 }
-
-    .header .logo {
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        width: 132px;
-        height: 40px;
-        vertical-align: middle;
-        display: inline-block;
-    }
 
 .pageTitle {
     display: inline-block;
@@ -41,7 +37,7 @@ a {
 /* 720p */
 @media all and (min-height: 720px) {
 
-    .header .logo {
+    .headerLogo {
         width: 132px;
         height: 40px;
     }
@@ -54,7 +50,7 @@ a {
 /* 2560 * 1440 */
 @media all and (min-height: 1440px) {
 
-    .header .logo {
+    .headerLogo {
         width: 231px;
         height: 70px;
     }
@@ -91,10 +87,23 @@ a {
     border-radius: 1000px;
 }
 
-.header .controlBox {
+.windowDragRegion {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 1.5em;
+    background-color: rgba(30, 30, 30, .6);
+    /* Higher than headerLeft and headerRight */
+    z-index: 1;
+}
+
+.controlBox {
     position: fixed;
     top: 0;
     right: 35px;
+    /* Higher than headerRight and windowDragRegion */
+    z-index: 2;
 }
 
 .mouseIdle .controlBox {
@@ -102,24 +111,24 @@ a {
 }
 
 .controlBox paper-icon-button {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
 }
 
-.header .headerLeft {
+.headerLeft {
     position: fixed;
     top: 35px;
     left: 45px;
 }
 
-.header .headerRight {
+.headerRight {
     position: fixed;
     top: 34px;
     right: 45px;
     text-align: right;
 }
 
-.header .clock {
+.headerClock {
     margin: 0;
     display: inline-block;
     vertical-align: middle;

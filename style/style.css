@@ -143,3 +143,7 @@ iron-overlay-backdrop.iron-overlay-backdrop-0[opened] {
     .transparentDocument .mainHeader, .transparentDocument .backdropContainer, .transparentDocument .themeContainer {
         display: none !important;
     }
+
+.windowDragRegion {
+    -webkit-app-region: drag;
+}

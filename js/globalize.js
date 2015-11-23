@@ -40,6 +40,7 @@
         });
     }
 
+    var cacheParam = new Date().getTime();
     function loadTranslation(translations, lang, dictionary) {
 
         var filtered = translations.filter(function (t) {
@@ -59,7 +60,11 @@
                 return;
             }
 
-            fetch(filtered[0].path, { mode: 'no-cors' }).then(function (response) {
+            var url = filtered[0].path;
+            url += url.indexOf('?') == -1 ? '?' : '&';
+            url += 'v=' + cacheParam;
+
+            fetch(url, { mode: 'no-cors' }).then(function (response) {
                 return response.json();
             }).then(function (json) {
                 dictionary = extend(dictionary, json);

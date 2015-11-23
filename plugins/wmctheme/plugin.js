@@ -9,13 +9,13 @@ define([], function () {
         self.packageName = 'wmctheme';
 
         self.getHeaderTemplate = function () {
-            return Emby.PluginManager.mapResource(self, 'header.html');
+            return Emby.PluginManager.mapPath(self, 'header.html');
         };
 
         self.getDependencies = function () {
 
             var files = [
-                'css!' + Emby.PluginManager.mapRequire(self, 'css/style')
+                'css!' + Emby.PluginManager.mapPath(self, 'css/style')
             ];
 
             return files;

@@ -91,6 +91,7 @@
         }
     }
 
+    var cacheParam = new Date().getTime();
     function loadContentUrl(ctx, next, route, request) {
 
         var url = route.contentPath || route.path;
@@ -99,7 +100,8 @@
             url = baseUrl() + '/' + url;
         }
 
-        url = url + '?t=' + new Date().getTime();
+        url += url.indexOf('?') == -1 ? '?' : '&';
+        url += 'v=' + cacheParam;
 
         fetch(url, { mode: 'no-cors' }).then(function (response) {
             return response.text();

@@ -67,7 +67,7 @@
 
             var card = element.querySelector('.wideSpotlightCard');
 
-            require([Emby.PluginManager.mapRequire('defaulttheme', 'home/spotlight.js')], function () {
+            require([Emby.PluginManager.mapPath('defaulttheme', 'home/spotlight.js')], function () {
 
                 new DefaultTheme.spotlight(card, result.Items, 767);
             });

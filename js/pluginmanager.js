@@ -37,26 +37,15 @@
             return plugin.baseUrl + '/' + path;
         };
 
-        self.mapRequire = function (plugin, path) {
+        // TODO: replace with each plugin version
+        var cacheParam = new Date().getTime();
 
-            if (typeof plugin === 'string') {
-                plugin = plugins.filter(function (p) {
-                    return p.packageName == plugin;
-                })[0];
-            }
+        self.mapUrl = function (plugin, path) {
 
-            return plugin.baseUrl + '/' + path;
-        };
+            var url = self.mapPath(plugin, path);
 
-        self.mapResource = function (plugin, path) {
-
-            if (typeof plugin === 'string') {
-                plugin = plugins.filter(function (p) {
-                    return p.packageName == plugin;
-                })[0];
-            }
-
-            return plugin.baseUrl + '/' + path;
+            url += url.indexOf('?') == -1 ? '?' : '&';
+            url += 'v=' + cacheParam;
         };
     }
 
