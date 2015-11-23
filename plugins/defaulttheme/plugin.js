@@ -297,7 +297,7 @@ define([], function () {
                     updateWindowState(apphost.getWindowState());
                 } else {
 
-                    document.querySelector('.controlBox').classList.remove('hide');
+                    document.querySelector('.controlBox').classList.add('hide');
                 }
             });
         }
