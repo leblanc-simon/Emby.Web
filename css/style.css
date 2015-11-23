@@ -52,9 +52,6 @@ html, body {
     z-index: 1;
 }
 
-.backdropContainer {
-}
-
 .backdropImage {
     background-repeat: no-repeat;
     background-position: center center;
@@ -155,3 +152,12 @@ paper-toast {
 iron-overlay-backdrop.iron-overlay-backdrop-0[opened] {
     opacity: 0.7;
 }
+
+.transparentDocument {
+    background: none !important;
+    background-color: transparent !important;
+}
+
+    .transparentDocument .mainHeader, .transparentDocument .backdropContainer, .transparentDocument .themeContainer {
+        display: none !important;
+    }
