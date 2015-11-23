@@ -334,6 +334,7 @@
 
             var list = [
              'bower_components/page.js/page.js',
+             'css!style/style.css',
              'js/pluginmanager',
              'js/routes',
              'js/globalize',
