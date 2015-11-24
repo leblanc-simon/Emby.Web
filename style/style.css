@@ -146,8 +146,17 @@ iron-overlay-backdrop.iron-overlay-backdrop-0[opened] {
 
 .windowDragRegion {
     -webkit-app-region: drag;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
 }
 
     .windowDragRegion * {
         -webkit-app-region: no-drag;
     }
+
+.mouseIdle .windowDragRegion {
+    display: none;
+}

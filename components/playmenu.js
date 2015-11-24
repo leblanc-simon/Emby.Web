@@ -9,8 +9,9 @@ define(['actionsheet'], function (actionsheet) {
         var resumePositionTicks = item.UserData ? item.UserData.PlaybackPositionTicks : null;
 
         if (!resumePositionTicks && mediaType != "Audio" && !isFolder) {
-
-            Emby.PlaybackManager.play(item);
+            Emby.PlaybackManager.play({
+                items: [item]
+            });
             return;
         }
 

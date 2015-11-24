@@ -17,7 +17,7 @@ define([], function () {
                     return;
                 }
 
-                require([Emby.PluginManager.mapRequire(self, 'keylime.js')], function () {
+                require([Emby.PluginManager.mapPath(self, 'keylime.js')], function () {
                     window.keyLime.config = window.keyLime.config || {};
                     window.keyLime.config.noauto = true;
                     resolve();
