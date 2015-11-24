@@ -189,6 +189,7 @@
             dialog: "components/" + componentType + "/dialog",
             soundeffects: "components/soundeffects",
             apphost: customPaths.apphost || "components/apphost",
+            filesystem: customPaths.filesystem || "components/filesystem",
             screensaverManager: "js/screensavermanager",
             viewManager: "components/viewmanager",
             slyScroller: "components/slyscroller",
