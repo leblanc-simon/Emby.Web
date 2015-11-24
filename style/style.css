@@ -160,3 +160,14 @@ iron-overlay-backdrop.iron-overlay-backdrop-0[opened] {
 .mouseIdle .windowDragRegion {
     display: none;
 }
+
+.controlBox {
+    margin-left: auto;
+    margin-right: .5em;
+}
+
+    .controlBox paper-icon-button {
+        width: 36px;
+        height: 36px;
+        padding: 0 8px;
+    }
