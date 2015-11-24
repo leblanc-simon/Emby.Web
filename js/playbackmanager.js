@@ -731,20 +731,20 @@
                         lastBitrateDetect = new Date().getTime();
                         appSettings.maxStreamingBitrate(bitrate);
 
-                        playAfterBitrateDetect(apiClient, item, startPosition, callback);
+                        playAfterBitrateDetect(apiClient, bitrate, item, startPosition, callback);
 
                     }).fail(function () {
 
-                        playAfterBitrateDetect(apiClient, item, startPosition, callback);
+                        playAfterBitrateDetect(apiClient, appSettings.maxStreamingBitrate(), item, startPosition, callback);
                     });
 
                 } else {
-                    playAfterBitrateDetect(apiClient, item, startPosition, callback);
+                    playAfterBitrateDetect(apiClient, appSettings.maxStreamingBitrate(), item, startPosition, callback);
                 }
             });
         }
 
-        function playAfterBitrateDetect(apiClient, item, startPosition, callback) {
+        function playAfterBitrateDetect(apiClient, maxBitrate, item, startPosition, callback) {
 
             var player = getPlayer(item);
 
@@ -754,6 +754,8 @@
             }
 
             player.getDeviceProfile().then(function (deviceProfile) {
+
+                deviceProfile.MaxStreamingBitrate = Math.min(deviceProfile.MaxStreamingBitrate, maxBitrate);
 
                 tryStartPlayback(apiClient, deviceProfile, item, startPosition, function (mediaSource) {
 
@@ -1091,23 +1093,15 @@
                     if (mediaSource.Protocol == 'File') {
 
                         // Determine if the file can be accessed directly
-                        try {
-                            var xhr = new XMLHttpRequest();
-                            xhr.open('HEAD', 'file://' + mediaSource.Path, true);
-                            xhr.onload = function () {
-                                if (this.status < 400) {
-                                    resolve(true);
-                                } else {
-                                    resolve(false);
-                                }
-                            };
-                            xhr.onerror = function () {
+                        require(['filesystem'], function (filesystem) {
+
+                            filesystem.fileExists(mediaSource.Path).then(function () {
+                                resolve(true);
+                            }, function () {
                                 resolve(false);
-                            };
-                            xhr.send();
-                        } catch (err) {
-                            resolve(false);
-                        }
+                            });
+
+                        });
                     }
                 }
                 else {
