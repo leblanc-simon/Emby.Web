@@ -87,24 +87,6 @@ a {
     border-radius: 1000px;
 }
 
-.controlBox {
-    position: fixed;
-    top: 5px;
-    right: 35px;
-    /* Higher than headerRight */
-    z-index: 1;
-}
-
-.mouseIdle .controlBox {
-    display: none;
-}
-
-.controlBox paper-icon-button {
-    width: 36px;
-    height: 36px;
-    padding: 0 8px;
-}
-
 .headerLeft {
     position: fixed;
     top: 35px;

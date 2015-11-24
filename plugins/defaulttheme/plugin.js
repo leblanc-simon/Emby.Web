@@ -205,7 +205,6 @@ define([], function () {
             updateClock();
             setInterval(updateClock, 50000);
             bindEvents();
-            loadControlBox();
         };
 
         self.unload = function () {
@@ -287,42 +286,7 @@ define([], function () {
             });
         }
 
-        function loadControlBox() {
-
-            require(['apphost'], function (apphost) {
-
-                if (apphost.supports('windowstate')) {
-
-                    document.querySelector('.controlBox').classList.remove('hide');
-                    updateWindowState(apphost.getWindowState());
-                } else {
-
-                    document.querySelector('.controlBox').classList.add('hide');
-                }
-            });
-        }
-
         function bindEvents() {
-
-            document.addEventListener('windowstatechanged', onWindowStateChanged);
-
-            document.querySelector('.appExitButton').addEventListener('click', function () {
-                require(['apphost'], function (apphost) {
-                    apphost.exit();
-                });
-            });
-
-            document.querySelector('.minimizeButton').addEventListener('click', function () {
-                require(['apphost'], function (apphost) {
-                    apphost.setWindowState('Minimized');
-                });
-            });
-
-            document.querySelector('.fullscreenExitButton').addEventListener('click', function () {
-                require(['apphost'], function (apphost) {
-                    apphost.setWindowState('Normal');
-                });
-            });
 
             document.querySelector('.headerSearchButton').addEventListener('click', function () {
                 self.search();
@@ -346,7 +310,6 @@ define([], function () {
 
         function unbindEvents() {
 
-            document.removeEventListener('windowstatechanged', onWindowStateChanged);
             document.removeEventListener('usersignedin', onLocalUserSignedIn);
             document.removeEventListener('usersignedout', onLocalUserSignedOut);
             document.removeEventListener('viewshow', onViewShow);
@@ -366,14 +329,6 @@ define([], function () {
 
         function onPlaybackStop() {
             document.querySelector('.headerAudioPlayerButton').classList.add('hide');
-        }
-
-        function onWindowStateChanged(e) {
-            updateWindowState(e.detail.windowState);
-        }
-
-        function updateWindowState(windowState) {
-
         }
 
         function onLocalUserSignedIn(e) {
