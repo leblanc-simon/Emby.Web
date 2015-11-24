@@ -1090,8 +1090,24 @@
 
                     if (mediaSource.Protocol == 'File') {
 
-                        // TODO
-                        resolve(false);
+                        // Determine if the file can be accessed directly
+                        try {
+                            var xhr = new XMLHttpRequest();
+                            xhr.open('HEAD', 'file://' + mediaSource.Path, true);
+                            xhr.onload = function () {
+                                if (this.status < 400) {
+                                    resolve(true);
+                                } else {
+                                    resolve(false);
+                                }
+                            };
+                            xhr.onerror = function () {
+                                resolve(false);
+                            };
+                            xhr.send();
+                        } catch (err) {
+                            resolve(false);
+                        }
                     }
                 }
                 else {
@@ -1287,7 +1303,12 @@
 
             if (playNextAfterEnded) {
                 self.nextTrack();
-                // TODO: destroy player if there's nothing to play
+            } else {
+                player.destroy();
+
+                if (player == currentPlayer) {
+                    currentPlayer = null;
+                }
             }
         }
 
