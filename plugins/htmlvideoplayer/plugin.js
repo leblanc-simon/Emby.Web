@@ -501,7 +501,7 @@ define([], function () {
 
                 if (!dlg) {
 
-                    require(['paperdialoghelper', 'css!' + Emby.PluginManager.mapRequire(self, 'style.css')], function (paperdialoghelper) {
+                    require(['paperdialoghelper', 'css!' + Emby.PluginManager.mapPath(self, 'style.css')], function (paperdialoghelper) {
 
                         var requiresNativeControls = !enableCustomVideoControls();
 

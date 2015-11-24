@@ -150,7 +150,7 @@ define([], function () {
 
         self.show = function () {
 
-            require(['css!' + Emby.PluginManager.mapRequire(self, 'style.css')], function () {
+            require(['css!' + Emby.PluginManager.mapPath(self, 'style.css')], function () {
 
                 var elem = document.querySelector('.logoScreenSaver');
 

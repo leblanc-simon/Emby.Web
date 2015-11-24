@@ -1,123 +1,123 @@
 define([], function () {
 
-    var currentOsd;
-    var currentPlayer;
+    //var currentOsd;
+    //var currentPlayer;
 
-    function setCurrentItem(item) {
+    //function setCurrentItem(item) {
 
-        var osd = currentOsd;
+    //    var osd = currentOsd;
 
-        if (!osd) {
-            return;
-        }
+    //    if (!osd) {
+    //        return;
+    //    }
 
-        osd.setItem(item);
-    }
+    //    osd.setItem(item);
+    //}
 
-    function onPlaybackStart(e, player) {
+    //function onPlaybackStart(e, player) {
 
-        bindToPlayer(player);
-        setCurrentItem(Emby.PlaybackManager.currentItem(player));
-    }
+    //    bindToPlayer(player);
+    //    setCurrentItem(Emby.PlaybackManager.currentItem(player));
+    //}
 
-    function onPlaybackStop(e, player) {
-        releasePlayer();
-        setCurrentItem(null);
-    }
+    //function onPlaybackStop(e, player) {
+    //    releasePlayer();
+    //    setCurrentItem(null);
+    //}
 
-    function bindToPlayer(player) {
+    //function bindToPlayer(player) {
 
-        if (player != currentPlayer) {
+    //    if (player != currentPlayer) {
 
-            releasePlayer();
+    //        releasePlayer();
 
-            Events.on(player, 'volumechange', onVolumeChange);
-            Events.on(player, 'timeupdate', onTimeUpdate);
-            Events.on(player, 'pause', onPlaystateChange);
-            Events.on(player, 'playing', onPlaystateChange);
-        }
+    //        Events.on(player, 'volumechange', onVolumeChange);
+    //        Events.on(player, 'timeupdate', onTimeUpdate);
+    //        Events.on(player, 'pause', onPlaystateChange);
+    //        Events.on(player, 'playing', onPlaystateChange);
+    //    }
 
-        currentPlayer = player;
-        updateVolume(player);
-        updateTime(player);
-        updatePlaystate(player);
-    }
+    //    currentPlayer = player;
+    //    updateVolume(player);
+    //    updateTime(player);
+    //    updatePlaystate(player);
+    //}
 
-    function releasePlayer() {
+    //function releasePlayer() {
 
-        var player = currentPlayer;
+    //    var player = currentPlayer;
 
-        if (player) {
-            Events.off(player, 'volumechange', onVolumeChange);
-            Events.off(player, 'timeupdate', onTimeUpdate);
-            Events.off(player, 'pause', onPlaystateChange);
-            Events.off(player, 'playing', onPlaystateChange);
-            currentPlayer = null;
-        }
-    }
+    //    if (player) {
+    //        Events.off(player, 'volumechange', onVolumeChange);
+    //        Events.off(player, 'timeupdate', onTimeUpdate);
+    //        Events.off(player, 'pause', onPlaystateChange);
+    //        Events.off(player, 'playing', onPlaystateChange);
+    //        currentPlayer = null;
+    //    }
+    //}
 
-    function onTimeUpdate(e) {
-        updateTime(this);
-    }
+    //function onTimeUpdate(e) {
+    //    updateTime(this);
+    //}
 
-    function onVolumeChange(e) {
-        updateVolume(this);
-    }
+    //function onVolumeChange(e) {
+    //    updateVolume(this);
+    //}
 
-    function onPlaystateChange(e) {
-        updatePlaystate(this);
-    }
+    //function onPlaystateChange(e) {
+    //    updatePlaystate(this);
+    //}
 
-    function updatePlaystate(player) {
+    //function updatePlaystate(player) {
 
-        var osd = currentOsd;
+    //    var osd = currentOsd;
 
-        if (!osd) {
-            return;
-        }
+    //    if (!osd) {
+    //        return;
+    //    }
 
-        osd.setPaused(Emby.PlaybackManager.paused());
-        osd.setRepeatMode(Emby.PlaybackManager.getRepeatMode());
-    }
+    //    osd.setPaused(Emby.PlaybackManager.paused());
+    //    osd.setRepeatMode(Emby.PlaybackManager.getRepeatMode());
+    //}
 
-    function onRepeatModeChanged() {
-        updatePlaystate(currentPlayer);
-    }
+    //function onRepeatModeChanged() {
+    //    updatePlaystate(currentPlayer);
+    //}
 
-    function updateVolume(player) {
+    //function updateVolume(player) {
 
-        var osd = currentOsd;
+    //    var osd = currentOsd;
 
-        if (!osd) {
-            return;
-        }
+    //    if (!osd) {
+    //        return;
+    //    }
 
-        osd.setVolume(Emby.PlaybackManager.volume());
-        osd.setMuted(Emby.PlaybackManager.isMuted());
-    }
+    //    osd.setVolume(Emby.PlaybackManager.volume());
+    //    osd.setMuted(Emby.PlaybackManager.isMuted());
+    //}
 
-    function updateTime(player) {
+    //function updateTime(player) {
 
-        var osd = currentOsd;
+    //    var osd = currentOsd;
 
-        if (!osd) {
-            return;
-        }
+    //    if (!osd) {
+    //        return;
+    //    }
 
-        var state = Emby.PlaybackManager.getPlayerState();
-        var playState = state.PlayState || {};
-        var nowPlayingItem = state.NowPlayingItem || {};
+    //    var state = Emby.PlaybackManager.getPlayerState();
+    //    var playState = state.PlayState || {};
+    //    var nowPlayingItem = state.NowPlayingItem || {};
 
-        osd.setPosition({
-            positionTicks: playState.PositionTicks,
-            runtimeTicks: nowPlayingItem.RunTimeTicks,
-            canSeek: playState.CanSeek
-        });
-    }
+    //    osd.setPosition({
+    //        positionTicks: playState.PositionTicks,
+    //        runtimeTicks: nowPlayingItem.RunTimeTicks,
+    //        canSeek: playState.CanSeek
+    //    });
+    //}
 
-    Events.on(Emby.PlaybackManager, 'playbackstart', onPlaybackStart);
-    Events.on(Emby.PlaybackManager, 'playbackstop', onPlaybackStop);
-    Events.on(Emby.PlaybackManager, 'repeatmodechange', onRepeatModeChanged);
+    //Events.on(Emby.PlaybackManager, 'playbackstart', onPlaybackStart);
+    //Events.on(Emby.PlaybackManager, 'playbackstop', onPlaybackStop);
+    //Events.on(Emby.PlaybackManager, 'repeatmodechange', onRepeatModeChanged);
 
-    onPlaybackStart(Emby.PlaybackManager.currentPlayer());
+    //onPlaybackStart(Emby.PlaybackManager.currentPlayer());
 });
