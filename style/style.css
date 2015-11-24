@@ -166,8 +166,9 @@ iron-overlay-backdrop.iron-overlay-backdrop-0[opened] {
     margin-right: .5em;
 }
 
-    .controlBox paper-icon-button {
-        width: 36px;
-        height: 36px;
-        padding: 0 8px;
-    }
+.controlBoxButton {
+    width: 36px;
+    height: 36px;
+    padding: 0 8px;
+    margin: 0;
+}
