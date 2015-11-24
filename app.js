@@ -484,6 +484,8 @@
                 document.documentElement.classList.remove('preload');
 
                 Emby.Page.start();
+
+                document.dispatchEvent(new CustomEvent("appready", {}));
             });
         });
     }
