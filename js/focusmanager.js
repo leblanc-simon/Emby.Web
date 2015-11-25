@@ -161,7 +161,7 @@
 
         originalElement = originalElement || document.activeElement;
 
-        require(['nearestElements'], function (nearestElements, soundeffects) {
+        require(['nearestElements'], function (nearestElements) {
 
             var activeElement = document.activeElement;
 

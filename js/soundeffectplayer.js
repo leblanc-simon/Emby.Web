@@ -32,7 +32,9 @@
             case 38:
             case 39:
             case 40:
-                play('navigation');
+                if (!evt.altKey) {
+                    play('navigation');
+                }
                 break;
             case 13:
                 play('select');
