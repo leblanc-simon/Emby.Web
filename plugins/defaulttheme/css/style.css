@@ -145,10 +145,6 @@ a {
     justify-content: initial;
 }
 
-.homePageContainer {
-    top: 12%;
-}
-
 .itemScrollFrame.scrollFrameY {
     height: 100%;
 }
