@@ -2,7 +2,7 @@
 
     document.addEventListener("viewinit-defaulttheme-list", function (e) {
 
-        new listPage(e.detail.element, e.detail.params);
+        new listPage(e.target, e.detail.params);
     });
 
     function listPage(view, params) {

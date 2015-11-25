@@ -44,8 +44,8 @@ define([], function () {
             return routes;
         };
 
-        self.goHome = function () {
-            Emby.Page.show(Emby.PluginManager.mapPath(self, 'home.html'));
+        self.getHomeRoute = function () {
+            return Emby.PluginManager.mapPath(self, 'home.html');
         };
 
         self.load = function () {

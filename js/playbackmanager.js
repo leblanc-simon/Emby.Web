@@ -715,10 +715,6 @@
 
             var depends = ['appsettings', 'connectionManager'];
 
-            if (item.MediaType == 'Video') {
-                depends.push('videoplayerosd');
-            }
-
             require(depends, function (appSettings, connectionManager) {
 
                 var apiClient = connectionManager.getApiClient(item.ServerId);

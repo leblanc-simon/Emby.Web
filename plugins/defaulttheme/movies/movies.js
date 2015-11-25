@@ -2,7 +2,7 @@
 
     document.addEventListener("viewinit-defaulttheme-movies", function (e) {
 
-        new moviesPage(e.detail.element, e.detail.params);
+        new moviesPage(e.target, e.detail.params);
     });
 
     function moviesPage(view, params) {

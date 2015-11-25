@@ -2,7 +2,7 @@
 
     document.addEventListener("viewinit-defaulttheme-tv", function (e) {
 
-        new tvPage(e.detail.element, e.detail.params);
+        new tvPage(e.target, e.detail.params);
     });
 
     function tvPage(view, params) {

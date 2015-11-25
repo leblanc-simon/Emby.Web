@@ -3,15 +3,43 @@ html {
     background: #181818;
 }
 
-.themeContainer.withBackdrop {
-    background: rgba(6, 6, 6, .86);
+.themeContainer.withBackdropIn {
+    animation: withBackdropIn .3s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-out;
 }
 
-    .themeContainer.withBackdrop.listBackdropIn {
-        animation: listBackdropIn 1s;
-        animation-fill-mode: forwards;
-        animation-timing-function: ease-in;
+.themeContainer.withBackdropOut {
+    animation: withBackdropOut .3s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-out;
+}
+
+@keyframes withBackdropIn {
+    from {
+        background-color: transparent;
     }
+
+    to {
+        background-color: rgba(6, 6, 6, .86);
+    }
+}
+
+@keyframes withBackdropOut {
+    from {
+        background-color: rgba(6, 6, 6, .86);
+    }
+
+    to {
+        background-color: transparent;
+    }
+}
+
+/*.themeContainer.withBackdropIn.listBackdropIn {
+    animation: listBackdropIn 1s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in;
+}
 
 @keyframes listBackdropIn {
     from {
@@ -23,7 +51,7 @@ html {
     }
 }
 
-.themeContainer.withBackdrop.listBackdropOut {
+.themeContainer.withBackdropIn.listBackdropOut {
     animation: listBackdropOut .5s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
@@ -37,7 +65,7 @@ html {
     to {
         background: rgba(6, 6, 6, .86);
     }
-}
+}*/
 
 .headerLogo {
     background-image: url(images/logowhite.png);

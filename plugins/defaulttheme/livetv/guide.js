@@ -2,7 +2,7 @@
 
     document.addEventListener("viewinit-defaulttheme-guide", function (e) {
 
-        new guidePage(e.detail.element, e.detail.params);
+        new guidePage(e.target, e.detail.params);
     });
 
     function guidePage(view, params) {

@@ -4,18 +4,6 @@
     cursor: none !important;
 }
 
-.docspinner {
-    display: block;
-    margin-top: -30px;
-    margin-left: -30px;
-    width: 60px;
-    height: 60px;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    z-index: 9999999;
-}
-
 .mainAnimatedPages {
     position: absolute;
     top: 0px;
@@ -140,7 +128,7 @@ iron-overlay-backdrop.iron-overlay-backdrop-0[opened] {
     background-color: transparent !important;
 }
 
-    .transparentDocument .mainHeader, .transparentDocument .backdropContainer, .transparentDocument .themeContainer {
+    .transparentDocument .backdropContainer {
         display: none !important;
     }
 

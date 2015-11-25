@@ -2,7 +2,7 @@
 
     document.addEventListener("viewinit-defaulttheme-home", function (e) {
 
-        new homePage(e.detail.element, e.detail.params);
+        new homePage(e.target, e.detail.params);
     });
 
     function homePage(view, params) {

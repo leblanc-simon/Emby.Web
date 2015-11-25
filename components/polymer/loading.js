@@ -1,4 +1,4 @@
-define(['html!bower_components/paper-spinner/paper-spinner'], function () {
+define(['html!bower_components/paper-spinner/paper-spinner', 'css!components/polymer/loading'], function () {
 
     return {
         show: function () {

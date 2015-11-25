@@ -364,7 +364,7 @@ paper-item-body .overview {
 
 .homePageContainer .selectedItemInfo {
     right: 2%;
-    bottom: 1.5%;
+    bottom: 2.5%;
 }
 
 .selectedItemInfo h2 {
@@ -547,7 +547,7 @@ paper-item-body .overview {
 }
 
 .paper-progress-0 #progressContainer.paper-progress, .paper-progress-0 .indeterminate.paper-progress:after {
-    height: 6px;
+    height: 8px;
 }
 
 .nowPlayingCardContainer {

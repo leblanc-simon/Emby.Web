@@ -2,7 +2,7 @@
 
     document.addEventListener("viewinit-defaulttheme-search", function (e) {
 
-        new searchPage(e.detail.element, e.detail.params);
+        new searchPage(e.target, e.detail.params);
     });
 
     function searchPage(view, params) {
@@ -172,11 +172,11 @@
             var isRestored = e.detail.isRestored;
 
             if (!isRestored) {
-                initAlphaPicker(e.detail.element);
+                initAlphaPicker(e.target);
 
-                e.detail.element.querySelector('.txtSearch').addEventListener('keydown', onSearchKeyDown);
+                e.target.querySelector('.txtSearch').addEventListener('keydown', onSearchKeyDown);
 
-                createVerticalScroller(e.detail.element, self);
+                createVerticalScroller(e.target, self);
             }
         });
 

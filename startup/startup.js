@@ -2,7 +2,7 @@
 
     document.addEventListener("viewshow-welcome", function (e) {
 
-        var element = e.detail.element;
+        var element = e.target;
         var params = e.detail.params;
         var isRestored = e.detail.isRestored;
 
@@ -30,7 +30,7 @@
 
     document.addEventListener("viewshow-manuallogin", function (e) {
 
-        var element = e.detail.element;
+        var element = e.target;
         var params = e.detail.params;
         var isRestored = e.detail.isRestored;
 
@@ -90,7 +90,7 @@
 
     document.addEventListener("viewshow-manualserver", function (e) {
 
-        var element = e.detail.element;
+        var element = e.target;
         var params = e.detail.params;
         var isRestored = e.detail.isRestored;
 
@@ -151,7 +151,7 @@
 
     document.addEventListener("viewshow-connectlogin", function (e) {
 
-        var element = e.detail.element;
+        var element = e.target;
         var params = e.detail.params;
         var isRestored = e.detail.isRestored;
 
@@ -295,7 +295,7 @@
 
     document.addEventListener("viewshow-login", function (e) {
 
-        var element = e.detail.element;
+        var element = e.target;
         var params = e.detail.params;
         var isRestored = e.detail.isRestored;
 
@@ -528,7 +528,7 @@
 
     document.addEventListener("viewshow-selectserver", function (e) {
 
-        var element = e.detail.element;
+        var element = e.target;
         var params = e.detail.params;
         var isRestored = e.detail.isRestored;
         var servers = [];
