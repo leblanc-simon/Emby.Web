@@ -73,7 +73,7 @@
                     sendCommand('right', evt.target);
                     return;
                 }
-            case 39:
+            case rightAlias:
                 // right
                 evt.preventDefault();
                 sendCommand('right', evt.target);
