@@ -50,7 +50,7 @@
 
             case 37:
                 // left
-                if (!e.altKey) {
+                if (!evt.altKey) {
                     evt.preventDefault();
                     sendCommand('left', evt.target);
                     return;
@@ -68,7 +68,7 @@
                 return;
             case 39:
                 // right
-                if (!e.altKey) {
+                if (!evt.altKey) {
                     evt.preventDefault();
                     sendCommand('right', evt.target);
                     return;
