@@ -8,7 +8,7 @@
         self.load = function (url, parent, existingBackdropImage) {
 
             var img = new Image();
-            img.onload = function() {
+            img.onload = function () {
 
                 if (isDestroyed) {
                     return;
@@ -34,7 +34,7 @@
                     }
                 };
 
-                document.querySelector('.themeContainer').classList.add('withBackdrop');
+                internalBackdrop(true);
             };
             img.src = url;
         };
@@ -73,7 +73,7 @@
         return backdropContainer;
     }
 
-    function clearBackdrop() {
+    function clearBackdrop(clearAll) {
 
         if (currentLoadingBackdrop) {
             currentLoadingBackdrop.destroy();
@@ -82,7 +82,53 @@
 
         var elem = getBackdropContainer();
         elem.innerHTML = '';
-        document.querySelector('.themeContainer').classList.remove('withBackdrop');
+
+        if (clearAll) {
+            hasExternalBackdrop = false;
+        }
+        internalBackdrop(false);
+    }
+
+    var themeContainer;
+    function setThemeContainerBackgroundEnabled() {
+
+        if (!themeContainer) {
+            themeContainer = document.querySelector('.themeContainer');
+        }
+
+        var classIn, classOut;
+
+        if (hasInternalBackdrop || hasExternalBackdrop) {
+            classIn = 'withBackdropIn';
+            classOut = 'withBackdropOut';
+        } else {
+            classIn = 'withBackdropOut';
+            classOut = 'withBackdropIn';
+
+            if (!themeContainer.classList.contains(classOut)) {
+
+                return;
+            }
+        }
+
+        if (!themeContainer.classList.contains(classIn)) {
+            console.log('add ' + classIn);
+
+            themeContainer.classList.add(classIn);
+            themeContainer.classList.remove(classOut);
+        }
+    }
+
+    var hasInternalBackdrop;
+    function internalBackdrop(enabled) {
+        hasInternalBackdrop = enabled;
+        setThemeContainerBackgroundEnabled();
+    }
+
+    var hasExternalBackdrop;
+    function externalBackdrop(enabled) {
+        hasExternalBackdrop = enabled;
+        setThemeContainerBackgroundEnabled();
     }
 
     function getRandom(min, max) {
@@ -154,7 +200,7 @@
                     format: 'jpg'
                 });
 
-                setBackdropImage(imgUrl);
+                setBackdrop(imgUrl);
             });
 
         } else {
@@ -164,7 +210,7 @@
 
     function setBackdrop(url) {
 
-        if (url) {
+        if (url && !Emby.Page.transparencyEnabled()) {
             setBackdropImage(url);
 
         } else {
@@ -180,7 +226,8 @@
 
         setBackdrops: setBackdrops,
         setBackdrop: setBackdrop,
-        clear: clearBackdrop
+        clear: clearBackdrop,
+        externalBackdrop: externalBackdrop
     };
 
 })(this);

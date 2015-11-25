@@ -192,6 +192,17 @@ define([], function () {
                 ]
             });
 
+            routes.push({
+                path: Emby.PluginManager.mapPath(self, 'nowplaying/videoosd.html'),
+                id: 'defaulttheme-videoosd',
+                transition: 'slide',
+                dependencies: [
+                    Emby.PluginManager.mapPath(self, 'nowplaying/videoosd.js'),
+                    'css!' + Emby.PluginManager.mapPath(self, 'nowplaying/videoosd.css')
+                ],
+                type: 'video-osd'
+            });
+
             return routes;
         };
 
@@ -218,8 +229,12 @@ define([], function () {
             }
         };
 
-        self.goHome = function () {
-            Emby.Page.show(Emby.PluginManager.mapPath(self, 'home.html'));
+        self.getHomeRoute = function () {
+            return Emby.PluginManager.mapPath(self, 'home.html');
+        };
+
+        self.getVideoOsdRoute = function () {
+            return Emby.PluginManager.mapPath(self, 'nowplaying/videoosd.html');
         };
 
         self.showItem = function (item) {

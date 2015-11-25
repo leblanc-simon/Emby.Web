@@ -2,7 +2,7 @@
 
     document.addEventListener("viewinit-defaulttheme-nowplayingplaylist", function (e) {
 
-        new playlistPage(e.detail.element, e.detail.params);
+        new playlistPage(e.target, e.detail.params);
     });
 
     function playlistPage(view, params) {

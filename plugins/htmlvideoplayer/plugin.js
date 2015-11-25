@@ -138,24 +138,8 @@ define([], function () {
                         elem.play();
                     }
 
-                    setFullScreen(streamInfo.fullscreen);
-
                     resolve();
                 });
-            });
-        }
-
-        function setFullScreen(enabled) {
-
-            require(['screenfull'], function () {
-
-                if (screenfull.enabled) {
-                    if (enabled) {
-                        screenfull.request(mediaElement);
-                    } else {
-                        screenfull.exit();
-                    }
-                }
             });
         }
 
@@ -203,6 +187,7 @@ define([], function () {
         self.destroy = function () {
 
             destroyHlsPlayer();
+            Emby.Page.transparencyEnabled(false);
 
             var videoElement = mediaElement;
 
@@ -226,10 +211,7 @@ define([], function () {
 
                 videoDialog = null;
 
-                require(['paperdialoghelper'], function (paperdialoghelper) {
-
-                    paperdialoghelper.close(dlg);
-                });
+                dlg.parentNode.removeChild(dlg);
             }
         };
 
@@ -319,6 +301,19 @@ define([], function () {
 
             if (!started) {
                 started = true;
+
+                Emby.Page.showVideoOsd().then(function () {
+
+                    Emby.Page.setHeaderVisible(false);
+                    Emby.Page.transparencyEnabled(true);
+                    videoDialog.classList.add('loaded');
+                });
+
+                require(['loading'], function (loading) {
+
+                    loading.hide();
+                });
+
                 Events.trigger(self, 'started');
             }
             Events.trigger(self, 'playing');
@@ -493,6 +488,16 @@ define([], function () {
             }
         }
 
+        function zoomIn(elem, iterations) {
+            var keyframes = [
+                { transform: 'scale3d(.2, .2, .2)  ', opacity: '.6', offset: 0 },
+              { transform: 'none', opacity: '1', offset: 1 }
+            ];
+
+            var timing = { duration: 240, iterations: iterations };
+            return elem.animate(keyframes, timing);
+        }
+
         function createMediaElement(options) {
 
             return new Promise(function (resolve, reject) {
@@ -501,18 +506,19 @@ define([], function () {
 
                 if (!dlg) {
 
-                    require(['paperdialoghelper', 'css!' + Emby.PluginManager.mapPath(self, 'style.css')], function (paperdialoghelper) {
+                    require(['loading', 'css!' + Emby.PluginManager.mapPath(self, 'style.css')], function (loading) {
+
+                        loading.show();
 
                         var requiresNativeControls = !enableCustomVideoControls();
 
                         // Safari often displays the poster under the video and it doesn't look good
                         var poster = /*!$.browser.safari &&*/ options.poster ? (' poster="' + options.poster + '"') : '';
+                        poster = '';
 
-                        var dlg = paperdialoghelper.createDialog({
-                            removeOnClose: true
-                        });
+                        var dlg = document.createElement('div');
 
-                        dlg.classList.add('videoPlayerDialog');
+                        dlg.classList.add('videoPlayerContainer');
 
                         var html = '';
                         // Can't autoplay in these browsers so we need to use the full controls
@@ -539,26 +545,20 @@ define([], function () {
                         videoElement.addEventListener('click', onClick);
                         videoElement.addEventListener('dblclick', onDblClick);
 
-                        document.body.appendChild(dlg);
+                        document.body.insertBefore(dlg, document.body.firstChild);
                         videoDialog = dlg;
                         mediaElement = videoElement;
 
-                        paperdialoghelper.open(dlg).then(onPlayerClosed);
+                        zoomIn(dlg, 1).onfinish = function () {
+                            resolve(videoElement);
+                        };
 
-                        resolve(videoElement);
                     });
 
                 } else {
                     resolve(dlg.querySelector('video'));
                 }
             });
-        }
-
-        function onPlayerClosed(result) {
-
-            if (result.closedByBack) {
-                Emby.PlaybackManager.stop();
-            }
         }
     }
 });

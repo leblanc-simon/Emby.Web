@@ -2,7 +2,7 @@
 
     document.addEventListener("viewinit-defaulttheme-nowplaying", function (e) {
 
-        new nowPlayingPage(e.detail.element, e.detail.params);
+        new nowPlayingPage(e.target, e.detail.params);
     });
 
     function nowPlayingPage(view, params) {

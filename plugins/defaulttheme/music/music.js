@@ -2,7 +2,7 @@
 
     document.addEventListener("viewinit-defaulttheme-music", function (e) {
 
-        new musicPage(e.detail.element, e.detail.params);
+        new musicPage(e.target, e.detail.params);
     });
 
     function musicPage(view, params) {

@@ -2,7 +2,7 @@
 
     document.addEventListener("viewinit-defaulttheme-item", function (e) {
 
-        new itemPage(e.detail.element, e.detail.params);
+        new itemPage(e.target, e.detail.params);
     });
 
     function itemPage(view, params) {

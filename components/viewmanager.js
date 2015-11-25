@@ -2,12 +2,20 @@ define([], function () {
 
     var currentView;
 
-    function onViewChange(view, viewId, url, state, isRestore) {
+    function onViewChange(view, viewId, viewType, url, state, isRestore) {
 
         var lastView = currentView;
 
         if (lastView) {
-            lastView.dispatchEvent(new CustomEvent("viewhide", {}));
+
+            lastView.dispatchEvent(new CustomEvent("viewhide", {
+                detail: {
+                    id: lastView.getAttribute('data-id'),
+                    type: lastView.getAttribute('data-type')
+                },
+                bubbles: true,
+                cancelable: false
+            }));
         }
 
         currentView = view;
@@ -39,8 +47,8 @@ define([], function () {
 
         return {
             detail: {
-                element: view,
                 id: view.getAttribute('data-id'),
+                type: view.getAttribute('data-type'),
                 params: params,
                 isRestored: isRestore,
                 state: state
@@ -69,7 +77,7 @@ define([], function () {
 
         viewcontainer.tryRestoreView(options).then(function (view) {
 
-            onViewChange(view, options.id, options.url, options.state, true);
+            onViewChange(view, options.id, options.type, options.url, options.state, true);
             resolve();
 
         }, reject);
@@ -96,7 +104,7 @@ define([], function () {
 
                 viewcontainer.loadView(options).then(function (view) {
 
-                    onViewChange(view, options.id, options.url, options.state);
+                    onViewChange(view, options.id, options.type, options.url, options.state);
                 });
             });
         };

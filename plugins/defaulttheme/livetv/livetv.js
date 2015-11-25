@@ -2,7 +2,7 @@
 
     document.addEventListener("viewinit-defaulttheme-livetv", function (e) {
 
-        new liveTVPage(e.detail.element, e.detail.params);
+        new liveTVPage(e.target, e.detail.params);
     });
 
     function liveTVPage(view, params) {
