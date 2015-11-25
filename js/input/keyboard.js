@@ -49,6 +49,12 @@
         switch (evt.keyCode) {
 
             case 37:
+                // left
+                if (!e.altKey) {
+                    evt.preventDefault();
+                    sendCommand('left', evt.target);
+                    return;
+                }
             case leftAlias:
                 // left
                 evt.preventDefault();
@@ -61,7 +67,13 @@
                 sendCommand('up', evt.target);
                 return;
             case 39:
-            case rightAlias:
+                // right
+                if (!e.altKey) {
+                    evt.preventDefault();
+                    sendCommand('right', evt.target);
+                    return;
+                }
+            case 39:
                 // right
                 evt.preventDefault();
                 sendCommand('right', evt.target);
