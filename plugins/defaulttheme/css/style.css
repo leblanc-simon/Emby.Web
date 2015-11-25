@@ -87,17 +87,21 @@ a {
     border-radius: 1000px;
 }
 
-.headerLeft {
+.headerContainer {
     position: fixed;
-    top: 35px;
-    left: 45px;
+    top: 3%;
+    left: 2.3%;
+    right: 2.3%;
+    display: flex;
+    align-items: center;
+}
+
+.headerLeft {
+    margin-right: auto;
 }
 
 .headerRight {
-    position: fixed;
-    top: 34px;
-    right: 45px;
-    text-align: right;
+    margin-left: auto;
 }
 
 .headerClock {
@@ -132,11 +136,7 @@ a {
 }
 
 .itemScrollFrame.scrollFrameX {
-    padding-left: 70px;
-}
-
-.homePageContainer .itemScrollFrame.scrollFrameX {
-    padding-bottom: 30px;
+    padding-left: 4.5%;
 }
 
 .tabbedPageContainer {
@@ -165,7 +165,7 @@ a {
 @media all and (min-width: 2000px) {
 
     .centeredPageContent {
-        max-width: 1000px;
+        max-width: 50%;
     }
 }
 
@@ -228,20 +228,6 @@ a {
     background: #888 no-repeat center;
 }
 
-.scrollbar {
-    display: none;
-}
-
-.scrollbarX {
-    width: 100%;
-    height: 10px;
-}
-
-    .scrollbarX .handle {
-        width: 100px; /* overriden if dynamicHandle: 1 */
-        height: 100%;
-    }
-
 .cardColumn {
     display: inline-block;
     vertical-align: top;
@@ -270,14 +256,13 @@ a {
     }
 
     .userViewNames .scrollSlider {
-        padding-left: 70px;
-        padding-right: 70px;
+        text-align: center;
     }
 
 .listNumbers {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: 2.5%;
+    right: 1.5%;
 }
 
     .listNumbers .selectedIndex {
@@ -374,15 +359,16 @@ paper-item-body .overview {
 
 .selectedItemInfo {
     position: fixed;
-    bottom: 1.5%;
+    bottom: 1%;
     left: 0;
     right: 10%;
     max-width: 60%;
+    font-size: 90%;
 }
 
 .homePageContainer .selectedItemInfo {
     right: 2%;
-    bottom: 2%;
+    bottom: 1.5%;
 }
 
 .selectedItemInfo h2 {
@@ -393,7 +379,6 @@ paper-item-body .overview {
     display: inline-block;
     vertical-align: bottom;
     position: relative;
-    font-size: 90%;
 }
 
     .selectedItemMediaInfo iron-icon {

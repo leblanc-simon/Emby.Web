@@ -4,8 +4,8 @@ paper-icon-button.mediumSizeIcon {
 }
 
 .largeIcon {
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
 }
 
 .xlargePaperIconButton {
@@ -27,8 +27,8 @@ paper-icon-button.mediumSizeIcon {
     }
 
     .largeIcon {
-        width: 60px;
-        height: 60px;
+        width: 56px;
+        height: 56px;
     }
 
     .xlargePaperIconButton {
@@ -47,8 +47,8 @@ paper-icon-button.mediumSizeIcon {
 @media all and (min-height: 1440px) {
 
     paper-icon-button.mediumSizeIcon {
-        width: 64px;
-        height: 64px;
+        width: 56px;
+        height: 56px;
     }
 
     iron-icon.mediumSizeIcon {
@@ -57,8 +57,8 @@ paper-icon-button.mediumSizeIcon {
     }
 
     .largeIcon {
-        width: 70px;
-        height: 70px;
+        width: 64px;
+        height: 64px;
     }
 
     .xlargePaperIconButton {
