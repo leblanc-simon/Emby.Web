@@ -140,9 +140,13 @@ a {
 }
 
 .tabbedPageContainer {
-    top: 11%;
+    top: 9.5%;
     align-items: initial;
     justify-content: initial;
+}
+
+.homePageContainer {
+    top: 11%;
 }
 
 .itemScrollFrame.scrollFrameY {
@@ -234,7 +238,7 @@ a {
     }
 
 .userViewNames {
-    margin-bottom: 1.55em;
+    margin-bottom: 1.25em;
 }
 
     .userViewNames h2 {
@@ -410,7 +414,7 @@ paper-item-body .overview {
 }
 
 .alphaPicker {
-    margin-top: 1.25em;
+    margin-top: 1em;
 }
 
 /* 720p */
@@ -440,18 +444,18 @@ paper-item-body .overview {
 @media all and (min-height: 1080px) {
 
     .horizontalPageContent .squareCard .cardImageContainer {
-        width: 220px;
-        height: 220px;
+        width: 225px;
+        height: 225px;
     }
 
     .horizontalPageContent .backdropCard .cardImageContainer {
-        width: 391px;
-        height: 220px;
+        width: 400px;
+        height: 225px;
     }
 
     .horizontalPageContent .portraitCard .cardImageContainer {
-        width: 222px;
-        height: 333px;
+        width: 227px;
+        height: 341px;
     }
 
     .homePageContent .squareCard .cardImageContainer {
