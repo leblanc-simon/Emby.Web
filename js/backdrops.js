@@ -210,7 +210,7 @@
 
     function setBackdrop(url) {
 
-        if (url && !Emby.Page.transparencyEnabled()) {
+        if (url) {
             setBackdropImage(url);
 
         } else {

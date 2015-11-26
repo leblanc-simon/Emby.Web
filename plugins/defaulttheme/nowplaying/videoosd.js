@@ -12,7 +12,11 @@
         view.addEventListener('viewshow', function () {
         });
 
-        view.addEventListener('viewhide', function () {
+        view.addEventListener('viewbeforehide', function () {
+
+            if (Emby.PlaybackManager.isPlayingVideo()) {
+                Emby.PlaybackManager.stop();
+            }
         });
     }
 

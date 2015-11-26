@@ -1,22 +1,14 @@
-define([], function () {
+define(['viewcontainer'], function (viewcontainer) {
 
     var currentView;
 
+    viewcontainer.setOnBeforeChange(function () {
+        dispatchViewHide('viewbeforehide');
+    });
+
     function onViewChange(view, viewId, viewType, url, state, isRestore) {
 
-        var lastView = currentView;
-
-        if (lastView) {
-
-            lastView.dispatchEvent(new CustomEvent("viewhide", {
-                detail: {
-                    id: lastView.getAttribute('data-id'),
-                    type: lastView.getAttribute('data-type')
-                },
-                bubbles: true,
-                cancelable: false
-            }));
-        }
+        dispatchViewHide('viewhide');
 
         currentView = view;
 
@@ -40,6 +32,22 @@ define([], function () {
         });
     }
 
+    function dispatchViewHide(eventName) {
+
+        var lastView = currentView;
+
+        if (lastView) {
+            lastView.dispatchEvent(new CustomEvent(eventName, {
+                detail: {
+                    id: lastView.getAttribute('data-id'),
+                    type: lastView.getAttribute('data-type')
+                },
+                bubbles: true,
+                cancelable: false
+            }));
+        }
+    }
+
     function getViewEventDetail(view, url, state, isRestore) {
 
         var index = url.indexOf('?');
@@ -60,9 +68,7 @@ define([], function () {
 
     function resetCachedViews() {
         // Reset all cached views whenever the theme changes
-        require(['viewcontainer'], function (viewcontainer) {
-            viewcontainer.reset();
-        });
+        viewcontainer.reset();
     }
 
     document.addEventListener('themeunload', resetCachedViews);
@@ -96,16 +102,13 @@ define([], function () {
                 lastView.activeElement = document.activeElement;
             }
 
-            require(['viewcontainer'], function (viewcontainer) {
+            if (options.cancel) {
+                return;
+            }
 
-                if (options.cancel) {
-                    return;
-                }
+            viewcontainer.loadView(options).then(function (view) {
 
-                viewcontainer.loadView(options).then(function (view) {
-
-                    onViewChange(view, options.id, options.type, options.url, options.state);
-                });
+                onViewChange(view, options.id, options.type, options.url, options.state);
             });
         };
 
@@ -121,10 +124,7 @@ define([], function () {
                     currentView.activeElement = document.activeElement;
                 }
 
-                require(['viewcontainer'], function (viewcontainer) {
-
-                    tryRestoreInternal(viewcontainer, options, resolve, reject);
-                });
+                tryRestoreInternal(viewcontainer, options, resolve, reject);
             });
         };
     }
