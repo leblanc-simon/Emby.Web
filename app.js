@@ -12,7 +12,7 @@
 
         Logger.log('Defining route: ' + path);
 
-        page(path, Emby.Page.getHandler(newRoute));
+        Emby.Page.addRoute(path, newRoute);
     }
 
     function defineRoutes(routes) {

@@ -488,8 +488,13 @@
         return Emby.Page.show(Emby.ThemeManager.getCurrentTheme().getVideoOsdRoute());
     }
 
+    function addRoute(path, newRoute) {
+        
+        page(path, getHandler(newRoute));
+    }
+
     globalScope.Emby.Page = {
-        getHandler: getHandler,
+        addRoute: addRoute,
         param: param,
         back: back,
         show: show,
