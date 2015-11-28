@@ -54,7 +54,6 @@
     var enableWebComponents;
     function supportsWebComponents() {
 
-        return globalScope.WebComponents != null;
         if (enableWebComponents == null) {
             enableWebComponents = ('registerElement' in document && 'content' in document.createElement('template'));
         }

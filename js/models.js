@@ -27,7 +27,7 @@
                 options.Recursive = true;
                 normalizeOptions(options);
 
-                apiClient.getItems(apiClient.getCurrentUserId(), options).done(resolve, reject);
+                apiClient.getItems(apiClient.getCurrentUserId(), options).then(resolve, reject);
             });
         });
     }
@@ -45,7 +45,7 @@
 
                 options.UserId = apiClient.getCurrentUserId();
 
-                apiClient.getNextUpEpisodes(options).done(resolve, reject);
+                apiClient.getNextUpEpisodes(options).then(resolve, reject);
             });
         });
     }
@@ -62,7 +62,7 @@
                 var apiClient = connectionManager.currentApiClient();
                 options.UserId = apiClient.getCurrentUserId();
 
-                apiClient.getJSON(apiClient.getUrl('Shows/Upcoming', options)).done(resolve, reject);
+                apiClient.getJSON(apiClient.getUrl('Shows/Upcoming', options)).then(resolve, reject);
             });
         });
     }
@@ -78,7 +78,7 @@
 
                 var apiClient = connectionManager.currentApiClient();
 
-                apiClient.getJSON(apiClient.getUrl('Users/' + apiClient.getCurrentUserId() + '/Items/Latest', options)).done(resolve, reject);
+                apiClient.getJSON(apiClient.getUrl('Users/' + apiClient.getCurrentUserId() + '/Items/Latest', options)).then(resolve, reject);
             });
         });
     }
@@ -96,7 +96,7 @@
 
                 options.UserId = apiClient.getCurrentUserId();
 
-                apiClient.getLiveTvRecordings(options).done(resolve, reject);
+                apiClient.getLiveTvRecordings(options).then(resolve, reject);
             });
         });
     }
@@ -109,7 +109,7 @@
 
                 var apiClient = connectionManager.currentApiClient();
 
-                apiClient.getItem(apiClient.getCurrentUserId(), id).done(resolve, reject);
+                apiClient.getItem(apiClient.getCurrentUserId(), id).then(resolve, reject);
             });
         });
     }
@@ -223,7 +223,7 @@
                 options.IncludeItemTypes = "Playlist";
                 normalizeOptions(options);
 
-                apiClient.getJSON(apiClient.getUrl('Users/' + apiClient.getCurrentUserId() + '/Items', options)).done(resolve, reject);
+                apiClient.getJSON(apiClient.getUrl('Users/' + apiClient.getCurrentUserId() + '/Items', options)).then(resolve, reject);
             });
         });
     }
@@ -240,7 +240,7 @@
 
                     UserId: apiClient.getCurrentUserId()
 
-                }).done(resolve, reject);
+                }).then(resolve, reject);
             });
         });
     }
@@ -258,7 +258,7 @@
                 options.UserId = apiClient.getCurrentUserId();
                 options.Filters = "IsUnplayed";
 
-                apiClient.getJSON(apiClient.getUrl("Channels/Items/Latest", options)).done(resolve, reject);
+                apiClient.getJSON(apiClient.getUrl("Channels/Items/Latest", options)).then(resolve, reject);
             });
         });
     }
@@ -280,7 +280,7 @@
 
                 promise = apiClient.getSimilarItems(item.Id, options);
 
-                promise.done(resolve, reject);
+                promise.then(resolve, reject);
             });
         });
     }
@@ -297,7 +297,7 @@
 
                 options.UserId = apiClient.getCurrentUserId();
 
-                apiClient.getLiveTvRecommendedPrograms(options).done(resolve, reject);
+                apiClient.getLiveTvRecommendedPrograms(options).then(resolve, reject);
             });
         });
     }
@@ -331,12 +331,12 @@
 
                     options.UserId = apiClient.getCurrentUserId();
 
-                    apiClient.getJSON(apiClient.getUrl("Channels/" + item.Id + "/Items", options)).done(resolve, reject);
+                    apiClient.getJSON(apiClient.getUrl("Channels/" + item.Id + "/Items", options)).then(resolve, reject);
                 } else {
 
                     options.ParentId = item.Id;
 
-                    apiClient.getItems(apiClient.getCurrentUserId(), options).done(resolve, reject);
+                    apiClient.getItems(apiClient.getCurrentUserId(), options).then(resolve, reject);
                 }
             });
         });
@@ -354,7 +354,7 @@
 
                 normalizeOptions(options);
 
-                apiClient.getItems(apiClient.getCurrentUserId(), options).done(resolve, reject);
+                apiClient.getItems(apiClient.getCurrentUserId(), options).then(resolve, reject);
             });
         });
     }
@@ -372,7 +372,7 @@
                 normalizeOptions(options);
                 options.UserId = apiClient.getCurrentUserId();
 
-                apiClient.getSearchHints(options).done(resolve, reject);
+                apiClient.getSearchHints(options).then(resolve, reject);
             });
         });
     }
@@ -392,7 +392,7 @@
 
                 normalizeOptions(options);
 
-                apiClient.getItems(apiClient.getCurrentUserId(), options).done(resolve, reject);
+                apiClient.getItems(apiClient.getCurrentUserId(), options).then(resolve, reject);
             });
         });
     }
@@ -410,7 +410,7 @@
 
                 normalizeOptions(options);
 
-                apiClient.getGenres(apiClient.getCurrentUserId(), options).done(resolve, reject);
+                apiClient.getGenres(apiClient.getCurrentUserId(), options).then(resolve, reject);
             });
         });
     }
@@ -426,7 +426,7 @@
                 options = options || {};
                 normalizeOptions(options);
 
-                apiClient.getUserViews({}, apiClient.getCurrentUserId()).done(resolve, reject);
+                apiClient.getUserViews({}, apiClient.getCurrentUserId()).then(resolve, reject);
             });
         });
     }
@@ -443,7 +443,7 @@
                 normalizeOptions(options);
                 options.UserId = apiClient.getCurrentUserId();
 
-                apiClient.getJSON(apiClient.getUrl('Movies/Recommendations', options)).done(resolve, reject);
+                apiClient.getJSON(apiClient.getUrl('Movies/Recommendations', options)).then(resolve, reject);
             });
         });
     }
@@ -458,7 +458,7 @@
 
                 normalizeOptions(options);
 
-                apiClient.getArtists(apiClient.getCurrentUserId(), options).done(resolve, reject);
+                apiClient.getArtists(apiClient.getCurrentUserId(), options).then(resolve, reject);
             });
         });
     }
@@ -471,7 +471,7 @@
 
                 var apiClient = connectionManager.currentApiClient();
 
-                apiClient.getJSON(apiClient.getUrl('Users/' + apiClient.getCurrentUserId() + '/Items/' + itemId + '/Intros')).done(resolve, reject);
+                apiClient.getJSON(apiClient.getUrl('Users/' + apiClient.getCurrentUserId() + '/Items/' + itemId + '/Intros')).then(resolve, reject);
             });
         });
     }
@@ -486,7 +486,7 @@
 
                 normalizeOptions(options);
 
-                apiClient.getAlbumArtists(apiClient.getCurrentUserId(), options).done(resolve, reject);
+                apiClient.getAlbumArtists(apiClient.getCurrentUserId(), options).then(resolve, reject);
             });
         });
     }
@@ -504,7 +504,7 @@
 
                 options.Fields = options.Fields ? (options.Fields + ',MediaSources') : 'MediaSources';
 
-                apiClient.getInstantMixFromItem(id, options).done(resolve, reject);
+                apiClient.getInstantMixFromItem(id, options).then(resolve, reject);
             });
         });
     }
@@ -643,7 +643,7 @@
 
                 var apiClient = connectionManager.currentApiClient();
 
-                apiClient.updateUserItemRating(apiClient.getCurrentUserId(), id, isLiked).done(resolve, reject);
+                apiClient.updateUserItemRating(apiClient.getCurrentUserId(), id, isLiked).then(resolve, reject);
             });
         });
     }
@@ -657,7 +657,7 @@
 
                 var method = isPlayed ? 'markPlayed' : 'markUnplayed';
 
-                apiClient[method](apiClient.getCurrentUserId(), id, new Date()).done(resolve, reject);
+                apiClient[method](apiClient.getCurrentUserId(), id, new Date()).then(resolve, reject);
             });
         });
     }
@@ -669,7 +669,7 @@
 
                 var apiClient = connectionManager.currentApiClient();
 
-                apiClient.updateFavoriteStatus(apiClient.getCurrentUserId(), id, isFavorite).done(resolve, reject);
+                apiClient.updateFavoriteStatus(apiClient.getCurrentUserId(), id, isFavorite).then(resolve, reject);
             });
         });
     }
@@ -682,7 +682,7 @@
 
                 var apiClient = connectionManager.currentApiClient();
 
-                apiClient.clearUserItemRating(apiClient.getCurrentUserId(), id).done(resolve, reject);
+                apiClient.clearUserItemRating(apiClient.getCurrentUserId(), id).then(resolve, reject);
             });
         });
     }

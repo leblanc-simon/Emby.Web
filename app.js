@@ -256,7 +256,6 @@
         define("connectservice", ["apiclient/connectservice"]);
         define("serverdiscovery", ["apiclient/serverdiscovery"]);
         define("wakeonlan", ["apiclient/wakeonlan"]);
-        define("webcomponentsjs", ["bower_components/webcomponentsjs/webcomponents-lite.min"]);
         define("type", ["bower_components/type/dist/type"]);
         define("Sly", ["bower_components/sly/src/sly"], function () {
             return window.Sly;
@@ -310,7 +309,6 @@
            'apiclient/store',
            'apiclient/deferred',
            'apiclient/events',
-           'apiclient/ajax',
            'apiclient/apiclient',
            'apiclient/connectionmanager'
         ];
@@ -318,10 +316,6 @@
         require(list, function (bean) {
 
             window.bean = bean;
-
-            define("httpclient", [], function () {
-                return window.HttpClient;
-            });
 
             callback();
         });
@@ -350,8 +344,8 @@
 
             list.push('screensaverManager');
 
-            if (enableWebComponents()) {
-                list.push('webcomponentsjs');
+            if (enableWebComponents() && !('registerElement' in document && 'content' in document.createElement('template'))) {
+                list.push("bower_components/webcomponentsjs/webcomponents-lite.min");
             }
 
             if (!globalScope.Promise) {
@@ -365,10 +359,6 @@
             require(list, function (page) {
 
                 window.page = page;
-
-                define("httpclient", [], function () {
-                    return window.HttpClient;
-                });
 
                 var secondLevelDeps = [];
 
