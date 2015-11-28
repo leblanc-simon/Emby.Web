@@ -115,20 +115,18 @@
                         break;
                 }
 
-                require(['httpclient'], function (httpclient) {
-                    httpclient.request({
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', Emby.PluginManager.mapPath('defaulttheme', 'home/views.' + viewName + '.html'), true);
 
-                        url: Emby.PluginManager.mapPath('defaulttheme', 'home/views.' + viewName + '.html'),
-                        type: 'GET',
-                        dataType: 'html'
+                xhr.onload = function (e) {
 
-                    }).then(function (html) {
+                    var html = this.response;
+                    loadViewHtml(page, id, html, viewName, isFirstLoad);
+                    isFirstLoad = false;
+                    resolve();
+                }
 
-                        loadViewHtml(page, id, html, viewName, isFirstLoad);
-                        isFirstLoad = false;
-                        resolve();
-                    });
-                });
+                xhr.send();
             });
         }
     }

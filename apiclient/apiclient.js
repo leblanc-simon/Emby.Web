@@ -68,8 +68,9 @@
 
             if (promise == null) {
 
-                promise = self.getUser(self.getCurrentUserId()).fail(function () {
+                promise = self.getUser(self.getCurrentUserId()).catch(function (err) {
                     currentUserPromise = null;
+                    throw err;
                 });
 
                 currentUserPromise = promise;
@@ -123,7 +124,7 @@
             name = name.split('&').join('-');
             name = name.split('?').join('-');
 
-            var val = HttpClient.param({ name: name });
+            var val = paramsToString({ name: name });
             return val.substring(val.indexOf('=') + 1).replace("'", '%27');
         };
 
@@ -132,9 +133,18 @@
             Events.trigger(self, 'requestfail', [
             {
                 url: this.url,
-                type: this.type,
                 status: e.status,
                 errorCode: e.getResponseHeader("X-Application-Error-Code")
+            }]);
+        }
+
+        function onFetchFail(url, response) {
+
+            Events.trigger(self, 'requestfail', [
+            {
+                url: url,
+                status: response.status,
+                errorCode: response.headers ? response.headers["X-Application-Error-Code"] : null
             }]);
         }
 
@@ -179,20 +189,91 @@
                 throw new Error("Request cannot be null");
             }
 
+            return self.fetch(request, includeAuthorization);
+        };
+
+        function getFetchPromise(request) {
+
+            var headers = request.headers || {};
+
+            if (request.dataType == 'json') {
+                headers.accept = 'application/json';
+            }
+
+            var fetchRequest = {
+                headers: headers,
+                method: request.type
+            };
+
+            if (request.data) {
+
+                if (typeof request.data === 'string') {
+                    fetchRequest.body = request.data;
+                }
+            }
+
+            if (request.contentType) {
+
+                headers['Content-Type'] = request.contentType;
+            }
+
+            return fetch(request.url, fetchRequest);
+        }
+
+        /**
+         * Wraps around jQuery ajax methods to add additional info to the request.
+         */
+        self.fetch = function (request, includeAuthorization) {
+
+            if (!request) {
+                throw new Error("Request cannot be null");
+            }
+
+            request.headers = request.headers || {};
+
             if (includeAuthorization !== false) {
 
-                request.headers = request.headers || {};
                 self.setRequestHeaders(request.headers);
             }
 
             if (self.enableAutomaticNetworking === false || request.type != "GET") {
                 logger.log('Requesting url without automatic networking: ' + request.url);
-                return HttpClient.send(request).fail(onRequestFail);
+
+                return getFetchPromise(request).then(function (response) {
+
+                    if (response.status < 400) {
+
+                        if (request.dataType == 'json' || request.headers.accept == 'application/json') {
+                            return response.json();
+                        } else {
+                            return response;
+                        }
+                    } else {
+                        onFetchFail(request.url, response);
+                        return Promise.reject(response);
+                    }
+
+                }, function () {
+                    onFetchFail(request.url, {});
+                    return Promise.reject({});
+                });
             }
 
-            var deferred = DeferredBuilder.Deferred();
-            self.ajaxWithFailover(request, deferred, true);
-            return deferred.promise();
+            return self.fetchWithFailover(request, true);
+        };
+
+        self.getJSON = function (url, includeAuthorization) {
+
+            return self.fetch({
+
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                headers: {
+                    accept: 'application/json'
+                }
+
+            }, includeAuthorization);
         };
 
         function switchConnectionMode(connectionMode) {
@@ -230,15 +311,15 @@
 
             var timeout = connectionMode == MediaBrowser.ConnectionMode.Local ? 7000 : 15000;
 
-            HttpClient.send({
+            fetch(url + "/system/info/public", {
 
-                type: "GET",
-                url: url + "/system/info/public",
-                dataType: "json",
+                method: 'GET',
+                accept: 'application/json'
 
-                timeout: timeout
+                // Commenting this out since the fetch api doesn't have a timeout option yet
+                //timeout: timeout
 
-            }).done(function () {
+            }).then(function () {
 
                 logger.log("Reconnect succeeded to " + url);
 
@@ -247,7 +328,7 @@
 
                 deferred.resolve();
 
-            }).fail(function () {
+            }, function () {
 
                 logger.log("Reconnect attempt failed to " + url);
 
@@ -274,50 +355,57 @@
             return deferred.promise();
         }
 
-        self.ajaxWithFailover = function (request, deferred, enableReconnection) {
+        self.fetchWithFailover = function (request, enableReconnection) {
 
             logger.log("Requesting " + request.url);
 
             request.timeout = 30000;
 
-            HttpClient.send(request).done(function (response) {
+            return getFetchPromise(request).then(function (response) {
 
-                deferred.resolve(response, 0);
+                if (response.status < 400) {
 
-            }).fail(function (e, textStatus) {
+                    if (request.dataType == 'json' || request.headers.accept == 'application/json') {
+                        return response.json();
+                    } else {
+                        return response;
+                    }
+                } else {
+                    onFetchFail(request.url, response);
+                    return Promise.reject(response);
+                }
 
-                logger.log("Request failed with textStatus " + textStatus + " to " + request.url);
+            }, function () {
 
-                var statusCode = parseInt(e.status || '0');
-                var isUserErrorCode = statusCode >= 400 && statusCode < 500;
+                logger.log("Request failed to " + request.url);
 
                 // http://api.jquery.com/jQuery.ajax/
-                if (enableReconnection && !isUserErrorCode) {
+                if (enableReconnection) {
 
                     logger.log("Attempting reconnection");
 
                     var previousServerAddress = self.serverAddress();
 
-                    tryReconnect().done(function () {
+                    tryReconnect().then(function () {
 
                         logger.log("Reconnect succeesed");
                         request.url = request.url.replace(previousServerAddress, self.serverAddress());
 
-                        self.ajaxWithFailover(request, deferred, false);
+                        self.fetchWithFailover(request, false);
 
-                    }).fail(function () {
+                    }, function () {
 
                         logger.log("Reconnect failed");
-                        onRetryRequestFail(request);
-                        deferred.reject();
+                        onFetchFail(request.url, {});
+                        return Promise.reject({});
 
                     });
                 } else {
 
                     logger.log("Reporting request failure");
 
-                    onRetryRequestFail(request);
-                    deferred.reject();
+                    onFetchFail(request.url, {});
+                    return Promise.reject({});
                 }
             });
         };
@@ -330,14 +418,20 @@
             });
         };
 
-        self.getJSON = function (url) {
+        function paramsToString(params) {
 
-            return self.ajax({
-                type: "GET",
-                url: url,
-                dataType: "json"
-            });
-        };
+            var values = [];
+
+            for (var key in params) {
+
+                var value = params[key];
+
+                if (value) {
+                    values.push(encodeURIComponent(key) + "=" + encodeURIComponent(value));
+                }
+            }
+            return values.join('&');
+        }
 
         /**
          * Creates an api url based on a handler name and query string parameters
@@ -367,7 +461,7 @@
             url += name;
 
             if (params) {
-                params = HttpClient.param(params);
+                params = paramsToString(params);
                 if (params) {
                     url += "?" + params;
                 }
@@ -509,7 +603,7 @@
 
             var now = new Date().getTime();
 
-            self.get(url).done(function () {
+            self.get(url).then(function () {
 
                 var responseTimeSeconds = (new Date().getTime() - now) / 1000;
                 var bytesPerSecond = byteSize / responseTimeSeconds;
@@ -517,7 +611,7 @@
 
                 deferred.resolveWith(null, [bitrate]);
 
-            }).fail(function () {
+            }, function () {
 
                 deferred.reject();
             });
@@ -530,24 +624,24 @@
             var deferred = DeferredBuilder.Deferred();
 
             // First try a small amount so that we don't hang up their mobile connection
-            self.getDownloadSpeed(1000000).done(function (bitrate) {
+            self.getDownloadSpeed(1000000).then(function (bitrate) {
 
                 if (bitrate < 1000000) {
                     deferred.resolveWith(null, [Math.round(bitrate * .8)]);
                 } else {
 
                     // If that produced a fairly high speed, try again with a larger size to get a more accurate result
-                    self.getDownloadSpeed(2400000).done(function (bitrate) {
+                    self.getDownloadSpeed(2400000).then(function (bitrate) {
 
                         deferred.resolveWith(null, [Math.round(bitrate * .8)]);
 
-                    }).fail(function () {
+                    }, function () {
 
                         deferred.reject();
                     });
                 }
 
-            }).fail(function () {
+            }, function () {
 
                 deferred.reject();
             });
@@ -647,7 +741,8 @@
                 return self.ajax({
                     type: "POST",
                     url: url
-                }).always(done);
+
+                }).then(done, done);
             }
 
             var deferred = DeferredBuilder.Deferred();
@@ -1102,12 +1197,7 @@
 
             var url = self.getUrl("System/Info/Public");
 
-            return self.ajax({
-                type: "GET",
-                url: url,
-                dataType: "json"
-
-            }, false);
+            return self.getJSON(url, false);
         };
 
         self.getInstantMixFromItem = function (itemId, options) {
@@ -1909,11 +1999,11 @@
                     url: url,
                     data: data,
                     contentType: "image/" + file.name.substring(file.name.lastIndexOf('.') + 1)
-                }).done(function (result) {
+                }).then(function (result) {
 
                     deferred.resolveWith(null, [result]);
 
-                }).fail(function () {
+                }, function () {
                     deferred.reject();
                 });
             };
@@ -1969,11 +2059,11 @@
                     url: url,
                     data: data,
                     contentType: "image/" + file.name.substring(file.name.lastIndexOf('.') + 1)
-                }).done(function (result) {
+                }).then(function (result) {
 
                     deferred.resolveWith(null, [result]);
 
-                }).fail(function () {
+                }, function () {
                     deferred.reject();
                 });
             };
@@ -2367,7 +2457,7 @@
                     dataType: "json",
                     contentType: "application/json"
 
-                }).done(function (result) {
+                }).then(function (result) {
 
                     if (self.onAuthenticated) {
                         self.onAuthenticated(self, result);
@@ -2375,7 +2465,7 @@
 
                     deferred.resolveWith(null, [result]);
 
-                }).fail(function () {
+                }, function () {
 
                     deferred.reject();
                 });
@@ -2410,11 +2500,11 @@
                         currentPassword: CryptoJS.SHA1(currentPassword).toString(),
                         newPassword: CryptoJS.SHA1(newPassword).toString()
                     }
-                }).done(function (result) {
+                }).then(function (result) {
 
                     deferred.resolveWith(null, [result]);
 
-                }).fail(function () {
+                }, function () {
 
                     deferred.reject();
                 });
@@ -2447,11 +2537,11 @@
                     data: {
                         newPassword: CryptoJS.SHA1(newPassword).toString()
                     }
-                }).done(function (result) {
+                }).then(function (result) {
 
                     deferred.resolveWith(null, [result]);
 
-                }).fail(function () {
+                }, function () {
 
                     deferred.reject();
                 });

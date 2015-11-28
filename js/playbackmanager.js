@@ -40,6 +40,17 @@
             return false;
         };
 
+        self.isPlayingAudio = function () {
+            if (self.isPlaying()) {
+                var playerData = getPlayerState(currentPlayer);
+                var currentItem = playerData.streamInfo.item;
+
+                return currentItem.MediaType == 'Audio';
+            }
+
+            return false;
+        };
+
         self.getPlayers = function () {
 
             var players = Emby.PluginManager.ofType('mediaplayer');
