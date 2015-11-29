@@ -48,7 +48,7 @@
 
             loading.show();
 
-            connectionManager.connect().done(function (result) {
+            connectionManager.connect().then(function (result) {
                 handleConnectionResult(result, loading);
             });
         });
@@ -66,7 +66,7 @@
                 break;
             case MediaBrowser.ConnectionState.ServerSignIn:
                 {
-                    result.ApiClient.getPublicUsers().done(function (users) {
+                    result.ApiClient.getPublicUsers().then(function (users) {
 
                         if (users.length) {
                             Emby.Page.show('/startup/login.html?serverid=' + result.Servers[0].Id);
@@ -176,7 +176,7 @@
 
             loading.show();
 
-            connectionManager.connect().done(function (result) {
+            connectionManager.connect().then(function (result) {
 
                 bindConnectionManagerEvents(connectionManager);
                 firstConnectionResult = result;
