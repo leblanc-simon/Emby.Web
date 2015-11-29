@@ -307,7 +307,6 @@
            'apiclient/credentials',
            'apiclient/device',
            'apiclient/store',
-           'apiclient/deferred',
            'apiclient/events',
            'apiclient/apiclient',
            'apiclient/connectionmanager'
