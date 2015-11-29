@@ -31,16 +31,10 @@ define(function () {
                 url = url + "?" + config.urlArgs;
             }
 
+            link.onload = load;
             link.href = url;
 
             document.head.appendChild(link);
-
-            // Unfortunately it's hard to know exactly when load is complete
-            setTimeout(function () {
-
-                load();
-
-            }, 500);
 
             return;
         }
