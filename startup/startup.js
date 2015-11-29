@@ -17,7 +17,7 @@
             element.querySelector('.btnWelcomeNext').addEventListener('click', function () {
 
                 require(['loading', 'connectionManager'], function (loading, connectionManager) {
-                    connectionManager.connect().done(function (result) {
+                    connectionManager.connect().then(function (result) {
 
                         loading.hide();
 
@@ -114,7 +114,7 @@
 
                     loading.show();
 
-                    connectionManager.connectToAddress(address).done(function (result) {
+                    connectionManager.connectToAddress(address).then(function (result) {
 
                         loading.hide();
 
@@ -172,7 +172,7 @@
 
                     loading.show();
 
-                    connectionManager.connect().done(function (result) {
+                    connectionManager.connect().then(function (result) {
 
                         loading.hide();
 
@@ -212,13 +212,13 @@
 
             loading.show();
 
-            connectionManager.loginToConnect(username, password).done(function () {
+            connectionManager.loginToConnect(username, password).then(function () {
 
                 loading.hide();
 
                 Emby.Page.show('/startup/selectserver.html');
 
-            }).fail(function () {
+            }, function () {
 
                 loading.hide();
 
@@ -254,7 +254,7 @@
                     require(['loading'], function (loading) {
 
                         loading.show();
-                        result.ApiClient.getPublicUsers().done(function (users) {
+                        result.ApiClient.getPublicUsers().then(function (users) {
                             loading.hide();
 
                             if (users.length) {
@@ -309,12 +309,12 @@
             loading.show();
 
             var apiClient = connectionManager.getApiClient(serverId);
-            apiClient.getPublicUsers().done(function (result) {
+            apiClient.getPublicUsers().then(function (result) {
 
                 renderLoginUsers(element, apiClient, result, serverId, !isRestored);
                 element.querySelector('.pageHeader').classList.remove('hide');
 
-            }).fail(function (result) {
+            }, function (result) {
 
                 renderLoginUsers(element, apiClient, [], serverId, !isRestored);
             });
@@ -506,13 +506,13 @@
             loading.show();
 
             var apiClient = connectionManager.getApiClient(serverId);
-            apiClient.authenticateUserByName(username, password).done(function (result) {
+            apiClient.authenticateUserByName(username, password).then(function (result) {
 
                 loading.hide();
 
                 onServerUserSignedIn(view);
 
-            }).fail(function (result) {
+            }, function (result) {
 
                 loading.hide();
 
@@ -540,13 +540,13 @@
 
             loading.show();
 
-            connectionManager.getAvailableServers().done(function (result) {
+            connectionManager.getAvailableServers().then(function (result) {
 
                 servers = result;
                 renderSelectServerItems(element, result, !isRestored);
                 element.querySelector('.pageHeader').classList.remove('hide');
 
-            }).fail(function (result) {
+            }, function (result) {
 
                 servers = [];
                 renderSelectServerItems(element, [], !isRestored);
@@ -574,7 +574,7 @@
                                 return s.Id == id;
                             })[0];
 
-                            connectionManager.connectToServer(server).done(function (result) {
+                            connectionManager.connectToServer(server).then(function (result) {
 
                                 loading.hide();
                                 handleConnectionResult(result, element);

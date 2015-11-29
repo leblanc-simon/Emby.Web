@@ -292,7 +292,7 @@
             getPlayerState(mediaRenderer).isChangingStream = true;
 
             if (getPlayerState(mediaRenderer).MediaType == "Video") {
-                apiClient.stopActiveEncodings(playSessionId).done(function () {
+                apiClient.stopActiveEncodings(playSessionId).then(function () {
 
                     setSrcIntoRenderer(apiClient, mediaRenderer, streamInfo);
 
@@ -584,7 +584,7 @@
             fn();
 
             //requirejs(["scripts/registrationservices"], function () {
-            //    RegistrationServices.validateFeature('playback').done(fn);
+            //    RegistrationServices.validateFeature('playback').then(fn);
             //});
         }
 
@@ -732,7 +732,7 @@
 
                 if (item.MediaType == 'Video' && appSettings.enableAutomaticBitrateDetection() && (new Date().getTime() - lastBitrateDetect) > 300000) {
 
-                    apiClient.detectBitrate().done(function (bitrate) {
+                    apiClient.detectBitrate().then(function (bitrate) {
 
                         Logger.log('Max bitrate auto detected to ' + bitrate);
                         lastBitrateDetect = new Date().getTime();

@@ -489,7 +489,7 @@
 
             loading.show();
 
-            connectionManager.logout().done(function () {
+            connectionManager.logout().then(function () {
                 Emby.Page.redirectToLogin();
             });
         });
