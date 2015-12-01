@@ -223,8 +223,8 @@
             paths: paths,
             map: {
                 '*': {
-                    'css': 'js/require/requirecss',
-                    'html': 'js/require/requirehtml'
+                    'css': 'components/requirecss',
+                    'html': 'components/requirehtml'
                 }
             },
             shim: {

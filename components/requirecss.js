@@ -52,9 +52,9 @@ define(function () {
 
             link.setAttribute('rel', 'stylesheet');
             link.setAttribute('type', 'text/css');
+            link.onload = load;
             link.setAttribute('href', url + "?" + config.urlArgs);
             document.head.appendChild(link);
-            setTimeout(load, 100);
         } else {
             load();
         }
