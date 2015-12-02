@@ -46,6 +46,8 @@
 
             url += url.indexOf('?') == -1 ? '?' : '&';
             url += 'v=' + cacheParam;
+
+            return url;
         };
     }
 
