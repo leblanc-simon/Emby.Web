@@ -33,17 +33,39 @@ define(['cryptojs-sha1'], function () {
             // Web-based implementation can't really do much
             return false;
         },
-        appName: function () {
-            return 'Emby Theater';
-        },
-        appVersion: function () {
-            return '3.0';
-        },
-        deviceName: function () {
-            return 'Web Browser';
-        },
-        deviceId: function () {
-            return MediaBrowser.generateDeviceId();
+        appInfo: function () {
+
+            return new Promise(function (resolve, reject) {
+
+                var deviceName = "Web Browser";
+
+                function onDeviceAdAcquired(id) {
+
+                    resolve({
+                        deviceId: id,
+                        deviceName: deviceName,
+                        appName: 'Emby Theater',
+                        appVersion: '3.0'
+                    });
+                }
+
+                var deviceId = appStorage.getItem('_deviceId');
+
+                if (deviceId) {
+                    onDeviceAdAcquired(deviceId);
+                } else {
+                    require(['cryptojs-sha1'], function () {
+                        var keys = [];
+                        keys.push(navigator.userAgent);
+                        keys.push((navigator.cpuClass || ""));
+
+                        var randomId = CryptoJS.SHA1(keys.join('|')).toString();
+                        appStorage.setItem('_deviceId', randomId);
+                        onDeviceAdAcquired(randomId);
+                    });
+                }
+            });
+
         },
         capabilities: getCapabilities
     };

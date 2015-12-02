@@ -164,13 +164,17 @@
                 if (window.location.href.indexOf('clear=1') != -1) {
                     credentialProvider.clear();
                 }
-                connectionManager = new MediaBrowser.ConnectionManager(Logger, credentialProvider, apphost.appName(), apphost.appVersion(), apphost.deviceName(), apphost.deviceId(), getCapabilities(apphost));
 
-                define('connectionManager', [], function () {
-                    return connectionManager;
+                apphost.appInfo().then(function (appInfo) {
+
+                    connectionManager = new MediaBrowser.ConnectionManager(Logger, credentialProvider, appInfo.appName, appInfo.appVersion, appInfo.deviceName, appInfo.deviceId, getCapabilities(apphost));
+
+                    define('connectionManager', [], function () {
+                        return connectionManager;
+                    });
+
+                    resolve();
                 });
-
-                resolve();
             });
         });
     }
@@ -253,6 +257,7 @@
         define("videoplayerosd", ["components/videoplayerosd"]);
 
         define("cryptojs-sha1", ["apiclient/sha1"]);
+        define("cryptojs-md5", ["apiclient/md5"]);
         define("connectservice", ["apiclient/connectservice"]);
         define("serverdiscovery", ["apiclient/serverdiscovery"]);
         define("wakeonlan", ["apiclient/wakeonlan"]);
@@ -303,9 +308,7 @@
         var list = [
            'bower_components/bean/bean.min',
            'apiclient/logger',
-           'apiclient/md5',
            'apiclient/credentials',
-           'apiclient/device',
            'apiclient/store',
            'apiclient/events',
            'apiclient/apiclient',
