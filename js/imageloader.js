@@ -37,7 +37,6 @@
         var images = elems;
 
         unveilId++;
-        var eventNamespace = 'unveil' + unveilId;
 
         function unveil() {
 
