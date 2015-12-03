@@ -342,8 +342,11 @@ define([], function () {
             }
         }
 
-        function onPlaybackStop() {
-            document.querySelector('.headerAudioPlayerButton').classList.add('hide');
+        function onPlaybackStop(e, stopInfo) {
+
+            if (stopInfo.nextMediaType != 'Audio') {
+                document.querySelector('.headerAudioPlayerButton').classList.add('hide');
+            }
         }
 
         function onLocalUserSignedIn(e) {

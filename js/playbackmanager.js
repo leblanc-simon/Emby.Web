@@ -166,7 +166,7 @@
         self.stop = function () {
             if (currentPlayer) {
                 playNextAfterEnded = false;
-                currentPlayer.stop(true);
+                currentPlayer.stop(true, true);
             }
         };
 
@@ -754,10 +754,13 @@
         function playAfterBitrateDetect(apiClient, maxBitrate, item, startPosition, callback) {
 
             var player = getPlayer(item);
+            var activePlayer = currentPlayer;
 
-            if (currentPlayer) {
+            if (activePlayer) {
+
+                // TODO: if changing players within the same playlist, this will cause nextItem to be null
                 playNextAfterEnded = false;
-                currentPlayer.stop(false);
+                onPlaybackChanging(activePlayer, player, item);
             }
 
             player.getDeviceProfile().then(function (deviceProfile) {
@@ -1195,7 +1198,7 @@
             return repeatMode;
         };
 
-        self.nextTrack = function () {
+        function getNextItemInfo() {
 
             var newIndex;
 
@@ -1215,14 +1218,28 @@
                     break;
             }
 
-            var newItem = playlist[newIndex];
+            var item = playlist[newIndex];
 
-            if (newItem) {
+            if (!item) {
+                null;
+            }
+
+            return {
+                item: item,
+                index: newIndex
+            };
+        }
+
+        self.nextTrack = function () {
+
+            var newItemInfo = getNextItemInfo();
+
+            if (newItemInfo) {
 
                 Logger.log('playing next track');
 
-                playInternal(newItem, 0, function () {
-                    setPlaylistState(newIndex);
+                playInternal(newItemInfo.item, 0, function () {
+                    setPlaylistState(newItemInfo.index);
                 });
             }
         };
@@ -1294,23 +1311,67 @@
                 return;
             }
 
+            // User clicked stop or content ended
             var state = getPlayerStateInternal(player);
 
             reportPlayback(state, getPlayerState(player).streamInfo.item.ServerId, 'reportPlaybackStopped');
 
             clearProgressInterval(player);
 
-            Events.trigger(self, 'playbackstop', [player]);
+            var nextItem = playNextAfterEnded ? getNextItemInfo() : null;
 
-            if (playNextAfterEnded) {
-                self.nextTrack();
-            } else {
+            Events.trigger(self, 'playbackstop', [
+            {
+                player: player,
+                state: state,
+                nextItem: (nextItem ? nextItem.item : null),
+                nextMediaType: (nextItem ? nextItem.item.MediaType : null)
+            }]);
+
+            var newPlayer = nextItem ? getPlayer(nextItem.item) : null;
+
+            if (newPlayer != player) {
                 player.destroy();
-
-                if (player == currentPlayer) {
-                    currentPlayer = null;
-                }
             }
+
+            if (player == currentPlayer) {
+                currentPlayer = null;
+            }
+
+            if (nextItem) {
+                self.nextTrack();
+            }
+        }
+
+        function onPlaybackChanging(activePlayer, newPlayer, newItem) {
+
+            var state = getPlayerStateInternal(activePlayer);
+            var serverId = getPlayerState(activePlayer).streamInfo.item.ServerId;
+
+            // User started playing something new while existing content is playing
+
+            if (activePlayer == newPlayer) {
+
+                // If we're staying with the same player, stop it
+                activePlayer.stop(false, false);
+
+            } else {
+
+                // If we're switching players, tear down the current one
+                activePlayer.stop(true, false);
+            }
+
+            reportPlayback(state, serverId, 'reportPlaybackStopped');
+
+            clearProgressInterval(activePlayer);
+
+            Events.trigger(self, 'playbackstop', [
+            {
+                player: activePlayer,
+                state: state,
+                nextItem: newItem,
+                nextMediaType: newItem.MediaType
+            }]);
         }
 
         Events.on(Emby.PluginManager, 'registered', function (e, plugin) {

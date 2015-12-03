@@ -25,7 +25,7 @@
             setCurrentItem(Emby.PlaybackManager.currentItem(player));
         }
 
-        function onPlaybackStop(e, player) {
+        function onPlaybackStop(e) {
             setCurrentItem(null);
         }
 

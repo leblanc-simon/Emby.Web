@@ -71,7 +71,7 @@ define([], function () {
             return null;
         };
 
-        self.stop = function (destroyPlayer) {
+        self.stop = function (destroyPlayer, reportEnded) {
 
             cancelFadeTimeout();
 
@@ -80,14 +80,12 @@ define([], function () {
 
             if (elem && src) {
 
-                if (elem.paused) {
-                    onEnded();
-                    return;
-                }
-
                 if (!destroyPlayer) {
-                    elem.pause();
-                    onEnded();
+
+                    if (!elem.paused) {
+                        elem.pause();
+                    }
+                    onEndedInternal(reportEnded);
                     return;
                 }
 
@@ -100,7 +98,7 @@ define([], function () {
                     }
 
                     elem.volume = originalVolume;
-                    onEnded();
+                    onEndedInternal(reportEnded);
                 });
             }
         };
@@ -182,11 +180,19 @@ define([], function () {
 
         function onEnded() {
 
-            var stopInfo = {
-                src: currentSrc
-            };
+            onEndedInternal(true);
+        }
 
-            Events.trigger(self, 'stopped', [stopInfo]);
+        function onEndedInternal(triggerEnded) {
+
+            if (triggerEnded) {
+                var stopInfo = {
+                    src: currentSrc
+                };
+
+                Events.trigger(self, 'stopped', [stopInfo]);
+            }
+
             currentSrc = null;
         }
 

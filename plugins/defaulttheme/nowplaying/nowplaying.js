@@ -66,9 +66,14 @@
             setCurrentItem(Emby.PlaybackManager.currentItem(player));
         }
 
-        function onPlaybackStop(e, player) {
+        function onPlaybackStop(e, stopInfo) {
+
             releasePlayer();
             setCurrentItem(null);
+
+            if (stopInfo.nextMediaType != 'Audio') {
+                Emby.Page.back();
+            }
         }
 
         function bindToPlayer(player) {
@@ -237,7 +242,6 @@
         view.querySelector('.btnStop').addEventListener('click', function () {
 
             Emby.PlaybackManager.stop();
-            Emby.Page.back();
         });
 
         view.querySelector('.btnNextTrack').addEventListener('click', function () {
