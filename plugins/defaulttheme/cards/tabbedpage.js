@@ -132,7 +132,20 @@
 
         function trySelectValue(value) {
 
-            var card = contentScrollSlider.querySelector('.card[data-prefix^=\'' + value + '\']');
+            var card;
+
+            // If it's the symbol just pick the first card
+            if (value == '#') {
+
+                card = contentScrollSlider.querySelector('.card');
+
+                if (card) {
+                    self.bodySlyFrame.toCenter(card, false);
+                    return;
+                }
+            }
+
+            card = contentScrollSlider.querySelector('.card[data-prefix^=\'' + value + '\']');
 
             if (card) {
                 self.bodySlyFrame.toCenter(card, false);

@@ -165,7 +165,7 @@ define([], function () {
             return null;
         };
 
-        self.stop = function (destroyPlayer) {
+        self.stop = function (destroyPlayer, reportEnded) {
 
             var elem = mediaElement;
             var src = currentSrc;
@@ -176,7 +176,7 @@ define([], function () {
 
                 destroyHlsPlayer();
 
-                onEnded();
+                onEndedInternal(reportEnded);
 
                 if (destroyPlayer) {
                     self.destroy();
@@ -279,11 +279,19 @@ define([], function () {
 
         function onEnded() {
 
-            var stopInfo = {
-                src: currentSrc
-            };
+            onEndedInternal(true);
+        }
 
-            Events.trigger(self, 'stopped', [stopInfo]);
+        function onEndedInternal(triggerEnded) {
+
+            if (triggerEnded) {
+                var stopInfo = {
+                    src: currentSrc
+                };
+
+                Events.trigger(self, 'stopped', [stopInfo]);
+            }
+
             currentSrc = null;
         }
 

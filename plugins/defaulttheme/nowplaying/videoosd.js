@@ -17,9 +17,13 @@
             enableStopOnBack(true);
         }
 
-        function onPlaybackStop(e, player) {
+        function onPlaybackStop(e, stopInfo) {
             //releasePlayer();
             //setCurrentItem(null);
+
+            if (stopInfo.nextMediaType != 'Video') {
+                Emby.Page.back();
+            }
         }
 
         view.addEventListener('viewshow', function (e) {
