@@ -127,10 +127,24 @@
 
             var value = pageOptions.alphaPicker.value();
 
+            trySelectValue(value);
+        }
+
+        function trySelectValue(value) {
+
             var card = contentScrollSlider.querySelector('.card[data-prefix^=\'' + value + '\']');
 
             if (card) {
                 self.bodySlyFrame.toCenter(card, false);
+                return;
+            }
+
+            // go to the previous letter
+            var values = pageOptions.alphaPicker.values();
+            var index = values.indexOf(value);
+
+            if (index > 0) {
+                trySelectValue(values[index - 1]);
             }
         }
 

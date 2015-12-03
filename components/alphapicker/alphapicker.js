@@ -200,6 +200,19 @@ define(['css!components/alphapicker/style.css'], function () {
             return currentValue;
         };
 
+        self.values = function () {
+
+            var elems = element.querySelectorAll('.alphaPickerButton');
+            var values = [];
+            for (var i = 0, length = elems.length; i < length; i++) {
+
+                values.push(elems[i].getAttribute('data-value'));
+
+            }
+
+            return values;
+        };
+
         self.focus = function () {
             Emby.FocusManager.autoFocus(element, true);
         };
