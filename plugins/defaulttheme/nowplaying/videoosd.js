@@ -41,7 +41,12 @@
         });
 
         function onViewHideStopPlayback() {
+
             if (Emby.PlaybackManager.isPlayingVideo()) {
+
+                // Unbind this event so that we don't go back twice
+                Events.off(Emby.PlaybackManager, 'playbackstop', onPlaybackStop);
+
                 Emby.PlaybackManager.stop();
             }
         }
