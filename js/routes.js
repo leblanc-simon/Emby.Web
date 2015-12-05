@@ -184,8 +184,7 @@
                 loading.hide();
 
                 page({
-                    click: false,
-                    hashbang: true
+                    click: false
                 });
             });
         });
