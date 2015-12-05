@@ -132,12 +132,11 @@
 
         cancelCurrentLoadRequest();
 
-        var url = window.location.href;
         var isBackNav = ctx.isBack;
 
         var currentRequest = {
             id: route.id,
-            url: url,
+            url: baseUrl() + ctx.path,
             transition: route.transition,
             isBack: isBackNav,
             state: ctx.state,
@@ -164,7 +163,10 @@
         viewManager.tryRestoreView(currentRequest).then(function () {
 
             // done
-            currentRoute = route;
+            currentRouteInfo = {
+                route: route,
+                path: ctx.path
+            };
 
         }, onNewViewNeeded);
     }
@@ -323,7 +325,11 @@
         request.view = html;
 
         viewManager.loadView(request);
-        currentRoute = route;
+
+        currentRouteInfo = {
+            route: route,
+            path: ctx.path
+        };
         //next();
 
         ctx.handled = true;
@@ -343,20 +349,15 @@
         };
     }
 
-    function getWindowUrl(win) {
-        return (win || window).location.href;
-    }
-
     function getWindowLocationSearch(win) {
 
-        var search = (win || window).location.search;
+        var currentPath = currentRouteInfo ? (currentRouteInfo.path || '') : '';
 
-        if (!search) {
+        var index = currentPath.indexOf('?');
+        var search = '';
 
-            var index = window.location.href.indexOf('?');
-            if (index != -1) {
-                search = window.location.href.substring(index);
-            }
+        if (index != -1) {
+            search = currentPath.substring(index);
         }
 
         return search || '';
@@ -377,7 +378,7 @@
     function back() {
 
         if (canGoBack()) {
-            history.back();
+            page.back();
 
         } else {
 
@@ -404,7 +405,7 @@
         if (curr.type == 'home') {
             return false;
         }
-        return history.length > 1;
+        return page.canGoBack();
     }
     function show(path, options) {
 
@@ -413,7 +414,7 @@
             var baseRoute = Emby.Page.baseUrl();
             path = path.replace(baseRoute, '');
 
-            if (currentRoute && currentRoute.path == path) {
+            if (currentRouteInfo && currentRouteInfo.path == path) {
                 resolve();
                 return;
             }
@@ -423,9 +424,9 @@
         });
     }
 
-    var currentRoute;
+    var currentRouteInfo;
     function current() {
-        return currentRoute;
+        return currentRouteInfo ? currentRouteInfo.route : null;
     }
 
     if (!globalScope.Emby) {
@@ -489,7 +490,7 @@
     }
 
     function addRoute(path, newRoute) {
-        
+
         page(path, getHandler(newRoute));
     }
 
