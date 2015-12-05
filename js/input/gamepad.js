@@ -1,4 +1,4 @@
-require(['inputmanager'], function (inputmanager) {
+require(['inputmanager', 'components/PxGamepad'], function (inputmanager) {
 
     function notifyApp() {
 
@@ -10,57 +10,54 @@ require(['inputmanager'], function (inputmanager) {
         inputmanager.handle(name);
     }
 
-    require(['components/gamepad'], function () {
+    var pxgamepad = new PxGamepad();
 
-        var gamepad = new Gamepad();
+    function onUpdateTick() {
 
-        console.log('Gamepad input supported: ' + gamepad.init());
+        pxgamepad.update();
+        requestAnimationFrame(onUpdateTick);
+    }
 
-        gamepad.bind(Gamepad.Event.BUTTON_DOWN, function (e) {
+    requestAnimationFrame(onUpdateTick);
 
-            //'LEFT_TOP_SHOULDER', 'RIGHT_TOP_SHOULDER', 'LEFT_BOTTOM_SHOULDER', 'RIGHT_BOTTOM_SHOULDER',
-            //'SELECT_BACK', 'START_FORWARD', 'LEFT_STICK', 'RIGHT_STICK',
-            //'DPAD_UP', 'DPAD_DOWN', 'DPAD_LEFT', 'DPAD_RIGHT',
-            //'HOME'
+    pxgamepad.on('dpadUp', function () {
+        sendCommand('up');
+    });
 
-            switch (e.control) {
+    pxgamepad.on('dpadDown', function () {
+        sendCommand('down');
+    });
 
-                case 'DPAD_LEFT':
-                    // left
-                    sendCommand('left');
-                    break;
-                case 'DPAD_UP':
-                    // up
-                    sendCommand('up');
-                    break;
-                case 'DPAD_RIGHT':
-                    // right
-                    sendCommand('right');
-                    break;
-                case 'DPAD_DOWN':
-                    // down
-                    sendCommand('down');
-                    break;
-                case 'HOME':
-                    sendCommand('home');
-                    break;
-                case 'FACE_1':
-                case 'FACE_3':
-                case 'SELECT_BACK':
-                    sendCommand('back');
-                    break;
-                case 'FACE_2':
-                case 'FACE_4':
-                case 'START_FORWARD':
-                    sendCommand('select');
-                    break;
-                default:
-                    // No command will be executed, but notify the app that input was received
-                    notifyApp();
-                    break;
-            }
-        });
+    pxgamepad.on('dpadLeft', function () {
+        sendCommand('left');
+    });
 
+    pxgamepad.on('dpadRight', function () {
+        sendCommand('right');
+    });
+
+    pxgamepad.on('select', function () {
+        sendCommand('back');
+    });
+
+    pxgamepad.on('x', function () {
+        sendCommand('back');
+    });
+
+    pxgamepad.on('y', function () {
+        sendCommand('back');
+    });
+
+    pxgamepad.on('start', function () {
+        sendCommand('select');
+    });
+
+    pxgamepad.on('a', function () {
+        sendCommand('select');
+    });
+
+    pxgamepad.on('b', function () {
+        sendCommand('select');
     });
 
 });
