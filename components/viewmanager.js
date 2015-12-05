@@ -1,51 +1,66 @@
-define(['viewcontainer'], function (viewcontainer) {
+define(['viewcontainer', 'bower_components/query-string/index'], function (viewcontainer) {
 
     var currentView;
 
-    viewcontainer.setOnBeforeChange(function () {
-        dispatchViewHide('viewbeforehide');
+    viewcontainer.setOnBeforeChange(function (newView, options) {
+
+        var lastView = currentView;
+        if (lastView) {
+            dispatchViewEvent(lastView, 'viewbeforehide');
+        }
+
+        if (!newView.initComplete) {
+            newView.initComplete = true;
+
+            var viewId = options.id;
+            var url = options.url;
+            var state = options.state;
+
+            var eventDetail = getViewEventDetail(newView, url, state, false);
+
+            newView.dispatchEvent(new CustomEvent("viewinit-" + viewId, eventDetail));
+        }
+
+        dispatchViewEvent(newView, 'viewbeforeshow');
     });
 
-    function onViewChange(view, viewId, viewType, url, state, isRestore) {
+    function onViewChange(view, options, isRestore) {
 
-        dispatchViewHide('viewhide');
+        var viewId = options.id;
+        var viewType = options.type;
+        var url = options.url;
+        var state = options.state;
+
+        var lastView = currentView;
+        if (lastView) {
+            dispatchViewEvent(lastView, 'viewhide');
+        }
 
         currentView = view;
 
-        require(['bower_components/query-string/index'], function () {
+        var eventDetail = getViewEventDetail(view, url, state, isRestore);
 
-            var eventDetail = getViewEventDetail(view, url, state, isRestore);
+        if (!isRestore) {
+            Emby.FocusManager.autoFocus(view);
+        }
+        else if (view.activeElement) {
+            view.activeElement.focus();
+        }
 
-            if (!isRestore) {
-                view.dispatchEvent(new CustomEvent("viewinit-" + viewId, eventDetail));
-            }
-
-            if (!isRestore) {
-                Emby.FocusManager.autoFocus(view);
-            }
-            else if (view.activeElement) {
-                view.activeElement.focus();
-            }
-
-            view.dispatchEvent(new CustomEvent("viewshow-" + viewId, eventDetail));
-            view.dispatchEvent(new CustomEvent("viewshow", eventDetail));
-        });
+        view.dispatchEvent(new CustomEvent("viewshow-" + viewId, eventDetail));
+        view.dispatchEvent(new CustomEvent("viewshow", eventDetail));
     }
 
-    function dispatchViewHide(eventName) {
+    function dispatchViewEvent(view, eventName) {
 
-        var lastView = currentView;
-
-        if (lastView) {
-            lastView.dispatchEvent(new CustomEvent(eventName, {
-                detail: {
-                    id: lastView.getAttribute('data-id'),
-                    type: lastView.getAttribute('data-type')
-                },
-                bubbles: true,
-                cancelable: false
-            }));
-        }
+        view.dispatchEvent(new CustomEvent(eventName, {
+            detail: {
+                id: view.getAttribute('data-id'),
+                type: view.getAttribute('data-type')
+            },
+            bubbles: true,
+            cancelable: false
+        }));
     }
 
     function getViewEventDetail(view, url, state, isRestore) {
@@ -83,7 +98,7 @@ define(['viewcontainer'], function (viewcontainer) {
 
         viewcontainer.tryRestoreView(options).then(function (view) {
 
-            onViewChange(view, options.id, options.type, options.url, options.state, true);
+            onViewChange(view, options, true);
             resolve();
 
         }, reject);
@@ -108,7 +123,7 @@ define(['viewcontainer'], function (viewcontainer) {
 
             viewcontainer.loadView(options).then(function (view) {
 
-                onViewChange(view, options.id, options.type, options.url, options.state);
+                onViewChange(view, options);
             });
         };
 

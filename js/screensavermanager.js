@@ -92,11 +92,11 @@ define([], function () {
                 return;
             }
 
-            require(['inputreceiver'], function (inputreceiver) {
+            require(['inputmanager'], function (inputmanager) {
 
                 var minIdleTime = getMinIdleTime();
 
-                if (minIdleTime > inputreceiver.idleTime()) {
+                if (minIdleTime > inputmanager.idleTime()) {
                     return;
                 }
 

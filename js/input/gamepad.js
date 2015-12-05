@@ -1,30 +1,13 @@
-(function (document) {
+require(['inputmanager'], function (inputmanager) {
 
-    var inputreceiver;
     function notifyApp() {
 
-        if (inputreceiver) {
-            inputreceiver.notify();
-            return;
-        }
-
-        require(['inputreceiver'], function (inputReceiverInstance) {
-            inputreceiver = inputReceiverInstance;
-            inputreceiver.notify();
-        });
+        inputmanager.notify();
     }
 
     function sendCommand(name) {
 
-        if (inputreceiver) {
-            inputreceiver.handle(name);
-            return;
-        }
-
-        require(['inputreceiver'], function (inputReceiverInstance) {
-            inputreceiver = inputReceiverInstance;
-            inputreceiver.handle(name);
-        });
+        inputmanager.handle(name);
     }
 
     require(['components/gamepad'], function () {
@@ -80,4 +63,4 @@
 
     });
 
-})(document);
+});

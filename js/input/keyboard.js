@@ -1,17 +1,8 @@
-(function (globalScope) {
+require(['inputmanager'], function (inputmanager) {
 
-    var inputreceiver;
     function notifyApp() {
 
-        if (inputreceiver) {
-            inputreceiver.notify();
-            return;
-        }
-
-        require(['inputreceiver'], function (inputReceiverInstance) {
-            inputreceiver = inputReceiverInstance;
-            inputreceiver.notify();
-        });
+        inputmanager.notify();
     }
 
     function sendCommand(name, sourceElement) {
@@ -20,16 +11,10 @@
             sourceElement: sourceElement
         };
 
-        if (inputreceiver) {
-            inputreceiver.handle(name, options);
-            return;
-        }
-
-        require(['inputreceiver'], function (inputReceiverInstance) {
-            inputreceiver = inputReceiverInstance;
-            inputreceiver.handle(name, options);
-        });
+        inputmanager.handle(name, options);
     }
+
+    var globalScope = window;
 
     // Support opera tv aliases
     // https://dev.opera.com/tv/functional-key-handling-in-opera-tv-store-applications
@@ -258,4 +243,4 @@
 
     });
 
-})(this, document);
+});

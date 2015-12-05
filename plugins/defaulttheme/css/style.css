@@ -87,11 +87,13 @@ a {
     border-radius: 1000px;
 }
 
-.headerContainer {
+.themeHeader {
     position: fixed;
     top: 3%;
-    left: 2.3%;
-    right: 2.3%;
+    left: 0;
+    right: 0;
+    padding-left: 2.3%;
+    padding-right: 2.3%;
     display: flex;
     align-items: center;
 }
