@@ -61,7 +61,7 @@
 
         getThemeHeader(theme).then(function (headerHtml) {
 
-            document.querySelector('.mainHeader').innerHTML = headerHtml;
+            document.querySelector('.themeHeader').innerHTML = headerHtml;
 
             //document.querySelector('.themeContent').innerHTML = theme.getPageContent();
             currentTheme = theme;

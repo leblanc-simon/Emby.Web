@@ -201,7 +201,7 @@
             tvguide: "components/tvguide/guide",
             actionsheet: "components/actionsheet",
             playmenu: "components/playmenu",
-            inputreceiver: "components/inputreceiver",
+            inputmanager: "components/inputmanager",
             alphapicker: "components/alphapicker/alphapicker",
             paperdialoghelper: "components/paperdialoghelper",
             slideshow: "components/slideshow/slideshow",

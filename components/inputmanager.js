@@ -18,6 +18,17 @@ define([], function () {
         }
     }
 
+    var eventListenerCount = 0;
+    function on(fn) {
+        eventListenerCount++;
+        Events.on(inputManager, 'command', fn);
+    }
+
+    function off(fn) {
+        eventListenerCount--;
+        Events.off(inputManager, 'command', fn);
+    }
+
     function handleCommand(name, options) {
 
         notify();
@@ -108,13 +119,24 @@ define([], function () {
             default:
                 break;
         }
+
+        if (eventListenerCount) {
+            Events.trigger(inputManager, 'command', [
+            {
+                command: name
+            }]);
+        }
     }
 
     document.addEventListener('click', notify);
 
-    return {
+    var inputManager = {
         handle: handleCommand,
         notify: notify,
-        idleTime: idleTime
+        idleTime: idleTime,
+        on: on,
+        off: off
     };
+
+    return inputManager;
 });

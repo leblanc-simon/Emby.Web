@@ -21,10 +21,6 @@ define([], function () {
                     return;
                 }
 
-                if (onBeforeChange) {
-                    onBeforeChange();
-                }
-
                 var selected = animatedPages.selected;
                 var pageIndex = selected == null ? 0 : (selected + 1);
 
@@ -46,9 +42,13 @@ define([], function () {
 
                 animatable.innerHTML = html;
 
-                animatedPages.selected = pageIndex;
-
                 var view = animatable.querySelector('.page-view');
+
+                if (onBeforeChange) {
+                    onBeforeChange(view, options);
+                }
+
+                animatedPages.selected = pageIndex;
 
                 sendResolve(resolve, view);
             });
@@ -200,8 +200,11 @@ define([], function () {
                             return;
                         }
 
+                        var animatable = animatedPages.querySelectorAll('.mainAnimatedPage')[index];
+                        var view = animatable.querySelector('.page-view');
+
                         if (onBeforeChange) {
-                            onBeforeChange();
+                            onBeforeChange(view, options);
                         }
 
                         animatedPages.selected = index;

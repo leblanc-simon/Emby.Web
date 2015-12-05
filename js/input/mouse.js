@@ -1,4 +1,4 @@
-(function (document) {
+require(['inputmanager'], function (inputmanager) {
 
     var lastMouseInputTime = new Date().getTime();
     var isMouseIdle;
@@ -7,25 +7,15 @@
         return new Date().getTime() - lastMouseInputTime;
     }
 
+    function notifyApp() {
+
+        inputmanager.notify();
+    }
+
     var lastMouseMoveData = {
         x: 0,
         y: 0
     };
-
-    var inputreceiver;
-    function notifyApp() {
-
-        if (inputreceiver) {
-            inputreceiver.notify();
-            return;
-        }
-
-        require(['inputreceiver'], function (inputReceiverInstance) {
-            inputreceiver = inputReceiverInstance;
-            inputreceiver.notify();
-        });
-    }
-
     document.addEventListener('mousemove', function (e) {
 
         var obj = lastMouseMoveData;
@@ -108,4 +98,4 @@
 
     }, 5000);
 
-})(document);
+});

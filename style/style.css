@@ -13,11 +13,7 @@
     height: 100%;
 }
 
-.mainHeader {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
+.themeHeader {
     /* This will ensure it is on top of the main body */
     z-index: 1;
 }

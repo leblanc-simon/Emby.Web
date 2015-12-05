@@ -312,7 +312,6 @@ define([], function () {
 
                 Emby.Page.showVideoOsd().then(function () {
 
-                    Emby.Page.setHeaderVisible(false);
                     Emby.Page.transparencyEnabled(true);
                     videoDialog.classList.add('loaded');
                 });

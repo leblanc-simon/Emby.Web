@@ -477,10 +477,10 @@
     function setHeaderVisible(visible) {
 
         if (visible) {
-            document.querySelector('.mainHeader').classList.remove('hide');
+            document.querySelector('.themeHeader').classList.remove('hide');
 
         } else {
-            document.querySelector('.mainHeader').classList.add('hide');
+            document.querySelector('.themeHeader').classList.add('hide');
         }
     }
 
@@ -516,7 +516,6 @@
     document.addEventListener('viewshow', function (e) {
 
         if (e.detail.type == 'video-osd') {
-            Emby.Page.setHeaderVisible(false);
             Emby.Backdrop.clear(true);
         }
     });
@@ -524,7 +523,6 @@
     document.addEventListener('viewhide', function (e) {
 
         if (e.detail.type == 'video-osd') {
-            Emby.Page.setHeaderVisible(true);
 
             if (transparencyEnabled()) {
                 Emby.Backdrop.externalBackdrop(true);

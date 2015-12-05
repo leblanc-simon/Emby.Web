@@ -740,7 +740,7 @@
 
                         playAfterBitrateDetect(apiClient, bitrate, item, startPosition, callback);
 
-                    }).fail(function () {
+                    }, function () {
 
                         playAfterBitrateDetect(apiClient, appSettings.maxStreamingBitrate(), item, startPosition, callback);
                     });

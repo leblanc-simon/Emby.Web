@@ -156,8 +156,15 @@
             var values = pageOptions.alphaPicker.values();
             var index = values.indexOf(value);
 
-            if (index > 0) {
-                trySelectValue(values[index - 1]);
+            if (index < values.length - 2) {
+                trySelectValue(values[index + 1]);
+            } else {
+                var all = contentScrollSlider.querySelectorAll('.card');
+                card = all.length ? all[all.length - 1] : null;
+
+                if (card) {
+                    self.bodySlyFrame.toCenter(card, false);
+                }
             }
         }
 
