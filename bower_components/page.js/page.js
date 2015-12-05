@@ -59,6 +59,8 @@
 
   var hashbang = false;
 
+  var enableHistory = true;
+
   /**
    * Previous context, for capturing
    * page exit events.
@@ -217,7 +219,11 @@
     if (page.len > 0) {
       // this may need more testing to see if all browsers
       // wait for the next tick to go back in history
-      history.back();
+        if (enableHistory) {
+            history.back();
+        } else {
+            
+        }
       page.len--;
     } else if (path) {
       setTimeout(function() {
@@ -230,6 +236,12 @@
     }
   };
 
+  page.canGoBack = function () {
+      if (enableHistory) {
+          return history.length > 1;
+      }
+      return (page.len || 0) > 0;
+  };
 
   /**
    * Register route to redirect from one path to other
@@ -409,16 +421,26 @@
    */
 
   page.Context = Context;
+    var backStack = [];
 
-  /**
+    /**
    * Push state.
    *
    * @api private
    */
 
   Context.prototype.pushState = function() {
-    page.len++;
-    history.pushState(this.state, this.title, hashbang && this.path !== '/' ? '#!' + this.path : this.canonicalPath);
+      page.len++;
+
+      if (enableHistory) {
+          history.pushState(this.state, this.title, hashbang && this.path !== '/' ? '#!' + this.path : this.canonicalPath);
+      } else {
+          backStack.push({
+              state: this.state,
+              title: this.title,
+              url: (hashbang && this.path !== '/' ? '#!' + this.path : this.canonicalPath)
+          });
+      }
   };
 
   /**
@@ -427,8 +449,17 @@
    * @api public
    */
 
-  Context.prototype.save = function() {
-    history.replaceState(this.state, this.title, hashbang && this.path !== '/' ? '#!' + this.path : this.canonicalPath);
+  Context.prototype.save = function () {
+
+      if (enableHistory) {
+          history.replaceState(this.state, this.title, hashbang && this.path !== '/' ? '#!' + this.path : this.canonicalPath);
+      } else {
+          backStack[page.len || 0] = {
+              state: this.state,
+              title: this.title,
+              url: (hashbang && this.path !== '/' ? '#!' + this.path : this.canonicalPath)
+          };
+      }
   };
 
   /**
