@@ -156,8 +156,12 @@
         };
 
         if (!isBackNav) {
-            onNewViewNeeded();
-            return;
+
+            // Don't force a new view for home due to the back menu
+            if (route.type != 'home') {
+                onNewViewNeeded();
+                return;
+            }
         }
 
         viewManager.tryRestoreView(currentRequest).then(function () {
@@ -416,7 +420,7 @@
 
             if (currentRouteInfo && currentRouteInfo.path == path) {
                 resolve();
-                return;
+                //return;
             }
 
             page.show(path, options);
