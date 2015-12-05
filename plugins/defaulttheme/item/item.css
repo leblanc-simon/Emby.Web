@@ -201,10 +201,12 @@
 
 .mediaInfoIcons {
     margin-top: 1.25em;
+    display: flex;
+    align-items: center;
 }
 
 .mediaInfoIcon {
-    height: 32px;
+    height: 38px;
     fill: #ccc;
     color: #ccc;
     vertical-align: middle;
@@ -233,15 +235,14 @@
 .mediaInfoText {
     display: inline-block;
     vertical-align: middle;
-    padding: .05em .5em;
+    padding: 0 .5em;
     margin-top: 0;
     margin-bottom: 0;
     color: #000;
     background: #ccc;
     border-radius: 3px;
-    height: auto;
     font-weight: normal;
-    margin-right: .5em;
+    margin-right: .8em;
     font-size: 90%;
 }
 
