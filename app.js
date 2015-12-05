@@ -42,6 +42,7 @@
         var startupRoot = '/startup/';
 
         var suffix = enableWebComponents() ? "" : "-lite";
+        suffix = "-lite";
 
         defineRoute({
             path: startupRoot + 'login.html',
