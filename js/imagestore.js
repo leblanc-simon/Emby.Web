@@ -164,6 +164,8 @@
         window.ImageStore = self;
     }
 
-    new imageFileStore();
+    require(['cryptojs-md5'], function () {
+        new imageFileStore();
+    });
 
 })();
