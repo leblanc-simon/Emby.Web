@@ -198,6 +198,11 @@
             });
         });
 
+        view.addEventListener('viewhide', function () {
+
+            getHeaderElement().classList.remove('hide');
+        });
+
         function onViewHideStopPlayback() {
 
             if (Emby.PlaybackManager.isPlayingVideo()) {
