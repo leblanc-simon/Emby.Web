@@ -5,10 +5,6 @@
         // This is going to be really difficult to get right
         var userAgent = navigator.userAgent.toLowerCase();
 
-        if (userAgent.indexOf('xbox') != -1) {
-            return true;
-        }
-
         if (userAgent.indexOf('mobile') != -1) {
             return true;
         }
