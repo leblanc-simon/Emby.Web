@@ -141,6 +141,10 @@ a {
     padding-left: 4.5%;
 }
 
+.userViewNames .scrollFrameX {
+    padding-left: 3.75%;
+}
+
 .tabbedPageContainer {
     top: 9.5%;
     align-items: initial;
@@ -255,10 +259,6 @@ a {
         padding-top: .1em;
         padding-bottom: .25em;
         font-weight: inherit !important;
-    }
-
-    .userViewNames .scrollSlider {
-        text-align: center;
     }
 
 .listNumbers {
@@ -575,13 +575,13 @@ paper-item-body .overview {
 }
 
 .nowPlayingInfoContainer #progressContainer {
-    height: 10px !important;
+    height: 8px !important;
 }
 
 .nowPlayingInfoContainer paper-slider #sliderKnob {
-    width: 54px !important;
-    height: 54px !important;
-    top: -9px;
+    width: 50px !important;
+    height: 50px !important;
+    top: -7px;
 }
 
 .nowPlayingMetadata {

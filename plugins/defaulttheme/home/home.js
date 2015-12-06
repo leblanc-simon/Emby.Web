@@ -13,7 +13,7 @@
 
             var isRestored = e.detail.isRestored;
 
-            Emby.Page.setTitle(null);
+            Emby.Page.setTitle('');
 
             DefaultTheme.Backdrop.setStaticBackdrop();
 
