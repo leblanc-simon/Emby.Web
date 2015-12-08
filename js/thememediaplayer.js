@@ -3,7 +3,7 @@
     var currentOwnerId;
     var currentThemeIds = [];
 
-    function playThemeSongs(items, ownerId) {
+    function playThemeMedia(items, ownerId) {
 
         if (items.length) {
 
@@ -20,7 +20,8 @@
             currentOwnerId = ownerId;
 
             Emby.PlaybackManager.play({
-                items: items
+                items: items,
+                fullscreen: false
             });
 
         } else {
@@ -55,10 +56,13 @@
             var apiClient = connectionManager.currentApiClient();
             apiClient.getThemeMedia(apiClient.getCurrentUserId(), item.Id, true).then(function (themeMediaResult) {
 
-                var ownerId = themeMediaResult.ThemeSongsResult.OwnerId;
+                var ownerId = themeMediaResult.ThemeVideosResult.Items.length ? themeMediaResult.ThemeVideosResult.OwnerId : themeMediaResult.ThemeSongsResult.OwnerId;
 
                 if (ownerId != currentOwnerId) {
-                    playThemeSongs(themeMediaResult.ThemeSongsResult.Items, ownerId);
+
+                    var items = themeMediaResult.ThemeVideosResult.Items.length ? themeMediaResult.ThemeVideosResult.Items : themeMediaResult.ThemeSongsResult.Items;
+
+                    playThemeMedia(items, ownerId);
                 }
             });
 
@@ -80,7 +84,7 @@
                 // TODO: Make this modular for other themes
             }
             else {
-                playThemeSongs([], null);
+                playThemeMedia([], null);
             }
         }
 

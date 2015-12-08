@@ -96,26 +96,10 @@
             themeContainer = document.querySelector('.themeContainer');
         }
 
-        var classIn, classOut;
-
         if (hasInternalBackdrop || hasExternalBackdrop) {
-            classIn = 'withBackdropIn';
-            classOut = 'withBackdropOut';
+            themeContainer.classList.add('withBackdrop');
         } else {
-            classIn = 'withBackdropOut';
-            classOut = 'withBackdropIn';
-
-            if (!themeContainer.classList.contains(classOut)) {
-
-                return;
-            }
-        }
-
-        if (!themeContainer.classList.contains(classIn)) {
-            console.log('add ' + classIn);
-
-            themeContainer.classList.add(classIn);
-            themeContainer.classList.remove(classOut);
+            themeContainer.classList.remove('withBackdrop');
         }
     }
 

@@ -9,6 +9,7 @@
         var repeatMode = 'RepeatNone';
         var playlist = [];
         var currentPlaylistIndex;
+        var currentPlayOptions;
         var playNextAfterEnded = true;
         var playerStates = {};
 
@@ -693,6 +694,7 @@
 
             if (options.startPositionTicks || firstItem.MediaType !== 'Video') {
 
+                currentPlayOptions = options;
                 playInternal(firstItem, options.startPositionTicks, afterPlayInternal);
                 return;
             }
@@ -700,6 +702,7 @@
             Emby.Models.intros(firstItem.Id).then(function (intros) {
 
                 items = intros.Items.concat(items);
+                currentPlayOptions = options;
                 playInternal(items[0], options.startPositionTicks, afterPlayInternal);
             });
         }
@@ -773,7 +776,7 @@
 
                         streamInfo.item = item;
                         streamInfo.mediaSource = mediaSource;
-                        streamInfo.fullscreen = true;
+                        streamInfo.fullscreen = currentPlayOptions.fullscreen;
 
                         getPlayerState(player).isChangingStream = false;
 

@@ -464,31 +464,6 @@
         Emby.Page.show('/startup/selectserver.html');
     }
 
-    function transparencyEnabled(enabled) {
-
-        if (enabled != null) {
-            if (enabled) {
-                document.documentElement.classList.add('transparentDocument');
-                Emby.Backdrop.clear();
-
-            } else {
-                document.documentElement.classList.remove('transparentDocument');
-            }
-        } else {
-            return document.documentElement.classList.contains('transparentDocument');
-        }
-    }
-
-    function setHeaderVisible(visible) {
-
-        if (visible) {
-            document.querySelector('.themeHeader').classList.remove('hide');
-
-        } else {
-            document.querySelector('.themeHeader').classList.add('hide');
-        }
-    }
-
     function showVideoOsd() {
         return Emby.Page.show(Emby.ThemeManager.getCurrentTheme().getVideoOsdRoute());
     }
@@ -496,6 +471,21 @@
     function addRoute(path, newRoute) {
 
         page(path, getHandler(newRoute));
+    }
+
+    function setTransparency(level) {
+
+        if (level == Emby.TransparencyLevel.Full) {
+            Emby.Backdrop.clear(true);
+            document.documentElement.classList.add('transparentDocument');
+        }
+        else if (level == Emby.TransparencyLevel.Backdrop) {
+            Emby.Backdrop.externalBackdrop(true);
+            document.documentElement.classList.add('transparentDocument');
+        } else {
+            Emby.Backdrop.externalBackdrop(false);
+            document.documentElement.classList.remove('transparentDocument');
+        }
     }
 
     globalScope.Emby.Page = {
@@ -513,27 +503,14 @@
         showItem: showItem,
         setTitle: setTitle,
         selectServer: selectServer,
-        transparencyEnabled: transparencyEnabled,
-        setHeaderVisible: setHeaderVisible,
-        showVideoOsd: showVideoOsd
+        showVideoOsd: showVideoOsd,
+        setTransparency: setTransparency
     };
 
-    document.addEventListener('viewshow', function (e) {
-
-        if (e.detail.type == 'video-osd') {
-            Emby.Backdrop.clear(true);
-        }
-    });
-
-    document.addEventListener('viewhide', function (e) {
-
-        if (e.detail.type == 'video-osd') {
-
-            if (transparencyEnabled()) {
-                Emby.Backdrop.externalBackdrop(true);
-            }
-        }
-
-    });
+    globalScope.Emby.TransparencyLevel = {
+        None: 0,
+        Backdrop: 1,
+        Full: 2
+    };
 
 })(this);

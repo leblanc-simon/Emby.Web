@@ -9,7 +9,7 @@
     align-items: center;
 }
 
-    .videoPlayerContainer:not(.loaded) {
+    .videoPlayerContainer.onTop {
         z-index: 1000;
     }
 

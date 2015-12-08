@@ -13,6 +13,10 @@
             return document.querySelector('.themeHeader');
         }
 
+        function getOsdBottom() {
+            return view.querySelector('.videoOsdBottom');
+        }
+
         function setTitle(item) {
 
             var url = Emby.Models.logoImageUrl(item, {});
@@ -43,12 +47,14 @@
         function showOsd() {
 
             slideDownToShow(getHeaderElement());
+            slideUpToShow(getOsdBottom());
             startHideTimer();
         }
 
         function hideOsd() {
 
             slideUpToHide(getHeaderElement());
+            slideDownToHide(getOsdBottom());
         }
 
         var hideTimeout;
@@ -92,6 +98,42 @@
                 var keyframes = [
                   { transform: 'translate3d(0,0,0)', opacity: '1', offset: 0 },
                   { transform: 'translate3d(0,-' + elem.offsetHeight + 'px,0)', opacity: '.3', offset: 1 }];
+                var timing = { duration: 300, iterations: 1, easing: 'ease-out' };
+                elem.animate(keyframes, timing).onfinish = function () {
+                    elem.classList.add('hide');
+                };
+            });
+        }
+
+        function slideUpToShow(elem) {
+
+            if (!elem.classList.contains('hide')) {
+                return;
+            }
+
+            elem.classList.remove('hide');
+
+            requestAnimationFrame(function () {
+
+                var keyframes = [
+                  { transform: 'translate3d(0,' + elem.offsetHeight + 'px,0)', opacity: '.3', offset: 0 },
+                  { transform: 'translate3d(0,0,0)', opacity: '1', offset: 1 }];
+                var timing = { duration: 300, iterations: 1, easing: 'ease-out' };
+                elem.animate(keyframes, timing);
+            });
+        }
+
+        function slideDownToHide(elem) {
+
+            if (elem.classList.contains('hide')) {
+                return;
+            }
+
+            requestAnimationFrame(function () {
+
+                var keyframes = [
+                  { transform: 'translate3d(0,0,0)', opacity: '1', offset: 0 },
+                  { transform: 'translate3d(0,' + elem.offsetHeight + 'px,0)', opacity: '.3', offset: 1 }];
                 var timing = { duration: 300, iterations: 1, easing: 'ease-out' };
                 elem.animate(keyframes, timing).onfinish = function () {
                     elem.classList.add('hide');
@@ -167,6 +209,9 @@
 
         view.addEventListener('viewbeforeshow', function (e) {
 
+            // Make sure the UI is completely transparent
+            Emby.Page.setTransparency(Emby.TransparencyLevel.Full);
+
             getHeaderElement().classList.add('osdHeader');
         });
 
@@ -211,6 +256,9 @@
                 Events.off(Emby.PlaybackManager, 'playbackstop', onPlaybackStop);
 
                 Emby.PlaybackManager.stop();
+
+                // or 
+                //Emby.Page.setTransparency(Emby.TransparencyLevel.Backdrop);
             }
         }
 
