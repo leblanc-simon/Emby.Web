@@ -17,6 +17,8 @@ define([], function () {
         var started = false;
         var hlsPlayer;
 
+        var currentPlayOptions;
+
         self.canPlayMediaType = function (mediaType) {
 
             return (mediaType || '').toLowerCase() == 'video';
@@ -34,50 +36,45 @@ define([], function () {
             return currentSrc;
         };
 
-        self.play = function (streamInfo) {
+        self.play = function (options) {
 
             started = false;
 
             return new Promise(function (resolve, reject) {
 
-                createMediaElement({
+                createMediaElement(options).then(function (elem) {
 
-                    // TODO
-                    poster: streamInfo.poster
-
-                }).then(function (elem) {
-
-                    setCurrentSrc(elem, streamInfo).then(resolve, reject);
+                    setCurrentSrc(elem, options).then(resolve, reject);
                 });
             });
         };
 
-        function setCurrentSrc(elem, streamInfo) {
+        function setCurrentSrc(elem, options) {
 
             return new Promise(function (resolve, reject) {
 
-                if (!elem) {
-                    currentSrc = null;
-                    resolve();
-                    return;
-                }
+                //if (!elem) {
+                //    currentSrc = null;
+                //    resolve();
+                //    return;
+                //}
 
-                if (!streamInfo) {
-                    currentSrc = null;
-                    elem.src = null;
-                    elem.src = "";
+                //if (!options) {
+                //    currentSrc = null;
+                //    elem.src = null;
+                //    elem.src = "";
 
-                    // When the browser regains focus it may start auto-playing the last video
-                    //if ($.browser.safari) {
-                    //    elem.src = 'files/dummy.mp4';
-                    //    elem.play();
-                    //}
+                //    // When the browser regains focus it may start auto-playing the last video
+                //    //if ($.browser.safari) {
+                //    //    elem.src = 'files/dummy.mp4';
+                //    //    elem.play();
+                //    //}
 
-                    resolve();
-                    return;
-                }
+                //    resolve();
+                //    return;
+                //}
 
-                var val = streamInfo.url;
+                var val = options.url;
 
                 var dependencies = [];
                 var enableHlsJs = enableHlsPlayer(val);
@@ -97,7 +94,9 @@ define([], function () {
 
                     destroyHlsPlayer();
 
-                    var tracks = streamInfo.textTracks || [];
+                    var tracks = options.textTracks || [];
+
+                    currentPlayOptions = options;
 
                     if (enableHlsJs) {
 
@@ -187,7 +186,7 @@ define([], function () {
         self.destroy = function () {
 
             destroyHlsPlayer();
-            Emby.Page.transparencyEnabled(false);
+            Emby.Page.setTransparency(Emby.TransparencyLevel.None);
 
             var videoElement = mediaElement;
 
@@ -305,16 +304,27 @@ define([], function () {
             Events.trigger(self, 'volumechange');
         }
 
+        function shouldGoFullscreen(options) {
+
+            return options.fullscreen !== false;
+        }
+
         function onPlaying() {
 
             if (!started) {
                 started = true;
 
-                Emby.Page.showVideoOsd().then(function () {
+                if (shouldGoFullscreen(currentPlayOptions)) {
 
-                    Emby.Page.transparencyEnabled(true);
-                    videoDialog.classList.add('loaded');
-                });
+                    Emby.Page.showVideoOsd().then(function () {
+
+                        videoDialog.classList.remove('onTop');
+                    });
+
+                } else {
+                    Emby.Page.setTransparency(Emby.TransparencyLevel.Backdrop);
+                    videoDialog.classList.remove('onTop');
+                }
 
                 require(['loading'], function (loading) {
 
@@ -526,6 +536,10 @@ define([], function () {
                         var dlg = document.createElement('div');
 
                         dlg.classList.add('videoPlayerContainer');
+
+                        if (shouldGoFullscreen(options)) {
+                            dlg.classList.add('onTop');
+                        }
 
                         var html = '';
                         // Can't autoplay in these browsers so we need to use the full controls
