@@ -259,6 +259,7 @@ a {
         padding-top: .1em;
         padding-bottom: .25em;
         font-weight: inherit !important;
+        font-size: 106%;
     }
 
 .listNumbers {
