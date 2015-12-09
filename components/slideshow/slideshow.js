@@ -1,4 +1,4 @@
-define(['paperdialoghelper', 'css!components/slideshow/style'], function (paperdialoghelper) {
+define(['paperdialoghelper', 'inputmanager', 'css!components/slideshow/style', 'inputmanager'], function (paperdialoghelper, inputmanager) {
 
     function slideshow(options) {
 
@@ -40,27 +40,38 @@ define(['paperdialoghelper', 'css!components/slideshow/style'], function (paperd
 
                     paperdialoghelper.close(dlg);
                 });
-                dlg.querySelector('.btnSlideshowNext').addEventListener('click', function (e) {
-
-                    stopInterval();
-                    showNextImage(currentIndex + 1);
-                });
-                dlg.querySelector('.btnSlideshowPrevious').addEventListener('click', function (e) {
-
-                    stopInterval();
-                    showNextImage(currentIndex - 1);
-                });
+                dlg.querySelector('.btnSlideshowNext').addEventListener('click', nextImage);
+                dlg.querySelector('.btnSlideshowPrevious').addEventListener('click', previousImage);
             }
 
             document.body.appendChild(dlg);
 
-            paperdialoghelper.open(dlg).then(function() {
-                
+            paperdialoghelper.open(dlg).then(function () {
+
                 stopInterval();
                 dlg.parentNode.removeChild(dlg);
             });
 
+
+            inputmanager.on(window, onInputCommand);
+
+            dlg.addEventListener('iron-overlay-closed', onDialogClosed);
+
             return dlg;
+        }
+
+        function previousImage() {
+            stopInterval();
+            showNextImage(currentIndex - 1);
+        }
+
+        function nextImage() {
+            stopInterval();
+            showNextImage(currentIndex + 1);
+        }
+
+        function onDialogClosed() {
+            inputmanager.off(window, onInputCommand);
         }
 
         var currentTimeout;
@@ -163,6 +174,21 @@ define(['paperdialoghelper', 'css!components/slideshow/style'], function (paperd
             if (currentTimeout) {
                 clearTimeout(currentTimeout);
                 currentTimeout = null;
+            }
+        }
+
+        function onInputCommand(e) {
+
+            switch (e.detail.command) {
+
+                case 'left':
+                    previousImage();
+                    break;
+                case 'right':
+                    nextImage();
+                    break;
+                default:
+                    break;
             }
         }
 

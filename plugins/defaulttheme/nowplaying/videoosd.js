@@ -167,9 +167,9 @@
             showOsd();
         }
 
-        function onInputCommand(e, data) {
+        function onInputCommand(e) {
 
-            switch (data.command) {
+            switch (e.detail.command) {
 
                 case 'up':
                 case 'down':
@@ -226,7 +226,7 @@
             showOsd();
 
             require(['inputmanager'], function (inputmanager) {
-                inputmanager.on(onInputCommand);
+                inputmanager.on(window, onInputCommand);
             });
         });
 
@@ -239,7 +239,7 @@
             Events.off(Emby.PlaybackManager, 'playbackstop', onPlaybackStop);
 
             require(['inputmanager'], function (inputmanager) {
-                inputmanager.off(onInputCommand);
+                inputmanager.off(window, onInputCommand);
             });
         });
 

@@ -19,14 +19,14 @@ define([], function () {
     }
 
     var eventListenerCount = 0;
-    function on(fn) {
+    function on(scope, fn) {
         eventListenerCount++;
-        Events.on(inputManager, 'command', fn);
+        scope.addEventListener('command', fn);
     }
 
-    function off(fn) {
+    function off(scope, fn) {
         eventListenerCount--;
-        Events.off(inputManager, 'command', fn);
+        scope.removeEventListener('command', fn);
     }
 
     function handleCommand(name, options) {
@@ -121,10 +121,12 @@ define([], function () {
         }
 
         if (eventListenerCount) {
-            Events.trigger(inputManager, 'command', [
-            {
-                command: name
-            }]);
+            (sourceElement || window).dispatchEvent(new CustomEvent("command", {
+                detail: {
+                    command: name
+                },
+                bubbles: true
+            }));
         }
     }
 

@@ -8,9 +8,11 @@
 
         function onHashChange(e) {
 
-            window.removeEventListener('popstate', onHashChange);
-
             var isBack = self.originalUrl == window.location.href;
+
+            if (isBack || !dlg.opened) {
+                window.removeEventListener('popstate', onHashChange);
+            }
 
             if (isBack) {
                 self.closedByBack = true;

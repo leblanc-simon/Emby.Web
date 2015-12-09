@@ -179,7 +179,7 @@
 @media all and (min-height: 1080px) {
 
     .detailImage {
-        max-height: 700px;
+        max-height: 720px;
     }
 }
 
@@ -235,7 +235,7 @@
 .mediaInfoText {
     display: inline-block;
     vertical-align: middle;
-    padding: 0 .5em;
+    padding: .25em .5em;
     margin-top: 0;
     margin-bottom: 0;
     color: #000;
@@ -244,6 +244,7 @@
     font-weight: normal;
     margin-right: 1em;
     font-size: 90%;
+    height: auto;
 }
 
 .paperIconItemRightButton {
