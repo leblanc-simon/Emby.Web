@@ -40,17 +40,10 @@
         var elem = document.querySelector('.themeContainer');
         if (isSubdued) {
 
-            if (!elem.classList.contains('listBackdropIn')) {
-                elem.classList.remove('listBackdropOut');
-                elem.classList.add('listBackdropIn');
-            }
+            elem.classList.remove('detailBackdrop');
 
         } else {
-
-            if (elem.classList.contains('listBackdropIn')) {
-                elem.classList.remove('listBackdropIn');
-                elem.classList.add('listBackdropOut');
-            }
+            elem.classList.add('detailBackdrop');
         }
     }
 

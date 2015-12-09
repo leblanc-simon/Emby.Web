@@ -1,7 +1,7 @@
 define([], function () {
 
     var pageContainerCount = 4;
-    var animationDuration = 500;
+    var animationDuration = 550;
 
     function loadView(options) {
 
