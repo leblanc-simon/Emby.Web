@@ -209,13 +209,13 @@
 
         view.addEventListener('viewbeforeshow', function (e) {
 
-            // Make sure the UI is completely transparent
-            Emby.Page.setTransparency(Emby.TransparencyLevel.Full);
-
             getHeaderElement().classList.add('osdHeader');
         });
 
         view.addEventListener('viewshow', function (e) {
+
+            // Make sure the UI is completely transparent
+            Emby.Page.setTransparency(Emby.TransparencyLevel.Full);
 
             Events.on(Emby.PlaybackManager, 'playbackstart', onPlaybackStart);
             Events.on(Emby.PlaybackManager, 'playbackstop', onPlaybackStop);

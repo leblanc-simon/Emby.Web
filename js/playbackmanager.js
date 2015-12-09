@@ -19,7 +19,7 @@
         };
 
         self.playlist = function () {
-            return playlist;
+            return playlist.slice(0);
         };
 
         self.currentPlayer = function () {
@@ -713,7 +713,7 @@
                 currentPlaylistIndex = i;
             }
             if (items) {
-                playlist = items;
+                playlist = items.slice(0);
             }
         }
 
@@ -1204,6 +1204,7 @@
         function getNextItemInfo() {
 
             var newIndex;
+            var playlistLength = playlist.length;
 
             switch (self.getRepeatMode()) {
 
@@ -1212,7 +1213,7 @@
                     break;
                 case 'RepeatAll':
                     newIndex = currentPlaylistIndex + 1;
-                    if (newIndex >= playlist.length) {
+                    if (newIndex >= playlistLength) {
                         newIndex = 0;
                     }
                     break;
@@ -1221,10 +1222,14 @@
                     break;
             }
 
+            if (newIndex < 0 || newIndex >= playlistLength) {
+                return null;
+            }
+
             var item = playlist[newIndex];
 
             if (!item) {
-                null;
+                return null;
             }
 
             return {
