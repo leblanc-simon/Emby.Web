@@ -557,7 +557,7 @@ paper-item-body .overview {
 }
 
 .paper-progress-0 #progressContainer.paper-progress, .paper-progress-0 .indeterminate.paper-progress:after {
-    height: 8px;
+    height: 7px;
 }
 
 .nowPlayingCardContainer {
