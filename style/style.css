@@ -135,6 +135,9 @@ iron-overlay-backdrop.iron-overlay-backdrop-0[opened] {
     left: 0;
     right: 0;
     display: flex;
+
+    /* This will ensure it is on top of the main body and the themeHeader */
+    z-index: 2;
 }
 
     .windowDragRegion * {
