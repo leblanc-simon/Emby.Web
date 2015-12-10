@@ -109,7 +109,7 @@
 
             page.querySelector('.viewsScrollSlider').innerHTML = tabs.map(function (i) {
 
-                return '<' + tagName + ' class="flat btnUserViewHeader" data-id="' + i.Id + '" data-type="' + (i.CollectionType || '') + '"><h2>' + i.Name + '</h2></' + tagName + '>';
+                return '<' + tagName + ' class="flat btnUserViewHeader" data-id="' + i.Id + '" data-type="' + (i.CollectionType || '') + '"><h2 class="userViewButtonText">' + i.Name + '</h2></' + tagName + '>';
 
             }).join('');
 
