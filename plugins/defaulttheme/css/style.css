@@ -578,14 +578,18 @@ paper-item-body .overview {
     margin-left: 3em;
 }
 
-.nowPlayingInfoContainer #progressContainer {
-    height: 8px !important;
+paper-slider #progressContainer {
+    height: 7px !important;
 }
 
-.nowPlayingInfoContainer paper-slider #sliderKnob {
-    width: 50px !important;
-    height: 50px !important;
-    top: -7px;
+paper-slider #sliderKnob {
+    width: 44px !important;
+    height: 44px !important;
+    top: -4px !important;
+}
+
+paper-slider:hover #sliderKnob {
+    display: block;
 }
 
 .nowPlayingMetadata {

@@ -126,7 +126,7 @@ paper-dialog {
     background-color: #F57F17;
 }
 
-.nowPlayingInfoContainer #progressContainer {
+paper-slider #progressContainer {
     background-color: #666 !important;
 }
 
