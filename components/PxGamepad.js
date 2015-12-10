@@ -48,9 +48,9 @@
 
         window.addEventListener('gamepadconnected', function(e) {
             var gamepad = e.gamepad;
-            //if (gamepad.mapping === 'standard') {
+            if (gamepad.mapping === 'standard') {
                 self.connectedGamepad = gamepad;
-            //}
+            }
         });
 
         window.addEventListener('gamepaddisconnected', function (e) {
