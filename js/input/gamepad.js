@@ -37,14 +37,17 @@ require(['inputmanager', 'components/PxGamepad'], function (inputmanager) {
     });
 
     pxgamepad.on('select', function () {
+        alert('back');
         sendCommand('back');
     });
 
     pxgamepad.on('x', function () {
+        alert('back');
         sendCommand('back');
     });
 
     pxgamepad.on('y', function () {
+        alert('back');
         sendCommand('back');
     });
 
