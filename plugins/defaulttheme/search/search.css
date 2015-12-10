@@ -1,6 +1,6 @@
 .searchPageContainer {
     position: absolute;
-    top: 10%;
+    top: 5%;
     left: 0;
     right: 0;
     bottom: 0;
@@ -45,4 +45,8 @@
 
 .searchResults .portraitCard {
     width: 16.66666666666666667%;
+}
+
+.searchHeader .headerRight {
+    display: none;
 }

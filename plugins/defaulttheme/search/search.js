@@ -152,19 +152,31 @@
                 searchTimeout = null;
             }
 
-            setTimeout(onSearchTimeout, 300);
+            searchTimeout = setTimeout(onSearchTimeout, 300);
         }
 
         function onSearchTimeout() {
             search(view.querySelector('.txtSearch').value);
         }
 
-        function onSearchKeyDown(e) {
+        var lastKeyDownValue = '';
+        function onSearchKeyPress(e) {
 
-            searchOnTimeout();
+            var value = e.target.value;
+
+            if (value != lastKeyDownValue) {
+                lastKeyDownValue = value;
+                searchOnTimeout();
+            }
+        }
+
+        function getHeaderElement() {
+            return document.querySelector('.themeHeader');
         }
 
         view.addEventListener('viewshow', function (e) {
+
+            getHeaderElement().classList.add('searchHeader');
 
             Emby.Page.setTitle('');
             document.querySelector('.headerSearchButton').classList.add('hide');
@@ -174,13 +186,15 @@
             if (!isRestored) {
                 initAlphaPicker(e.target);
 
-                e.target.querySelector('.txtSearch').addEventListener('keydown', onSearchKeyDown);
+                e.target.querySelector('.txtSearch').addEventListener('keyup', onSearchKeyPress);
 
                 createVerticalScroller(e.target, self);
             }
         });
 
         view.addEventListener('viewhide', function () {
+
+            getHeaderElement().classList.remove('searchHeader');
 
             document.querySelector('.headerSearchButton').classList.remove('hide');
         });
