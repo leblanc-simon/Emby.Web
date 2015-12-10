@@ -244,6 +244,11 @@ function showIME () {
     document.removeEventListener('keyup', onKeyUp);
     document.addEventListener('keyup', onKeyUp, true);
 
+    require(['inputmanager'], function (inputmanager) {
+        inputmanager.off(document, onInputCommand);
+        inputmanager.on(document, onInputCommand);
+    });
+
     if (!visible && dispatchCustomEvent('keylimeshow')) {
         document.body.appendChild(imeCtr);
         visible = true;
@@ -271,6 +276,10 @@ function hideIME () {
     document.removeEventListener('keyup', onKeyUp);
     document.removeEventListener('keypress', onKeyPress);
 
+    require(['inputmanager'], function (inputmanager) {
+        inputmanager.off(document, onInputCommand);
+    });
+
     clearTimeout(hideTimer);
     hideTimer = setTimeout(function () {
         if (!visible || !dispatchCustomEvent('keylimehide'))
@@ -294,6 +303,42 @@ function hideIME () {
             onHideAnimationFinished();
         }
     });
+}
+
+function onInputCommand(e) {
+
+    switch (e.detail.command) {
+        case 'left':
+        case 'right':
+        case 'up':
+        case 'down':
+            // When the "move caret" button is toggled, arrow keys behave as normal
+            if (move)
+                return;
+
+            moveKeyFocus(e.detail.command);
+            break;
+
+        case 'select':
+            if (!holdTimer)
+                holdTimer = setTimeout(showDiacritics, exports.config.keyHoldTimeout || 500);
+
+            break;
+
+        case 'back':
+
+            if (move)
+                spKeys.Caret(focused);
+
+            else if (diacriticsMenu)
+                hideDiacritics();
+
+            else
+                hideIME();
+            break;
+        default:
+            break;
+    }
 }
 
 function onHideAnimationFinished() {
