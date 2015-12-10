@@ -67,7 +67,7 @@ paper-input .focused-line {
 }
 
 
-    .userViewNames paper-button div {
+    .userViewButtonText {
         border-bottom: 2px solid transparent;
     }
 
@@ -102,7 +102,7 @@ paper-dialog {
     opacity: 1;
 }
 
-    .userViewNames paper-button[focused] div {
+    .userViewNames paper-button[focused] .userViewButtonText {
         border-bottom-color: #52B54B;
     }
 
