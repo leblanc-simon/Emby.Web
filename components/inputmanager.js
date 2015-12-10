@@ -25,7 +25,11 @@ define([], function () {
     }
 
     function off(scope, fn) {
-        eventListenerCount--;
+
+        if (eventListenerCount) {
+            eventListenerCount--;
+        }
+
         scope.removeEventListener('command', fn);
     }
 
@@ -34,6 +38,22 @@ define([], function () {
         notify();
 
         var sourceElement = (options ? options.sourceElement : null);
+
+        if (eventListenerCount) {
+            var customEvent = new CustomEvent("command", {
+                detail: {
+                    command: name
+                },
+                bubbles: true,
+                cancelable: true
+            });
+
+            var eventResult = (sourceElement || window).dispatchEvent(customEvent);
+            if (!eventResult) {
+                // event cancelled
+                return;
+            }
+        }
 
         switch (name) {
 
@@ -118,15 +138,6 @@ define([], function () {
                 break;
             default:
                 break;
-        }
-
-        if (eventListenerCount) {
-            (sourceElement || window).dispatchEvent(new CustomEvent("command", {
-                detail: {
-                    command: name
-                },
-                bubbles: true
-            }));
         }
     }
 
