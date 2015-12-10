@@ -47,14 +47,14 @@
         var self = this;
 
         window.addEventListener('gamepadconnected', function(e) {
-            var gamepad = e.originalEvent.gamepad;
+            var gamepad = e.gamepad;
             if (gamepad.mapping === 'standard') {
                 self.connectedGamepad = gamepad;
             }
         });
 
         window.addEventListener('gamepaddisconnected', function (e) {
-            var gamepad = e.originalEvent.gamepad;
+            var gamepad = e.gamepad;
             if (self.connectedGamepad === gamepad) {
                 self.connectedGamepad = null;
             }
