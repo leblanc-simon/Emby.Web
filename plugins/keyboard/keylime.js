@@ -232,6 +232,18 @@ function showIME () {
 
     clearTimeout(hideTimer);
 
+    document.removeEventListener('blur', onBlur);
+    document.addEventListener('blur', onBlur, true);
+
+    document.removeEventListener('keydown', onKeyDown);
+    document.addEventListener('keydown', onKeyDown, true);
+
+    document.removeEventListener('keypress', onKeyPress);
+    document.addEventListener('keypress', onKeyPress, true);
+
+    document.removeEventListener('keyup', onKeyUp);
+    document.addEventListener('keyup', onKeyUp, true);
+
     if (!visible && dispatchCustomEvent('keylimeshow')) {
         document.body.appendChild(imeCtr);
         visible = true;
@@ -253,6 +265,12 @@ function showIME () {
  * Removes the keyboard from the document
  */
 function hideIME () {
+
+    document.removeEventListener('blur', onBlur);
+    document.removeEventListener('keydown', onKeyDown);
+    document.removeEventListener('keyup', onKeyUp);
+    document.removeEventListener('keypress', onKeyPress);
+
     clearTimeout(hideTimer);
     hideTimer = setTimeout(function () {
         if (!visible || !dispatchCustomEvent('keylimehide'))
@@ -662,18 +680,12 @@ function isInput (el) {
     return (allowed.test(el.type) || el.isContentEditable) && !el.readOnly;
 }
 
-/**
- * Automatically shows the IME on focus if settings permit
- */
-document.addEventListener('blur', function () {
+function onBlur() {
     if (visible)
         hideIME();
-}, true);
+}
 
-/**
- * Captures and handles keydown events before they hit any elements
- */
-document.addEventListener('keydown', function (evt) {
+function onKeyDown(evt) {
     if (!visible)
         return;
 
@@ -712,13 +724,9 @@ document.addEventListener('keydown', function (evt) {
             else
                 hideIME();
     }
-}, true);
+}
 
-/**
- * Fan service: flash the buttons as they are pressed on a hardware keyboard
- */
-document.addEventListener('keypress', function (evt) {
-
+function onKeyPress(evt) {
     // Fix for Firefox to get the demo working
     if (evt.charCode === 0)
         return;
@@ -729,7 +737,7 @@ document.addEventListener('keypress', function (evt) {
         return;
     }
 
-    var e = imeCtr.querySelector('li[data-text="'+s+'"]');
+    var e = imeCtr.querySelector('li[data-text="' + s + '"]');
 
     if (e) {
         newFocus(e);
@@ -737,12 +745,9 @@ document.addEventListener('keypress', function (evt) {
             e.classList.remove('lime-focus');
         }, 100);
     }
-}, true);
+}
 
-/**
- * Text entry happens on keyup
- */
-document.addEventListener('keyup', function (evt) {
+function onKeyUp(evt) {
     if (!visible || !focused)
         return;
 
@@ -771,7 +776,7 @@ document.addEventListener('keyup', function (evt) {
                     hideDiacritics();
             }
     }
-}, true);
+}
 
 /**
  * Handles mousedown on the keys, prevents input losing focus
