@@ -10,12 +10,9 @@ define([], function () {
         return new Date().getTime() - lastInputTime;
     }
 
-    function select() {
+    function select(sourceElement) {
 
-        var elem = document.activeElement;
-        if (elem) {
-            elem.click();
-        }
+        sourceElement.click();
     }
 
     var eventListenerCount = 0;
@@ -37,7 +34,7 @@ define([], function () {
 
         notify();
 
-        var sourceElement = (options ? options.sourceElement : null);
+        var sourceElement = (options ? options.sourceElement : null) || document.activeElement || window;
 
         if (eventListenerCount) {
             var customEvent = new CustomEvent("command", {
@@ -48,7 +45,7 @@ define([], function () {
                 cancelable: true
             });
 
-            var eventResult = (sourceElement || window).dispatchEvent(customEvent);
+            var eventResult = sourceElement.dispatchEvent(customEvent);
             if (!eventResult) {
                 // event cancelled
                 return;
@@ -78,7 +75,7 @@ define([], function () {
             case 'forward':
                 break;
             case 'select':
-                select();
+                select(sourceElement);
                 break;
             case 'pageup':
                 break;
