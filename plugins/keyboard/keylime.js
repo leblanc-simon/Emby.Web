@@ -312,6 +312,8 @@ function onInputCommand(e) {
         case 'right':
         case 'up':
         case 'down':
+            e.preventDefault();
+
             // When the "move caret" button is toggled, arrow keys behave as normal
             if (move)
                 return;
@@ -320,12 +322,16 @@ function onInputCommand(e) {
             break;
 
         case 'select':
+            e.preventDefault();
+
             if (!holdTimer)
                 holdTimer = setTimeout(showDiacritics, exports.config.keyHoldTimeout || 500);
 
             break;
 
         case 'back':
+
+            e.preventDefault();
 
             if (move)
                 spKeys.Caret(focused);
