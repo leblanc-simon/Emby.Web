@@ -11,6 +11,7 @@ require(['inputmanager', 'components/PxGamepad'], function (inputmanager) {
     }
 
     var pxgamepad = new PxGamepad();
+    pxgamepad.start();
 
     function onUpdateTick() {
 
