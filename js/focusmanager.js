@@ -161,13 +161,11 @@
             && typeof t.scrollTop == 'number' ? t : document.body).scrollTop;
     }
 
-    function nav(originalElement, direction) {
+    function nav(activeElement, direction) {
 
-        originalElement = originalElement || document.activeElement;
+        activeElement = activeElement || document.activeElement;
 
         require(['nearestElements'], function (nearestElements) {
-
-            var activeElement = document.activeElement;
 
             if (activeElement) {
                 activeElement = focusableParent(activeElement);
@@ -183,7 +181,7 @@
                 return;
             }
 
-            var focusableContainer = Emby.Dom.parentWithClass(originalElement, 'focusable');
+            var focusableContainer = Emby.Dom.parentWithClass(activeElement, 'focusable');
 
             var rect = getViewportBoundingClientRect(activeElement);
             var focusableElements = [];

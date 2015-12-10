@@ -34,7 +34,13 @@ define([], function () {
 
         notify();
 
-        var sourceElement = (options ? options.sourceElement : null) || document.activeElement || window;
+        var sourceElement = (options ? options.sourceElement : null);
+
+        if (sourceElement) {
+            sourceElement = Emby.FocusManager.focusableParent(sourceElement);
+        }
+
+        sourceElement = sourceElement || document.activeElement || window;
 
         if (eventListenerCount) {
             var customEvent = new CustomEvent("command", {
