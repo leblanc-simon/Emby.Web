@@ -102,11 +102,13 @@
                 }
 
                 var showAlphaPicker = false;
+                var showListNumbers = false;
 
                 switch (id) {
 
                     case 'series':
                         showAlphaPicker = true;
+                        showListNumbers = true;
                         renderSeries(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
                         break;
                     case 'genres':
@@ -120,6 +122,12 @@
                         break;
                     default:
                         break;
+                }
+
+                if (showListNumbers) {
+                    page.querySelector('.listNumbers').classList.remove('hide');
+                } else {
+                    page.querySelector('.listNumbers').classList.add('hide');
                 }
 
                 if (self.alphaPicker) {
@@ -143,8 +151,6 @@
                         ParentId: pageParams.parentid
                     });
                 },
-                listCountElement: page.querySelector('.listCount'),
-                listNumbersElement: page.querySelector('.listNumbers'),
                 autoFocus: autoFocus,
                 cardOptions: {
                     shape: 'backdropCard',
@@ -154,7 +160,6 @@
                     indexBy: 'PremiereDate'
                 },
                 selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
-                selectedIndexElement: page.querySelector('.selectedIndex'),
                 slyFrame: slyFrame,
                 onRender: function () {
                     if (resolve) {
@@ -222,11 +227,7 @@
                             Fields: "Genres"
                         });
                     },
-                    listCountElement: page.querySelector('.listCount'),
-                    listNumbersElement: page.querySelector('.listNumbers'),
                     autoFocus: autoFocus,
-                    selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
-                    selectedIndexElement: page.querySelector('.selectedIndex'),
                     slyFrame: slyFrame,
                     onRender: function () {
                         if (resolve) {

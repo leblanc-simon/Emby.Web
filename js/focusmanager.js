@@ -61,6 +61,10 @@
 
             var elem = elems[i];
 
+            if (elem.getAttribute('tabindex') == "-1") {
+                continue;
+            }
+
             // http://stackoverflow.com/questions/19669786/check-if-element-is-visible-in-dom
             if (elem.offsetParent === null) {
                 continue;
@@ -87,7 +91,7 @@
                 return true;
             }
         }
-        else if (direction  == 3) {
+        else if (direction == 3) {
             if (elem.classList.contains('focuscontainer-down')) {
                 return true;
             }
