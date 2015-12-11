@@ -190,10 +190,19 @@
                 loading.hide();
 
                 page({
-                    click: false
+                    click: false,
+                    enableHistory: enableHistory()
                 });
             });
         });
+    }
+
+    function enableHistory() {
+        if (userAgent.indexOf('xbox') != -1) {
+            return false;
+        }
+
+        return true;
     }
 
     var localApiClient;

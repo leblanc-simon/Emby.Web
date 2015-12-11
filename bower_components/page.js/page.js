@@ -59,7 +59,7 @@
 
   var hashbang = false;
 
-  var enableHistory = true;
+  var enableHistory = false;
 
   /**
    * Previous context, for capturing
@@ -166,6 +166,7 @@
     if (false !== options.click) {
       document.addEventListener(clickEvent, onclick, false);
     }
+    if (options.enableHistory != null) enableHistory = options.enableHistory;
     if (true === options.hashbang) hashbang = true;
     if (!dispatch) return;
     var url = (hashbang && ~location.hash.indexOf('#!')) ? location.hash.substr(2) + location.search : location.pathname + location.search + location.hash;
@@ -222,7 +223,12 @@
         if (enableHistory) {
             history.back();
         } else {
-            
+
+            if (backStack.length > 2) {
+                backStack.length--;
+                var previousState = backStack[backStack.length - 1];
+                page.show(previousState.path, previousState.state, true, false, true);
+            }
         }
       page.len--;
     } else if (path) {
@@ -438,7 +444,8 @@
           backStack.push({
               state: this.state,
               title: this.title,
-              url: (hashbang && this.path !== '/' ? '#!' + this.path : this.canonicalPath)
+              url: (hashbang && this.path !== '/' ? '#!' + this.path : this.canonicalPath),
+              path: this.path
           });
       }
   };
@@ -457,7 +464,8 @@
           backStack[page.len || 0] = {
               state: this.state,
               title: this.title,
-              url: (hashbang && this.path !== '/' ? '#!' + this.path : this.canonicalPath)
+              url: (hashbang && this.path !== '/' ? '#!' + this.path : this.canonicalPath),
+              path: this.path
           };
       }
   };
