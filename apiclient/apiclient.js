@@ -58,25 +58,32 @@
             return serverInfo;
         };
 
-        var currentUserPromise;
+        var currentUser;
         /**
          * Gets or sets the current user id.
          */
         self.getCurrentUser = function () {
 
-            var promise = currentUserPromise;
+            if (currentUser) {
+                return new Promise(function (resolve, reject) {
 
-            if (promise == null) {
-
-                promise = self.getUser(self.getCurrentUserId()).catch(function (err) {
-                    currentUserPromise = null;
-                    throw err;
+                    resolve(currentUser);
                 });
-
-                currentUserPromise = promise;
             }
 
-            return promise;
+            var userId = self.getCurrentUserId();
+
+            if (!userId) {
+                return new Promise(function (resolve, reject) {
+
+                    reject();
+                });
+            }
+
+            return self.getUser(userId).then(function (user) {
+                currentUser = user;
+                return user;
+            });
         };
 
         /**
@@ -112,7 +119,7 @@
         };
 
         self.setAuthenticationInfo = function (accessKey, userId) {
-            currentUserPromise = null;
+            currentUser = null;
 
             serverInfo.AccessToken = accessKey;
             serverInfo.UserId = userId;
@@ -555,14 +562,14 @@
         function onWebSocketMessage(msg) {
 
             if (msg.MessageType === "UserDeleted") {
-                currentUserPromise = null;
+                currentUser = null;
             }
             else if (msg.MessageType === "UserUpdated" || msg.MessageType === "UserConfigurationUpdated") {
 
                 var user = msg.Data;
                 if (user.Id == self.getCurrentUserId()) {
 
-                    currentUserPromise = null;
+                    currentUser = null;
                 }
             }
 
