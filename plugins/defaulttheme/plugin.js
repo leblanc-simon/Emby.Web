@@ -178,7 +178,8 @@ define([], function () {
                 id: 'defaulttheme-nowplaying',
                 transition: 'slide',
                 dependencies: [
-                    Emby.PluginManager.mapPath(self, 'nowplaying/nowplaying.js')
+                    Emby.PluginManager.mapPath(self, 'nowplaying/nowplaying.js'),
+                    'css!' + Emby.PluginManager.mapPath(self, 'nowplaying/nowplaying.css')
                 ]
             });
 

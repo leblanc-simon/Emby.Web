@@ -21,6 +21,8 @@
         function setCurrentItem(item) {
 
             if (item) {
+                setTitle(item);
+
                 DefaultTheme.Backdrop.setBackdrops([item]);
 
                 DefaultTheme.CardBuilder.buildCards([item], {
@@ -62,6 +64,22 @@
             }
 
             updatePlaylist();
+        }
+
+        function setTitle(item) {
+
+            var url = Emby.Models.logoImageUrl(item, {});
+
+            if (url) {
+
+                var pageTitle = document.querySelector('.pageTitle');
+                pageTitle.style.backgroundImage = "url('" + url + "')";
+                pageTitle.classList.add('pageTitleWithLogo');
+                pageTitle.innerHTML = '';
+                document.querySelector('.headerLogo').classList.add('hide');
+            } else {
+                Emby.Page.setTitle('');
+            }
         }
 
         function onPlaybackStart(e, player) {
@@ -233,7 +251,13 @@
             elem.innerHTML = html;
         }
 
+        function getHeaderElement() {
+            return document.querySelector('.themeHeader');
+        }
+
         view.addEventListener('viewshow', function (e) {
+
+            getHeaderElement().classList.add('nowPlayingHeader');
 
             Emby.Page.setTitle('');
             Events.on(Emby.PlaybackManager, 'playbackstart', onPlaybackStart);
@@ -244,6 +268,8 @@
         });
 
         view.addEventListener('viewhide', function () {
+
+            getHeaderElement().classList.remove('nowPlayingHeader');
 
             releasePlayer();
             Events.off(Emby.PlaybackManager, 'playbackstart', onPlaybackStart);
