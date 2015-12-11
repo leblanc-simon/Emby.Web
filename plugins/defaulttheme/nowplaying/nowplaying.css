@@ -11,11 +11,15 @@
     width: 35%;
 }
 
-.nowPlayingButtonsContainer .userDataIcons {
-    display: inline-block;
-    margin-right: 1em;
-    margin-left: .35em;
+.nowPlayingButtonsContainer {
+    color: #eee;
 }
+
+    .nowPlayingButtonsContainer .userDataIcons {
+        display: inline-block;
+        margin-right: 1em;
+        margin-left: .35em;
+    }
 
 .nowPlayingMetadata {
     padding-left: 12px;

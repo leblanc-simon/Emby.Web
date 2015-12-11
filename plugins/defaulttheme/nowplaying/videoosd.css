@@ -1,6 +1,6 @@
 .osdHeader {
     padding-bottom: 3vh;
-    background-color: rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, .3);
 }
 
     .osdHeader .headerButton {
@@ -24,7 +24,7 @@
     }
 
     .videoOsdBottom paper-icon-button {
-        color: #ddd;
+        color: #eee;
     }
 
 .osdPositionSlider {
