@@ -91,6 +91,7 @@
             }
 
             var fetchRequest = {
+                mode: 'no-cors',
                 headers: headers,
                 method: request.type
             };
@@ -117,18 +118,22 @@
                 return fetch(request.url, fetchRequest);
             }
 
+            return fetchWithTimeout(request.url, fetchRequest, request.timeout);
+        }
+
+        function fetchWithTimeout(url, options, timeoutMs) {
+
             return new Promise(function (resolve, reject) {
 
-                var timeout = setTimeout(reject, request.timeout);
+                var timeout = setTimeout(reject, timeoutMs);
 
-                fetch(request.url, fetchRequest).then(function (response) {
+                fetch(url, options).then(function (response) {
                     clearTimeout(timeout);
                     resolve(response);
                 }, function (error) {
                     clearTimeout(timeout);
                     throw error;
                 });
-
             });
         }
 
@@ -1407,6 +1412,7 @@
             var url = "https://connect.emby.media/service/serverAuthorizations?serverId=" + serverId + "&userId=" + self.connectUserId();
 
             return fetch(url, {
+                mode: 'no-cors',
                 method: "DELETE",
                 headers: {
                     "X-Connect-UserToken": connectToken,
