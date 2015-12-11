@@ -190,10 +190,21 @@
                 loading.hide();
 
                 page({
-                    click: false
+                    click: false,
+                    enableHistory: enableHistory()
                 });
             });
         });
+    }
+
+    function enableHistory() {
+        var userAgent = navigator.userAgent.toLowerCase();
+
+        if (userAgent.indexOf('xbox') != -1) {
+            return false;
+        }
+
+        return true;
     }
 
     var localApiClient;
