@@ -67,14 +67,14 @@ paper-input .focused-line {
 }
 
 
-    .userViewButtonText {
-        border-bottom: 2px solid transparent;
-    }
+.userViewButtonText {
+    border-bottom: 2px solid transparent;
+}
 
-    .userViewNames paper-button.selected {
-        color: #fff;
-        opacity: 1;
-    }
+.userViewNames paper-button.selected {
+    color: #fff;
+    opacity: 1;
+}
 
 paper-dialog {
     background: #1c1c1c !important;
@@ -161,4 +161,8 @@ paper-icon-item:focus::before {
 
 .tagline {
     color: #FFEB3B;
+}
+
+paper-icon-button[disabled] {
+    color: #666 !important;
 }

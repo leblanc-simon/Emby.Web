@@ -1,16 +1,10 @@
 .osdHeader {
-    top: 0;
-    padding-top: 1em;
-    padding-bottom: 1em;
+    padding-bottom: 3vh;
     background-color: rgba(0, 0, 0, .2);
 }
 
-    .osdHeader .headerClock {
-        font-size: 110%;
-    }
-
     .osdHeader .headerButton {
-        display: none;
+        visibility: hidden;
     }
 
 .videoOsdBottom {
@@ -25,9 +19,27 @@
 
     .videoOsdBottom .buttons {
         padding: .25em 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .videoOsdBottom paper-icon-button {
         color: #ddd;
     }
 
 .osdPositionSlider {
     width: 100%;
+}
+
+.osdVolumeSlider {
+    display: inline-flex !important;
+    width: 150px;
+}
+
+.volumeButtons {
+    margin: 0 .75em 0 auto;
+}
+
+.osdTimeText {
+    margin-left: 1em;
 }

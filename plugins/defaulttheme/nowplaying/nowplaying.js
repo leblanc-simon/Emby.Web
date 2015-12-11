@@ -12,6 +12,10 @@
 
         var nowPlayingVolumeSlider = view.querySelector('.nowPlayingVolumeSlider');
         var nowPlayingPositionSlider = view.querySelector('.nowPlayingPositionSlider');
+
+        var nowPlayingPositionText = view.querySelector('.nowPlayingPositionText');
+        var nowPlayingDurationText = view.querySelector('.nowPlayingDurationText');
+
         var btnRepeat = view.querySelector('.btnRepeat');
 
         function setCurrentItem(item) {
@@ -170,6 +174,20 @@
             } else {
                 view.querySelector('.btnPlaylist').disabled = true;
             }
+
+            var index = Emby.PlaybackManager.currentPlaylistIndex();
+
+            if (index == 0) {
+                view.querySelector('.btnPreviousTrack').disabled = true;
+            } else {
+                view.querySelector('.btnPreviousTrack').disabled = false;
+            }
+
+            if (index >= items.length - 1) {
+                view.querySelector('.btnNextTrack').disabled = true;
+            } else {
+                view.querySelector('.btnNextTrack').disabled = false;
+            }
         }
 
         function updateTime(player) {
@@ -192,8 +210,27 @@
                     nowPlayingPositionSlider.value = 0;
                 }
 
+                updateTimeText(nowPlayingPositionText, playState.PositionTicks);
+                updateTimeText(nowPlayingDurationText, nowPlayingItem.RunTimeTicks, true);
+
                 nowPlayingPositionSlider.disabled = !playState.CanSeek;
             }
+        }
+
+        function updateTimeText(elem, ticks, divider) {
+
+            if (ticks == null) {
+                elem.innerHTML = '';
+                return;
+            }
+
+            var html = Emby.DateTime.getDisplayRunningTime(ticks);
+
+            if (divider) {
+                html = '&nbsp;/&nbsp;' + html;
+            }
+
+            elem.innerHTML = html;
         }
 
         view.addEventListener('viewshow', function (e) {
