@@ -89,11 +89,12 @@ a {
 
 .themeHeader {
     position: fixed;
-    top: 3%;
+    top: 0;
     left: 0;
     right: 0;
     padding-left: 2.3%;
     padding-right: 2.3%;
+    padding-top: 3vh;
     display: flex;
     align-items: center;
 }
@@ -600,10 +601,16 @@ paper-slider:hover #sliderKnob {
 .nowPlayingTime {
     display: inline-block;
     vertical-align: middle;
+    margin-left: 2em;
+}
+
+.nowPlayingProgressContainer {
+    display: flex;
+    align-items: center;
 }
 
 .nowPlayingPositionSlider {
-    width: 80%;
+    flex-grow: 1;
 }
 
 .nowPlayingVolumeSlider, .nowPlayingPositionSlider {

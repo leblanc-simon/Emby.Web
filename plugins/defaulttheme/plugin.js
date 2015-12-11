@@ -195,7 +195,7 @@ define([], function () {
             routes.push({
                 path: Emby.PluginManager.mapPath(self, 'nowplaying/videoosd.html'),
                 id: 'defaulttheme-videoosd',
-                transition: 'slide',
+                transition: 'fade',
                 dependencies: [
                     Emby.PluginManager.mapPath(self, 'nowplaying/videoosd.js'),
                     'css!' + Emby.PluginManager.mapPath(self, 'nowplaying/videoosd.css')
