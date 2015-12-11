@@ -198,6 +198,8 @@
     }
 
     function enableHistory() {
+        var userAgent = navigator.userAgent.toLowerCase();
+
         if (userAgent.indexOf('xbox') != -1) {
             return false;
         }
