@@ -561,24 +561,6 @@ paper-item-body .overview {
     height: 6px;
 }
 
-.nowPlayingCardContainer {
-    width: 25%;
-    margin-right: 1em;
-}
-
-    .nowPlayingCardContainer .card {
-        width: 100%;
-    }
-
-.nowPlayingInfoContainer {
-    width: 40%;
-}
-
-.nowPlayingButtonsContainer .userDataIcons {
-    display: inline-block;
-    margin-left: 3em;
-}
-
 paper-slider #progressContainer {
     height: 7px !important;
 }
@@ -591,34 +573,6 @@ paper-slider #sliderKnob {
 
 paper-slider:hover #sliderKnob {
     display: block;
-}
-
-.nowPlayingMetadata {
-    padding-left: 12px;
-    margin: 0 0 .5em;
-}
-
-.nowPlayingTime {
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 2em;
-}
-
-.nowPlayingProgressContainer {
-    display: flex;
-    align-items: center;
-}
-
-.nowPlayingPositionSlider {
-    flex-grow: 1;
-}
-
-.nowPlayingVolumeSlider, .nowPlayingPositionSlider {
-    display: inline-block !important;
-}
-
-.nowPlayingProgressContainer {
-    margin: 1em 0;
 }
 
 .playlistPageContainer {
