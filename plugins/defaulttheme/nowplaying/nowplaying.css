@@ -13,7 +13,8 @@
 
 .nowPlayingButtonsContainer .userDataIcons {
     display: inline-block;
-    margin-left: 3em;
+    margin-right: 1em;
+    margin-left: .35em;
 }
 
 .nowPlayingMetadata {
@@ -46,4 +47,14 @@
 
 .nowPlayingHeader .headerAudioPlayerButton {
     display: none;
+}
+
+.mouseIdle .nowPlayingButtonsContainer .buttonMute, .mouseIdle .nowPlayingButtonsContainer .nowPlayingVolumeSlider {
+    visibility: hidden !important;
+}
+
+.nowPlayingSecondaryButtons {
+    display: flex;
+    align-items: center;
+    margin-top: .5em;
 }
