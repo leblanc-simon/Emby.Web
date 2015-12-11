@@ -43,3 +43,7 @@
 .osdTimeText {
     margin-left: 1em;
 }
+
+.mouseIdle .videoOsdBottom .volumeButtons {
+    display: none;
+}
