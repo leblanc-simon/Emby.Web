@@ -61,6 +61,10 @@
 
             var elem = elems[i];
 
+            if (elem.disabled) {
+                continue;
+            }
+
             if (elem.getAttribute('tabindex') == "-1") {
                 continue;
             }
