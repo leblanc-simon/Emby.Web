@@ -91,7 +91,6 @@
             }
 
             var fetchRequest = {
-                mode: 'no-cors',
                 headers: headers,
                 method: request.type
             };
@@ -1412,7 +1411,6 @@
             var url = "https://connect.emby.media/service/serverAuthorizations?serverId=" + serverId + "&userId=" + self.connectUserId();
 
             return fetch(url, {
-                mode: 'no-cors',
                 method: "DELETE",
                 headers: {
                     "X-Connect-UserToken": connectToken,

@@ -183,7 +183,6 @@
             }
 
             var fetchRequest = {
-                mode: 'no-cors',
                 headers: headers,
                 method: request.type
             };
@@ -337,7 +336,6 @@
 
             fetchWithTimeout(url + "/system/info/public", {
 
-                mode: 'no-cors',
                 method: 'GET',
                 accept: 'application/json'
 
