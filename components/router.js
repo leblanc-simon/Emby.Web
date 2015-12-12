@@ -1,9 +1,6 @@
-(function (globalScope) {
+define(['loading', 'viewManager'], function (loading, viewManager) {
 
-    var viewManager;
-    require(['viewManager'], function (viewManagerInstance) {
-        viewManager = viewManagerInstance;
-    });
+    var connectionManager;
 
     function isStartup(ctx) {
         var path = ctx.pathname;
@@ -44,13 +41,10 @@
 
         Emby.Backdrop.clear();
 
-        require(['connectionManager', 'loading'], function (connectionManager, loading) {
+        loading.show();
 
-            loading.show();
-
-            connectionManager.connect().then(function (result) {
-                handleConnectionResult(result, loading);
-            });
+        connectionManager.connect().then(function (result) {
+            handleConnectionResult(result, loading);
         });
     }
 
@@ -69,21 +63,21 @@
                     result.ApiClient.getPublicUsers().then(function (users) {
 
                         if (users.length) {
-                            Emby.Page.show('/startup/login.html?serverid=' + result.Servers[0].Id);
+                            show('/startup/login.html?serverid=' + result.Servers[0].Id);
                         } else {
-                            Emby.Page.show('/startup/manuallogin.html?serverid=' + result.Servers[0].Id);
+                            show('/startup/manuallogin.html?serverid=' + result.Servers[0].Id);
                         }
                     });
                 }
                 break;
             case MediaBrowser.ConnectionState.ServerSelection:
                 {
-                    Emby.Page.show('/startup/selectserver.html');
+                    show('/startup/selectserver.html');
                 }
                 break;
             case MediaBrowser.ConnectionState.ConnectSignIn:
                 {
-                    Emby.Page.show('/startup/welcome.html');
+                    show('/startup/welcome.html');
                 }
                 break;
             default:
@@ -103,7 +97,7 @@
         url += url.indexOf('?') == -1 ? '?' : '&';
         url += 'v=' + cacheParam;
 
-        fetch(url, { mode: 'no-cors' }).then(function (response) {
+        fetch(url).then(function (response) {
             return response.text();
         }).then(function (body) {
             loadContent(ctx, route, body, request);
@@ -178,9 +172,11 @@
     var firstConnectionResult;
     function start() {
 
-        require(['connectionManager', 'loading'], function (connectionManager, loading) {
+        loading.show();
 
-            loading.show();
+        require(['connectionManager'], function (connectionManagerInstance) {
+
+            connectionManager = connectionManagerInstance;
 
             connectionManager.connect().then(function (result) {
 
@@ -258,60 +254,59 @@
 
     function authenticate(ctx, route, callback) {
 
-        require(['connectionManager', 'loading'], function (connectionManager, loading) {
+        var firstResult = firstConnectionResult;
+        if (firstResult) {
 
-            var firstResult = firstConnectionResult;
-            if (firstResult) {
+            firstConnectionResult = null;
 
-                firstConnectionResult = null;
+            if (firstResult.State != MediaBrowser.ConnectionState.SignedIn) {
 
-                if (firstResult.State != MediaBrowser.ConnectionState.SignedIn) {
-
-                    handleConnectionResult(firstResult, loading);
-                    return;
-                }
-            }
-
-            var server = connectionManager.currentLoggedInServer();
-            var pathname = ctx.pathname.toLowerCase();
-
-            Logger.log('Emby.Page - processing path request ' + pathname);
-
-            if (server) {
-
-                Logger.log('Emby.Page - user is authenticated');
-
-                if (ctx.isBack && (route.isDefaultRoute /*|| isStartup(ctx)*/)) {
-                    handleBackToDefault();
-                }
-                else if (route.isDefaultRoute) {
-                    Logger.log('Emby.Page - loading theme home page');
-
-                    Emby.ThemeManager.loadUserTheme();
-                } else {
-                    Logger.log('Emby.Page - next()');
-                    callback();
-                }
+                handleConnectionResult(firstResult, loading);
                 return;
             }
+        }
 
-            Logger.log('Emby.Page - user is not authenticated');
+        var server = connectionManager.currentLoggedInServer();
+        var pathname = ctx.pathname.toLowerCase();
 
-            if (!allowAnonymous(ctx)) {
+        Logger.log('Emby.Page - processing path request ' + pathname);
 
-                Logger.log('Emby.Page - route does not allow anonymous access, redirecting to login');
-                redirectToLogin();
+        if (server) {
+
+            Logger.log('Emby.Page - user is authenticated');
+
+            if (ctx.isBack && (route.isDefaultRoute /*|| isStartup(ctx)*/)) {
+                handleBackToDefault();
             }
-            else {
+            else if (route.isDefaultRoute) {
+                Logger.log('Emby.Page - loading theme home page');
 
-                Logger.log('Emby.Page - proceeding to ' + pathname);
+                Emby.ThemeManager.loadUserTheme();
+            } else {
+                Logger.log('Emby.Page - next()');
                 callback();
             }
-        });
+            return;
+        }
+
+        Logger.log('Emby.Page - user is not authenticated');
+
+        if (!allowAnonymous(ctx)) {
+
+            Logger.log('Emby.Page - route does not allow anonymous access, redirecting to login');
+            redirectToLogin();
+        }
+        else {
+
+            Logger.log('Emby.Page - proceeding to ' + pathname);
+            callback();
+        }
     }
 
     var isHandlingBackToDefault;
     function handleBackToDefault() {
+
+        Emby.ThemeManager.loadUserTheme();
 
         if (isHandlingBackToDefault) {
             return;
@@ -329,7 +324,7 @@
             isHandlingBackToDefault = false;
 
             if (wasCancelled) {
-                Emby.ThemeManager.loadUserTheme();
+                //Emby.ThemeManager.loadUserTheme();
             }
         });
     }
@@ -392,22 +387,7 @@
 
     function back() {
 
-        if (canGoBack()) {
-            page.back();
-
-        } else {
-
-            require(['apphost'], function (apphost) {
-
-                if (apphost.supports('Exit')) {
-                    apphost.exit();
-                } else {
-
-                    // Sign out since that's the closest thing we can do to closing the app
-                    Emby.App.logout();
-                }
-            });
-        }
+        page.back();
     }
     function canGoBack() {
 
@@ -426,7 +406,7 @@
 
         return new Promise(function (resolve, reject) {
 
-            var baseRoute = Emby.Page.baseUrl();
+            var baseRoute = baseUrl();
             path = path.replace(baseRoute, '');
 
             if (currentRouteInfo && currentRouteInfo.path == path) {
@@ -444,13 +424,9 @@
         return currentRouteInfo ? currentRouteInfo.route : null;
     }
 
-    if (!globalScope.Emby) {
-        globalScope.Emby = {};
-    }
-
     function goHome() {
 
-        Emby.Page.show(Emby.ThemeManager.getCurrentTheme().getHomeRoute());
+        show(Emby.ThemeManager.getCurrentTheme().getHomeRoute());
     }
 
     function showItem(item) {
@@ -468,15 +444,15 @@
     }
 
     function gotoSettings() {
-        Emby.Page.show('/settings/settings.html');
+        show('/settings/settings.html');
     }
 
     function selectServer() {
-        Emby.Page.show('/startup/selectserver.html');
+        show('/startup/selectserver.html');
     }
 
     function showVideoOsd() {
-        return Emby.Page.show(Emby.ThemeManager.getCurrentTheme().getVideoOsdRoute());
+        return show(Emby.ThemeManager.getCurrentTheme().getVideoOsdRoute());
     }
 
     function addRoute(path, newRoute) {
@@ -499,7 +475,7 @@
         }
     }
 
-    globalScope.Emby.Page = {
+    return {
         addRoute: addRoute,
         param: param,
         back: back,
@@ -515,13 +491,13 @@
         setTitle: setTitle,
         selectServer: selectServer,
         showVideoOsd: showVideoOsd,
-        setTransparency: setTransparency
+        setTransparency: setTransparency,
+
+        TransparencyLevel: {
+            None: 0,
+            Backdrop: 1,
+            Full: 2
+        }
     };
 
-    globalScope.Emby.TransparencyLevel = {
-        None: 0,
-        Backdrop: 1,
-        Full: 2
-    };
-
-})(this);
+});
