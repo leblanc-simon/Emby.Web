@@ -12,7 +12,7 @@
     }
 
     // Request Quota (only for File System API)  
-    var requestedBytes = 1024 * 1024 * 500; // 200MB
+    var requestedBytes = 1024 * 1024 * 1000; 
     var imageCacheDirectoryEntry;
     var imageCacheFolder = 'images';
 

@@ -263,7 +263,7 @@
         define("wakeonlan", ["apiclient/wakeonlan"]);
         define("type", ["bower_components/type/dist/type"]);
         define("Sly", ["bower_components/sly/src/sly"], function () {
-            return window.Sly;
+            return globalScope.Sly;
         });
 
         define("jquery.easing", ["bower_components/jquery.easing/js/jquery.easing.min"]);
@@ -317,7 +317,7 @@
 
         require(list, function (bean) {
 
-            window.bean = bean;
+            globalScope.bean = bean;
 
             callback();
         });
@@ -331,9 +331,9 @@
 
             var list = [
              'bower_components/page.js/page.js',
+             'components/router',
              'css!style/style.css',
              'js/pluginmanager',
-             'js/routes',
              'js/globalize',
              'js/thememanager',
              'js/focusmanager',
@@ -358,9 +358,11 @@
                 list.push('bower_components/fetch/fetch');
             }
 
-            require(list, function (page) {
+            require(list, function (pageJs, pageObjects) {
 
-                window.page = page;
+                globalScope.page = pageJs;
+                globalScope.Emby.Page = pageObjects;
+                globalScope.Emby.TransparencyLevel = pageObjects.TransparencyLevel;
 
                 var secondLevelDeps = [];
 
