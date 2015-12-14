@@ -187,6 +187,7 @@ define(['loading', 'viewManager'], function (loading, viewManager) {
 
                 page({
                     click: false,
+                    //hashbang: true,
                     enableHistory: enableHistory()
                 });
             });

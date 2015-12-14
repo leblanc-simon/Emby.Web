@@ -183,6 +183,7 @@
 
         console.log('Initializing requirejs');
 
+        var bowerPath = "bower_components";
         var componentType = enableWebComponents() ? 'polymer' : 'default';
 
         var paths = {
@@ -211,6 +212,9 @@
             screenfull: 'bower_components/screenfull/dist/screenfull'
         };
 
+        paths.serverdiscovery = "apiclient/serverdiscovery";
+        paths.wakeonlan = "apiclient/wakeonlan";
+
         if (enableWebComponents()) {
             paths.viewcontainer = 'components/viewcontainer';
         } else {
@@ -218,6 +222,18 @@
         }
 
         var urlArgs = "t=" + new Date().getTime();
+
+        var sha1Path = bowerPath + "/cryptojslib/components/sha1-min";
+        var md5Path = bowerPath + "/cryptojslib/components/md5-min";
+        var shim = {};
+
+        shim[sha1Path] = {
+            deps: [bowerPath + "/cryptojslib/components/core-min"]
+        };
+
+        shim[md5Path] = {
+            deps: [bowerPath + "/cryptojslib/components/core-min"]
+        };
 
         var config = {
 
@@ -231,16 +247,7 @@
                     'html': 'components/requirehtml'
                 }
             },
-            shim: {
-                'bower_components/sly/src/sly': {
-                    //These script dependencies should be loaded before loading
-                    //backbone.js
-                    deps: [],
-                    //Once loaded, use the global 'Backbone' as the
-                    //module value.
-                    exports: 'Sly'
-                }
-            }
+            shim: shim
         };
 
         var baseRoute = window.location.href.split('?')[0].replace('/index.html', '');
@@ -254,13 +261,11 @@
 
         requirejs.config(config);
 
+        define("cryptojs-sha1", [sha1Path]);
+        define("cryptojs-md5", [md5Path]);
         define("videoplayerosd", ["components/videoplayerosd"]);
 
-        define("cryptojs-sha1", ["apiclient/sha1"]);
-        define("cryptojs-md5", ["apiclient/md5"]);
         define("connectservice", ["apiclient/connectservice"]);
-        define("serverdiscovery", ["apiclient/serverdiscovery"]);
-        define("wakeonlan", ["apiclient/wakeonlan"]);
         define("type", ["bower_components/type/dist/type"]);
         define("Sly", ["bower_components/sly/src/sly"], function () {
             return globalScope.Sly;
