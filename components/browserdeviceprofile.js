@@ -243,18 +243,18 @@
                     Value: 'HE-AAC'
                 }
                 // Disabling this is going to require us to learn why it was disabled in the first place
-                ,
-                {
-                    Condition: 'NotEquals',
-                    Property: 'AudioProfile',
-                    Value: 'LC'
-                }
+                //,
+                //{
+                //    Condition: 'NotEquals',
+                //    Property: 'AudioProfile',
+                //    Value: 'LC'
+                //}
             ]
         });
 
         profile.CodecProfiles.push({
             Type: 'VideoAudio',
-            Codec: 'aac',
+            Codec: 'aac,mp3',
             Conditions: [
                 {
                     Condition: 'LessThanEqual',
@@ -310,12 +310,6 @@
         }
 
         profile.ResponseProfiles = [];
-
-        //profile.ResponseProfiles.push({
-        //    Type: 'Video',
-        //    Container: 'mkv',
-        //    MimeType: 'video/mp4'
-        //});
 
         profile.ResponseProfiles.push({
             Type: 'Video',
