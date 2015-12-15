@@ -184,14 +184,13 @@
         console.log('Initializing requirejs');
 
         var bowerPath = "bower_components";
-        var componentType = enableWebComponents() ? 'polymer' : 'default';
 
         var paths = {
-            alert: "components/" + componentType + "/alert",
-            confirm: "components/" + componentType + "/confirm",
-            toast: "components/" + componentType + "/toast",
-            loading: "components/" + componentType + "/loading",
-            dialog: "components/" + componentType + "/dialog",
+            alert: "components/alert",
+            confirm: "components/confirm",
+            toast: "components/toast",
+            loading: "components/loading/loading",
+            dialog: "components/dialog",
             soundeffects: "components/soundeffects",
             apphost: customPaths.apphost || "components/apphost",
             filesystem: customPaths.filesystem || "components/filesystem",
