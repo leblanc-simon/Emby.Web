@@ -221,7 +221,7 @@ define([], function () {
                     player.destroy();
                 }
                 catch (err) {
-                    Logger.log(err);
+                    console.log(err);
                 }
 
                 hlsPlayer = null;
@@ -351,7 +351,7 @@ define([], function () {
         function onError() {
 
             var errorCode = this.error ? this.error.code : '';
-            Logger.log('Media element error code: ' + errorCode);
+            console.log('Media element error code: ' + errorCode);
 
             Events.trigger(self, 'error');
         }
@@ -438,7 +438,7 @@ define([], function () {
 
         function setCurrentTrackElement(trackIndex) {
 
-            Logger.log('Setting new text track index to: ' + trackIndex);
+            console.log('Setting new text track index to: ' + trackIndex);
 
             var allTracks = mediaElement.textTracks; // get list of tracks
 
@@ -454,7 +454,7 @@ define([], function () {
                     mode = 0; // hide all other tracks
                 }
 
-                Logger.log('Setting track ' + i + ' mode to: ' + mode);
+                console.log('Setting track ' + i + ' mode to: ' + mode);
 
                 // Safari uses integers for the mode property
                 // http://www.jwplayer.com/html5/scripting/
@@ -492,7 +492,7 @@ define([], function () {
                         track.removeCue(track.cues[0]);
                     }
                 } catch (e) {
-                    Logger.log('Error removing cue from textTrack');
+                    console.log('Error removing cue from textTrack');
                 }
             }
 

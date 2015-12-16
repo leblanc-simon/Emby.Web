@@ -1,4 +1,4 @@
-define(['loading', 'viewManager'], function (loading, viewManager) {
+define(['loading', 'viewManager', 'events'], function (loading, viewManager, Events) {
 
     var connectionManager;
 
@@ -270,36 +270,36 @@ define(['loading', 'viewManager'], function (loading, viewManager) {
         var server = connectionManager.currentLoggedInServer();
         var pathname = ctx.pathname.toLowerCase();
 
-        Logger.log('Emby.Page - processing path request ' + pathname);
+        console.log('Emby.Page - processing path request ' + pathname);
 
         if (server) {
 
-            Logger.log('Emby.Page - user is authenticated');
+            console.log('Emby.Page - user is authenticated');
 
             if (ctx.isBack && (route.isDefaultRoute /*|| isStartup(ctx)*/)) {
                 handleBackToDefault();
             }
             else if (route.isDefaultRoute) {
-                Logger.log('Emby.Page - loading theme home page');
+                console.log('Emby.Page - loading theme home page');
 
                 Emby.ThemeManager.loadUserTheme();
             } else {
-                Logger.log('Emby.Page - next()');
+                console.log('Emby.Page - next()');
                 callback();
             }
             return;
         }
 
-        Logger.log('Emby.Page - user is not authenticated');
+        console.log('Emby.Page - user is not authenticated');
 
         if (!allowAnonymous(ctx)) {
 
-            Logger.log('Emby.Page - route does not allow anonymous access, redirecting to login');
+            console.log('Emby.Page - route does not allow anonymous access, redirecting to login');
             redirectToLogin();
         }
         else {
 
-            Logger.log('Emby.Page - proceeding to ' + pathname);
+            console.log('Emby.Page - proceeding to ' + pathname);
             callback();
         }
     }

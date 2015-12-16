@@ -1,4 +1,4 @@
-(function (globalScope) {
+define(['events'], function (Events) {
 
     function playbackManager() {
 
@@ -737,7 +737,7 @@
 
                     apiClient.detectBitrate().then(function (bitrate) {
 
-                        Logger.log('Max bitrate auto detected to ' + bitrate);
+                        console.log('Max bitrate auto detected to ' + bitrate);
                         lastBitrateDetect = new Date().getTime();
                         appSettings.maxStreamingBitrate(bitrate);
 
@@ -1244,7 +1244,7 @@
 
             if (newItemInfo) {
 
-                Logger.log('playing next track');
+                console.log('playing next track');
 
                 playInternal(newItemInfo.item, 0, function () {
                     setPlaylistState(newItemInfo.index);
@@ -1308,7 +1308,7 @@
 
             startProgressInterval(player);
 
-            Events.trigger(self, 'playbackstart', [player]);
+            Events.trigger(self, 'playbackstart', player);
         }
 
         function onPlaybackStopped() {
@@ -1328,8 +1328,7 @@
 
             var nextItem = playNextAfterEnded ? getNextItemInfo() : null;
 
-            Events.trigger(self, 'playbackstop', [
-            {
+            Events.trigger(self, 'playbackstop', [{
                 player: player,
                 state: state,
                 nextItem: (nextItem ? nextItem.item : null),
@@ -1373,8 +1372,7 @@
 
             clearProgressInterval(activePlayer);
 
-            Events.trigger(self, 'playbackstop', [
-            {
+            Events.trigger(self, 'playbackstop', [{
                 player: activePlayer,
                 state: state,
                 nextItem: newItem,
@@ -1457,10 +1455,5 @@
         });
     }
 
-    if (!globalScope.Emby) {
-        globalScope.Emby = {};
-    }
-
-    globalScope.Emby.PlaybackManager = new playbackManager();
-
-})(this);
+    return new playbackManager();
+});

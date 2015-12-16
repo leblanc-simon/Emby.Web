@@ -51,7 +51,7 @@
         function cancelAnimation() {
             var animation = currentAnimation;
             if (animation) {
-                Logger.log('Cancelling backdrop animation');
+                console.log('Cancelling backdrop animation');
                 animation.cancel();
                 currentAnimation = null;
             }

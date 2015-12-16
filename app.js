@@ -10,7 +10,7 @@
 
         path = path.replace(baseRoute, '');
 
-        Logger.log('Defining route: ' + path);
+        console.log('Defining route: ' + path);
 
         Emby.Page.addRoute(path, newRoute);
     }
@@ -27,7 +27,7 @@
 
     function defineCoreRoutes() {
 
-        Logger.log('Defining core routes');
+        console.log('Defining core routes');
 
         var baseRoute = window.location.pathname.replace('/index.html', '');
         if (baseRoute.lastIndexOf('/') == baseRoute.length - 1) {
@@ -112,7 +112,7 @@
 
     function definePluginRoutes() {
 
-        Logger.log('Defining plugin routes');
+        console.log('Defining plugin routes');
 
         var plugins = Emby.PluginManager.plugins();
 
@@ -157,17 +157,17 @@
 
         return new Promise(function (resolve, reject) {
 
-            require(['apphost'], function (apphost) {
+            require(['apphost', 'credentialprovider'], function (apphost, credentialProvider) {
 
-                var credentialProvider = new MediaBrowser.CredentialProvider();
+                var credentialProviderInstance = new credentialProvider();
 
                 if (window.location.href.indexOf('clear=1') != -1) {
-                    credentialProvider.clear();
+                    credentialProviderInstance.clear();
                 }
 
                 apphost.appInfo().then(function (appInfo) {
 
-                    connectionManager = new MediaBrowser.ConnectionManager(Logger, credentialProvider, appInfo.appName, appInfo.appVersion, appInfo.deviceName, appInfo.deviceId, getCapabilities(apphost));
+                    connectionManager = new MediaBrowser.ConnectionManager(credentialProviderInstance, appInfo.appName, appInfo.appVersion, appInfo.deviceName, appInfo.deviceId, getCapabilities(apphost), window.devicePixelRatio);
 
                     define('connectionManager', [], function () {
                         return connectionManager;
@@ -209,7 +209,13 @@
             browser: "components/browser",
             isMobile: "bower_components/isMobile/isMobile.min",
             howler: 'bower_components/howler.js/howler.min',
-            screenfull: 'bower_components/screenfull/dist/screenfull'
+            screenfull: 'bower_components/screenfull/dist/screenfull',
+            events: 'bower_components/emby-apiclient/events',
+            pluginmanager: 'components/pluginmanager',
+            playbackmanager: 'components/playbackmanager',
+            credentialprovider: 'bower_components/emby-apiclient/credentials',
+            apiclient: 'bower_components/emby-apiclient/apiclient',
+            connectservice: 'bower_components/emby-apiclient/connectservice'
         };
 
         paths.serverdiscovery = "bower_components/emby-apiclient/serverdiscovery";
@@ -266,7 +272,6 @@
         define("cryptojs-md5", [md5Path]);
         define("videoplayerosd", ["components/videoplayerosd"]);
 
-        define("connectservice", ["apiclient/connectservice"]);
         define("type", ["bower_components/type/dist/type"]);
         define("Sly", ["bower_components/sly/src/sly"], function () {
             return globalScope.Sly;
@@ -312,19 +317,16 @@
     function loadApiClientDependencies(callback) {
 
         var list = [
-           'bower_components/bean/bean.min',
-           'bower_components/emby-apiclient/logger',
-           'bower_components/emby-apiclient/credentials',
-           'bower_components/emby-apiclient/store',
-           'components/events',
-           'bower_components/emby-apiclient/apiclient',
-           'bower_components/emby-apiclient/connectionmanager'
+           'bower_components/emby-apiclient/connectionmanager',
+           'bower_components/emby-apiclient/store'
         ];
 
-        require(list, function (bean) {
+        require(list, function(connectionManagerExports) {
 
-            globalScope.bean = bean;
-
+            window.MediaBrowser = window.MediaBrowser || {};
+            for (var i in connectionManagerExports) {
+                MediaBrowser[i] = connectionManagerExports[i];
+            }
             callback();
         });
     }
@@ -338,8 +340,8 @@
             var list = [
              'bower_components/page.js/page.js',
              'components/router',
+             'pluginmanager',
              'css!style/style.css',
-             'js/pluginmanager',
              'js/globalize',
              'js/thememanager',
              'js/focusmanager',
@@ -364,24 +366,34 @@
                 list.push('bower_components/fetch/fetch');
             }
 
-            require(list, function (pageJs, pageObjects) {
+            require(list, function (pageJs, pageObjects, pluginmanager) {
 
                 globalScope.page = pageJs;
                 globalScope.Emby.Page = pageObjects;
                 globalScope.Emby.TransparencyLevel = pageObjects.TransparencyLevel;
+                globalScope.Emby.PluginManager = pluginmanager;
 
-                var secondLevelDeps = [];
-
-                // needs to be after the plugin manager
-                secondLevelDeps.push('js/playbackmanager');
-
-                if (enableWebComponents()) {
-                    secondLevelDeps.push('html!bower_components/neon-animation/neon-animated-pages.html');
-                }
-
-                // Second level dependencies that have to be loaded after the first set
-                require(secondLevelDeps, callback);
+                loadSecondLevelCoreDependencies(callback);
             });
+        });
+    }
+
+    function loadSecondLevelCoreDependencies(callback) {
+
+        var secondLevelDeps = [];
+
+        // needs to be after the plugin manager
+        secondLevelDeps.push('playbackmanager');
+
+        if (enableWebComponents()) {
+            secondLevelDeps.push('html!bower_components/neon-animation/neon-animated-pages.html');
+        }
+
+        // Second level dependencies that have to be loaded after the first set
+        require(secondLevelDeps, function (playbackmanager) {
+
+            globalScope.Emby.PlaybackManager = playbackmanager;
+            callback();
         });
     }
 
@@ -466,6 +478,7 @@
 
         var presentationDependencies = [];
 
+        presentationDependencies.push('events');
         presentationDependencies.push('js/models');
         presentationDependencies.push('js/soundeffectplayer');
         presentationDependencies.push('js/thememediaplayer');
@@ -477,9 +490,11 @@
 
         presentationDependencies.push('js/controlbox');
 
-        require(presentationDependencies, function () {
+        require(presentationDependencies, function (events) {
 
-            Logger.log('Loading presentation');
+            window.Events = events;
+
+            console.log('Loading presentation');
 
             // Start by loading the default theme. Once a user is logged in we can change the theme based on settings
             loadDefaultTheme(function () {
