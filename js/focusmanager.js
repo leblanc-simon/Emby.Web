@@ -258,10 +258,10 @@
 
             var nearest = window.nearest(focusableElements, {
 
-                x: rect.left + rect.width / 2, // X position of top left corner of point/region
-                y: rect.top + rect.height / 2, // Y position of top left corner of point/region
-                w: 0, // Width of region
-                h: 0, // Height of region
+                x: rect.left, // X position of top left corner of point/region
+                y: rect.top, // Y position of top left corner of point/region
+                w: rect.width, // Width of region
+                h: rect.height, // Height of region
                 tolerance: 1, // Distance tolerance in pixels, mainly to handle fractional pixel rounding bugs
                 container: document, // Container of objects for calculating %-based dimensions
                 includeSelf: false, // Include 'this' in search results (t/f) - only applies to $(elem).func(selector) syntax
