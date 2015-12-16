@@ -13,7 +13,7 @@ define([], function () {
 
         function showScreenSaver(screensaver) {
 
-            Logger.log('Showing screensaver ' + screensaver.name);
+            console.log('Showing screensaver ' + screensaver.name);
 
             screensaver.show();
             activeScreenSaver = screensaver;
@@ -31,7 +31,7 @@ define([], function () {
 
         function hide() {
             if (activeScreenSaver) {
-                Logger.log('Hiding screensaver');
+                console.log('Hiding screensaver');
                 activeScreenSaver.hide();
                 activeScreenSaver = null;
             }

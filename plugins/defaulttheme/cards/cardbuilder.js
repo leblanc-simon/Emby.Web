@@ -719,7 +719,7 @@
                     miscInfo.push(text);
                 }
                 catch (e) {
-                    Logger.log("Error parsing date: " + item.PremiereDate);
+                    console.log("Error parsing date: " + item.PremiereDate);
                 }
             }
         }
@@ -738,7 +738,7 @@
                 }
             }
             catch (e) {
-                Logger.log("Error parsing date: " + item.PremiereDate);
+                console.log("Error parsing date: " + item.PremiereDate);
             }
         }
 
@@ -764,7 +764,7 @@
 
                     }
                     catch (e) {
-                        Logger.log("Error parsing date: " + item.EndDate);
+                        console.log("Error parsing date: " + item.EndDate);
                     }
                 }
 
@@ -785,7 +785,7 @@
                     miscInfo.push(text);
                 }
                 catch (e) {
-                    Logger.log("Error parsing date: " + item.PremiereDate);
+                    console.log("Error parsing date: " + item.PremiereDate);
                 }
             }
         }

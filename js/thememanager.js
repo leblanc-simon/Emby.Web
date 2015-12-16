@@ -44,7 +44,7 @@
 
         Emby.Backdrop.clear();
 
-        Logger.log('Unloading theme: ' + theme.name);
+        console.log('Unloading theme: ' + theme.name);
         requireCss.unloadPackage('theme');
         requireCss.unloadPackage(theme.packageName);
 

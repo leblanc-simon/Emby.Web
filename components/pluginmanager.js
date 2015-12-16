@@ -1,4 +1,4 @@
-(function (globalScope) {
+define(['events'], function (Events) {
 
     function pluginManager() {
 
@@ -51,10 +51,5 @@
         };
     }
 
-    if (!globalScope.Emby) {
-        globalScope.Emby = {};
-    }
-
-    globalScope.Emby.PluginManager = new pluginManager();
-
-})(this);
+    return new pluginManager();
+});

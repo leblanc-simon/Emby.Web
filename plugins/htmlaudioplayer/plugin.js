@@ -224,7 +224,7 @@ define([], function () {
         function onError() {
 
             var errorCode = this.error ? this.error.code : '';
-            Logger.log('Media element error code: ' + errorCode);
+            console.log('Media element error code: ' + errorCode);
 
             Events.trigger(self, 'error');
         }
