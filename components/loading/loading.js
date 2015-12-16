@@ -12,6 +12,7 @@ define(['html!bower_components/paper-spinner/paper-spinner', 'css!components/loa
                 document.body.appendChild(elem);
             }
 
+            elem.active = true;
             elem.style.display = 'block';
         },
         hide: function () {
@@ -21,10 +22,6 @@ define(['html!bower_components/paper-spinner/paper-spinner', 'css!components/loa
 
                 elem.active = false;
                 elem.style.display = 'none';
-
-                setTimeout(function () {
-                    elem.active = false;
-                }, 100);
             }
         }
     };
