@@ -1,4 +1,4 @@
-﻿define([], function () {
+﻿define(['browser'], function (browser) {
 
     var supportedFormats;
     function getSupportedFormats() {
@@ -15,6 +15,9 @@
         }
         if (elem.canPlayType('audio/mp4; codecs="ac-3"').replace(/no/, '')) {
             list.push('ac3');
+        }
+        if (browser.chrome) {
+            list.push('mkv');
         }
 
         var canPlayH264 = true;
@@ -72,7 +75,7 @@
 
     return function () {
 
-        var bitrateSetting = 1000000;
+        var bitrateSetting = 100000000;
 
         var supportedFormats = getSupportedFormats();
 
@@ -80,11 +83,12 @@
         var canPlayAc3 = supportedFormats.indexOf('ac3') != -1;
         var canPlayMp3 = supportedFormats.indexOf('mp3') != -1;
         var canPlayAac = supportedFormats.indexOf('aac') != -1;
+        var canPlayMkv = supportedFormats.indexOf('mkv') != -1;
 
         var profile = {};
 
         profile.MaxStreamingBitrate = bitrateSetting;
-        profile.MaxStaticBitrate = 8000000;
+        profile.MaxStaticBitrate = 100000000;
         profile.MusicStreamingTranscodingBitrate = Math.min(bitrateSetting, 192000);
 
         profile.DirectPlayProfiles = [];
@@ -98,8 +102,7 @@
             });
         }
 
-        var userAgent = navigator.userAgent.toLowerCase();
-        if (userAgent.indexOf('chrome') != -1 && userAgent.indexOf('msie') == -1 && userAgent.indexOf('edge') == -1) {
+        if (browser.chrome) {
             profile.DirectPlayProfiles.push({
                 Container: 'mkv,mov',
                 Type: 'Video',
@@ -166,6 +169,17 @@
                 AudioCodec: 'aac',
                 Context: 'Static',
                 Protocol: 'http'
+            });
+        }
+
+        // Can't use mkv on mobile because we have to use the native player controls and they won't be able to seek it
+        if (canPlayMkv && !browser.mobile) {
+            profile.TranscodingProfiles.push({
+                Container: 'mkv',
+                Type: 'Video',
+                AudioCodec: 'aac' + (canPlayAc3 ? ',ac3' : ''),
+                VideoCodec: 'h264',
+                Context: 'Streaming'
             });
         }
 

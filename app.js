@@ -184,14 +184,13 @@
         console.log('Initializing requirejs');
 
         var bowerPath = "bower_components";
-        var componentType = enableWebComponents() ? 'polymer' : 'default';
 
         var paths = {
-            alert: "components/" + componentType + "/alert",
-            confirm: "components/" + componentType + "/confirm",
-            toast: "components/" + componentType + "/toast",
-            loading: "components/" + componentType + "/loading",
-            dialog: "components/" + componentType + "/dialog",
+            alert: "components/alert",
+            confirm: "components/confirm",
+            toast: "components/toast",
+            loading: "components/loading/loading",
+            dialog: "components/dialog",
             soundeffects: "components/soundeffects",
             apphost: customPaths.apphost || "components/apphost",
             filesystem: customPaths.filesystem || "components/filesystem",
@@ -206,14 +205,16 @@
             alphapicker: "components/alphapicker/alphapicker",
             paperdialoghelper: "components/paperdialoghelper",
             slideshow: "components/slideshow/slideshow",
-            hlsjs: "components/hls.min",
             browserdeviceprofile: "components/browserdeviceprofile",
+            browser: "components/browser",
+            isMobile: "bower_components/isMobile/isMobile.min",
             howler: 'bower_components/howler.js/howler.min',
             screenfull: 'bower_components/screenfull/dist/screenfull'
         };
 
-        paths.serverdiscovery = "apiclient/serverdiscovery";
-        paths.wakeonlan = "apiclient/wakeonlan";
+        paths.serverdiscovery = "bower_components/emby-apiclient/serverdiscovery";
+        paths.wakeonlan = "bower_components/emby-apiclient/wakeonlan";
+        paths.hlsjs = bowerPath + "/hls.js/dist/hls.min";
 
         if (enableWebComponents()) {
             paths.viewcontainer = 'components/viewcontainer';
@@ -312,12 +313,12 @@
 
         var list = [
            'bower_components/bean/bean.min',
-           'apiclient/logger',
-           'apiclient/credentials',
-           'apiclient/store',
-           'apiclient/events',
-           'apiclient/apiclient',
-           'apiclient/connectionmanager'
+           'bower_components/emby-apiclient/logger',
+           'bower_components/emby-apiclient/credentials',
+           'bower_components/emby-apiclient/store',
+           'components/events',
+           'bower_components/emby-apiclient/apiclient',
+           'bower_components/emby-apiclient/connectionmanager'
         ];
 
         require(list, function (bean) {
