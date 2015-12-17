@@ -34,16 +34,6 @@
         }
     }
 
-    function onPlayItem(item) {
-
-        // User played something manually
-        if (currentThemeIds.indexOf(item.Id) == -1) {
-
-            currentOwnerId = null;
-
-        }
-    }
-
     function enabled() {
 
         return true;
@@ -71,17 +61,20 @@
 
     document.addEventListener('viewshow', function (e) {
 
-        var state = e.detail.state || {};
-        var item = state.item;
-
         if (enabled()) {
+
+            var state = e.detail.state || {};
+            var item = state.item;
 
             if (item) {
                 loadThemeMedia(item);
+                return;
             }
-            else if (e.detail.id == 'defaulttheme-nowplaying') {
+
+            var viewOptions = e.detail.options || {};
+
+            if (viewOptions.supportsThemeMedia) {
                 // Do nothing here, allow it to keep playing
-                // TODO: Make this modular for other themes
             }
             else {
                 playThemeMedia([], null);
@@ -89,5 +82,13 @@
         }
 
     }, true);
+
+    //Events.on(Emby.PlaybackManager, 'playbackstart', function (e, player) {
+    //    var item = Emby.PlaybackManager.currentItem(player);
+    //    // User played something manually
+    //    if (currentThemeIds.indexOf(item.Id) == -1) {
+    //        currentOwnerId = null;
+    //    }
+    //});
 
 })(document);
