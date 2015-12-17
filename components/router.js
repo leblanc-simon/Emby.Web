@@ -134,7 +134,8 @@ define(['loading', 'viewManager', 'events'], function (loading, viewManager, Eve
             transition: route.transition,
             isBack: isBackNav,
             state: ctx.state,
-            type: route.type
+            type: route.type,
+            options: route.options
         };
         currentViewLoadRequest = currentRequest;
 
@@ -476,6 +477,13 @@ define(['loading', 'viewManager', 'events'], function (loading, viewManager, Eve
         }
     }
 
+    function pushState(state, title, url) {
+        
+        state.navigate = false;
+
+        page.pushState(state, title, url);
+    }
+
     return {
         addRoute: addRoute,
         param: param,
@@ -493,6 +501,8 @@ define(['loading', 'viewManager', 'events'], function (loading, viewManager, Eve
         selectServer: selectServer,
         showVideoOsd: showVideoOsd,
         setTransparency: setTransparency,
+
+        pushState: pushState,
 
         TransparencyLevel: {
             None: 0,
