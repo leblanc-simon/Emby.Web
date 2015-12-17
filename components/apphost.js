@@ -38,13 +38,14 @@ define(['cryptojs-sha1'], function () {
             return new Promise(function (resolve, reject) {
 
                 var deviceName = "Web Browser";
+                var appName = 'Emby Theater';
 
                 function onDeviceAdAcquired(id) {
 
                     resolve({
                         deviceId: id,
                         deviceName: deviceName,
-                        appName: 'Emby Theater',
+                        appName: appName,
                         appVersion: '3.0'
                     });
                 }
@@ -58,6 +59,7 @@ define(['cryptojs-sha1'], function () {
                         var keys = [];
                         keys.push(navigator.userAgent);
                         keys.push((navigator.cpuClass || ""));
+                        keys.push(appName);
 
                         var randomId = CryptoJS.SHA1(keys.join('|')).toString();
                         appStorage.setItem('_deviceId', randomId);

@@ -42,7 +42,8 @@
                 html += '<iron-icon icon="' + option.ironIcon + '"></iron-icon>';
             }
             else if (renderIcon) {
-                html += '<iron-icon></iron-icon>';
+                // Need this when left-justified but not when centered
+                //html += '<iron-icon></iron-icon>';
             }
             html += '<span>' + option.name + '</span>';
             html += '</paper-button>';

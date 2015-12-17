@@ -35,7 +35,7 @@ paper-input .focused-line {
     background: #404040;
 }
 
-    .paperRaised:focus, paper-button[raised][focused] {
+    .paperRaised:focus, paper-button[focused]:not(.btnUserViewHeader) {
         background: #52B54B;
         color: #fff;
     }
@@ -77,7 +77,7 @@ paper-input .focused-line {
 }
 
 paper-dialog {
-    background: #1c1c1c !important;
+    background: rgba(28,28,28,.94) !important;
     color: #fff !important;
 }
 

@@ -69,6 +69,10 @@ button.flat, paper-button {
     margin-bottom: 5px;
 }
 
+paper-button {
+    border-radius: 3px;
+}
+
     paper-button.block {
         display: block;
     }
