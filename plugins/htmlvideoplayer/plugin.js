@@ -519,7 +519,7 @@ define([], function () {
 
             return new Promise(function (resolve, reject) {
 
-                var dlg = document.querySelector('.videoPlayerDialog');
+                var dlg = document.querySelector('.videoPlayerContainer');
 
                 if (!dlg) {
 
@@ -570,9 +570,13 @@ define([], function () {
                         videoDialog = dlg;
                         mediaElement = videoElement;
 
-                        zoomIn(dlg, 1).onfinish = function () {
+                        if (shouldGoFullscreen(options)) {
+                            zoomIn(dlg, 1).onfinish = function () {
+                                resolve(videoElement);
+                            };
+                        } else {
                             resolve(videoElement);
-                        };
+                        }
 
                     });
 
