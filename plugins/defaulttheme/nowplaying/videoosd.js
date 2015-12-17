@@ -63,7 +63,7 @@
                     view.querySelector('.btnSubtitles').classList.add('hide');
                 }
 
-                if (Emby.PlaybackManager.audioTracks(player).length > 0) {
+                if (Emby.PlaybackManager.audioTracks(player).length > 1) {
                     view.querySelector('.btnAudio').classList.remove('hide');
                 } else {
                     view.querySelector('.btnAudio').classList.add('hide');
@@ -77,9 +77,6 @@
 
                 view.querySelector('.btnSubtitles').classList.add('hide');
                 view.querySelector('.btnAudio').classList.add('hide');
-
-                osdPoster.innerHTML = '';
-                osdPoster.classList.add('hide');
 
                 view.querySelector('.osdTitle').innerHTML = '';
                 view.querySelector('.osdMediaInfo').innerHTML = '';
