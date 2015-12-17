@@ -40,21 +40,63 @@
             }
         }
 
-        function setCurrentItem(item) {
+        function setCurrentItem(item, player) {
+
+            setPoster(item);
 
             if (item) {
                 setTitle(item);
 
                 nowPlayingVolumeSlider.disabled = false;
                 nowPlayingPositionSlider.disabled = false;
+
+                if (Emby.PlaybackManager.subtitleTracks(player).length) {
+                    view.querySelector('.btnSubtitles').classList.remove('hide');
+                } else {
+                    view.querySelector('.btnSubtitles').classList.add('hide');
+                }
+
+                if (Emby.PlaybackManager.audioTracks(player).length > 0) {
+                    view.querySelector('.btnAudio').classList.remove('hide');
+                } else {
+                    view.querySelector('.btnAudio').classList.add('hide');
+                }
+
             } else {
 
                 Emby.Page.setTitle('');
                 nowPlayingVolumeSlider.disabled = true;
                 nowPlayingPositionSlider.disabled = true;
+
+                view.querySelector('.btnSubtitles').classList.add('hide');
+                view.querySelector('.btnAudio').classList.add('hide');
+
+                osdPoster.innerHTML = '';
+                osdPoster.classList.add('hide');
             }
 
             updatePlaylist();
+        }
+
+        function setPoster(item) {
+
+            var osdPoster = view.querySelector('.osdPoster');
+
+            if (item) {
+
+                var imgUrl = Emby.Models.seriesImageUrl(item, { type: 'Primary' }) ||
+                    Emby.Models.seriesImageUrl(item, { type: 'Thumb' }) ||
+                    Emby.Models.imageUrl(item, { type: 'Primary' });
+
+                if (imgUrl) {
+                    osdPoster.classList.remove('hide');
+                    osdPoster.innerHTML = '<img src="' + imgUrl + '" />';
+                    return;
+                }
+            }
+
+            osdPoster.innerHTML = '';
+            osdPoster.classList.add('hide');
         }
 
         function showOsd() {
@@ -132,7 +174,7 @@
                   { transform: 'translate3d(0,' + elem.offsetHeight + 'px,0)', opacity: '.3', offset: 0 },
                   { transform: 'translate3d(0,0,0)', opacity: '1', offset: 1 }];
                 var timing = { duration: 300, iterations: 1, easing: 'ease-out' };
-                elem.animate(keyframes, timing).onfinish = function() {
+                elem.animate(keyframes, timing).onfinish = function () {
                     Emby.FocusManager.autoFocus(elem, true);
                 };
             });
@@ -206,8 +248,12 @@
 
         function onPlaybackStart(e, player) {
 
-            bindToPlayer(player);
-            setCurrentItem(Emby.PlaybackManager.currentItem(player));
+            if (player) {
+                bindToPlayer(player);
+                setCurrentItem(Emby.PlaybackManager.currentItem(player), player);
+            } else {
+                setCurrentItem(null);
+            }
 
             enableStopOnBack(true);
         }
@@ -245,7 +291,6 @@
         });
 
         view.addEventListener('viewbeforehide', function () {
-
             stopHideTimer();
             getHeaderElement().classList.remove('osdHeader');
             document.removeEventListener('mousemove', onMouseMove);
@@ -347,7 +392,7 @@
 
             if (!nowPlayingPositionSlider.dragging) {
 
-                var state = Emby.PlaybackManager.getPlayerState();
+                var state = Emby.PlaybackManager.getPlayerState(player);
                 var playState = state.PlayState || {};
                 var nowPlayingItem = state.NowPlayingItem || {};
 
@@ -386,9 +431,144 @@
             elem.innerHTML = html;
         }
 
+        function showAudioTrackSelection() {
+
+            var player = currentPlayer;
+
+            var audioTracks = Emby.PlaybackManager.audioTracks(player);
+
+            var currentIndex = Emby.PlaybackManager.getPlayerState(player).PlayState.AudioStreamIndex;
+
+            var menuItems = audioTracks.map(function (stream) {
+
+                var attributes = [];
+
+                attributes.push(stream.Language || Globalize.translate('UnknownLanguage'));
+
+                if (stream.Codec) {
+                    attributes.push(stream.Codec);
+                }
+                if (stream.Profile) {
+                    attributes.push(stream.Profile);
+                }
+
+                if (stream.BitRate) {
+                    attributes.push((Math.floor(stream.BitRate / 1000)) + ' kbps');
+                }
+
+                if (stream.Channels) {
+                    attributes.push(stream.Channels + ' ch');
+                }
+
+                var name = attributes.join(' - ');
+
+                if (stream.IsDefault) {
+                    name += ' (D)';
+                }
+
+                var opt = {
+                    name: name,
+                    id: stream.Index
+                };
+
+                if (stream.Index == currentIndex) {
+                    opt.ironIcon = "check";
+                }
+
+                return opt;
+            });
+
+            require(['actionsheet'], function (actionsheet) {
+
+                actionsheet.show({
+                    items: menuItems,
+                    title: Globalize.translate('Audio'),
+                    callback: function (id) {
+
+                        var index = parseInt(id);
+                        if (index != currentIndex) {
+                            Emby.PlaybackManager.setAudioStreamIndex(index);
+                        }
+                    }
+                });
+
+            });
+        }
+
+        function showSubtitleTrackSelection() {
+
+            var player = currentPlayer;
+
+            var streams = Emby.PlaybackManager.subtitleTracks(player);
+
+            var currentIndex = Emby.PlaybackManager.getPlayerState(player).PlayState.SubtitleStreamIndex;
+            if (currentIndex == null) {
+                currentIndex = -1;
+            }
+
+            streams.unshift({
+                Index: -1,
+                Language: Globalize.translate('Off')
+            });
+
+            var menuItems = streams.map(function (stream) {
+
+                var attributes = [];
+
+                attributes.push(stream.Language || Globalize.translate('LabelUnknownLanguage'));
+
+                if (stream.Codec) {
+                    attributes.push(stream.Codec);
+                }
+
+                var name = attributes.join(' - ');
+
+                if (stream.IsDefault) {
+                    name += ' (D)';
+                }
+                if (stream.IsForced) {
+                    name += ' (F)';
+                }
+                if (stream.External) {
+                    name += ' (EXT)';
+                }
+
+                var opt = {
+                    name: name,
+                    id: stream.Index
+                };
+
+                if (stream.Index == currentIndex) {
+                    opt.ironIcon = "check";
+                }
+
+                return opt;
+            });
+
+            require(['actionsheet'], function (actionsheet) {
+
+                actionsheet.show({
+                    title: Globalize.translate('Subtitles'),
+                    items: menuItems,
+                    callback: function (id) {
+                        var index = parseInt(id);
+                        if (index != currentIndex) {
+                            Emby.PlaybackManager.setSubtitleStreamIndex(index);
+                        }
+                    }
+                });
+
+            });
+        }
+
         view.addEventListener('viewhide', function () {
 
             getHeaderElement().classList.remove('hide');
+        });
+
+        view.querySelector('.pageContainer').addEventListener('click', function () {
+
+            Emby.PlaybackManager.playPause();
         });
 
         view.querySelector('.buttonMute').addEventListener('click', function () {
@@ -425,6 +605,9 @@
 
             Emby.PlaybackManager.nextTrack();
         });
+
+        view.querySelector('.btnAudio').addEventListener('click', showAudioTrackSelection);
+        view.querySelector('.btnSubtitles').addEventListener('click', showSubtitleTrackSelection);
 
         function onViewHideStopPlayback() {
 

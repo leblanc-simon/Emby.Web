@@ -15,17 +15,23 @@
     background-color: rgba(0, 0, 0, .6);
     color: #fff;
     padding: .5em;
+    display: flex;
+    flex-direction: row;
 }
 
-    .videoOsdBottom .buttons {
-        padding: .25em 0;
-        display: flex;
-        align-items: center;
-    }
+.osdControls {
+    flex-grow: 1;
+}
 
-    .videoOsdBottom paper-icon-button {
-        color: #eee;
-    }
+.videoOsdBottom .buttons {
+    padding: .25em 0;
+    display: flex;
+    align-items: center;
+}
+
+.videoOsdBottom paper-icon-button {
+    color: #eee;
+}
 
 .osdPositionSlider {
     width: 100%;
@@ -47,3 +53,22 @@
 .mouseIdle .videoOsdBottom .volumeButtons {
     display: none;
 }
+
+.osdPoster {
+    width: 10%;
+    position: relative;
+    margin-right: .5em;
+}
+
+    .osdPoster img {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: auto;
+        width: 100%;
+          -moz-box-shadow: 0px 0 20px #000;
+        -webkit-box-shadow: 0px 0 20px #000;
+        box-shadow: 0px 0 20px #000;
+        border: solid 1px #222;
+  }
