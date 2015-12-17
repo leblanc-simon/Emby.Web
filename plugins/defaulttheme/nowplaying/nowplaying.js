@@ -212,7 +212,7 @@
 
             if (!nowPlayingPositionSlider.dragging) {
 
-                var state = Emby.PlaybackManager.getPlayerState();
+                var state = Emby.PlaybackManager.getPlayerState(player);
                 var playState = state.PlayState || {};
                 var nowPlayingItem = state.NowPlayingItem || {};
 
