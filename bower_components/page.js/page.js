@@ -547,7 +547,28 @@
   };
 
 
-  /**
+  var previousPopState = {};
+
+  function ignorePopState(event) {
+
+      var state = event.state || {};
+
+      if (previousPopState.navigate === false) {
+          // Ignore
+          previousPopState = state;
+          return true;
+      }
+
+      previousPopState = state;
+      return false;
+  }
+
+  page.pushState = function (state, title, url) {
+      history.pushState(state, title, url);
+      previousPopState = state;
+  };
+
+    /**
    * Handle "populate" events.
    */
 
@@ -567,6 +588,7 @@
     }
     return function onpopstate(e) {
       if (!loaded) return;
+      if (ignorePopState(e)) return;
       if (e.state) {
         var path = e.state.path;
         page.replace(path, e.state, null, null, true);

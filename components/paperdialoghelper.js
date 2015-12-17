@@ -58,7 +58,7 @@
             //Dashboard.onPopupOpen();
         }
 
-        history.pushState({ dialogId: hash }, "Dialog", hash);
+        Emby.Page.pushState({ dialogId: hash }, "Dialog", hash);
         window.addEventListener('popstate', onHashChange);
     }
 
