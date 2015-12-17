@@ -4,7 +4,7 @@ define(['dialog'], function (dialog) {
 
         if (typeof options === 'string') {
             options = {
-                title: Globalize.translate('HeaderAlert'),
+                title: '',
                 text: options
             };
         }

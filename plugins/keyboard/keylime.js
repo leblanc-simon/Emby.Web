@@ -322,10 +322,13 @@ function onInputCommand(e) {
             break;
 
         case 'select':
-            e.preventDefault();
 
-            if (!holdTimer)
-                holdTimer = setTimeout(showDiacritics, exports.config.keyHoldTimeout || 500);
+            if (focused) {
+                e.preventDefault();
+
+                if (!holdTimer)
+                    holdTimer = setTimeout(showDiacritics, exports.config.keyHoldTimeout || 500);
+            }
 
             break;
 
@@ -417,6 +420,17 @@ function newFocus(el) {
 
     focused = el;
     focused.classList.add('lime-focus');
+}
+
+function removeFocus(el) {
+    if (!el.classList.contains('lime-key'))
+        return;
+
+    el.classList.remove('lime-focus');
+
+    if (el == focused) {
+        focused = null;
+    }
 }
 
 /**
@@ -756,10 +770,12 @@ function onKeyDown(evt) {
             break;
 
         case 'Enter':
-            if (!holdTimer)
-                holdTimer = setTimeout(showDiacritics, exports.config.keyHoldTimeout || 500);
+            if (focused) {
+                if (!holdTimer)
+                    holdTimer = setTimeout(showDiacritics, exports.config.keyHoldTimeout || 500);
 
-            swallowEvt(evt);
+                swallowEvt(evt);
+            }
             break;
 
         case 'Escape':
@@ -774,6 +790,7 @@ function onKeyDown(evt) {
 
             else
                 hideIME();
+            break;
     }
 }
 
@@ -793,7 +810,7 @@ function onKeyPress(evt) {
     if (e) {
         newFocus(e);
         window.setTimeout(function () {
-            e.classList.remove('lime-focus');
+            removeFocus(e);
         }, 100);
     }
 }
@@ -813,19 +830,22 @@ function onKeyUp(evt) {
             break;
 
         case 'Enter':
-            swallowEvt(evt);
-            clearTimeout(holdTimer);
-            holdTimer = null;
+            if (focused) {
+                swallowEvt(evt);
+                clearTimeout(holdTimer);
+                holdTimer = null;
 
-            if (diacriticsMenu && !focused.classList.contains('lime-diacritical'))
-                newFocus(diacriticsMenu.firstChild);
+                if (diacriticsMenu && !focused.classList.contains('lime-diacritical'))
+                    newFocus(diacriticsMenu.firstChild);
 
-            else {
-                doKeyAction();
+                else {
+                    doKeyAction();
 
-                if (diacriticsMenu)
-                    hideDiacritics();
+                    if (diacriticsMenu)
+                        hideDiacritics();
+                }
             }
+            break;
     }
 }
 
@@ -857,21 +877,6 @@ imeCtr.addEventListener('mouseup', function (evt) {
     if (diacriticsMenu)
         hideDiacritics();
 }, true);
-
-/**
- * Move key focus for the mouse too
- */
-imeCtr.addEventListener('mousemove', function (evt) {
-    newFocus(evt.target);
-});
-
-/**
- * Remove focus on mouseout (mostly for the container)
- */
-imeCtr.addEventListener('mouseout', function (evt) {
-    if (focused === evt.target)
-        focused.classList.remove('lime-focus');
-});
 
 /**
  * Event.key mini-polyfill

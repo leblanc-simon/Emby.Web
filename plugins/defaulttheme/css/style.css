@@ -593,9 +593,8 @@ paper-slider:hover #sliderKnob {
 }
 
 .actionSheetMenuItem {
-    padding: .5em 1em;
+    padding: .75em 1em;
     margin: 0;
-    border-radius: 0;
 }
 
 .criticRatingFresh {

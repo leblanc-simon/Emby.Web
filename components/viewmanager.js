@@ -13,10 +13,8 @@ define(['viewcontainer', 'bower_components/query-string/index'], function (viewc
             newView.initComplete = true;
 
             var viewId = options.id;
-            var url = options.url;
-            var state = options.state;
 
-            var eventDetail = getViewEventDetail(newView, url, state, false);
+            var eventDetail = getViewEventDetail(newView, options, false);
 
             newView.dispatchEvent(new CustomEvent("viewinit-" + viewId, eventDetail));
         }
@@ -28,8 +26,6 @@ define(['viewcontainer', 'bower_components/query-string/index'], function (viewc
 
         var viewId = options.id;
         var viewType = options.type;
-        var url = options.url;
-        var state = options.state;
 
         var lastView = currentView;
         if (lastView) {
@@ -38,7 +34,7 @@ define(['viewcontainer', 'bower_components/query-string/index'], function (viewc
 
         currentView = view;
 
-        var eventDetail = getViewEventDetail(view, url, state, isRestore);
+        var eventDetail = getViewEventDetail(view, options, isRestore);
 
         if (!isRestore) {
             Emby.FocusManager.autoFocus(view);
@@ -63,8 +59,10 @@ define(['viewcontainer', 'bower_components/query-string/index'], function (viewc
         }));
     }
 
-    function getViewEventDetail(view, url, state, isRestore) {
+    function getViewEventDetail(view, options, isRestore) {
 
+        var url = options.url;
+        var state = options.state;
         var index = url.indexOf('?');
         var params = index == -1 ? {} : queryString.parse(url.substring(index + 1));
 
@@ -74,7 +72,10 @@ define(['viewcontainer', 'bower_components/query-string/index'], function (viewc
                 type: view.getAttribute('data-type'),
                 params: params,
                 isRestored: isRestore,
-                state: state
+                state: options.state,
+
+                // The route options
+                options: options.options || {}
             },
             bubbles: true,
             cancelable: false
