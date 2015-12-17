@@ -622,7 +622,7 @@
             var firstCard = scrollFrame.querySelector('.card');
 
             if (firstCard) {
-                Logger.log('focusing first card');
+                console.log('focusing first card');
                 Emby.FocusManager.focus(firstCard);
             }
         }, 200);
