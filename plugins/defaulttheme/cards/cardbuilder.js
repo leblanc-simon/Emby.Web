@@ -686,11 +686,11 @@
         }
     }
 
-    function getMediaInfoHtml(item) {
+    function getMediaInfoHtml(item, options) {
         var html = '';
 
         var miscInfo = [];
-
+        options = options || {};
         var text, date, minutes;
 
         if (item.Type == "MusicAlbum" || item.MediaType == 'MusicArtist' || item.MediaType == 'Playlist' || item.MediaType == 'MusicGenre') {
@@ -790,7 +790,7 @@
             }
         }
 
-        if (item.RunTimeTicks && item.Type != "Series") {
+        if (item.RunTimeTicks && item.Type != "Series" && options.runtime !== false) {
 
             if (item.Type == "Audio") {
 
@@ -812,7 +812,7 @@
             });
         }
 
-        if (item.HasSubtitles) {
+        if (item.HasSubtitles && options.subtitles !== false) {
             miscInfo.push({
                 html: '<iron-icon class="mediaInfoItem closedCaptionIcon" icon="closed-caption"></iron-icon>'
             });
@@ -845,7 +845,7 @@
 
         html += getStarIconsHtml(item);
 
-        if (item.CriticRating) {
+        if (item.CriticRating && options.criticRating !== false) {
 
             if (item.CriticRating >= 60) {
                 html += '<div class="mediaInfoItem criticRating criticRatingFresh">' + item.CriticRating + '</div>';
