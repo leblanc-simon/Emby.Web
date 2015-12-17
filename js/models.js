@@ -547,6 +547,54 @@
         return null;
     }
 
+    function seriesImageUrl(item, options) {
+
+        options = options || {};
+        options.type = options.type || "Primary";
+
+        if (options.type == 'Primary') {
+
+            if (item.SeriesPrimaryImageTag) {
+
+                options.tag = item.SeriesPrimaryImageTag;
+
+                return getConnectionManager().getApiClient(item.ServerId).getScaledImageUrl(item.SeriesId, options);
+            }
+
+            //else if (item.ParentPrimaryImageTag) {
+
+            //    imgUrl = ApiClient.getImageUrl(item.ParentPrimaryImageItemId, {
+            //        type: "Primary",
+            //        width: downloadWidth,
+            //        tag: item.ParentPrimaryImageTag,
+            //        minScale: minScale
+            //    });
+            //}
+        }
+
+        if (options.type == 'Thumb') {
+
+            if (item.SeriesThumbImageTag) {
+
+                options.tag = item.SeriesThumbImageTag;
+
+                return getConnectionManager().getApiClient(item.ServerId).getScaledImageUrl(item.SeriesId, options);
+            }
+
+            //else if (item.ParentPrimaryImageTag) {
+
+            //    imgUrl = ApiClient.getImageUrl(item.ParentPrimaryImageItemId, {
+            //        type: "Primary",
+            //        width: downloadWidth,
+            //        tag: item.ParentPrimaryImageTag,
+            //        minScale: minScale
+            //    });
+            //}
+        }
+
+        return null;
+    }
+
     function imageUrl(item, options) {
 
         options = options || {};
@@ -729,7 +777,8 @@
         played: played,
         favorite: favorite,
         clearLike: clearLike,
-        search: search
+        search: search,
+        seriesImageUrl: seriesImageUrl
     };
 
 })(this, document);

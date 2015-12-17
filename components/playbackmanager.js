@@ -18,6 +18,29 @@ define(['events'], function (Events) {
             return data.streamInfo ? data.streamInfo.item : null;
         };
 
+        self.currentMediaSource = function (player) {
+            var data = getPlayerState(player);
+            return data.streamInfo ? data.streamInfo.mediaSource : null;
+        };
+
+        self.audioTracks = function (player) {
+            var mediaSource = self.currentMediaSource(player);
+
+            var mediaStreams = (mediaSource || {}).MediaStreams || [];
+            return mediaStreams.filter(function (s) {
+                return s.Type == 'Audio';
+            });
+        };
+
+        self.subtitleTracks = function (player) {
+            var mediaSource = self.currentMediaSource(player);
+
+            var mediaStreams = (mediaSource || {}).MediaStreams || [];
+            return mediaStreams.filter(function (s) {
+                return s.Type == 'Subtitle';
+            });
+        };
+
         self.playlist = function () {
             return playlist.slice(0);
         };
@@ -150,18 +173,14 @@ define(['events'], function (Events) {
             }
         };
 
-        self.setAudioStreamIndex = function (index) {
+        self.setAudioStreamIndex = function (player, index) {
 
-            if (currentPlayer) {
-                currentPlayer.setAudioStreamIndex(index);
-            }
+            player.setAudioStreamIndex(index);
         };
 
-        self.setSubtitleStreamIndex = function (index) {
+        self.setSubtitleStreamIndex = function (player, index) {
 
-            if (currentPlayer) {
-                currentPlayer.setSubtitleStreamIndex(index);
-            }
+            player.setSubtitleStreamIndex(index);
         };
 
         self.stop = function () {
@@ -277,6 +296,7 @@ define(['events'], function (Events) {
                             }
 
                             getPlayerState(mediaRenderer).currentSubtitleStreamIndex = subtitleStreamIndex;
+                            getPlayerState(mediaRenderer).currentAudioStreamIndex = audioStreamIndex;
 
                             changeStreamToUrl(apiClient, mediaRenderer, playSessionId, streamInfo);
                         });
@@ -434,8 +454,8 @@ define(['events'], function (Events) {
             return player;
         }
 
-        self.getPlayerState = function () {
-            return getPlayerStateInternal(currentPlayer);
+        self.getPlayerState = function (player) {
+            return getPlayerStateInternal(player || currentPlayer);
         };
 
         function getPlayerStateInternal(mediaRenderer) {
@@ -460,13 +480,8 @@ define(['events'], function (Events) {
 
                 if (currentSrc) {
 
-                    var audioStreamIndex = Emby.Page.param('AudioStreamIndex', currentSrc);
-
-                    if (audioStreamIndex) {
-                        state.PlayState.AudioStreamIndex = parseInt(audioStreamIndex);
-                    }
-
                     state.PlayState.SubtitleStreamIndex = playerData.currentSubtitleStreamIndex;
+                    state.PlayState.AudioStreamIndex = playerData.currentAudioStreamIndex;
 
                     state.PlayState.PlayMethod = playerData.streamInfo.playMethod;
 
@@ -591,9 +606,11 @@ define(['events'], function (Events) {
 
         function playItems(options, method) {
 
-            require(['loading'], function (loading) {
-                loading.show();
-            });
+            if (options.fullscreen !== false) {
+                require(['loading'], function (loading) {
+                    loading.show();
+                });
+            }
 
             if (options.items) {
 
@@ -692,7 +709,7 @@ define(['events'], function (Events) {
                 });
             };
 
-            if (options.startPositionTicks || firstItem.MediaType !== 'Video') {
+            if (options.startPositionTicks || firstItem.MediaType !== 'Video' || options.fullscreen === false) {
 
                 currentPlayOptions = options;
                 playInternal(firstItem, options.startPositionTicks, afterPlayInternal);
@@ -1308,7 +1325,7 @@ define(['events'], function (Events) {
 
             startProgressInterval(player);
 
-            Events.trigger(self, 'playbackstart', player);
+            Events.trigger(self, 'playbackstart', [player]);
         }
 
         function onPlaybackStopped() {
