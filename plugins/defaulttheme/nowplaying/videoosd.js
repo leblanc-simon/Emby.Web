@@ -47,6 +47,13 @@
             if (item) {
                 setTitle(item);
 
+                view.querySelector('.osdTitle').innerHTML = DefaultTheme.CardBuilder.getDisplayName(item);
+                view.querySelector('.osdMediaInfo').innerHTML = DefaultTheme.CardBuilder.getMediaInfoHtml(item, {
+                    runtime: false,
+                    subtitles: false,
+                    tomatoes: false
+                });
+
                 nowPlayingVolumeSlider.disabled = false;
                 nowPlayingPositionSlider.disabled = false;
 
@@ -73,6 +80,9 @@
 
                 osdPoster.innerHTML = '';
                 osdPoster.classList.add('hide');
+
+                view.querySelector('.osdTitle').innerHTML = '';
+                view.querySelector('.osdMediaInfo').innerHTML = '';
             }
 
             updatePlaylist();

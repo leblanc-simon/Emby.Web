@@ -14,7 +14,7 @@
     right: 0;
     background-color: rgba(0, 0, 0, .6);
     color: #fff;
-    padding: .5em;
+    padding: 1%;
     display: flex;
     flex-direction: row;
 }
@@ -24,7 +24,7 @@
 }
 
 .videoOsdBottom .buttons {
-    padding: .25em 0;
+    padding: .25em 0 0;
     display: flex;
     align-items: center;
 }
@@ -43,7 +43,7 @@
 }
 
 .volumeButtons {
-    margin: 0 .75em 0 auto;
+    margin: 0 .25em 0 auto;
 }
 
 .osdTimeText {
@@ -67,8 +67,34 @@
         right: 0;
         height: auto;
         width: 100%;
-          -moz-box-shadow: 0px 0 20px #000;
+        -moz-box-shadow: 0px 0 20px #000;
         -webkit-box-shadow: 0px 0 20px #000;
         box-shadow: 0px 0 20px #000;
         border: solid 1px #222;
-  }
+    }
+
+.osdTitle {
+    margin: 0;
+    padding-left: .4em;
+}
+
+.osdMediaInfo {
+    margin-left: 1em;
+}
+
+paper-slider.osdPositionSlider #sliderKnob {
+    display: none;
+}
+
+paper-slider.osdPositionSlider:hover #sliderKnob {
+    display: block;
+}
+
+.osdTextContainer {
+    display: flex;
+    align-items: baseline;
+}
+
+    .osdTextContainer .starRatingContainer {
+        top: -6px;
+    }
