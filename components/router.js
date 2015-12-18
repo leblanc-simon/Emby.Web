@@ -151,7 +151,6 @@ define(['loading', 'viewManager', 'events'], function (loading, viewManager, Eve
         };
 
         if (!isBackNav) {
-
             // Don't force a new view for home due to the back menu
             if (route.type != 'home') {
                 onNewViewNeeded();
@@ -282,7 +281,6 @@ define(['loading', 'viewManager', 'events'], function (loading, viewManager, Eve
             }
             else if (route.isDefaultRoute) {
                 console.log('Emby.Page - loading theme home page');
-
                 Emby.ThemeManager.loadUserTheme();
             } else {
                 console.log('Emby.Page - next()');
@@ -412,8 +410,12 @@ define(['loading', 'viewManager', 'events'], function (loading, viewManager, Eve
             path = path.replace(baseRoute, '');
 
             if (currentRouteInfo && currentRouteInfo.path == path) {
-                resolve();
-                //return;
+
+                // can't use this with home right now due to the back menu
+                if (currentRouteInfo.route.type != 'home') {
+                    resolve();
+                    return;
+                }
             }
 
             page.show(path, options);
@@ -478,7 +480,7 @@ define(['loading', 'viewManager', 'events'], function (loading, viewManager, Eve
     }
 
     function pushState(state, title, url) {
-        
+
         state.navigate = false;
 
         page.pushState(state, title, url);
