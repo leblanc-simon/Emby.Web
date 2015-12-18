@@ -692,3 +692,12 @@ paper-dialog.actionSheet {
         text-transform: none;
         font-size: 86%;
     }
+
+
+paper-slider.noKnob #sliderKnob {
+    display: none;
+}
+
+paper-slider.noKnob:hover #sliderKnob {
+    display: block;
+}
