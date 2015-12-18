@@ -279,6 +279,18 @@
         });
 
         profile.CodecProfiles.push({
+            Type: 'VideoAudio',
+            Conditions: [
+                {
+                    Condition: 'Equals',
+                    Property: 'IsSecondaryAudio',
+                    Value: 'false',
+                    IsRequired: 'false'
+                }
+            ]
+        });
+
+        profile.CodecProfiles.push({
             Type: 'Video',
             Codec: 'h264',
             Conditions: [
