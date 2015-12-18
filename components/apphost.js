@@ -1,4 +1,4 @@
-define(['cryptojs-sha1'], function () {
+define([], function () {
 
     function getDeviceProfile() {
 
@@ -50,7 +50,8 @@ define(['cryptojs-sha1'], function () {
                     });
                 }
 
-                var deviceId = appStorage.getItem('_deviceId');
+                var key = '_deviceId1';
+                var deviceId = appStorage.getItem(key);
 
                 if (deviceId) {
                     onDeviceAdAcquired(deviceId);
@@ -62,7 +63,7 @@ define(['cryptojs-sha1'], function () {
                         keys.push(appName);
 
                         var randomId = CryptoJS.SHA1(keys.join('|')).toString();
-                        appStorage.setItem('_deviceId', randomId);
+                        appStorage.setItem(key, randomId);
                         onDeviceAdAcquired(randomId);
                     });
                 }

@@ -1412,7 +1412,7 @@ define(['events'], function (Events) {
 
             clearProgressInterval(player);
 
-            var intervalTime = 1200;
+            var intervalTime = 800;
             player.lastProgressReport = 0;
 
             getPlayerState(player).currentProgressInterval = setInterval(function () {
@@ -1438,14 +1438,13 @@ define(['events'], function (Events) {
 
             var info = {
                 QueueableMediaTypes: state.NowPlayingItem.MediaType,
-                ItemId: state.NowPlayingItem.Id,
-                NowPlayingItem: state.NowPlayingItem
+                ItemId: state.NowPlayingItem.Id
             };
 
             for (var i in state.PlayState) {
                 info[i] = state.PlayState[i];
             }
-
+            //console.log(method + '-' + JSON.stringify(info));
             require(['connectionManager'], function (connectionManager) {
                 var apiClient = connectionManager.getApiClient(serverId);
                 apiClient[method](info);
