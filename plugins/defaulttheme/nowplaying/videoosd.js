@@ -96,14 +96,12 @@
                     Emby.Models.imageUrl(item, { type: 'Primary' });
 
                 if (imgUrl) {
-                    osdPoster.classList.remove('hide');
                     osdPoster.innerHTML = '<img src="' + imgUrl + '" />';
                     return;
                 }
             }
 
             osdPoster.innerHTML = '';
-            osdPoster.classList.add('hide');
         }
 
         function showOsd() {

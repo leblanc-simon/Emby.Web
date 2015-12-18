@@ -76,6 +76,8 @@ define([], function () {
 
                 var val = options.url;
 
+                console.log('playing url: ' + val);
+
                 var dependencies = [];
                 var enableHlsJs = enableHlsPlayer(val);
 
