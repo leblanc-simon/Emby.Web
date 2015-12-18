@@ -28,10 +28,6 @@
 			min = Math.min,
 			max = Math.max;
 
-        if (tolerance < 0) {
-            tolerance = 0;
-        }
-
         // Loop through all elements and check their positions
         for (var i = 0, length = elementInfos.length; i < length; i++) {
 
@@ -71,21 +67,18 @@
 
         // Make sure all cached items are within tolerance range
         var len = cache.length,
-			filtered = [],
-			compMin, compMax,
-			i, item;
-        if (len) {
+			filtered = [];
 
-            compMin = compDist;
-            compMax = compDist + tolerance;
+        var compMin = compDist;
+        var compMax = compDist + tolerance;
 
-            for (i = 0; i < len; i++) {
-                item = cache[i];
-                if (item.dist >= compMin && item.dist <= compMax) {
-                    filtered.push(item.node);
-                }
+        for (var i = 0; i < len; i++) {
+            var item = cache[i];
+            if (item.dist >= compMin && item.dist <= compMax) {
+                filtered.push(item.node);
             }
         }
+
         return filtered;
     }
 
