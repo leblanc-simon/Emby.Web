@@ -80,14 +80,7 @@
 
 .osdMediaInfo {
     margin-left: 1em;
-}
-
-paper-slider.osdPositionSlider #sliderKnob {
-    display: none;
-}
-
-paper-slider.osdPositionSlider:hover #sliderKnob {
-    display: block;
+    color: #eee;
 }
 
 .osdTextContainer {

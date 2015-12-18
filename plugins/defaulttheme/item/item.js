@@ -316,32 +316,6 @@
             view.querySelector('.blurayIcon').classList.add('hide');
         }
 
-        var audioIcons = [
-            {
-                codec: 'ac3',
-                cssClass: 'dolbyIcon'
-            },
-            {
-                codec: 'truehd',
-                cssClass: 'truehdIcon'
-            },
-            {
-                codec: 'dts',
-                cssClass: 'dtsIcon'
-            }
-        ];
-
-        audioIcons.map(function (i) {
-
-            if (hasCodec(item, 'Audio', i.codec)) {
-                view.querySelector('.' + i.cssClass).classList.remove('hide');
-                showMediaInfoIcons = true;
-            } else {
-                view.querySelector('.' + i.cssClass).classList.add('hide');
-            }
-
-        });
-
         var channels = getChannels(item);
         var mediaInfoChannels = view.querySelector('.mediaInfoChannels');
         var channelText;
@@ -382,11 +356,42 @@
             mediaInfoResolution.classList.add('hide');
         }
 
+        var audioCodecIcon = view.querySelector('.audioCodecIcon');
+        var audioCodecText = getAudioCodecText(item);
+        if (audioCodecText) {
+            audioCodecIcon.classList.remove('hide');
+            audioCodecIcon.innerHTML = audioCodecText;
+            showMediaInfoIcons = true;
+        } else {
+            audioCodecIcon.classList.add('hide');
+        }
+
         if (showMediaInfoIcons) {
             view.querySelector('.mediaInfoIcons').classList.remove('hide');
         } else {
             view.querySelector('.mediaInfoIcons').classList.add('hide');
         }
+    }
+
+    function getAudioCodecText(item) {
+
+        if (!item.MediaSources || !item.MediaSources.length) {
+            return null;
+        }
+
+        return item.MediaSources[0].MediaStreams.filter(function (i) {
+
+            return i.Type == 'Audio';
+
+        }).map(function (i) {
+
+            if ((i.Codec || '').toLowerCase() == 'dca') {
+                return i.Profile;
+            }
+
+            return i.Codec;
+        })[0];
+
     }
 
     function getResolutionText(item) {
@@ -402,20 +407,20 @@
         }).map(function (i) {
 
             if (i.Height) {
-                
-                if (i.Height >= 2000) {
+
+                if (i.Width >= 4000) {
                     return '4K';
                 }
-                if (i.Height >= 1400) {
+                if (i.Width >= 2500) {
                     return '1440P';
                 }
-                if (i.Height >= 1060) {
+                if (i.Width >= 1900) {
                     return '1080P';
                 }
-                if (i.Height >= 700) {
+                if (i.Width >= 1260) {
                     return '720P';
                 }
-                if (i.Height >= 460) {
+                if (i.Width >= 700) {
                     return '480P';
                 }
 
@@ -1069,7 +1074,7 @@
 
         Emby.Models.similar(item, {
 
-            Limit: 12
+            Limit: 18
 
         }).then(function (result) {
 
