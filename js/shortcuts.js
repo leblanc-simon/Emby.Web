@@ -27,8 +27,12 @@
                 }
 
                 else if (action == 'play') {
+
+                    var startPositionTicks = parseInt(card.getAttribute('data-startpositionticks') || '0');
+
                     Emby.PlaybackManager.play({
-                        ids: [id]
+                        ids: [id],
+                        startPositionTicks: startPositionTicks
                     });
                 }
 

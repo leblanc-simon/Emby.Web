@@ -1060,7 +1060,7 @@
             section.classList.remove('hide');
 
             require([Emby.PluginManager.mapPath('defaulttheme', 'cards/chaptercardbuilder.js')], function () {
-                DefaultTheme.ChapterCardBuilder.buildChapterCards(chapters, {
+                DefaultTheme.ChapterCardBuilder.buildChapterCards(item, chapters, {
                     parentContainer: section,
                     itemsContainer: section.querySelector('.itemsContainer'),
                     shape: 'backdropCard',
