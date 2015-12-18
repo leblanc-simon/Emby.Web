@@ -19,14 +19,16 @@
         // Get elements and work out x/y points
         var cache = [],
 			compDist = Infinity,
-			point1x = parseFloat(options.x) || 0,
-			point1y = parseFloat(options.y) || 0,
-			point2x = parseFloat(point1x + options.w) || point1x,
-			point2y = parseFloat(point1y + options.h) || point1y,
-			tolerance = parseFloat(options.tolerance) || 0,
+			point1x = parseFloat(options.left) || 0,
+			point1y = parseFloat(options.top) || 0,
+			point2x = parseFloat(point1x + options.width) || point1x,
+			point2y = parseFloat(point1y + options.height) || point1y,
 			// Shortcuts to help with compression
 			min = Math.min,
 			max = Math.max;
+
+        var sourceMidX = options.left + (options.width / 2);
+        var sourceMidY = options.top + (options.height / 2);
 
         // Loop through all elements and check their positions
         for (var i = 0, length = elementInfos.length; i < length; i++) {
@@ -48,14 +50,15 @@
                 intersectX = minX2 >= maxX1,
                 intersectY = minY2 >= maxY1;
 
-            var distX = intersectX ? 0 : maxX1 - minX2;
-            var distY = intersectY ? 0 : maxY1 - minY2;
+            var midX = off.left + (off.width / 2);
+            var midY = off.top + (off.height / 2);
 
-            var distT = intersectX || intersectY ?
-                max(distX, distY) :
-                Math.sqrt(distX * distX + distY * distY);
+            var distX = Math.abs(sourceMidX - midX);
+            var distY = Math.abs(sourceMidY - midY);
 
-            var isValid = distT <= compDist + tolerance;
+            var distT = Math.sqrt(distX * distX + distY * distY);
+
+            var isValid = distT <= compDist;
             if (isValid) {
                 compDist = min(compDist, distT);
                 cache.push({
@@ -70,7 +73,7 @@
 			filtered = [];
 
         var compMin = compDist;
-        var compMax = compDist + tolerance;
+        var compMax = compDist;
 
         for (var i = 0; i < len; i++) {
             var item = cache[i];
