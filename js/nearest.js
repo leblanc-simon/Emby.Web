@@ -50,17 +50,16 @@
                 maxY1 = max(y, point1y),
                 minY2 = min(y2, point2y),
                 intersectX = minX2 >= maxX1,
-                intersectY = minY2 >= maxY1,
-                distX, distY, distT, isValid;
+                intersectY = minY2 >= maxY1;
 
-            distX = intersectX ? 0 : maxX1 - minX2;
-            distY = intersectY ? 0 : maxY1 - minY2;
+            var distX = intersectX ? 0 : maxX1 - minX2;
+            var distY = intersectY ? 0 : maxY1 - minY2;
 
-            distT = intersectX || intersectY ?
+            var distT = intersectX || intersectY ?
                 max(distX, distY) :
                 Math.sqrt(distX * distX + distY * distY);
 
-            isValid = distT <= compDist + tolerance;
+            var isValid = distT <= compDist + tolerance;
             if (isValid) {
                 compDist = min(compDist, distT);
                 cache.push({
