@@ -1,8 +1,8 @@
 (function (globalScope) {
 
-    function buildChapterCardsHtml(chapters, options) {
+    function buildChapterCardsHtml(item, chapters, options) {
 
-        var className = 'card scalableCard';
+        var className = 'card scalableCard itemAction';
 
         if (options.shape) {
             className += ' ' + options.shape;
@@ -23,7 +23,7 @@
 
             var chapter = chapters[i];
 
-            html += buildChapterCard(chapter, options, className);
+            html += buildChapterCard(item, chapter, options, className);
             itemsInRow++;
 
             if (options.rows && itemsInRow >= options.rows) {
@@ -35,7 +35,7 @@
         return html;
     }
 
-    function buildChapterCard(chapter, options, className) {
+    function buildChapterCard(item, chapter, options, className) {
 
         var imgUrl = chapter.images ? chapter.images.primary : '';
 
@@ -43,13 +43,14 @@
         if (options.coverImage) {
             cardImageContainerClass += ' coveredImage';
         }
+        var dataAttributes = ' data-action="play" data-isfolder="' + item.IsFolder + '" data-id="' + item.Id + '" data-type="' + item.Type + '" data-startpositionticks="' + chapter.StartPositionTicks + '"';
         var cardImageContainer = imgUrl ? ('<div class="' + cardImageContainerClass + ' lazy" data-src="' + imgUrl + '">') : ('<div class="' + cardImageContainerClass + '">');
 
         var nameHtml = '';
         nameHtml += '<div class="cardText">' + chapter.Name + '</div>';
 
         var html = '\
-<button type="button" class="' + className + '"> \
+<button type="button" class="' + className + '"' + dataAttributes + '> \
 <div class="cardBox">\
 <div class="cardScalable">\
 <div class="cardPadder"></div>\
@@ -68,7 +69,7 @@
         return html;
     }
 
-    function buildChapterCards(items, options) {
+    function buildChapterCards(item, chapters, options) {
 
         // Abort if the container has been disposed
         if (!Emby.Dom.isInDocument(options.parentContainer)) {
@@ -76,7 +77,7 @@
         }
 
         if (options.parentContainer) {
-            if (items.length) {
+            if (chapters.length) {
                 options.parentContainer.classList.remove('hide');
             } else {
                 options.parentContainer.classList.add('hide');
@@ -84,7 +85,7 @@
             }
         }
 
-        var html = buildChapterCardsHtml(items, options);
+        var html = buildChapterCardsHtml(item, chapters, options);
 
         options.itemsContainer.innerHTML = html;
 
