@@ -215,11 +215,11 @@
             playbackmanager: 'components/playbackmanager',
             credentialprovider: 'bower_components/emby-apiclient/credentials',
             apiclient: 'bower_components/emby-apiclient/apiclient',
-            connectservice: 'bower_components/emby-apiclient/connectservice'
+            connectservice: 'bower_components/emby-apiclient/connectservice',
+            serverdiscovery: customPaths.serverdiscovery || "bower_components/emby-apiclient/serverdiscovery",
+            wakeonlan: customPaths.wakeonlan || "bower_components/emby-apiclient/wakeonlan"
         };
 
-        paths.serverdiscovery = "bower_components/emby-apiclient/serverdiscovery";
-        paths.wakeonlan = "bower_components/emby-apiclient/wakeonlan";
         paths.hlsjs = bowerPath + "/hls.js/dist/hls.min";
 
         if (enableWebComponents()) {

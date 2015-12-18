@@ -262,11 +262,7 @@
                 y: rect.top + (rect.height / 2), // Y position of top left corner of point/region
                 w: 0, // Width of region
                 h: 0, // Height of region
-                tolerance: 1, // Distance tolerance in pixels, mainly to handle fractional pixel rounding bugs
-                container: document, // Container of objects for calculating %-based dimensions
-                includeSelf: false, // Include 'this' in search results (t/f) - only applies to $(elem).func(selector) syntax
-                onlyX: false, // Only check X axis variations (t/f)
-                onlyY: false // Only check Y axis variations (t/f)
+                tolerance: 1
 
             });
 
