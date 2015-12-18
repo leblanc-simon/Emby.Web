@@ -236,14 +236,15 @@
 
 .mediaInfoText {
     display: inline-block;
-    padding: .25em .5em;
+    padding: .25em .75em;
     margin-top: 0;
     margin-bottom: 0;
     color: #000;
     background: #ccc;
     border-radius: 3px;
+    border-radius: 100px;
     font-weight: normal;
-    margin-right: 1em;
+    margin-right: .8em;
     font-size: 90%;
     height: auto;
     text-transform: uppercase;
@@ -251,4 +252,8 @@
 
 .paperIconItemRightButton {
     display: none;
+}
+
+.nextUpSection .backdropCard {
+    width: 30%;
 }
