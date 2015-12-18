@@ -256,18 +256,21 @@
                 });
             }
 
-            var nearest = window.nearest(focusableElements, {
-
-                x: rect.left + (rect.width / 2), // X position of top left corner of point/region
-                y: rect.top + (rect.height / 2), // Y position of top left corner of point/region
-                w: 0, // Width of region
-                h: 0, // Height of region
-                tolerance: 1
-
-            });
+            var nearest = window.nearest(focusableElements, rect);
 
             if (nearest.length) {
-                focus(nearest[0]);
+
+                var nearestElement = nearest[0];
+
+                // See if there's a focusable container, and if so, send the focus command to that
+                var nearestElementFocusableParent = Emby.Dom.parentWithClass(nearestElement, 'focusable');
+                if (nearestElementFocusableParent && nearestElementFocusableParent != nearestElement && activeElement) {
+                    if (Emby.Dom.parentWithClass(activeElement, 'focusable') != nearestElementFocusableParent) {
+                        nearestElement = nearestElementFocusableParent;
+                    }
+                }
+
+                focus(nearestElement);
             }
         });
     }
