@@ -41,7 +41,7 @@
         var deps = ['startup/startup'];
         var startupRoot = '/startup/';
 
-        var suffix = enableWebComponents() ? "" : "-lite";
+        var suffix = "";
 
         defineRoute({
             path: startupRoot + 'login.html',
@@ -221,12 +221,7 @@
         };
 
         paths.hlsjs = bowerPath + "/hls.js/dist/hls.min";
-
-        if (enableWebComponents()) {
-            paths.viewcontainer = 'components/viewcontainer';
-        } else {
-            paths.viewcontainer = 'components/viewcontainer-lite';
-        }
+        paths.viewcontainer = 'components/viewcontainer';
 
         var urlArgs = "t=" + new Date().getTime();
 
@@ -303,17 +298,6 @@
         define("scale-down-animation", ['html!bower_components/neon-animation/animations/scale-down-animation.html']);
     }
 
-    function enableWebComponents() {
-
-        var userAgent = navigator.userAgent.toLowerCase();
-
-        if (userAgent.indexOf('maxthon') != -1) {
-            return false;
-        }
-
-        return userAgent.indexOf('chrome') != -1 || userAgent.indexOf('firefox') != -1;
-    }
-
     function loadApiClientDependencies(callback) {
 
         var list = [
@@ -354,7 +338,7 @@
 
             list.push('screensaverManager');
 
-            if (enableWebComponents() && !('registerElement' in document && 'content' in document.createElement('template'))) {
+            if (!('registerElement' in document && 'content' in document.createElement('template'))) {
                 list.push("bower_components/webcomponentsjs/webcomponents-lite.min");
             }
 
@@ -385,9 +369,7 @@
         // needs to be after the plugin manager
         secondLevelDeps.push('playbackmanager');
 
-        if (enableWebComponents()) {
-            secondLevelDeps.push('html!bower_components/neon-animation/neon-animated-pages.html');
-        }
+        secondLevelDeps.push('html!bower_components/neon-animation/neon-animated-pages.html');
 
         // Second level dependencies that have to be loaded after the first set
         require(secondLevelDeps, function (playbackmanager) {
@@ -413,9 +395,7 @@
         'plugins/defaultsoundeffects/plugin.js'
         ];
 
-        if (enableWebComponents()) {
-            list.push('plugins/wmctheme/plugin.js');
-        }
+        list.push('plugins/wmctheme/plugin.js');
 
         for (var i = 0, length = externalPlugins.length; i < length; i++) {
             list.push(externalPlugins[i]);

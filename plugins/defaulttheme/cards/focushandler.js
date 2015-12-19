@@ -8,7 +8,7 @@ define([], function () {
         var focusedElement;
         var zoomElement;
         var currentAnimation;
-        var zoomScale = options.zoomScale || '1.16';
+        var zoomScale = options.zoomScale || '1.18';
         var zoomInEase = 'ease-out-sine';
         var zoomOutEase = 'ease-in-cubic';
         var zoomDuration = 160;
