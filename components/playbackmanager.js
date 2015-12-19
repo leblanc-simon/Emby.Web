@@ -248,29 +248,29 @@ define(['events'], function (Events) {
 
         function changeStream(ticks, params) {
 
-            var mediaRenderer = self.currentPlayer();
+            var player = self.currentPlayer();
 
             if (canPlayerSeek() && params == null) {
 
-                mediaRenderer.currentTime(ticks / 10000);
+                player.currentTime(ticks / 10000);
                 return;
             }
 
             params = params || {};
 
-            var currentSrc = mediaRenderer.currentSrc();
+            var currentSrc = player.currentSrc();
 
             var playSessionId = Emby.Page.param('PlaySessionId', currentSrc);
             var liveStreamId = Emby.Page.param('LiveStreamId', currentSrc);
 
-            mediaRenderer.getDeviceProfile().then(function (deviceProfile) {
+            player.getDeviceProfile().then(function (deviceProfile) {
                 
-                var audioStreamIndex = params.AudioStreamIndex == null ? getPlayerData(mediaRenderer).subtitleStreamIndex : params.AudioStreamIndex;
-                var subtitleStreamIndex = params.SubtitleStreamIndex == null ? getPlayerData(mediaRenderer).audioStreamIndex : params.SubtitleStreamIndex;
+                var audioStreamIndex = params.AudioStreamIndex == null ? getPlayerData(player).subtitleStreamIndex : params.AudioStreamIndex;
+                var subtitleStreamIndex = params.SubtitleStreamIndex == null ? getPlayerData(player).audioStreamIndex : params.SubtitleStreamIndex;
 
                 require(['connectionManager'], function (connectionManager) {
 
-                    var playerData = getPlayerData(mediaRenderer);
+                    var playerData = getPlayerData(player);
                     var currentItem = playerData.streamInfo.item;
                     var currentMediaSource = playerData.streamInfo.mediaSource;
                     var apiClient = connectionManager.getApiClient(currentItem.ServerId);
@@ -288,10 +288,10 @@ define(['events'], function (Events) {
                                     return;
                                 }
 
-                                getPlayerData(mediaRenderer).subtitleStreamIndex = subtitleStreamIndex;
-                                getPlayerData(mediaRenderer).audioStreamIndex = audioStreamIndex;
+                                getPlayerData(player).subtitleStreamIndex = subtitleStreamIndex;
+                                getPlayerData(player).audioStreamIndex = audioStreamIndex;
 
-                                changeStreamToUrl(apiClient, mediaRenderer, playSessionId, streamInfo);
+                                changeStreamToUrl(apiClient, player, playSessionId, streamInfo);
                             });
                         }
                     });
@@ -450,7 +450,7 @@ define(['events'], function (Events) {
                 if (currentSrc) {
 
                     state.PlayState.SubtitleStreamIndex = playerData.subtitleStreamIndex;
-                    state.PlayState.AudioStreamIndex = playerData.currentAudioStreamIndex;
+                    state.PlayState.AudioStreamIndex = playerData.audioStreamIndex;
 
                     state.PlayState.PlayMethod = playerData.streamInfo.playMethod;
 
@@ -767,6 +767,8 @@ define(['events'], function (Events) {
                         player.play(streamInfo).then(callback);
                         currentPlayer = player;
                         getPlayerData(player).streamInfo = streamInfo;
+                        getPlayerData(player).audioStreamIndex = mediaSource.DefaultAudioStreamIndex;
+                        getPlayerData(player).subtitleStreamIndex = mediaSource.DefaultSubtitleStreamIndex;
                     });
                 });
             });
