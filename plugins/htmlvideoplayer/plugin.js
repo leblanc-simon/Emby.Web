@@ -1,4 +1,4 @@
-define([], function () {
+define(['browser'], function (browser) {
 
     return function () {
 
@@ -18,6 +18,9 @@ define([], function () {
         var hlsPlayer;
 
         var currentPlayOptions;
+
+        var seekToSecondsOnPlaying;
+        var subtitleTrackIndexToSetOnPlaying;
 
         self.canPlayMediaType = function (mediaType) {
 
@@ -91,12 +94,26 @@ define([], function () {
                     //    val = val.replace('file://', '');
                     //}
 
-                    var startTime = getStartTime(val);
+                    // Convert to seconds
+                    seekToSecondsOnPlaying = (options.playerStartPositionTicks || 0) / 10000000;
+
+                    if (seekToSecondsOnPlaying) {
+                        val += '#t=' + seekToSecondsOnPlaying;
+                    }
+
                     var playNow = false;
 
                     destroyHlsPlayer();
 
                     var tracks = options.textTracks || [];
+                    var currentTrackIndex = -1;
+                    for (var i = 0, length = tracks.length; i < length; i++) {
+                        if (tracks[i].isDefault) {
+                            currentTrackIndex = i;
+                            break;
+                        }
+                    }
+                    subtitleTrackIndexToSetOnPlaying = currentTrackIndex;
 
                     currentPlayOptions = options;
 
@@ -121,14 +138,6 @@ define([], function () {
 
                         elem.addEventListener('loadedmetadata', onLoadedMetadata);
                         playNow = true;
-                    }
-
-                    var currentTrackIndex = -1;
-                    for (var i = 0, length = tracks.length; i < length; i++) {
-                        if (tracks[i].isDefault) {
-                            currentTrackIndex = i;
-                            break;
-                        }
                     }
 
                     setCurrentTrackElement(currentTrackIndex);
@@ -311,10 +320,19 @@ define([], function () {
             return options.fullscreen !== false;
         }
 
-        function onPlaying() {
+        function onPlaying(e) {
 
             if (!started) {
                 started = true;
+
+                setCurrentTrackElement(subtitleTrackIndexToSetOnPlaying);
+
+                //var requiresNativeControls = !self.enableCustomVideoControls();
+
+                //if (requiresNativeControls) {
+                //    $(element).attr('controls', 'controls');
+                //}
+                seekOnPlaybackStart(e.target);
 
                 if (shouldGoFullscreen(currentPlayOptions)) {
 
@@ -336,6 +354,28 @@ define([], function () {
                 Events.trigger(self, 'started');
             }
             Events.trigger(self, 'playing');
+        }
+
+        function seekOnPlaybackStart(element) {
+
+            var seconds = seekToSecondsOnPlaying;
+
+            if (seconds) {
+                var src = (self.currentSrc() || '').toLowerCase();
+
+                // Appending #t=xxx to the query string doesn't seem to work with HLS
+                if (src.indexOf('.m3u8') != -1) {
+
+                    var delay = browser.safari ? 2500 : 0;
+                    if (delay) {
+                        setTimeout(function () {
+                            element.currentTime = seconds;
+                        }, delay);
+                    } else {
+                        element.currentTime = seconds;
+                    }
+                }
+            }
         }
 
         function onClick() {
@@ -388,25 +428,6 @@ define([], function () {
             }
 
             return false;
-        }
-
-        function getStartTime(url) {
-
-            var src = url;
-
-            var parts = src.split('#');
-
-            if (parts.length > 1) {
-
-                parts = parts[parts.length - 1].split('=');
-
-                if (parts.length == 2) {
-
-                    return parseFloat(parts[1]);
-                }
-            }
-
-            return 0;
         }
 
         function enableCustomVideoControls() {
