@@ -169,110 +169,178 @@
 
         activeElement = activeElement || document.activeElement;
 
-        require(['nearestElements'], function (nearestElements) {
+        if (activeElement) {
+            activeElement = focusableParent(activeElement);
+        }
 
-            if (activeElement) {
-                activeElement = focusableParent(activeElement);
+        var container = activeElement ? getFocusContainer(activeElement, direction) : document.body;
+        var focusable = getFocusableElements(container);
+
+        if (!activeElement) {
+            if (focusable.length) {
+                focus(focusable[0]);
+            }
+            return;
+        }
+
+        var focusableContainer = Emby.Dom.parentWithClass(activeElement, 'focusable');
+
+        var rect = getViewportBoundingClientRect(activeElement);
+        var focusableElements = [];
+
+        for (var i = 0, length = focusable.length; i < length; i++) {
+            var curr = focusable[i];
+
+            if (curr == activeElement) {
+                continue;
+            }
+            // Don't refocus into the same container
+            if (curr == focusableContainer) {
+                continue;
             }
 
-            var container = activeElement ? getFocusContainer(activeElement, direction) : document.body;
-            var focusable = getFocusableElements(container);
+            var elementRect = getViewportBoundingClientRect(curr);
 
-            if (!activeElement) {
-                if (focusable.length) {
-                    focus(focusable[0]);
+            switch (direction) {
+
+                case 0:
+                    // left
+                    if (elementRect.left >= rect.left) {
+                        continue;
+                    }
+                    if (elementRect.right == rect.right) {
+                        continue;
+                    }
+                    if (elementRect.right > rect.left + 10) {
+                        //continue;
+                    }
+                    break;
+                case 1:
+                    // right
+                    if (elementRect.right <= rect.right) {
+                        continue;
+                    }
+                    if (elementRect.left == rect.left) {
+                        continue;
+                    }
+                    if (elementRect.left < rect.right - 10) {
+                        //continue;
+                    }
+                    break;
+                case 2:
+                    // up
+                    if (elementRect.top >= rect.top) {
+                        continue;
+                    }
+                    if (elementRect.bottom >= rect.bottom) {
+                        continue;
+                    }
+                    break;
+                case 3:
+                    // down
+                    if (elementRect.bottom <= rect.bottom) {
+                        continue;
+                    }
+                    if (elementRect.top <= rect.top) {
+                        continue;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            focusableElements.push({
+                element: curr,
+                clientRect: elementRect
+            });
+        }
+
+        var nearest = getNearestElements(focusableElements, rect);
+
+        if (nearest.length) {
+
+            var nearestElement = nearest[0];
+
+            // See if there's a focusable container, and if so, send the focus command to that
+            var nearestElementFocusableParent = Emby.Dom.parentWithClass(nearestElement, 'focusable');
+            if (nearestElementFocusableParent && nearestElementFocusableParent != nearestElement && activeElement) {
+                if (Emby.Dom.parentWithClass(activeElement, 'focusable') != nearestElementFocusableParent) {
+                    nearestElement = nearestElementFocusableParent;
                 }
-                return;
             }
 
-            var focusableContainer = Emby.Dom.parentWithClass(activeElement, 'focusable');
+            focus(nearestElement);
+        }
+    }
 
-            var rect = getViewportBoundingClientRect(activeElement);
-            var focusableElements = [];
+    function getNearestElements(elementInfos, options) {
 
-            for (var i = 0, length = focusable.length; i < length; i++) {
-                var curr = focusable[i];
+        // Get elements and work out x/y points
+        var cache = [],
+			compDist = Infinity,
+			point1x = parseFloat(options.left) || 0,
+			point1y = parseFloat(options.top) || 0,
+			point2x = parseFloat(point1x + options.width) || point1x,
+			point2y = parseFloat(point1y + options.height) || point1y,
+			// Shortcuts to help with compression
+			min = Math.min,
+			max = Math.max;
 
-                if (curr == activeElement) {
-                    continue;
-                }
-                // Don't refocus into the same container
-                if (curr == focusableContainer) {
-                    continue;
-                }
+        var sourceMidX = options.left + (options.width / 2);
+        var sourceMidY = options.top + (options.height / 2);
 
-                var elementRect = getViewportBoundingClientRect(curr);
+        // Loop through all elements and check their positions
+        for (var i = 0, length = elementInfos.length; i < length; i++) {
 
-                switch (direction) {
+            var elementInfo = elementInfos[i];
+            var elem = elementInfo.element;
 
-                    case 0:
-                        // left
-                        if (elementRect.left >= rect.left) {
-                            continue;
-                        }
-                        if (elementRect.right == rect.right) {
-                            continue;
-                        }
-                        if (elementRect.right > rect.left + 10) {
-                            //continue;
-                        }
-                        break;
-                    case 1:
-                        // right
-                        if (elementRect.right <= rect.right) {
-                            continue;
-                        }
-                        if (elementRect.left == rect.left) {
-                            continue;
-                        }
-                        if (elementRect.left < rect.right - 10) {
-                            //continue;
-                        }
-                        break;
-                    case 2:
-                        // up
-                        if (elementRect.top >= rect.top) {
-                            continue;
-                        }
-                        if (elementRect.bottom >= rect.bottom) {
-                            continue;
-                        }
-                        break;
-                    case 3:
-                        // down
-                        if (elementRect.bottom <= rect.bottom) {
-                            continue;
-                        }
-                        if (elementRect.top <= rect.top) {
-                            continue;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                focusableElements.push({
-                    element: curr,
-                    clientRect: elementRect
+            var off = elementInfo.clientRect,
+                x = off.left,
+                y = off.top,
+                w = off.width,
+                h = off.height,
+                x2 = x + w,
+                y2 = y + h,
+                maxX1 = max(x, point1x),
+                minX2 = min(x2, point2x),
+                maxY1 = max(y, point1y),
+                minY2 = min(y2, point2y),
+                intersectX = minX2 >= maxX1,
+                intersectY = minY2 >= maxY1;
+
+            var midX = off.left + (off.width / 2);
+            var midY = off.top + (off.height / 2);
+
+            var distX = Math.abs(sourceMidX - midX);
+            var distY = Math.abs(sourceMidY - midY);
+
+            var distT = Math.sqrt(distX * distX + distY * distY);
+
+            var isValid = distT <= compDist;
+            if (isValid) {
+                compDist = min(compDist, distT);
+                cache.push({
+                    node: elem,
+                    dist: distT
                 });
             }
+        }
 
-            var nearest = window.nearest(focusableElements, rect);
+        // Make sure all cached items are within tolerance range
+        var len = cache.length,
+			filtered = [];
 
-            if (nearest.length) {
+        var compMin = compDist;
+        var compMax = compDist;
 
-                var nearestElement = nearest[0];
-
-                // See if there's a focusable container, and if so, send the focus command to that
-                var nearestElementFocusableParent = Emby.Dom.parentWithClass(nearestElement, 'focusable');
-                if (nearestElementFocusableParent && nearestElementFocusableParent != nearestElement && activeElement) {
-                    if (Emby.Dom.parentWithClass(activeElement, 'focusable') != nearestElementFocusableParent) {
-                        nearestElement = nearestElementFocusableParent;
-                    }
-                }
-
-                focus(nearestElement);
+        for (var i = 0; i < len; i++) {
+            var item = cache[i];
+            if (item.dist >= compMin && item.dist <= compMax) {
+                filtered.push(item.node);
             }
-        });
+        }
+
+        return filtered;
     }
 
     globalScope.Emby.FocusManager = {
