@@ -14,12 +14,12 @@ define(['events'], function (Events) {
         var playerStates = {};
 
         self.currentItem = function (player) {
-            var data = getPlayerState(player);
+            var data = getPlayerData(player);
             return data.streamInfo ? data.streamInfo.item : null;
         };
 
         self.currentMediaSource = function (player) {
-            var data = getPlayerState(player);
+            var data = getPlayerData(player);
             return data.streamInfo ? data.streamInfo.mediaSource : null;
         };
 
@@ -55,7 +55,7 @@ define(['events'], function (Events) {
 
         self.isPlayingVideo = function () {
             if (self.isPlaying()) {
-                var playerData = getPlayerState(currentPlayer);
+                var playerData = getPlayerData(currentPlayer);
                 var currentItem = playerData.streamInfo.item;
 
                 return currentItem.MediaType == 'Video';
@@ -66,7 +66,7 @@ define(['events'], function (Events) {
 
         self.isPlayingAudio = function () {
             if (self.isPlaying()) {
-                var playerData = getPlayerState(currentPlayer);
+                var playerData = getPlayerData(currentPlayer);
                 var currentItem = playerData.streamInfo.item;
 
                 return currentItem.MediaType == 'Audio';
@@ -263,46 +263,40 @@ define(['events'], function (Events) {
             var playSessionId = Emby.Page.param('PlaySessionId', currentSrc);
             var liveStreamId = Emby.Page.param('LiveStreamId', currentSrc);
 
-            var deviceProfile = mediaRenderer.getDeviceProfile();
+            mediaRenderer.getDeviceProfile().then(function (deviceProfile) {
+                
+                var audioStreamIndex = params.AudioStreamIndex == null ? getPlayerData(mediaRenderer).subtitleStreamIndex : params.AudioStreamIndex;
+                var subtitleStreamIndex = params.SubtitleStreamIndex == null ? getPlayerData(mediaRenderer).audioStreamIndex : params.SubtitleStreamIndex;
 
-            var audioStreamIndex = params.AudioStreamIndex == null ? (Emby.Page.param('AudioStreamIndex', currentSrc) || null) : params.AudioStreamIndex;
-            if (typeof (audioStreamIndex) == 'string') {
-                audioStreamIndex = parseInt(audioStreamIndex);
-            }
+                require(['connectionManager'], function (connectionManager) {
 
-            var subtitleStreamIndex = params.SubtitleStreamIndex == null ? (Emby.Page.param('SubtitleStreamIndex', currentSrc) || null) : params.SubtitleStreamIndex;
-            if (typeof (subtitleStreamIndex) == 'string') {
-                subtitleStreamIndex = parseInt(subtitleStreamIndex);
-            }
+                    var playerData = getPlayerData(mediaRenderer);
+                    var currentItem = playerData.streamInfo.item;
+                    var currentMediaSource = playerData.streamInfo.mediaSource;
+                    var apiClient = connectionManager.getApiClient(currentItem.ServerId);
 
-            require(['connectionManager'], function (connectionManager) {
+                    getPlaybackInfo(apiClient, currentItem.Id, deviceProfile, ticks, currentMediaSource, audioStreamIndex, subtitleStreamIndex, liveStreamId).then(function (result) {
 
-                var playerData = getPlayerState(mediaRenderer);
-                var currentItem = playerData.streamInfo.item;
-                var currentMediaSource = playerData.streamInfo.mediaSource;
-                var apiClient = connectionManager.getApiClient(currentItem.ServerId);
+                        if (validatePlaybackInfoResult(result)) {
 
-                getPlaybackInfo(apiClient, currentItem.Id, deviceProfile, ticks, currentMediaSource, audioStreamIndex, subtitleStreamIndex, liveStreamId).then(function (result) {
+                            currentMediaSource = result.MediaSources[0];
+                            createStreamInfo(apiClient, currentItem.MediaType, currentItem, currentMediaSource, ticks).then(function (streamInfo) {
 
-                    if (validatePlaybackInfoResult(result)) {
+                                if (!streamInfo.url) {
+                                    showPlaybackInfoErrorMessage('NoCompatibleStream');
+                                    self.nextTrack();
+                                    return;
+                                }
 
-                        currentMediaSource = result.MediaSources[0];
-                        createStreamInfo(apiClient, currentItem.MediaType, currentItem, currentMediaSource, ticks).then(function (streamInfo) {
+                                getPlayerData(mediaRenderer).subtitleStreamIndex = subtitleStreamIndex;
+                                getPlayerData(mediaRenderer).audioStreamIndex = audioStreamIndex;
 
-                            if (!streamInfo.url) {
-                                showPlaybackInfoErrorMessage('NoCompatibleStream');
-                                self.nextTrack();
-                                return;
-                            }
+                                changeStreamToUrl(apiClient, mediaRenderer, playSessionId, streamInfo);
+                            });
+                        }
+                    });
 
-                            getPlayerState(mediaRenderer).currentSubtitleStreamIndex = subtitleStreamIndex;
-                            getPlayerState(mediaRenderer).currentAudioStreamIndex = audioStreamIndex;
-
-                            changeStreamToUrl(apiClient, mediaRenderer, playSessionId, streamInfo);
-                        });
-                    }
                 });
-
             });
         };
 
@@ -310,16 +304,14 @@ define(['events'], function (Events) {
 
             clearProgressInterval(mediaRenderer);
 
-            getPlayerState(mediaRenderer).isChangingStream = true;
+            getPlayerData(mediaRenderer).isChangingStream = true;
 
-            if (getPlayerState(mediaRenderer).MediaType == "Video") {
+            if (getPlayerData(mediaRenderer).MediaType == "Video") {
                 apiClient.stopActiveEncodings(playSessionId).then(function () {
 
                     setSrcIntoRenderer(apiClient, mediaRenderer, streamInfo);
-
                 });
 
-                self.updateTextStreamUrls(newPositionTicks || 0);
             } else {
 
                 setSrcIntoRenderer(apiClient, mediaRenderer, streamInfo);
@@ -328,38 +320,15 @@ define(['events'], function (Events) {
 
         function setSrcIntoRenderer(apiClient, mediaRenderer, streamInfo) {
 
-            var mediaSource = streamInfo.mediaSource;
-
-            var subtitleStreams = mediaSource.MediaStreams.filter(function (s) {
-                return s.Type == 'Subtitle';
-            });
-
-            var textStreams = subtitleStreams.filter(function (s) {
-                return s.DeliveryMethod == 'External';
-            });
-
-            var tracks = [];
-
-            for (var i = 0, length = textStreams.length; i < length; i++) {
-
-                var textStream = textStreams[i];
-                var textStreamUrl = !textStream.IsExternalUrl ? apiClient.getUrl(textStream.DeliveryUrl) : textStream.DeliveryUrl;
-
-                tracks.push({
-                    url: textStreamUrl,
-                    language: (textStream.Language || 'und'),
-                    isDefault: textStream.Index == mediaSource.DefaultSubtitleStreamIndex
-                });
-            }
-
             mediaRenderer.play(streamInfo);
+            getPlayerData(mediaRenderer).streamInfo = streamInfo;
 
-            getPlayerState(mediaRenderer).streamInfo = streamInfo;
+            //self.updateTextStreamUrls(newPositionTicks || 0);
         };
 
         self.seekPercent = function (percent, player) {
 
-            var data = getPlayerState(player).streamInfo;
+            var data = getPlayerData(player).streamInfo;
             var mediaSource = data.mediaSource;
 
             if (mediaSource) {
@@ -439,7 +408,7 @@ define(['events'], function (Events) {
             });
         };
 
-        function getPlayerState(player) {
+        function getPlayerData(player) {
 
             if (!player) {
                 throw new Error('player cannot be null');
@@ -458,9 +427,9 @@ define(['events'], function (Events) {
             return getPlayerStateInternal(player || currentPlayer);
         };
 
-        function getPlayerStateInternal(mediaRenderer) {
+        function getPlayerStateInternal(player) {
 
-            var playerData = getPlayerState(mediaRenderer);
+            var playerData = getPlayerData(player);
             var item = playerData.streamInfo.item;
             var mediaSource = playerData.streamInfo.mediaSource;
 
@@ -468,19 +437,19 @@ define(['events'], function (Events) {
                 PlayState: {}
             };
 
-            if (mediaRenderer) {
+            if (player) {
 
-                state.PlayState.VolumeLevel = mediaRenderer.volume();
-                state.PlayState.IsMuted = mediaRenderer.isMuted();
-                state.PlayState.IsPaused = mediaRenderer.paused();
-                state.PlayState.PositionTicks = getCurrentTicks(mediaRenderer);
+                state.PlayState.VolumeLevel = player.volume();
+                state.PlayState.IsMuted = player.isMuted();
+                state.PlayState.IsPaused = player.paused();
+                state.PlayState.PositionTicks = getCurrentTicks(player);
                 state.PlayState.RepeatMode = self.getRepeatMode();
 
-                var currentSrc = mediaRenderer.currentSrc();
+                var currentSrc = player.currentSrc();
 
                 if (currentSrc) {
 
-                    state.PlayState.SubtitleStreamIndex = playerData.currentSubtitleStreamIndex;
+                    state.PlayState.SubtitleStreamIndex = playerData.subtitleStreamIndex;
                     state.PlayState.AudioStreamIndex = playerData.currentAudioStreamIndex;
 
                     state.PlayState.PlayMethod = playerData.streamInfo.playMethod;
@@ -517,7 +486,7 @@ define(['events'], function (Events) {
 
             var playerTime = Math.floor(10000 * (player || currentPlayer).currentTime());
 
-            playerTime += getPlayerState(player).streamInfo.transcodingOffsetTicks;
+            playerTime += getPlayerData(player).streamInfo.transcodingOffsetTicks;
 
             return playerTime;
         }
@@ -791,15 +760,13 @@ define(['events'], function (Events) {
 
                     createStreamInfo(apiClient, item.MediaType, item, mediaSource, startPosition).then(function (streamInfo) {
 
-                        streamInfo.item = item;
-                        streamInfo.mediaSource = mediaSource;
                         streamInfo.fullscreen = currentPlayOptions.fullscreen;
 
-                        getPlayerState(player).isChangingStream = false;
+                        getPlayerData(player).isChangingStream = false;
 
                         player.play(streamInfo).then(callback);
                         currentPlayer = player;
-                        getPlayerState(player).streamInfo = streamInfo;
+                        getPlayerData(player).streamInfo = streamInfo;
                     });
                 });
             });
@@ -990,14 +957,6 @@ define(['events'], function (Events) {
         }
 
         function getPlaybackInfo(apiClient, itemId, deviceProfile, startPosition, mediaSource, audioStreamIndex, subtitleStreamIndex, liveStreamId) {
-
-            return new Promise(function (resolve, reject) {
-
-                getPlaybackInfoInternal(apiClient, itemId, deviceProfile, startPosition, mediaSource, audioStreamIndex, subtitleStreamIndex, liveStreamId).then(resolve, reject);
-            });
-        }
-
-        function getPlaybackInfoInternal(apiClient, itemId, deviceProfile, startPosition, mediaSource, audioStreamIndex, subtitleStreamIndex, liveStreamId) {
 
             var postData = {
                 DeviceProfile: deviceProfile
@@ -1308,9 +1267,9 @@ define(['events'], function (Events) {
 
             var player = this;
 
-            if (getPlayerState(player).isChangingStream) {
+            if (getPlayerData(player).isChangingStream) {
 
-                getPlayerState(player).isChangingStream = false;
+                getPlayerData(player).isChangingStream = false;
 
                 startProgressInterval(player);
                 sendProgressUpdate(player);
@@ -1321,25 +1280,25 @@ define(['events'], function (Events) {
 
             var state = getPlayerStateInternal(player);
 
-            reportPlayback(state, getPlayerState(player).streamInfo.item.ServerId, 'reportPlaybackStart');
+            reportPlayback(state, getPlayerData(player).streamInfo.item.ServerId, 'reportPlaybackStart');
 
             startProgressInterval(player);
 
             Events.trigger(self, 'playbackstart', [player]);
         }
 
-        function onPlaybackStopped() {
+        function onPlaybackStopped(e) {
 
             var player = this;
 
-            if (getPlayerState(player).isChangingStream) {
+            if (getPlayerData(player).isChangingStream) {
                 return;
             }
 
             // User clicked stop or content ended
             var state = getPlayerStateInternal(player);
 
-            reportPlayback(state, getPlayerState(player).streamInfo.item.ServerId, 'reportPlaybackStopped');
+            reportPlayback(state, getPlayerData(player).streamInfo.item.ServerId, 'reportPlaybackStopped');
 
             clearProgressInterval(player);
 
@@ -1370,7 +1329,7 @@ define(['events'], function (Events) {
         function onPlaybackChanging(activePlayer, newPlayer, newItem) {
 
             var state = getPlayerStateInternal(activePlayer);
-            var serverId = getPlayerState(activePlayer).streamInfo.item.ServerId;
+            var serverId = getPlayerData(activePlayer).streamInfo.item.ServerId;
 
             // User started playing something new while existing content is playing
 
@@ -1415,7 +1374,7 @@ define(['events'], function (Events) {
             var intervalTime = 800;
             player.lastProgressReport = 0;
 
-            getPlayerState(player).currentProgressInterval = setInterval(function () {
+            getPlayerData(player).currentProgressInterval = setInterval(function () {
 
                 if ((new Date().getTime() - player.lastProgressReport) > intervalTime) {
 
@@ -1430,7 +1389,7 @@ define(['events'], function (Events) {
             player.lastProgressReport = new Date().getTime();
 
             var state = getPlayerStateInternal(player);
-            var currentItem = getPlayerState(player).streamInfo.item;
+            var currentItem = getPlayerData(player).streamInfo.item;
             reportPlayback(state, currentItem.ServerId, 'reportPlaybackProgress');
         }
 
@@ -1453,9 +1412,9 @@ define(['events'], function (Events) {
 
         function clearProgressInterval(player) {
 
-            if (getPlayerState(player).currentProgressInterval) {
-                clearTimeout(getPlayerState(player).currentProgressInterval);
-                getPlayerState(player).currentProgressInterval = null;
+            if (getPlayerData(player).currentProgressInterval) {
+                clearTimeout(getPlayerData(player).currentProgressInterval);
+                getPlayerData(player).currentProgressInterval = null;
             }
         }
 
@@ -1464,7 +1423,7 @@ define(['events'], function (Events) {
             var player = currentPlayer;
 
             // Try to report playback stopped before the browser closes
-            if (player && getPlayerState(player).currentProgressInterval) {
+            if (player && getPlayerData(player).currentProgressInterval) {
 
                 onPlaybackStopped.call(player);
             }
