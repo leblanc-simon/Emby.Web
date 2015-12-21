@@ -19,21 +19,21 @@ define(['actionsheet'], function (actionsheet) {
 
         if (resumePositionTicks) {
             menuItems.push({
-                name: Globalize.translate('ButtonResume'),
+                name: Globalize.translate('core#ButtonResume'),
                 id: 'resume',
                 ironIcon: 'play-arrow'
             });
         }
 
         menuItems.push({
-            name: Globalize.translate('ButtonPlay'),
+            name: Globalize.translate('core#ButtonPlay'),
             id: 'play',
             ironIcon: 'play-arrow'
         });
 
         if (Emby.PlaybackManager.canQueueMediaType(mediaType)) {
             menuItems.push({
-                name: Globalize.translate('ButtonQueue'),
+                name: Globalize.translate('core#ButtonQueue'),
                 id: 'queue',
                 ironIcon: 'playlist-add'
             });
@@ -41,7 +41,7 @@ define(['actionsheet'], function (actionsheet) {
 
         if (itemType == "Audio" || itemType == "MusicAlbum" || itemType == "MusicArtist" || itemType == "MusicGenre") {
             menuItems.push({
-                name: Globalize.translate('ButtonInstantMix'),
+                name: Globalize.translate('core#ButtonInstantMix'),
                 id: 'instantmix',
                 ironIcon: 'shuffle'
             });
@@ -49,7 +49,7 @@ define(['actionsheet'], function (actionsheet) {
 
         if (isFolder || itemType == "MusicArtist" || itemType == "MusicGenre") {
             menuItems.push({
-                name: Globalize.translate('ButtonShuffle'),
+                name: Globalize.translate('core#ButtonShuffle'),
                 id: 'shuffle',
                 ironIcon: 'shuffle'
             });

@@ -305,7 +305,7 @@
            'bower_components/emby-apiclient/store'
         ];
 
-        require(list, function(connectionManagerExports) {
+        require(list, function (connectionManagerExports) {
 
             window.MediaBrowser = window.MediaBrowser || {};
             for (var i in connectionManagerExports) {
@@ -484,7 +484,28 @@
                 Emby.Page.start();
 
                 document.dispatchEvent(new CustomEvent("appready", {}));
+
+                loadCoreDictionary();
             });
+        });
+    }
+
+    function loadCoreDictionary() {
+
+        var baseUrl = Emby.Page.baseUrl() + '/strings/';
+
+        var languages = ['en-us'];
+
+        var translations = languages.map(function (i) {
+            return {
+                lang: i,
+                path: baseUrl + i + '.json'
+            };
+        });
+
+        Globalize.loadTranslations({
+            name: 'core',
+            translations: translations
         });
     }
 

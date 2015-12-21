@@ -2,7 +2,7 @@ define(['dialog'], function (dialog) {
 
     return function (options) {
 
-        options.buttons = [Globalize.translate('ButtonOk'), Globalize.translate('ButtonCancel')];
+        options.buttons = [Globalize.translate('core#ButtonOk'), Globalize.translate('core#ButtonCancel')];
 
         var callback = options.callback;
 
