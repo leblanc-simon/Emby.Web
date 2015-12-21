@@ -32,7 +32,12 @@
         //    }
         //}
         //document.querySelector('.themeContainer').classList.remove('staticBackdrop');
-        Emby.Backdrop.setBackdrops(items);
+
+        if (isFocused) {
+
+        } else {
+            Emby.Backdrop.setBackdrops(items);
+        }
     }
 
     function subdued(isSubdued) {

@@ -3,10 +3,6 @@
     height: 271.125px;
 }
 
-.horizontalPageContent .miniSpotlightCard .cardImageContainer {
-    width: 238px;
-}
-
 /* 720p */
 @media all and (min-height: 720px) {
 
@@ -14,22 +10,14 @@
         width: 482px;
         height: 271.125px;
     }
-
-    .horizontalPageContent .miniSpotlightCard .cardImageContainer {
-        width: 238px;
-    }
 }
 
 /* 1080p */
 @media all and (min-height: 1080px) {
 
     .wideSpotlightCard .cardImageContainer {
-        width: 811px;
-        height: 455px;
-    }
-
-    .horizontalPageContent .miniSpotlightCard .cardImageContainer {
-        width: 398px;
+        width: 877px;
+        height: 490px;
     }
 }
 
@@ -39,10 +27,6 @@
     .wideSpotlightCard .cardImageContainer {
         width: 1021px;
         height: 605px;
-    }
-
-    .horizontalPageContent .miniSpotlightCard .cardImageContainer {
-        width: 503px;
     }
 }
 
