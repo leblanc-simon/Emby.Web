@@ -1065,9 +1065,9 @@
     globalScope.DefaultTheme.CardBuilder = {
         buildCardsHtml: buildCardsHtml,
         buildCards: buildCards,
-        homeThumbWidth: 320,
-        homePortraitWidth: 189,
-        homeSquareWidth: 180,
+        homeThumbWidth: 600,
+        homePortraitWidth: 500,
+        homeSquareWidth: 330,
         getDisplayName: getDisplayName,
         getMediaInfoHtml: getMediaInfoHtml,
         getListViewHtml: getListViewHtml,
