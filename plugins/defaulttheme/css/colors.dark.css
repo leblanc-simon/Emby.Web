@@ -166,3 +166,7 @@ paper-icon-item:focus::before {
 paper-icon-button[disabled] {
     color: #666 !important;
 }
+
+.sectionTitle {
+    color: #ccc;
+}
