@@ -164,10 +164,6 @@ a {
     justify-content: initial;
 }
 
-.homePageContainer {
-    top: 11%;
-}
-
 .itemScrollFrame.scrollFrameY {
     height: 100%;
 }
@@ -257,7 +253,7 @@ a {
     }
 
 .userViewNames {
-    margin-bottom: 1.55em;
+    margin-bottom: 1.5em;
 }
 
     .userViewNames h2 {
@@ -275,7 +271,7 @@ a {
     }
 
 .userViewButtonText {
-    font-size: 116%;
+    font-size: 110%;
 }
 
 .listNumbers {
@@ -295,7 +291,6 @@ a {
 }
 
 .sectionTitle {
-    text-transform: uppercase;
     font-size: 86%;
     padding-left: .1em;
 }
@@ -377,7 +372,7 @@ paper-item-body .overview {
 
 .selectedItemInfo {
     position: fixed;
-    bottom: 1%;
+    bottom: .5%;
     left: 0;
     right: 10%;
     max-width: 60%;
@@ -386,7 +381,7 @@ paper-item-body .overview {
 
 .homePageContainer .selectedItemInfo {
     right: 2%;
-    bottom: 2.5%;
+    bottom: .5%;
 }
 
 .selectedItemInfo h2 {
@@ -477,18 +472,18 @@ paper-item-body .overview {
     }
 
     .homePageContent .squareCard .cardImageContainer {
-        width: 224px;
-        height: 224px;
+        width: 243px;
+        height: 243px;
     }
 
     .homePageContent .backdropCard .cardImageContainer {
-        width: 398px;
-        height: 224px;
+        width: 432px;
+        height: 243px;
     }
 
     .homePageContent .portraitCard .cardImageContainer {
-        width: 226px;
-        height: 339px;
+        width: 245px;
+        height: 367px;
     }
 
     .listPageContent .squareCard .cardImageContainer {
