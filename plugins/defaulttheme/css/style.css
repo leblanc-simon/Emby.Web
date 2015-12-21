@@ -159,7 +159,7 @@ a {
 }
 
 .tabbedPageContainer {
-    top: 9.5%;
+    top: 10%;
     align-items: initial;
     justify-content: initial;
 }
@@ -529,18 +529,18 @@ paper-item-body .overview {
     }
 
     .homePageContent .squareCard .cardImageContainer {
-        width: 300px;
-        height: 300px;
+        width: 330px;
+        height: 330px;
     }
 
     .homePageContent .backdropCard .cardImageContainer {
-        width: 533px;
-        height: 300px;
+        width: 587px;
+        height: 330px;
     }
 
     .homePageContent .portraitCard .cardImageContainer {
-        width: 302px;
-        height: 453px;
+        width: 331px;
+        height: 497px;
     }
 
     .listPageContent .squareCard .cardImageContainer {
