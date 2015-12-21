@@ -56,7 +56,7 @@
 
         if (options.showCancel) {
             html += '<div class="buttons">';
-            html += '<paper-button dialog-dismiss>' + Globalize.translate('ButtonCancel') + '</paper-button>';
+            html += '<paper-button dialog-dismiss>' + Globalize.translate('core#ButtonCancel') + '</paper-button>';
             html += '</div>';
         }
 

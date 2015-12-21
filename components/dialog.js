@@ -4,7 +4,7 @@ define(['paperdialoghelper'], function (paperdialoghelper) {
 
         if (typeof options === 'string') {
             options = {
-                title: Globalize.translate('HeaderAlert'),
+                title: Globalize.translate('core#HeaderAlert'),
                 text: options
             };
         }

@@ -1115,8 +1115,8 @@ define(['events'], function (Events) {
         function showPlaybackInfoErrorMessage(errorCode) {
 
             Dashboard.alert({
-                text: Globalize.translate('MessagePlaybackError' + errorCode),
-                title: Globalize.translate('HeaderPlaybackError')
+                text: Globalize.translate('core#MessagePlaybackError' + errorCode),
+                title: Globalize.translate('core#HeaderPlaybackError')
             });
 
         }

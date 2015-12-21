@@ -47,6 +47,18 @@ a {
     }
 }
 
+/* 720p */
+@media all and (min-height: 1080px) {
+
+    .pageTitle {
+        height: 60px;
+    }
+
+    .pageTitleWithLogo {
+        width: 400px;
+    }
+}
+
 /* 2560 * 1440 */
 @media all and (min-height: 1440px) {
 
@@ -56,11 +68,11 @@ a {
     }
 
     .pageTitle {
-        height: 60px;
+        height: 70px;
     }
 
     .pageTitleWithLogo {
-        width: 400px;
+        width: 500px;
     }
 }
 

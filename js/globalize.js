@@ -1,47 +1,33 @@
 (function (globalScope) {
 
-    var allTranslations = [];
-    var dictionary = {};
+    var allTranslations = {};
 
-    function getDictionary() {
+    function getCurrentLocale() {
 
-        return dictionary;
+        return 'en-us';
+    }
+
+    function getDictionary(module) {
+
+        return allTranslations[module || 'theme'].dictionaries[getCurrentLocale()];
     }
 
     function loadTranslations(options) {
 
-        var found = false;
+        allTranslations[options.name] = {
+            translations: options.translations,
+            dictionaries: {}
+        };
 
-        for (var i = 0, length = allTranslations.length; i < length; i++) {
+        var locale = getCurrentLocale();
+        return loadTranslation(options.translations, locale).then(function (dictionary) {
 
-            if (options.name == allTranslations[i].name) {
-                allTranslations[i] = options;
-                found = true;
-                break;
-            }
-        }
-
-        if (!found) {
-            allTranslations.push(options);
-        }
-
-        return loadTranslation(options.translations, 'en-us', dictionary);
-    }
-
-    function loadLanguage(lang) {
-
-        return new Promise(function (resolve, reject) {
-
-            var masterDictionary = {};
-            // Go through each translation, get the file for the language, add it to dictionary
-
-            dictionary = masterDictionary;
-            resolve();
+            allTranslations[options.name].dictionaries[locale] = dictionary;
         });
     }
 
     var cacheParam = new Date().getTime();
-    function loadTranslation(translations, lang, dictionary) {
+    function loadTranslation(translations, lang) {
 
         var filtered = translations.filter(function (t) {
             return t.lang == lang;
@@ -64,12 +50,20 @@
             url += url.indexOf('?') == -1 ? '?' : '&';
             url += 'v=' + cacheParam;
 
-            fetch(url, { mode: 'no-cors' }).then(function (response) {
-                return response.json();
-            }).then(function (json) {
-                dictionary = extend(dictionary, json);
-                resolve();
-            });
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+
+            xhr.onload = function (e) {
+                if (this.status < 400) {
+                    resolve(JSON.parse(this.response));
+                }
+                resolve({});
+            };
+
+            xhr.onerror = function () {
+                resolve({});
+            };
+            xhr.send();
         });
     }
 
@@ -85,7 +79,17 @@
 
     function translateKey(key) {
 
-        return getDictionary()[key] || key;
+        var parts = key.split('#');
+        var module;
+
+        if (parts.length == 1) {
+            module = 'theme';
+        } else {
+            module = parts[0];
+            key = parts[1];
+        }
+
+        return getDictionary(module)[key] || key;
     }
 
     function translate(key) {
