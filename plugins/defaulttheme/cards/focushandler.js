@@ -214,7 +214,7 @@ define([], function () {
             selectedItemInfoInner.innerHTML = html;
 
             var rect = card.getBoundingClientRect();
-            selectedItemInfoInner.parentNode.style.left = (Math.max(rect.left - 0, 70)) + 'px';
+            selectedItemInfoInner.parentNode.style.left = (Math.max(rect.left, 70)) + 'px';
 
             if (html) {
                 fadeIn(selectedItemInfoInner, 1);

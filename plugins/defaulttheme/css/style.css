@@ -160,7 +160,8 @@ a {
 
 .itemScrollFrame.scrollFrameX {
     overflow: hidden;
-    padding-bottom: 10%;
+    padding-bottom: 1.5%;
+    padding-top: 1.5%;
 }
 
 .tabbedPageContainer {
@@ -256,10 +257,6 @@ a {
     .cardColumn .card {
         display: block !important;
     }
-
-.userViewNames {
-    margin-bottom: 1.5em;
-}
 
     .userViewNames h2 {
         margin-top: 0;
@@ -382,6 +379,7 @@ paper-item-body .overview {
     right: 10%;
     max-width: 60%;
     font-size: 90%;
+    color: #ccc;
 }
 
 .homePageContainer .selectedItemInfo {
@@ -492,18 +490,18 @@ paper-item-body .overview {
     }
 
     .listPageContent .squareCard .cardImageContainer {
-        width: 240px;
-        height: 240px;
+        width: 243px;
+        height: 243px;
     }
 
     .listPageContent .backdropCard .cardImageContainer {
-        width: 427px;
-        height: 240px;
+        width: 432px;
+        height: 243px;
     }
 
     .listPageContent .portraitCard .cardImageContainer {
-        width: 240px;
-        height: 360px;
+        width: 245px;
+        height: 367px;
     }
 
     .horizontalPageContent .loginSquareCard {
