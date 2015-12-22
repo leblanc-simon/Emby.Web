@@ -6,6 +6,8 @@
             return;
         }
 
+        card.dispatchEvent(new CustomEvent("focus"));
+
         var imgUrl = Emby.Models.backdropImageUrl(item, {
             maxWidth: width
         });
