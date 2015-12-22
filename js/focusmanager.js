@@ -53,6 +53,24 @@
         return elem;
     }
 
+    function isFocusableElementValid(elem) {
+
+        if (elem.disabled) {
+            return false;
+        }
+
+        if (elem.getAttribute('tabindex') == "-1") {
+            return false;
+        }
+
+        // http://stackoverflow.com/questions/19669786/check-if-element-is-visible-in-dom
+        if (elem.offsetParent === null) {
+            return false;
+        }
+
+        return true;
+    }
+
     function getFocusableElements(parent) {
         var elems = (parent || document).querySelectorAll(focusableQuery);
         var focusableElements = [];
@@ -61,20 +79,9 @@
 
             var elem = elems[i];
 
-            if (elem.disabled) {
-                continue;
+            if (isFocusableElementValid(elem)) {
+                focusableElements.push(elem);
             }
-
-            if (elem.getAttribute('tabindex') == "-1") {
-                continue;
-            }
-
-            // http://stackoverflow.com/questions/19669786/check-if-element-is-visible-in-dom
-            if (elem.offsetParent === null) {
-                continue;
-            }
-
-            focusableElements.push(elem);
         }
 
         return focusableElements;
@@ -174,12 +181,9 @@
         }
 
         var container = activeElement ? getFocusContainer(activeElement, direction) : document.body;
-        var focusable = getFocusableElements(container);
 
         if (!activeElement) {
-            if (focusable.length) {
-                focus(focusable[0]);
-            }
+            autoFocus(container, true);
             return;
         }
 
@@ -188,6 +192,7 @@
         var rect = getViewportBoundingClientRect(activeElement);
         var focusableElements = [];
 
+        var focusable = container.querySelectorAll(focusableQuery);
         for (var i = 0, length = focusable.length; i < length; i++) {
             var curr = focusable[i];
 
@@ -196,6 +201,10 @@
             }
             // Don't refocus into the same container
             if (curr == focusableContainer) {
+                continue;
+            }
+
+            if (!isFocusableElementValid(curr)) {
                 continue;
             }
 
@@ -211,9 +220,6 @@
                     if (elementRect.right == rect.right) {
                         continue;
                     }
-                    if (elementRect.right > rect.left + 10) {
-                        //continue;
-                    }
                     break;
                 case 1:
                     // right
@@ -222,9 +228,6 @@
                     }
                     if (elementRect.left == rect.left) {
                         continue;
-                    }
-                    if (elementRect.left < rect.right - 10) {
-                        //continue;
                     }
                     break;
                 case 2:
@@ -254,11 +257,11 @@
             });
         }
 
-        var nearest = getNearestElements(focusableElements, rect);
+        var nearest = getNearestElements(focusableElements, rect, direction);
 
         if (nearest.length) {
 
-            var nearestElement = nearest[0];
+            var nearestElement = nearest[0].node;
 
             // See if there's a focusable container, and if so, send the focus command to that
             var nearestElementFocusableParent = Emby.Dom.parentWithClass(nearestElement, 'focusable');
@@ -272,15 +275,14 @@
         }
     }
 
-    function getNearestElements(elementInfos, options) {
+    function getNearestElements(elementInfos, options, direction) {
 
         // Get elements and work out x/y points
         var cache = [],
-			compDist = Infinity,
 			point1x = parseFloat(options.left) || 0,
 			point1y = parseFloat(options.top) || 0,
-			point2x = parseFloat(point1x + options.width) || point1x,
-			point2y = parseFloat(point1y + options.height) || point1y,
+			point2x = parseFloat(point1x + options.width - 1) || point1x,
+			point2y = parseFloat(point1y + options.height - 1) || point1y,
 			// Shortcuts to help with compression
 			min = Math.min,
 			max = Math.max;
@@ -297,10 +299,8 @@
             var off = elementInfo.clientRect,
                 x = off.left,
                 y = off.top,
-                w = off.width,
-                h = off.height,
-                x2 = x + w,
-                y2 = y + h,
+                x2 = x + off.width - 1,
+                y2 = y + off.height - 1,
                 maxX1 = max(x, point1x),
                 minX2 = min(x2, point2x),
                 maxY1 = max(y, point1y),
@@ -311,36 +311,77 @@
             var midX = off.left + (off.width / 2);
             var midY = off.top + (off.height / 2);
 
-            var distX = Math.abs(sourceMidX - midX);
-            var distY = Math.abs(sourceMidY - midY);
+            var distX;
+            var distY;
+
+            switch (direction) {
+
+                case 0:
+                    // left
+                    distX = intersectX ? 0 : Math.abs(point1x - x2);
+                    distY = intersectY ? 0 : Math.abs(sourceMidY - midY);
+                    break;
+                case 1:
+                    // right
+                    distX = intersectX ? 0 : Math.abs(x - point2x);
+                    distY = intersectY ? 0 : Math.abs(sourceMidY - midY);
+                    break;
+                case 2:
+                    // up
+                    distY = intersectY ? 0 : Math.abs(point1y - y2);
+                    distX = intersectX ? 0 : Math.abs(sourceMidX - midX);
+                    break;
+                case 3:
+                    // down
+                    distY = intersectY ? 0 : Math.abs(y - point2y);
+                    distX = intersectX ? 0 : Math.abs(sourceMidX - midX);
+                    break;
+                default:
+                    break;
+            }
 
             var distT = Math.sqrt(distX * distX + distY * distY);
 
-            var isValid = distT <= compDist;
-            if (isValid) {
-                compDist = min(compDist, distT);
-                cache.push({
-                    node: elem,
-                    dist: distT
-                });
-            }
+            cache.push({
+                node: elem,
+                distX: distX,
+                distY: distY,
+                distT: distT
+            });
         }
 
-        // Make sure all cached items are within tolerance range
-        var len = cache.length,
-			filtered = [];
+        cache.sort(sortNodesT);
+        //if (direction < 2) {
+        //    cache.sort(sortNodesX);
+        //} else {
+        //    cache.sort(sortNodesY);
+        //}
 
-        var compMin = compDist;
-        var compMax = compDist;
+        return cache;
+    }
 
-        for (var i = 0; i < len; i++) {
-            var item = cache[i];
-            if (item.dist >= compMin && item.dist <= compMax) {
-                filtered.push(item.node);
-            }
+    function sortNodesX(a, b) {
+        var result = a.distX - b.distX;
+
+        if (result == 0) {
+            return a.distY - b.distY;
         }
 
-        return filtered;
+        return result;
+    }
+
+    function sortNodesT(a, b) {
+        return a.distT - b.distT;
+    }
+
+    function sortNodesY(a, b) {
+        var result = a.distY - b.distY;
+
+        if (result == 0) {
+            return a.distX - b.distX;
+        }
+
+        return result;
     }
 
     globalScope.Emby.FocusManager = {

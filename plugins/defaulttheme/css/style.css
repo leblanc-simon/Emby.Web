@@ -150,12 +150,17 @@ a {
     margin: 0 auto;
 }
 
-.itemScrollFrame.scrollFrameX {
+.itemScrollFrame.scrollFrameX .scrollSlider {
     padding-left: 4.5%;
 }
 
-.userViewNames .scrollFrameX {
+.userViewNames .scrollFrameX .scrollSlider {
     padding-left: 3.75%;
+}
+
+.itemScrollFrame.scrollFrameX {
+    overflow: hidden;
+    padding-bottom: 10%;
 }
 
 .tabbedPageContainer {
