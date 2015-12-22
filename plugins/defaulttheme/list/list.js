@@ -183,7 +183,7 @@
                 dragHandle: 1,
                 dynamicHandle: 1,
                 clickBar: 1,
-                centerOffset: window.innerWidth * .15,
+                centerOffset: window.innerWidth * .5,
                 scrollWidth: 20000
             };
 

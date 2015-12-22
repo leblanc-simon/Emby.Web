@@ -486,7 +486,7 @@
 
             return {
                 start: offset,
-                center: offset + centerOffset - frameSize / 2 + size / 2,
+                center: offset + centerOffset - (frameSize / 2) + (size / 2),
                 end: offset - frameSize + size,
                 size: size
             };
