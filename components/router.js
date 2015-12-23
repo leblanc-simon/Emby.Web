@@ -461,9 +461,16 @@ define(['loading', 'viewManager', 'events'], function (loading, viewManager, Eve
         return show(Emby.ThemeManager.getCurrentTheme().getVideoOsdRoute());
     }
 
+    var allRoutes = [];
+
     function addRoute(path, newRoute) {
 
         page(path, getHandler(newRoute));
+        allRoutes.push(newRoute);
+    }
+
+    function getRoutes() {
+        return allRoutes;
     }
 
     function setTransparency(level) {
@@ -505,6 +512,7 @@ define(['loading', 'viewManager', 'events'], function (loading, viewManager, Eve
         selectServer: selectServer,
         showVideoOsd: showVideoOsd,
         setTransparency: setTransparency,
+        getRoutes: getRoutes,
 
         pushState: pushState,
 
