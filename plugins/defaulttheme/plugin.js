@@ -83,7 +83,6 @@ define([], function () {
         };
 
         self.getRoutes = function () {
-            // Routes, relative to the current directory. The app will handle normalizing the full path
 
             var routes = [];
 
@@ -205,6 +204,19 @@ define([], function () {
                 ],
                 type: 'video-osd',
                 supportsThemeMedia: true
+            });
+
+            routes.push({
+                path: Emby.PluginManager.mapPath(self, 'settings/settings.html'),
+                id: 'defaulttheme-settings',
+                transition: 'slide',
+                dependencies: [
+                    Emby.PluginManager.mapPath(self, 'settings/settings.js')
+                ],
+                type: 'settings',
+                title: 'Default Theme',
+                category: 'Theme',
+                thumbImage: ''
             });
 
             return routes;

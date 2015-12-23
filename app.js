@@ -15,16 +15,6 @@
         Emby.Page.addRoute(path, newRoute);
     }
 
-    function defineRoutes(routes) {
-
-        for (var i = 0, length = routes.length; i < length; i++) {
-
-            var currentRoute = routes[i];
-
-            defineRoute(routes[i]);
-        }
-    }
-
     function defineCoreRoutes() {
 
         console.log('Defining core routes');
@@ -105,11 +95,6 @@
         });
     }
 
-    function replaceAll(str, find, replace) {
-
-        return str.split(find).join(replace);
-    }
-
     function definePluginRoutes() {
 
         console.log('Defining plugin routes');
@@ -120,7 +105,7 @@
 
             var plugin = plugins[i];
             if (plugin.getRoutes) {
-                defineRoutes(plugin.getRoutes());
+                plugin.getRoutes().forEach(defineRoute);
             }
         }
     }
