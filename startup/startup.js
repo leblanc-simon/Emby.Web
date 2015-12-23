@@ -622,7 +622,6 @@
             focusedElement = focused;
 
             if (focused) {
-                document.title = focused.className;
                 frame.toCenter(focused);
             }
         }, true);
