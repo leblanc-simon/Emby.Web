@@ -4,9 +4,10 @@
         ua = ua.toLowerCase();
 
         var match = /(edge)[ \/]([\w.]+)/.exec(ua) ||
+            /(opera)(?:.*version|)[ \/]([\w.]+)/.exec(ua) ||
+            /(opr)(?:.*version|)[ \/]([\w.]+)/.exec(ua) ||
             /(chrome)[ \/]([\w.]+)/.exec(ua) ||
             /(safari)[ \/]([\w.]+)/.exec(ua) ||
-            /(opera)(?:.*version|)[ \/]([\w.]+)/.exec(ua) ||
             /(msie) ([\w.]+)/.exec(ua) ||
             ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec(ua) ||
             [];
@@ -25,6 +26,10 @@
         }
         else if (ua.indexOf("like gecko") != -1 && ua.indexOf('webkit') == -1 && ua.indexOf('opera') == -1 && ua.indexOf('chrome') == -1 && ua.indexOf('safari') == -1) {
             browser = "msie";
+        }
+
+        if (browser == 'opr') {
+            browser = 'opera';
         }
 
         return {
