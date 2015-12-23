@@ -571,6 +571,13 @@
             getHeaderElement().classList.remove('hide');
         });
 
+        window.addEventListener('keydown', function (e) {
+
+            if (e.keyCode == 32) {
+                Emby.PlaybackManager.playPause();
+            }
+        });
+
         view.querySelector('.pageContainer').addEventListener('click', function () {
 
             Emby.PlaybackManager.playPause();

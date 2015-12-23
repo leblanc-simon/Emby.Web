@@ -598,31 +598,40 @@
 
         var options = {
             horizontal: 1,
-            itemNav: 'forceCentered',
+            itemNav: 0,
             mouseDragging: 1,
             touchDragging: 1,
             slidee: view.querySelector('.scrollSlider'),
             itemSelector: '.card',
-            activateOn: 'click focus',
             smart: true,
-            easing: 'swing',
             releaseSwing: true,
-            scrollBar: view.querySelector('.scrollbar'),
             scrollBy: 200,
-            speed: 300,
+            speed: 340,
             elasticBounds: 1,
             dragHandle: 1,
             dynamicHandle: 1,
-            clickBar: 1
+            clickBar: 1,
+            scrollWidth: 100000
         };
+
         var frame = new Sly(scrollFrame, options).init();
+
+        view.querySelector('.scrollSlider').addEventListener('focus', function (e) {
+
+            var focused = Emby.FocusManager.focusableParent(e.target);
+            focusedElement = focused;
+
+            if (focused) {
+                document.title = focused.className;
+                frame.toCenter(focused);
+            }
+        }, true);
 
         // TODO: Not exactly sure yet why this can't be focused immediately
         setTimeout(function () {
             var firstCard = scrollFrame.querySelector('.card');
 
             if (firstCard) {
-                console.log('focusing first card');
                 Emby.FocusManager.focus(firstCard);
             }
         }, 200);
