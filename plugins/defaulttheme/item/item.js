@@ -1006,18 +1006,18 @@
 
     function renderPeople(view, item) {
 
+        var section = view.querySelector('.peopleSection');
+
         Emby.Models.itemPeople(item, {
 
             limit: 32,
             images: [
             {
                 type: 'Primary',
-                width: 250
+                width: Math.round((section.offsetWidth / 7))
             }]
 
         }).then(function (people) {
-
-            var section = view.querySelector('.peopleSection');
 
             if (!people.length) {
                 section.classList.add('hide');
@@ -1026,13 +1026,12 @@
 
             section.classList.remove('hide');
 
-            require([Emby.PluginManager.mapPath('defaulttheme', 'cards/peoplecardbuilder.js')], function () {
-                DefaultTheme.PeopleCardBuilder.buildPeopleCards(people, {
+            require(['peoplecardbuilder'], function (peoplecardbuilder) {
+
+                peoplecardbuilder.buildPeopleCards(people, {
                     parentContainer: section,
                     itemsContainer: section.querySelector('.itemsContainer'),
-                    shape: 'portraitCard itemPersonThumb',
-                    coverImage: true,
-                    width: (section.offsetWidth / 7)
+                    coverImage: true
                 });
             });
         });
@@ -1040,16 +1039,16 @@
 
     function renderScenes(view, item) {
 
+        var section = view.querySelector('.scenesSection');
+
         Emby.Models.chapters(item, {
             images: [
             {
                 type: 'Primary',
-                width: 440
+                width: Math.round((section.offsetWidth / 4))
             }]
 
         }).then(function (chapters) {
-
-            var section = view.querySelector('.scenesSection');
 
             if (!chapters.length) {
                 section.classList.add('hide');
@@ -1058,11 +1057,11 @@
 
             section.classList.remove('hide');
 
-            require([Emby.PluginManager.mapPath('defaulttheme', 'cards/chaptercardbuilder.js')], function () {
-                DefaultTheme.ChapterCardBuilder.buildChapterCards(item, chapters, {
+            require(['chaptercardbuilder'], function (chaptercardbuilder) {
+
+                chaptercardbuilder.buildChapterCards(item, chapters, {
                     parentContainer: section,
                     itemsContainer: section.querySelector('.itemsContainer'),
-                    shape: 'backdropCard',
                     coverImage: true
                 });
             });

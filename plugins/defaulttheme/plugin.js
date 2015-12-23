@@ -181,9 +181,7 @@ define([], function () {
                     Emby.PluginManager.mapPath(self, 'nowplaying/nowplaying.js'),
                     'css!' + Emby.PluginManager.mapPath(self, 'nowplaying/nowplaying.css')
                 ],
-                options: {
-                    supportsThemeMedia: true
-                }
+                supportsThemeMedia: true
             });
 
             routes.push({
@@ -194,9 +192,7 @@ define([], function () {
                     Emby.PluginManager.mapPath(self, 'nowplaying/playlist.js'),
                     'css!' + Emby.PluginManager.mapPath(self, 'item/item.css')
                 ],
-                options: {
-                    supportsThemeMedia: true
-                }
+                supportsThemeMedia: true
             });
 
             routes.push({
@@ -208,9 +204,7 @@ define([], function () {
                     'css!' + Emby.PluginManager.mapPath(self, 'nowplaying/videoosd.css')
                 ],
                 type: 'video-osd',
-                options: {
-                    supportsThemeMedia: true
-                }
+                supportsThemeMedia: true
             });
 
             return routes;

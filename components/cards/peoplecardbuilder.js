@@ -1,12 +1,8 @@
-(function (globalScope) {
+define([], function () {
 
-    function buildChapterCardsHtml(item, chapters, options) {
+    function buildPeopleCardsHtml(people, options) {
 
-        var className = 'card scalableCard itemAction';
-
-        if (options.shape) {
-            className += ' ' + options.shape;
-        }
+        var className = 'card portraitCard personCard';
 
         if (options.block || options.rows) {
             className += ' block';
@@ -15,15 +11,15 @@
         var html = '';
         var itemsInRow = 0;
 
-        for (var i = 0, length = chapters.length; i < length; i++) {
+        for (var i = 0, length = people.length; i < length; i++) {
 
             if (options.rows && itemsInRow == 0) {
                 html += '<div class="cardColumn">';
             }
 
-            var chapter = chapters[i];
+            var person = people[i];
 
-            html += buildChapterCard(item, chapter, options, className);
+            html += buildPersonCard(person, options, className);
             itemsInRow++;
 
             if (options.rows && itemsInRow >= options.rows) {
@@ -35,32 +31,42 @@
         return html;
     }
 
-    function buildChapterCard(item, chapter, options, className) {
+    function buildPersonCard(person, options, className) {
 
-        var imgUrl = chapter.images ? chapter.images.primary : '';
+        className += " itemAction scalableCard";
+
+        var imgUrl = person.images ? person.images.primary : '';
 
         var cardImageContainerClass = 'cardImageContainer';
         if (options.coverImage) {
             cardImageContainerClass += ' coveredImage';
         }
-        var dataAttributes = ' data-action="play" data-isfolder="' + item.IsFolder + '" data-id="' + item.Id + '" data-type="' + item.Type + '" data-startpositionticks="' + chapter.StartPositionTicks + '"';
         var cardImageContainer = imgUrl ? ('<div class="' + cardImageContainerClass + ' lazy" data-src="' + imgUrl + '">') : ('<div class="' + cardImageContainerClass + '">');
 
         var nameHtml = '';
-        nameHtml += '<div class="cardText">' + chapter.Name + '</div>';
+        nameHtml += '<div class="cardText">' + person.Name + '</div>';
+
+        if (person.Role) {
+            nameHtml += '<div class="cardText">as ' + person.Role + '</div>';
+        }
+        else if (person.Type) {
+            nameHtml += '<div class="cardText">' + person.Type + '</div>';
+        } else {
+            nameHtml += '<div class="cardText">&nbsp;</div>';
+        }
 
         var html = '\
-<button type="button" class="' + className + '"' + dataAttributes + '> \
+<button type="button" data-isfolder="'+ person.IsFolder + '" data-type="' + person.Type + '" data-action="link" data-id="' + person.Id + '" raised class="' + className + '"> \
 <div class="cardBox">\
 <div class="cardScalable">\
 <div class="cardPadder"></div>\
 <div class="cardContent">\
 ' + cardImageContainer + '\
 </div>\
-<div class="innerCardFooter">\
+</div>\
+</div>\
+<div class="cardFooter">\
 ' + nameHtml + '\
-</div>\
-</div>\
 </div>\
 </div>\
 </button>'
@@ -69,7 +75,7 @@
         return html;
     }
 
-    function buildChapterCards(item, chapters, options) {
+    function buildPeopleCards(items, options) {
 
         // Abort if the container has been disposed
         if (!Emby.Dom.isInDocument(options.parentContainer)) {
@@ -77,7 +83,7 @@
         }
 
         if (options.parentContainer) {
-            if (chapters.length) {
+            if (items.length) {
                 options.parentContainer.classList.remove('hide');
             } else {
                 options.parentContainer.classList.add('hide');
@@ -85,19 +91,15 @@
             }
         }
 
-        var html = buildChapterCardsHtml(item, chapters, options);
+        var html = buildPeopleCardsHtml(items, options);
 
         options.itemsContainer.innerHTML = html;
 
         Emby.ImageLoader.lazyChildren(options.itemsContainer);
     }
 
-    if (!globalScope.DefaultTheme) {
-        globalScope.DefaultTheme = {};
-    }
-
-    globalScope.DefaultTheme.ChapterCardBuilder = {
-        buildChapterCards: buildChapterCards
+    return {
+        buildPeopleCards: buildPeopleCards
     };
 
-})(this);
+});

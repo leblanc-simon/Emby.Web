@@ -217,7 +217,9 @@
             apiclient: 'bower_components/emby-apiclient/apiclient',
             connectservice: 'bower_components/emby-apiclient/connectservice',
             serverdiscovery: customPaths.serverdiscovery || "bower_components/emby-apiclient/serverdiscovery",
-            wakeonlan: customPaths.wakeonlan || "bower_components/emby-apiclient/wakeonlan"
+            wakeonlan: customPaths.wakeonlan || "bower_components/emby-apiclient/wakeonlan",
+            peoplecardbuilder: 'components/cards/peoplecardbuilder',
+            chaptercardbuilder: 'components/cards/chaptercardbuilder'
         };
 
         paths.hlsjs = bowerPath + "/hls.js/dist/hls.min";

@@ -1,12 +1,8 @@
-(function (globalScope) {
+define([], function () {
 
-    function buildPeopleCardsHtml(people, options) {
+    function buildChapterCardsHtml(item, chapters, options) {
 
-        var className = 'card';
-
-        if (options.shape) {
-            className += ' ' + options.shape;
-        }
+        var className = 'card scalableCard itemAction backdropCard';
 
         if (options.block || options.rows) {
             className += ' block';
@@ -15,15 +11,15 @@
         var html = '';
         var itemsInRow = 0;
 
-        for (var i = 0, length = people.length; i < length; i++) {
+        for (var i = 0, length = chapters.length; i < length; i++) {
 
             if (options.rows && itemsInRow == 0) {
                 html += '<div class="cardColumn">';
             }
 
-            var person = people[i];
+            var chapter = chapters[i];
 
-            html += buildPersonCard(person, options, className);
+            html += buildChapterCard(item, chapter, options, className);
             itemsInRow++;
 
             if (options.rows && itemsInRow >= options.rows) {
@@ -35,42 +31,32 @@
         return html;
     }
 
-    function buildPersonCard(person, options, className) {
+    function buildChapterCard(item, chapter, options, className) {
 
-        className += " itemAction scalableCard";
-
-        var imgUrl = person.images ? person.images.primary : '';
+        var imgUrl = chapter.images ? chapter.images.primary : '';
 
         var cardImageContainerClass = 'cardImageContainer';
         if (options.coverImage) {
             cardImageContainerClass += ' coveredImage';
         }
+        var dataAttributes = ' data-action="play" data-isfolder="' + item.IsFolder + '" data-id="' + item.Id + '" data-type="' + item.Type + '" data-startpositionticks="' + chapter.StartPositionTicks + '"';
         var cardImageContainer = imgUrl ? ('<div class="' + cardImageContainerClass + ' lazy" data-src="' + imgUrl + '">') : ('<div class="' + cardImageContainerClass + '">');
 
         var nameHtml = '';
-        nameHtml += '<div class="cardText">' + person.Name + '</div>';
-
-        if (person.Role) {
-            nameHtml += '<div class="cardText">as ' + person.Role + '</div>';
-        }
-        else if (person.Type) {
-            nameHtml += '<div class="cardText">' + person.Type + '</div>';
-        } else {
-            nameHtml += '<div class="cardText">&nbsp;</div>';
-        }
+        nameHtml += '<div class="cardText">' + chapter.Name + '</div>';
 
         var html = '\
-<button type="button" data-isfolder="'+ person.IsFolder + '" data-type="' + person.Type + '" data-action="link" data-id="' + person.Id + '" raised class="' + className + '"> \
+<button type="button" class="' + className + '"' + dataAttributes + '> \
 <div class="cardBox">\
 <div class="cardScalable">\
 <div class="cardPadder"></div>\
 <div class="cardContent">\
 ' + cardImageContainer + '\
 </div>\
-</div>\
-</div>\
-<div class="cardFooter">\
+<div class="innerCardFooter">\
 ' + nameHtml + '\
+</div>\
+</div>\
 </div>\
 </div>\
 </button>'
@@ -79,7 +65,7 @@
         return html;
     }
 
-    function buildPeopleCards(items, options) {
+    function buildChapterCards(item, chapters, options) {
 
         // Abort if the container has been disposed
         if (!Emby.Dom.isInDocument(options.parentContainer)) {
@@ -87,7 +73,7 @@
         }
 
         if (options.parentContainer) {
-            if (items.length) {
+            if (chapters.length) {
                 options.parentContainer.classList.remove('hide');
             } else {
                 options.parentContainer.classList.add('hide');
@@ -95,19 +81,15 @@
             }
         }
 
-        var html = buildPeopleCardsHtml(items, options);
+        var html = buildChapterCardsHtml(item, chapters, options);
 
         options.itemsContainer.innerHTML = html;
 
         Emby.ImageLoader.lazyChildren(options.itemsContainer);
     }
 
-    if (!globalScope.DefaultTheme) {
-        globalScope.DefaultTheme = {};
-    }
-
-    globalScope.DefaultTheme.PeopleCardBuilder = {
-        buildPeopleCards: buildPeopleCards
+    return {
+        buildChapterCards: buildChapterCards
     };
 
-})(this);
+});
