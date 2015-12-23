@@ -547,18 +547,18 @@ paper-item-body .overview {
     }
 
     .listPageContent .squareCard .cardImageContainer {
-        width: 290px;
-        height: 290px;
+        width: 330px;
+        height: 330px;
     }
 
     .listPageContent .backdropCard .cardImageContainer {
-        width: 516px;
-        height: 290px;
+        width: 587px;
+        height: 330px;
     }
 
     .listPageContent .portraitCard .cardImageContainer {
-        width: 290px;
-        height: 435px;
+        width: 331px;
+        height: 497px;
     }
 
     .horizontalPageContent .loginSquareCard {

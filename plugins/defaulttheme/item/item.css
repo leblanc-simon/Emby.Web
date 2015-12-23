@@ -30,7 +30,7 @@
         width: 16.66666666666666667%;
     }
 
-    .itemScrollContent .itemPersonThumb {
+    .itemScrollContent .personCard {
         width: 14.285714285714285714285714285714%;
     }
 
@@ -51,7 +51,7 @@
 }
 
 .itemPageLeft {
-    max-width: 38%;
+    max-width: 40%;
     padding-right: 1.7em;
 }
 

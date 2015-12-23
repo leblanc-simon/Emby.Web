@@ -135,7 +135,9 @@ define(['loading', 'viewManager', 'events'], function (loading, viewManager, Eve
             isBack: isBackNav,
             state: ctx.state,
             type: route.type,
-            options: route.options
+            options: {
+                supportsThemeMedia: route.supportsThemeMedia || false
+            }
         };
         currentViewLoadRequest = currentRequest;
 
