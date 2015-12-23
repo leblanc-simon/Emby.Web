@@ -231,7 +231,6 @@
                     itemSelector: '.card',
                     smart: true,
                     releaseSwing: true,
-                    scrollBar: view.querySelector('.contentScrollbar'),
                     scrollBy: 200,
                     speed: 340,
                     immediateSpeed: pageOptions.immediateSpeed,
