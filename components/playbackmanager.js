@@ -275,6 +275,10 @@ define(['events'], function (Events) {
                     var currentMediaSource = playerData.streamInfo.mediaSource;
                     var apiClient = connectionManager.getApiClient(currentItem.ServerId);
 
+                    if (ticks) {
+                        ticks = parseInt(ticks);
+                    }
+
                     getPlaybackInfo(apiClient, currentItem.Id, deviceProfile, ticks, currentMediaSource, audioStreamIndex, subtitleStreamIndex, liveStreamId).then(function (result) {
 
                         if (validatePlaybackInfoResult(result)) {
