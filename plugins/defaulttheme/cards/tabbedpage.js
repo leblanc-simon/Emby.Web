@@ -103,7 +103,7 @@
         var selectedItemInfoInner = page.querySelector('.selectedItemInfoInner');
         var selectedIndexElement = page.querySelector('.selectedIndex');
 
-        var tagName = Emby.Dom.supportsWebComponents() ? 'paper-button' : 'button';
+        var tagName = 'paper-button';
 
         self.renderTabs = function (tabs, initialTabId) {
 
