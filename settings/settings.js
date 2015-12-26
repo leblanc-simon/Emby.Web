@@ -56,6 +56,74 @@
 
                 return 0;
             });
+
+            renderRoutes(routes);
+        }
+
+        function renderRoutes(routes) {
+
+            var html = '';
+            var currentCategory = '';
+
+            for (var i = 0, length = routes.length; i < length; i++) {
+
+                var route = routes[i];
+                var category = getCategoryTitle(route);
+
+                if (category != currentCategory) {
+                    if (currentCategory) {
+
+                        // close the items container
+                        html += '</div>';
+
+                        // close the section
+                        html += '</div>';
+                    }
+
+                    html += '<div>';
+                    html += '<h1>';
+                    html += category;
+                    html += '</h1>';
+                    html += '<div>';
+                }
+
+                currentCategory = category;
+
+                html += getRouteHtml(route);
+            }
+
+            if (html) {
+                // close the items container
+                html += '</div>';
+
+                // close the section
+                html += '</div>';
+            }
+
+            view.querySelector('.dynamicRoutes').innerHTML = html;
+            Emby.ImageLoader.lazyChildren(view);
+        }
+
+        function getRouteHtml(route) {
+            
+            var html = '';
+            return html;
+        }
+
+        function getCategoryTitle(route) {
+
+            switch (route.category) {
+
+                case 'General':
+                    return Globalize.translate('core#General');
+                case 'Playback':
+                    return Globalize.translate('core#Playback');
+                case 'Theme':
+                    return Globalize.translate('core#Theme');
+                default:
+                    return Globalize.translate('core#Other');
+            }
+
         }
 
         view.addEventListener('viewdestroy', function () {

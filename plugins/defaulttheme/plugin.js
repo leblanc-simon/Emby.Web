@@ -56,16 +56,14 @@ define([], function () {
 
             list.push('css!' + Emby.PluginManager.mapPath(self, 'css/fonts'));
 
-            if (Emby.Dom.supportsWebComponents()) {
-                list.push('html!' + Emby.PluginManager.mapPath(self, 'icons.html'));
-                list.push('paper-button');
-                list.push('paper-icon-button');
-                list.push('paper-input');
-                list.push('paper-fab');
-                list.push('paper-slider');
-                list.push('html!bower_components/paper-item/paper-icon-item.html');
-                list.push('html!bower_components/paper-item/paper-item-body.html');
-            }
+            list.push('html!' + Emby.PluginManager.mapPath(self, 'icons.html'));
+            list.push('paper-button');
+            list.push('paper-icon-button');
+            list.push('paper-input');
+            list.push('paper-fab');
+            list.push('paper-slider');
+            list.push('html!bower_components/paper-item/paper-icon-item.html');
+            list.push('html!bower_components/paper-item/paper-item-body.html');
 
             return list;
         };

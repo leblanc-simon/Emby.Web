@@ -408,28 +408,14 @@
             var cardImageContainer;
 
             if (item.showIcon) {
-                if (Emby.Dom.supportsWebComponents()) {
-                    cardImageContainer = '<iron-icon class="cardImageIcon" icon="' + item.icon + '"></iron-icon>';
-                } else {
-                    cardImageContainer = '';
-                }
+                cardImageContainer = '<iron-icon class="cardImageIcon" icon="' + item.icon + '"></iron-icon>';
             } else {
                 cardImageContainer = '<div class="cardImage" style="' + item.cardImageStyle + '"></div>';
             }
 
-            var tagName;
-            var innerOpening;
-            var innerClosing;
-
-            if (Emby.Dom.supportsWebComponents()) {
-                tagName = 'paper-button';
-                innerOpening = '<div class="cardBox">';
-                innerClosing = '</div>';
-            } else {
-                tagName = 'button';
-                innerOpening = '<div class="cardBox">';
-                innerClosing = '</div>';
-            }
+            var tagName = 'paper-button';
+            var innerOpening = '<div class="cardBox">';
+            var innerClosing = '</div>';
 
             return '\
 <' + tagName + ' raised class="card squareCard loginSquareCard scalableCard" data-cardtype="' + item.cardType + '" data-url="' + item.url + '" data-name="' + item.name + '" data-serverid="' + item.serverId + '">\
@@ -667,28 +653,14 @@
             var cardImageContainer;
 
             if (item.showIcon) {
-                if (Emby.Dom.supportsWebComponents()) {
-                    cardImageContainer = '<iron-icon class="cardImageIcon" icon="' + item.icon + '"></iron-icon>';
-                } else {
-                    cardImageContainer = '';
-                }
+                cardImageContainer = '<iron-icon class="cardImageIcon" icon="' + item.icon + '"></iron-icon>';
             } else {
                 cardImageContainer = '<div class="cardImage" style="' + item.cardImageStyle + '"></div>';
             }
 
-            var tagName;
-            var innerOpening;
-            var innerClosing;
-
-            if (Emby.Dom.supportsWebComponents()) {
-                tagName = 'paper-button';
-                innerOpening = '<div class="cardBox">';
-                innerClosing = '</div>';
-            } else {
-                tagName = 'button';
-                innerOpening = '<div class="cardBox">';
-                innerClosing = '</div>';
-            }
+            var tagName = 'paper-button';
+            var innerOpening = '<div class="cardBox">';
+            var innerClosing = '</div>';
 
             return '\
 <' + tagName + ' raised class="card squareCard loginSquareCard scalableCard" data-id="' + item.id + '" data-url="' + (item.url || '') + '" data-cardtype="' + item.cardType + '">\
