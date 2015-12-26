@@ -37,6 +37,17 @@
         if (document.createElement('audio').canPlayType('audio/mp3').replace(/no/, '')) {
             list.push('mp3');
         }
+        if (document.createElement('audio').canPlayType('audio/ogg; codecs="opus"').replace(/no/, '')) {
+            list.push('opus');
+        }
+
+        if (document.createElement('audio').canPlayType('audio/webm').replace(/no/, '')) {
+            list.push('webma');
+        }
+
+        if (document.createElement('audio').canPlayType('audio/flac').replace(/no/, '')) {
+            list.push('flac');
+        }
 
         supportedFormats = list;
         return list;
@@ -111,66 +122,44 @@
             });
         }
 
-        if (canPlayMp3) {
-            profile.DirectPlayProfiles.push({
-                Container: 'mp3',
-                Type: 'Audio'
-            });
-        }
+        ['opus', 'mp3', 'aac', 'flac', 'webma'].forEach(function (audioFormat) {
 
-        if (canPlayAac) {
-            profile.DirectPlayProfiles.push({
-                Container: 'aac',
-                Type: 'Audio'
-            });
-        }
+            if (supportedFormats.indexOf(audioFormat) != -1) {
+                profile.DirectPlayProfiles.push({
+                    Container: audioFormat == 'webma' ? 'webma,webm' : audioFormat,
+                    Type: 'Audio'
+                });
+            }
+        });
 
         if (canPlayWebm) {
             profile.DirectPlayProfiles.push({
                 Container: 'webm',
                 Type: 'Video'
             });
-            profile.DirectPlayProfiles.push({
-                Container: 'webm,webma',
-                Type: 'Audio'
-            });
         }
 
         profile.TranscodingProfiles = [];
 
-        if (canPlayMp3) {
-            profile.TranscodingProfiles.push({
-                Container: 'mp3',
-                Type: 'Audio',
-                AudioCodec: 'mp3',
-                Context: 'Streaming',
-                Protocol: 'http'
-            });
-            profile.TranscodingProfiles.push({
-                Container: 'mp3',
-                Type: 'Audio',
-                AudioCodec: 'mp3',
-                Context: 'Static',
-                Protocol: 'http'
-            });
-        }
-        if (canPlayAac) {
-            profile.TranscodingProfiles.push({
-                Container: 'aac',
-                Type: 'Audio',
-                AudioCodec: 'aac',
-                Context: 'Streaming',
-                Protocol: 'http'
-            });
+        ['opus', 'mp3', 'aac'].forEach(function (audioFormat) {
 
-            profile.TranscodingProfiles.push({
-                Container: 'aac',
-                Type: 'Audio',
-                AudioCodec: 'aac',
-                Context: 'Static',
-                Protocol: 'http'
-            });
-        }
+            if (supportedFormats.indexOf(audioFormat) != -1) {
+                profile.TranscodingProfiles.push({
+                    Container: audioFormat,
+                    Type: 'Audio',
+                    AudioCodec: audioFormat,
+                    Context: 'Streaming',
+                    Protocol: 'http'
+                });
+                profile.TranscodingProfiles.push({
+                    Container: audioFormat,
+                    Type: 'Audio',
+                    AudioCodec: audioFormat,
+                    Context: 'Static',
+                    Protocol: 'http'
+                });
+            }
+        });
 
         // Can't use mkv on mobile because we have to use the native player controls and they won't be able to seek it
         if (canPlayMkv && !browser.mobile) {
@@ -192,16 +181,6 @@
                 Context: 'Streaming',
                 Protocol: 'hls'
             });
-
-            if (canPlayAac) {
-                profile.TranscodingProfiles.push({
-                    Container: 'ts',
-                    Type: 'Audio',
-                    AudioCodec: 'aac',
-                    Context: 'Streaming',
-                    Protocol: 'hls'
-                });
-            }
         }
 
         if (canPlayWebm) {
