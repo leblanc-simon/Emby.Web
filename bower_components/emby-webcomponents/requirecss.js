@@ -31,12 +31,6 @@ define(function () {
 
         var packageName = '';
 
-        // TODO: handle any value before the #
-        if (url.indexOf('theme#') != -1) {
-            url = url.replace('theme#', '');
-            packageName = 'theme';
-        }
-
         if (url.indexOf('http') != 0 && url.indexOf('file:') != 0) {
             url = config.baseUrl + url;
         }

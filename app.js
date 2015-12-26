@@ -169,6 +169,7 @@
         console.log('Initializing requirejs');
 
         var bowerPath = "bower_components";
+        var embyWebComponentsBowerPath = bowerPath + '/emby-webcomponents';
 
         var paths = {
             alert: "components/alert",
@@ -190,8 +191,8 @@
             alphapicker: "components/alphapicker/alphapicker",
             paperdialoghelper: "components/paperdialoghelper",
             slideshow: "components/slideshow/slideshow",
-            browserdeviceprofile: "components/browserdeviceprofile",
-            browser: "components/browser",
+            browserdeviceprofile: embyWebComponentsBowerPath + "/browserdeviceprofile",
+            browser: embyWebComponentsBowerPath + "/browser",
             isMobile: "bower_components/isMobile/isMobile.min",
             howler: 'bower_components/howler.js/howler.min',
             screenfull: 'bower_components/screenfull/dist/screenfull',
@@ -232,8 +233,8 @@
             paths: paths,
             map: {
                 '*': {
-                    'css': 'components/requirecss',
-                    'html': bowerPath + '/emby-webcomponents/requirehtml'
+                    'css': embyWebComponentsBowerPath + '/requirecss',
+                    'html': embyWebComponentsBowerPath + '/requirehtml'
                 }
             },
             shim: shim

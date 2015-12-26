@@ -1,6 +1,8 @@
 (function (globalScope, document) {
 
     var currentTheme;
+    var currentThemeDependencies = [];
+
     function getCurrentTheme() {
         return currentTheme;
     }
@@ -21,11 +23,10 @@
             unloadTheme(currentTheme);
         }
 
-        var deps = theme.getDependencies().map(function (d) {
-            return d.replace('css!', 'css!theme#');
-        });
-
+        var deps = theme.getDependencies();
         require(deps, function () {
+
+            currentThemeDependencies = deps;
 
             var translations = theme.getTranslations ? theme.getTranslations() : [];
 
@@ -45,8 +46,8 @@
         Emby.Backdrop.clear();
 
         console.log('Unloading theme: ' + theme.name);
-        requireCss.unloadPackage('theme');
-        requireCss.unloadPackage(theme.packageName);
+
+        // TODO: unload css
 
         theme.unload();
 
