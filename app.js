@@ -83,7 +83,7 @@
             path: '/settings/settings.html',
             id: 'settings',
             transition: 'slide',
-            dependencies: ['settings/settings']
+            dependencies: ['settings/settings', 'css!settings/settings.css']
         });
 
         defineRoute({
