@@ -1,26 +1,39 @@
 define([], function () {
-    function update(key, val) {
-        appStorage.setItem(key, val);
+
+    function getKey(name, userId) {
+        
+        if (userId) {
+            name = userId + '-' + name;
+        }
+
+        return name;
+    }
+
+    function get(name, userId) {
+
+        return appStorage.getItem(getKey(name, userId));
+    }
+
+    function set(name, value, userId) {
+        appStorage.setItem(getKey(name, userId), value);
     }
 
     return {
         enableAutomaticBitrateDetection: function (val) {
 
             if (val != null) {
-                update('enableAutomaticBitrateDetection', val.toString());
+                set('enableAutomaticBitrateDetection', val.toString());
             }
 
-            var savedVal = appStorage.getItem('enableAutomaticBitrateDetection');
-
-            return appStorage.getItem('enableAutomaticBitrateDetection') != 'false';
+            return get('enableAutomaticBitrateDetection') != 'false';
         },
         maxStreamingBitrate: function (val) {
 
             if (val != null) {
-                update('preferredVideoBitrate', val);
+                set('preferredVideoBitrate', val);
             }
 
-            return parseInt(appStorage.getItem('preferredVideoBitrate') || '') || 1500000;
+            return parseInt(get('preferredVideoBitrate') || '') || 1500000;
         }
     };
 });
