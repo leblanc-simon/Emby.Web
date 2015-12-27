@@ -102,12 +102,44 @@
 
             view.querySelector('.dynamicRoutes').innerHTML = html;
             Emby.ImageLoader.lazyChildren(view);
+
+            setTimeout(function() {
+                Emby.FocusManager.autoFocus(view, true);
+            }, 300);
         }
 
         function getRouteHtml(route) {
-            
-            var html = '';
-            return html;
+
+            var cardImageContainer;
+
+            if (route.thumbImage) {
+                cardImageContainer = '<div class="cardImage" style="background-image:url(\'' + route.thumbImage + '\');"></div>';
+            }
+            else {
+                cardImageContainer = '<iron-icon class="cardImageIcon" icon="settings"></iron-icon>';
+            }
+
+            var tagName = 'paper-button';
+            var innerOpening = '<div class="cardBox">';
+            var innerClosing = '</div>';
+
+            return '\
+<' + tagName + ' raised class="card backdropCard scalableCard" data-id="' + route.id + '">\
+'+ innerOpening + '<div class="cardScalable">\
+<div class="cardPadder"></div>\
+<div class="cardContent">\
+<div class="cardImageContainer coveredImage defaultCardColor'+ getRandomInt(1, 5) + '">\
+'+ cardImageContainer + '</div>\
+</div>\
+</div>\
+<div class="cardFooter">\
+<div class="cardText">' + route.title + '</div>\
+</div>'+ innerClosing + '\
+</'+ tagName + '>';
+        }
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
         function getCategoryTitle(route) {
@@ -119,7 +151,7 @@
                 case 'Playback':
                     return Globalize.translate('core#Playback');
                 case 'Theme':
-                    return Globalize.translate('core#Theme');
+                    return Globalize.translate('core#Themes');
                 default:
                     return Globalize.translate('core#Other');
             }
