@@ -410,7 +410,8 @@
                     }
                 }
 
-                plugin.baseUrl = url.substring(0, url.lastIndexOf('/'));
+                var separatorIndex = Math.max(url.lastIndexOf('/'), url.lastIndexOf('\\'));
+                plugin.baseUrl = url.substring(0, separatorIndex);
 
                 Emby.PluginManager.register(plugin);
 
