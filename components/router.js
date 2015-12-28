@@ -97,11 +97,17 @@ define(['loading', 'viewManager', 'events'], function (loading, viewManager, Eve
         url += url.indexOf('?') == -1 ? '?' : '&';
         url += 'v=' + cacheParam;
 
-        fetch(url).then(function (response) {
-            return response.text();
-        }).then(function (body) {
-            loadContent(ctx, route, body, request);
-        }).catch(next);
+        var xhr = new XMLHttpRequest();
+        xhr.onload = xhr.onerror = function () {
+            if (this.status < 400) {
+                loadContent(ctx, route, this.response, request);
+            } else {
+                next();
+            }
+        };
+        xhr.onerror = next;
+        xhr.open('GET', url, true);
+        xhr.send();
     }
 
     function handleRoute(ctx, next, route) {
