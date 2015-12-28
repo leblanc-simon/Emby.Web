@@ -402,9 +402,12 @@
 
                 var plugin = new pluginFactory();
 
-                if (url.indexOf() != 0) {
+                var urlLower = url.toLowerCase();
+                if (urlLower.indexOf('http:') == -1 && urlLower.indexOf('https:') == -1 && urlLower.indexOf('file:') == -1) {
+                    if (url.indexOf(Emby.Page.baseUrl()) != 0) {
 
-                    url = Emby.Page.baseUrl() + '/' + url;
+                        url = Emby.Page.baseUrl() + '/' + url;
+                    }
                 }
 
                 plugin.baseUrl = url.substring(0, url.lastIndexOf('/'));
