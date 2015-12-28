@@ -26,6 +26,17 @@
             }
         });
 
+        view.addEventListener('click', function (e) {
+
+            var card = Emby.Dom.parentWithClass(e.target, 'card');
+
+            if (card) {
+                var path = card.getAttribute('data-path');
+
+                Emby.Page.show(path);
+            }
+        });
+
         function renderSettings() {
 
             var routes = Emby.Page.getRoutes().filter(function (r) {
@@ -124,7 +135,7 @@
             var innerClosing = '</div>';
 
             return '\
-<' + tagName + ' raised class="card backdropCard scalableCard" data-id="' + route.id + '">\
+<' + tagName + ' raised class="card backdropCard scalableCard" data-path="' + route.path + '">\
 '+ innerOpening + '<div class="cardScalable">\
 <div class="cardPadder"></div>\
 <div class="cardContent">\
