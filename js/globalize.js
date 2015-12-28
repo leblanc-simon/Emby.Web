@@ -9,7 +9,11 @@
 
     function getDictionary(module) {
 
-        return allTranslations[module || 'theme'].dictionaries[getCurrentLocale()];
+        if (module == 'theme') {
+            module = Emby.ThemeManager.getCurrentTheme().packageName;
+        }
+
+        return allTranslations[module].dictionaries[getCurrentLocale()];
     }
 
     function loadTranslations(options) {
@@ -110,7 +114,11 @@
         return val;
     }
 
-    function translateHtml(html) {
+    function translateHtml(html, module) {
+
+        if (!module) {
+            throw new Error('module cannot be null or empty');
+        }
 
         var startIndex = html.indexOf('${');
 
@@ -125,14 +133,11 @@
             return html;
         }
 
-        var module = 'theme';
-
         var key = html.substring(startIndex, endIndex);
         var val = translateKeyFromModule(key, module);
 
         html = html.replace('${' + key + '}', val);
-
-        return translateHtml(html);
+        return translateHtml(html, module);
     }
 
     globalScope.Globalize = {

@@ -339,7 +339,7 @@ define(['loading', 'viewManager', 'events'], function (loading, viewManager, Eve
 
     function loadContent(ctx, route, html, request) {
 
-        html = Globalize.translateHtml(html);
+        html = Globalize.translateHtml(html, 'theme');
         request.view = html;
 
         viewManager.loadView(request);

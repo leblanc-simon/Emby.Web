@@ -32,7 +32,7 @@
 
             Globalize.loadTranslations({
 
-                name: 'theme',
+                name: theme.packageName,
                 translations: translations
 
             }).then(function () {
