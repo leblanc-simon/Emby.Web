@@ -23,7 +23,7 @@ html {
     color: #ccc;
 }
 
-paper-input label {
+paper-input label, paper-checkbox label, emby-dropdown-menu label {
     color: #ccc !important;
 }
 

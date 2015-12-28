@@ -1,0 +1,96 @@
+/* Remove overrides from paper elements */
+paper-icon-item, paper-dialog {
+    font-size: inherit !important;
+    font-family: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+}
+
+paper-item-body {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+}
+
+    paper-item-body.paper-item-body-0 [secondary] {
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+    }
+
+paper-icon-button paper-ripple {
+    color: inherit !important;
+}
+
+paper-input label, paper-input input, paper-dropdown-menu label, paper-checkbox label {
+    font-size: inherit !important;
+}
+
+paper-dialog {
+    font-size: inherit !important;
+    font-family: inherit !important;
+}
+
+paper-toast {
+    font-size: inherit !important;
+}
+
+iron-overlay-backdrop.iron-overlay-backdrop-0[opened] {
+    opacity: 0.7;
+}
+
+paper-slider {
+    vertical-align: middle;
+}
+
+.clearButton {
+    background: transparent;
+    border: 0 !important;
+    padding: 0 !important;
+    cursor: pointer;
+    outline: none !important;
+    color: inherit;
+    width: 100%;
+    vertical-align: middle;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.clearLink {
+    text-decoration: none;
+    font-weight: inherit !important;
+    vertical-align: middle;
+    color: inherit !important;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+paper-input input {
+    color: inherit !important;
+}
+
+paper-button {
+    font-weight: 400;
+    vertical-align: middle;
+    margin-top: .25em;
+    margin-bottom: .25em;
+    border-radius: 3px;
+}
+
+    paper-button.block {
+        display: block;
+    }
+
+    paper-button .keyboard-focus {
+        font-weight: 400 !important;
+    }
+
+    paper-button span {
+        vertical-align: middle;
+    }
+
+    paper-button[focused], paper-button:focus {
+        font-weight: normal !important;
+    }

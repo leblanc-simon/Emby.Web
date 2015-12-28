@@ -1,4 +1,4 @@
-define(['html!bower_components/paper-spinner/paper-spinner', 'css!components/loading/loading'], function () {
+define(['paper-spinner', 'css!components/loading/loading'], function () {
 
     return {
         show: function () {
@@ -13,7 +13,7 @@ define(['html!bower_components/paper-spinner/paper-spinner', 'css!components/loa
             }
 
             elem.active = true;
-            elem.style.display = 'block';
+            elem.classList.remove('loadingHide');
         },
         hide: function () {
             var elem = document.querySelector('.docspinner');
@@ -21,7 +21,7 @@ define(['html!bower_components/paper-spinner/paper-spinner', 'css!components/loa
             if (elem) {
 
                 elem.active = false;
-                elem.style.display = 'none';
+                elem.classList.add('loadingHide');
             }
         }
     };
