@@ -62,8 +62,8 @@ define([], function () {
             list.push('paper-input');
             list.push('paper-fab');
             list.push('paper-slider');
-            list.push('html!bower_components/paper-item/paper-icon-item.html');
-            list.push('html!bower_components/paper-item/paper-item-body.html');
+            list.push('paper-icon-item');
+            list.push('paper-item-body');
 
             return list;
         };

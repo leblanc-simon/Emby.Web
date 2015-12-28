@@ -253,37 +253,45 @@
 
         define("cryptojs-sha1", [sha1Path]);
         define("cryptojs-md5", [md5Path]);
-        define("videoplayerosd", ["components/videoplayerosd"]);
 
-        define("type", ["bower_components/type/dist/type"]);
-        define("Sly", ["bower_components/sly/src/sly"], function () {
+        //define("type", ["bower_components/type/dist/type"]);
+        define("Sly", [bowerPath + "/sly/src/sly"], function () {
             return globalScope.Sly;
         });
 
-        define("jquery.easing", ["bower_components/jquery.easing/js/jquery.easing.min"]);
-        define("nearestElements", ["js/nearest"]);
+        define("paper-spinner", ["html!" + bowerPath + "/paper-spinner/paper-spinner.html"]);
+        define("paper-toast", ["html!" + bowerPath + "/paper-toast/paper-toast.html"]);
+        define("paper-slider", ["html!" + bowerPath + "/paper-slider/paper-slider.html"]);
+        define("paper-tabs", ["html!" + bowerPath + "/paper-tabs/paper-tabs.html"]);
+        define("paper-menu", ["html!" + bowerPath + "/paper-menu/paper-menu.html"]);
+        define("paper-dialog", ["html!" + bowerPath + "/paper-dialog/paper-dialog.html"]);
+        define("paper-dialog-scrollable", ["html!" + bowerPath + "/paper-dialog-scrollable/paper-dialog-scrollable.html"]);
+        define("paper-button", ["html!" + bowerPath + "/paper-button/paper-button.html"]);
+        define("paper-icon-button", ["html!" + bowerPath + "/paper-icon-button/paper-icon-button.html"]);
+        define("paper-drawer-panel", ["html!" + bowerPath + "/paper-drawer-panel/paper-drawer-panel.html"]);
+        define("paper-radio-group", ["html!" + bowerPath + "/paper-radio-group/paper-radio-group.html"]);
+        define("paper-radio-button", ["html!" + bowerPath + "/paper-radio-button/paper-radio-button.html"]);
+        define("neon-animated-pages", ["html!" + bowerPath + "/neon-animation/neon-animated-pages.html"]);
+        define("paper-toggle-button", ["html!" + bowerPath + "/paper-toggle-button/paper-toggle-button.html"]);
 
-        define("paper-dialog", ['html!bower_components/paper-dialog/paper-dialog']);
-        define("paper-menu", ['html!bower_components/paper-menu/paper-menu']);
-        define("paper-button", ['html!bower_components/paper-button/paper-button']);
-        define("paper-icon-button", ['html!bower_components/paper-icon-button/paper-icon-button']);
-        define("paper-menu-item", ['html!bower_components/paper-menu/paper-menu-item']);
-        define("paper-input", ['html!bower_components/paper-input/paper-input']);
-        define("paper-fab", ['html!bower_components/paper-fab/paper-fab']);
-        define("paper-slider", ['html!bower_components/paper-slider/paper-slider']);
-
-        define("slide-from-right-animation", ['html!bower_components/neon-animation/animations/slide-from-right-animation.html']);
-        define("slide-left-animation", ['html!bower_components/neon-animation/animations/slide-left-animation.html']);
-        define("slide-from-left-animation", ['html!bower_components/neon-animation/animations/slide-from-left-animation.html']);
-        define("slide-right-animation", ['html!bower_components/neon-animation/animations/slide-right-animation.html']);
-        define("hero-animation", ['html!bower_components/neon-animation/animations/hero-animation.html']);
-        define("ripple-animation", ['html!bower_components/neon-animation/animations/ripple-animation.html']);
-        define("reverse-ripple-animation", ['html!bower_components/neon-animation/animations/reverse-ripple-animation.html']);
-        define("fade-in-animation", ['html!bower_components/neon-animation/animations/fade-in-animation.html']);
-        define("fade-out-animation", ['html!bower_components/neon-animation/animations/fade-out-animation.html']);
-
-        define("scale-up-animation", ['html!bower_components/neon-animation/animations/scale-up-animation.html']);
-        define("scale-down-animation", ['html!bower_components/neon-animation/animations/scale-down-animation.html']);
+        define("slide-right-animation", ["html!" + bowerPath + "/neon-animation/animations/slide-right-animation.html"]);
+        define("slide-left-animation", ["html!" + bowerPath + "/neon-animation/animations/slide-left-animation.html"]);
+        define("slide-from-right-animation", ["html!" + bowerPath + "/neon-animation/animations/slide-from-right-animation.html"]);
+        define("slide-from-left-animation", ["html!" + bowerPath + "/neon-animation/animations/slide-from-left-animation.html"]);
+        define("paper-textarea", ["html!" + bowerPath + "/paper-input/paper-textarea.html"]);
+        define("paper-item", ["html!" + bowerPath + "/paper-item/paper-item.html"]);
+        define("paper-checkbox", ["html!" + bowerPath + "/paper-checkbox/paper-checkbox.html"]);
+        define("fade-in-animation", ["html!" + bowerPath + "/neon-animation/animations/fade-in-animation.html"]);
+        define("fade-out-animation", ["html!" + bowerPath + "/neon-animation/animations/fade-out-animation.html"]);
+        define("scale-up-animation", ["html!" + bowerPath + "/neon-animation/animations/scale-up-animation.html"]);
+        define("scale-down-animation", ["html!" + bowerPath + "/neon-animation/animations/scale-down-animation.html"]);
+        define("paper-fab", ["html!" + bowerPath + "/paper-fab/paper-fab.html"]);
+        define("paper-progress", ["html!" + bowerPath + "/paper-progress/paper-progress.html"]);
+        define("paper-input", ["html!" + bowerPath + "/paper-input/paper-input.html"]);
+        define("paper-icon-item", ["html!" + bowerPath + "/paper-item/paper-icon-item.html"]);
+        define("paper-item-body", ["html!" + bowerPath + "/paper-item/paper-item-body.html"]);
+        define("paper-menu-item", ["html!" + bowerPath + "/paper-menu/paper-menu-item.html"]);
+        define("paper-dropdown-menu", ["html!" + bowerPath + "/paper-dropdown-menu/paper-dropdown-menu.html"]);
     }
 
     function loadApiClientDependencies(callback) {
@@ -357,7 +365,7 @@
         // needs to be after the plugin manager
         secondLevelDeps.push('playbackmanager');
 
-        secondLevelDeps.push('html!bower_components/neon-animation/neon-animated-pages.html');
+        secondLevelDeps.push('neon-animated-pages');
 
         // Second level dependencies that have to be loaded after the first set
         require(secondLevelDeps, function (playbackmanager) {
