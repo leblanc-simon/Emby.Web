@@ -259,40 +259,42 @@
             return globalScope.Sly;
         });
 
-        define("paper-spinner", ["html!" + bowerPath + "/paper-spinner/paper-spinner.html"]);
-        define("paper-toast", ["html!" + bowerPath + "/paper-toast/paper-toast.html"]);
-        define("paper-slider", ["html!" + bowerPath + "/paper-slider/paper-slider.html"]);
-        define("paper-tabs", ["html!" + bowerPath + "/paper-tabs/paper-tabs.html"]);
-        define("paper-menu", ["html!" + bowerPath + "/paper-menu/paper-menu.html"]);
-        define("paper-dialog", ["html!" + bowerPath + "/paper-dialog/paper-dialog.html"]);
-        define("paper-dialog-scrollable", ["html!" + bowerPath + "/paper-dialog-scrollable/paper-dialog-scrollable.html"]);
-        define("paper-button", ["html!" + bowerPath + "/paper-button/paper-button.html"]);
-        define("paper-icon-button", ["html!" + bowerPath + "/paper-icon-button/paper-icon-button.html"]);
-        define("paper-drawer-panel", ["html!" + bowerPath + "/paper-drawer-panel/paper-drawer-panel.html"]);
-        define("paper-radio-group", ["html!" + bowerPath + "/paper-radio-group/paper-radio-group.html"]);
-        define("paper-radio-button", ["html!" + bowerPath + "/paper-radio-button/paper-radio-button.html"]);
-        define("neon-animated-pages", ["html!" + bowerPath + "/neon-animation/neon-animated-pages.html"]);
-        define("paper-toggle-button", ["html!" + bowerPath + "/paper-toggle-button/paper-toggle-button.html"]);
+        define("paper-base", ["css!style/paperstyles.css"]);
+        define("paper-spinner", ["html!" + bowerPath + "/paper-spinner/paper-spinner.html", 'paper-base']);
+        define("paper-toast", ["html!" + bowerPath + "/paper-toast/paper-toast.html", 'paper-base']);
+        define("paper-slider", ["html!" + bowerPath + "/paper-slider/paper-slider.html", 'paper-base']);
+        define("paper-tabs", ["html!" + bowerPath + "/paper-tabs/paper-tabs.html", 'paper-base']);
+        define("paper-menu", ["html!" + bowerPath + "/paper-menu/paper-menu.html", 'paper-base']);
+        define("paper-dialog", ["html!" + bowerPath + "/paper-dialog/paper-dialog.html", 'paper-base']);
+        define("paper-dialog-scrollable", ["html!" + bowerPath + "/paper-dialog-scrollable/paper-dialog-scrollable.html", 'paper-base']);
+        define("paper-button", ["html!" + bowerPath + "/paper-button/paper-button.html", 'paper-base']);
+        define("paper-icon-button", ["html!" + bowerPath + "/paper-icon-button/paper-icon-button.html", 'paper-base']);
+        define("paper-drawer-panel", ["html!" + bowerPath + "/paper-drawer-panel/paper-drawer-panel.html", 'paper-base']);
+        define("paper-radio-group", ["html!" + bowerPath + "/paper-radio-group/paper-radio-group.html", 'paper-base']);
+        define("paper-radio-button", ["html!" + bowerPath + "/paper-radio-button/paper-radio-button.html", 'paper-base']);
+        define("neon-animated-pages", ["html!" + bowerPath + "/neon-animation/neon-animated-pages.html", 'paper-base']);
+        define("paper-toggle-button", ["html!" + bowerPath + "/paper-toggle-button/paper-toggle-button.html", 'paper-base']);
 
         define("slide-right-animation", ["html!" + bowerPath + "/neon-animation/animations/slide-right-animation.html"]);
         define("slide-left-animation", ["html!" + bowerPath + "/neon-animation/animations/slide-left-animation.html"]);
         define("slide-from-right-animation", ["html!" + bowerPath + "/neon-animation/animations/slide-from-right-animation.html"]);
         define("slide-from-left-animation", ["html!" + bowerPath + "/neon-animation/animations/slide-from-left-animation.html"]);
-        define("paper-textarea", ["html!" + bowerPath + "/paper-input/paper-textarea.html"]);
-        define("paper-item", ["html!" + bowerPath + "/paper-item/paper-item.html"]);
-        define("paper-checkbox", ["html!" + bowerPath + "/paper-checkbox/paper-checkbox.html"]);
+        define("paper-textarea", ["html!" + bowerPath + "/paper-input/paper-textarea.html", 'paper-base']);
+        define("paper-item", ["html!" + bowerPath + "/paper-item/paper-item.html", 'paper-base']);
+        define("paper-checkbox", ["html!" + bowerPath + "/paper-checkbox/paper-checkbox.html", 'paper-base']);
         define("fade-in-animation", ["html!" + bowerPath + "/neon-animation/animations/fade-in-animation.html"]);
         define("fade-out-animation", ["html!" + bowerPath + "/neon-animation/animations/fade-out-animation.html"]);
         define("scale-up-animation", ["html!" + bowerPath + "/neon-animation/animations/scale-up-animation.html"]);
         define("scale-down-animation", ["html!" + bowerPath + "/neon-animation/animations/scale-down-animation.html"]);
-        define("paper-fab", ["html!" + bowerPath + "/paper-fab/paper-fab.html"]);
-        define("paper-progress", ["html!" + bowerPath + "/paper-progress/paper-progress.html"]);
-        define("paper-input", ["html!" + bowerPath + "/paper-input/paper-input.html"]);
-        define("paper-icon-item", ["html!" + bowerPath + "/paper-item/paper-icon-item.html"]);
-        define("paper-item-body", ["html!" + bowerPath + "/paper-item/paper-item-body.html"]);
-        define("paper-menu-item", ["html!" + bowerPath + "/paper-menu/paper-menu-item.html"]);
-        define("paper-dropdown-menu", ["html!" + bowerPath + "/paper-dropdown-menu/paper-dropdown-menu.html"]);
-        define("paper-listbox", ["html!" + bowerPath + "/paper-listbox/paper-listbox.html"]);
+        define("paper-fab", ["html!" + bowerPath + "/paper-fab/paper-fab.html", 'paper-base']);
+        define("paper-progress", ["html!" + bowerPath + "/paper-progress/paper-progress.html", 'paper-base']);
+        define("paper-input", ["html!" + bowerPath + "/paper-input/paper-input.html", 'paper-base']);
+        define("paper-icon-item", ["html!" + bowerPath + "/paper-item/paper-icon-item.html", 'paper-base']);
+        define("paper-item-body", ["html!" + bowerPath + "/paper-item/paper-item-body.html", 'paper-base']);
+        define("paper-menu-item", ["html!" + bowerPath + "/paper-menu/paper-menu-item.html", 'paper-base']);
+        define("paper-dropdown-menu", ["html!" + bowerPath + "/paper-dropdown-menu/paper-dropdown-menu.html", 'paper-base']);
+        define("emby-dropdown-menu", ["html!" + bowerPath + "/emby-dropdown-menu/emby-dropdown-menu.html", 'paper-item', 'paper-base']);
+        define("paper-listbox", ["html!" + bowerPath + "/paper-listbox/paper-listbox.html", 'paper-base']);
     }
 
     function loadApiClientDependencies(callback) {

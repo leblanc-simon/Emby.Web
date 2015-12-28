@@ -1,5 +1,4 @@
 .docspinner {
-    display: block;
     margin-top: -50px;
     margin-left: -50px;
     width: 100px;
@@ -8,4 +7,18 @@
     top: 50%;
     left: 50%;
     z-index: 9999999;
+}
+
+.loadingHide {
+    display: none !important;
+}
+
+@media all and (min-height: 1440px) {
+
+    .docspinner {
+        margin-top: -100px;
+        margin-left: -100px;
+        width: 200px;
+        height: 200px;
+    }
 }

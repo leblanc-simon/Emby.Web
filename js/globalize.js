@@ -89,6 +89,11 @@
             key = parts[1];
         }
 
+        return translateKeyFromModule(key, module);
+    }
+
+    function translateKeyFromModule(key, module) {
+
         return getDictionary(module)[key] || key;
     }
 
@@ -120,8 +125,10 @@
             return html;
         }
 
+        var module = 'theme';
+
         var key = html.substring(startIndex, endIndex);
-        var val = translateKey(key);
+        var val = translateKeyFromModule(key, module);
 
         html = html.replace('${' + key + '}', val);
 

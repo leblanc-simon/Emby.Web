@@ -76,45 +76,6 @@
         display: none;
     }
 
-/* Remove overrides from paper elements */
-paper-icon-item, paper-dialog {
-    font-size: inherit !important;
-    font-family: inherit !important;
-    font-weight: inherit !important;
-    line-height: inherit !important;
-}
-
-paper-item-body {
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: inherit;
-}
-
-    paper-item-body.paper-item-body-0 [secondary] {
-        font-family: inherit;
-        font-size: inherit;
-        font-weight: inherit;
-        line-height: inherit;
-    }
-
-paper-icon-button paper-ripple {
-    color: inherit !important;
-}
-
-paper-input label, paper-input input {
-    font-size: inherit !important;
-}
-
-paper-dialog {
-    font-size: inherit !important;
-    font-family: inherit !important;
-}
-
-paper-toast {
-    font-size: inherit !important;
-}
-
 iron-overlay-backdrop.iron-overlay-backdrop-0[opened] {
     opacity: 0.7;
 }
@@ -135,7 +96,6 @@ iron-overlay-backdrop.iron-overlay-backdrop-0[opened] {
     left: 0;
     right: 0;
     display: flex;
-
     /* This will ensure it is on top of the main body and the themeHeader */
     z-index: 2;
 }
