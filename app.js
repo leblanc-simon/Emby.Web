@@ -292,6 +292,7 @@
         define("paper-item-body", ["html!" + bowerPath + "/paper-item/paper-item-body.html"]);
         define("paper-menu-item", ["html!" + bowerPath + "/paper-menu/paper-menu-item.html"]);
         define("paper-dropdown-menu", ["html!" + bowerPath + "/paper-dropdown-menu/paper-dropdown-menu.html"]);
+        define("paper-listbox", ["html!" + bowerPath + "/paper-listbox/paper-listbox.html"]);
     }
 
     function loadApiClientDependencies(callback) {
