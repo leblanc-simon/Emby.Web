@@ -136,7 +136,7 @@
         var homeScrollContent = page.querySelector('.contentScrollSlider');
 
         html = html;
-        homeScrollContent.innerHTML = Globalize.translateHtml(html);
+        homeScrollContent.innerHTML = Globalize.translateHtml(html, 'defaulttheme');
 
         require([Emby.PluginManager.mapPath('defaulttheme', 'home/views.' + viewName + '.js')], function () {
 
