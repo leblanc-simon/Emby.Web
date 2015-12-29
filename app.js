@@ -309,7 +309,7 @@
         define("paper-item-body", ["html!" + bowerPath + "/paper-item/paper-item-body.html", 'paper-base']);
         define("paper-menu-item", ["html!" + bowerPath + "/paper-menu/paper-menu-item.html", 'paper-base']);
         define("paper-dropdown-menu", ["html!" + bowerPath + "/paper-dropdown-menu/paper-dropdown-menu.html", 'paper-base']);
-        define("emby-dropdown-menu", ["html!" + bowerPath + "/emby-dropdown-menu/emby-dropdown-menu.html", 'paper-item', 'paper-base']);
+        define("emby-dropdown-menu", ["html!" + bowerPath + "/emby-dropdown-menu/emby-dropdown-menu.html", 'paper-base']);
         define("paper-listbox", ["html!" + bowerPath + "/paper-listbox/paper-listbox.html", 'paper-base']);
     }
 
