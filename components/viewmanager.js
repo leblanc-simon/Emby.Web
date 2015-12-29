@@ -2,7 +2,7 @@ define(['viewcontainer', 'bower_components/query-string/index'], function (viewc
 
     var currentView;
 
-    viewcontainer.setOnBeforeChange(function (newView, options) {
+    viewcontainer.setOnBeforeChange(function (newView, isRestored, options) {
 
         var lastView = currentView;
         if (lastView) {
@@ -19,7 +19,7 @@ define(['viewcontainer', 'bower_components/query-string/index'], function (viewc
             newView.dispatchEvent(new CustomEvent("viewinit-" + viewId, eventDetail));
         }
 
-        dispatchViewEvent(newView, 'viewbeforeshow');
+        dispatchViewEvent(newView, 'viewbeforeshow', isRestored);
     });
 
     function onViewChange(view, options, isRestore) {
@@ -47,12 +47,13 @@ define(['viewcontainer', 'bower_components/query-string/index'], function (viewc
         view.dispatchEvent(new CustomEvent("viewshow", eventDetail));
     }
 
-    function dispatchViewEvent(view, eventName) {
+    function dispatchViewEvent(view, eventName, isRestored) {
 
         view.dispatchEvent(new CustomEvent(eventName, {
             detail: {
                 id: view.getAttribute('data-id'),
-                type: view.getAttribute('data-type')
+                type: view.getAttribute('data-type'),
+                isRestored: isRestored
             },
             bubbles: true,
             cancelable: false
