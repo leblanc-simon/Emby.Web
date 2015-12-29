@@ -1,4 +1,4 @@
-define(['actionsheet'], function (actionsheet) {
+define(['actionsheet', 'datetime'], function (actionsheet, datetime) {
 
     function show(item) {
 
@@ -19,7 +19,7 @@ define(['actionsheet'], function (actionsheet) {
 
         if (resumePositionTicks) {
             menuItems.push({
-                name: Globalize.translate('core#ButtonResumeAt', Emby.DateTime.getDisplayRunningTime(resumePositionTicks)),
+                name: Globalize.translate('core#ButtonResumeAt', datetime.getDisplayRunningTime(resumePositionTicks)),
                 id: 'resume',
                 ironIcon: 'play-arrow'
             });
