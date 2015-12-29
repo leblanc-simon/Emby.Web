@@ -1,4 +1,4 @@
-(function (globalScope) {
+define(['datetime'], function (datetime) {
 
     function getDisplayName(item, displayAsSpecial, includeParentInfo) {
 
@@ -136,7 +136,7 @@
                     if (item.PremiereDate) {
                         try {
 
-                            newIndexValue = getDisplayDateText(Emby.DateTime.parseISO8601Date(item.PremiereDate));
+                            newIndexValue = getDisplayDateText(datetime.parseISO8601Date(item.PremiereDate));
 
                         } catch (err) {
                         }
@@ -713,7 +713,7 @@
             if (item.PremiereDate) {
 
                 try {
-                    date = Emby.DateTime.parseISO8601Date(item.PremiereDate);
+                    date = datetime.parseISO8601Date(item.PremiereDate);
 
                     text = date.toLocaleDateString();
                     miscInfo.push(text);
@@ -727,7 +727,7 @@
         if (item.StartDate) {
 
             try {
-                date = Emby.DateTime.parseISO8601Date(item.StartDate);
+                date = datetime.parseISO8601Date(item.StartDate);
 
                 text = date.toLocaleDateString();
                 miscInfo.push(text);
@@ -756,10 +756,10 @@
 
                     try {
 
-                        var endYear = Emby.DateTime.parseISO8601Date(item.EndDate).getFullYear();
+                        var endYear = datetime.parseISO8601Date(item.EndDate).getFullYear();
 
                         if (endYear != item.ProductionYear) {
-                            text += "-" + Emby.DateTime.parseISO8601Date(item.EndDate).getFullYear();
+                            text += "-" + datetime.parseISO8601Date(item.EndDate).getFullYear();
                         }
 
                     }
@@ -781,7 +781,7 @@
             else if (item.PremiereDate) {
 
                 try {
-                    text = Emby.DateTime.parseISO8601Date(item.PremiereDate).getFullYear();
+                    text = datetime.parseISO8601Date(item.PremiereDate).getFullYear();
                     miscInfo.push(text);
                 }
                 catch (e) {
@@ -1058,11 +1058,7 @@
         return outerHtml;
     }
 
-    if (!globalScope.DefaultTheme) {
-        globalScope.DefaultTheme = {};
-    }
-
-    globalScope.DefaultTheme.CardBuilder = {
+    var cardBuilder = {
         buildCardsHtml: buildCardsHtml,
         buildCards: buildCards,
         homeThumbWidth: 600,
@@ -1074,4 +1070,8 @@
         getProgressBarHtml: getProgressBarHtml
     };
 
-})(this);
+    window.DefaultTheme = window.DefaultTheme || {};
+    window.DefaultTheme.CardBuilder = cardBuilder;
+
+    return cardBuilder;
+});

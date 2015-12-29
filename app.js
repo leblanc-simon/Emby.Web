@@ -202,6 +202,7 @@
             tvguide: "components/tvguide/guide",
             actionsheet: "components/actionsheet/actionsheet",
             playmenu: "components/playmenu",
+            datetime: embyWebComponentsBowerPath + "/datetime",
             inputmanager: "components/inputmanager",
             alphapicker: "components/alphapicker/alphapicker",
             paperdialoghelper: "components/paperdialoghelper/paperdialoghelper",
@@ -347,7 +348,6 @@
              'js/imageloader',
              'js/backdrops',
              'js/dom',
-             'js/datetime',
              'js/shortcuts'
             ];
 

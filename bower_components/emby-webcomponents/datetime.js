@@ -1,4 +1,4 @@
-(function (globalScope) {
+define([], function () {
 
     function parseISO8601Date(s, toLocal) {
 
@@ -57,10 +57,6 @@
         return new Date(ms);
     }
 
-    if (!globalScope.Emby) {
-        globalScope.Emby = {};
-    }
-
     function getDisplayRunningTime(ticks) {
         var ticksPerHour = 36000000000;
         var ticksPerMinute = 600000000;
@@ -98,9 +94,8 @@
         return parts.join(':');
     }
 
-    globalScope.Emby.DateTime = {
+    return {
         parseISO8601Date: parseISO8601Date,
         getDisplayRunningTime: getDisplayRunningTime
     };
-
-})(this);
+});

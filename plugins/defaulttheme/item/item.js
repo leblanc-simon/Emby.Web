@@ -567,8 +567,12 @@
         var birthDateElem = view.querySelector('.birthDate');
         if (item.PremiereDate && item.Type == 'Person') {
             birthDateElem.classList.remove('hide');
-            var dateString = Emby.DateTime.parseISO8601Date(item.PremiereDate).toDateString();
-            birthDateElem.innerHTML = Globalize.translate('BornValue', dateString);
+
+            require(['datetime'], function (datetime) {
+                
+                var dateString = datetime.parseISO8601Date(item.PremiereDate).toDateString();
+                birthDateElem.innerHTML = Globalize.translate('BornValue', dateString);
+            });
         } else {
             birthDateElem.classList.add('hide');
         }
@@ -1095,56 +1099,6 @@
                 coverImage: item.Type == 'MusicArtist' || item.Type == 'MusicAlbum'
             });
         });
-    }
-
-    function getDisplayTime(date) {
-
-        if ((typeof date).toString().toLowerCase() === 'string') {
-            try {
-
-                date = Emby.DateTime.parseISO8601Date(date);
-
-            } catch (err) {
-                return date;
-            }
-        }
-
-        var lower = date.toLocaleTimeString().toLowerCase();
-
-        var hours = date.getHours();
-        var minutes = date.getMinutes();
-
-        var text;
-
-        if (lower.indexOf('am') != -1 || lower.indexOf('pm') != -1) {
-
-            var suffix = hours > 11 ? 'pm' : 'am';
-
-            hours = (hours % 12) || 12;
-
-            text = hours;
-
-            if (minutes) {
-
-                text += ':';
-                if (minutes < 10) {
-                    text += '0';
-                }
-                text += minutes;
-            }
-
-            text += suffix;
-
-        } else {
-            text = hours + ':';
-
-            if (minutes < 10) {
-                text += '0';
-            }
-            text += minutes;
-        }
-
-        return text;
     }
 
 })();
