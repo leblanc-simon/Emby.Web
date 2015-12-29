@@ -45,7 +45,7 @@ define([], function () {
                 var view = animatable.querySelector('.page-view');
 
                 if (onBeforeChange) {
-                    onBeforeChange(view, options);
+                    onBeforeChange(view, false, options);
                 }
 
                 animatedPages.selected = pageIndex;
@@ -204,7 +204,7 @@ define([], function () {
                         var view = animatable.querySelector('.page-view');
 
                         if (onBeforeChange) {
-                            onBeforeChange(view, options);
+                            onBeforeChange(view, true, options);
                         }
 
                         animatedPages.selected = index;
