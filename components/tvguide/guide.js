@@ -1,4 +1,4 @@
-define([], function () {
+define(['datetime'], function (datetime) {
 
     return function (options) {
 
@@ -109,7 +109,7 @@ define([], function () {
             if ((typeof date).toString().toLowerCase() === 'string') {
                 try {
 
-                    date = parseISO8601Date(date, { toLocal: true });
+                    date = datetime.parseISO8601Date(date, { toLocal: true });
 
                 } catch (err) {
                     return date;
@@ -184,7 +184,7 @@ define([], function () {
             if (!program.StartDateLocal) {
                 try {
 
-                    program.StartDateLocal = Emby.DateTime.parseISO8601Date(program.StartDate, { toLocal: true });
+                    program.StartDateLocal = datetime.parseISO8601Date(program.StartDate, { toLocal: true });
 
                 } catch (err) {
 
@@ -195,7 +195,7 @@ define([], function () {
             if (!program.EndDateLocal) {
                 try {
 
-                    program.EndDateLocal = Emby.DateTime.parseISO8601Date(program.EndDate, { toLocal: true });
+                    program.EndDateLocal = datetime.parseISO8601Date(program.EndDate, { toLocal: true });
 
                 } catch (err) {
 
@@ -437,8 +437,8 @@ define([], function () {
             var today = new Date();
             today.setHours(today.getHours(), 0, 0, 0);
 
-            var start = Emby.DateTime.parseISO8601Date(guideInfo.StartDate, { toLocal: true });
-            var end = Emby.DateTime.parseISO8601Date(guideInfo.EndDate, { toLocal: true });
+            var start = datetime.parseISO8601Date(guideInfo.StartDate, { toLocal: true });
+            var end = datetime.parseISO8601Date(guideInfo.EndDate, { toLocal: true });
 
             start.setHours(0, 0, 0, 0);
             end.setHours(0, 0, 0, 0);

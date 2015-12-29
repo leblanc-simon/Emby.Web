@@ -21,6 +21,7 @@
     "ButtonPlay": "Play",
     "ButtonShuffle": "Shuffle",
     "ButtonResume": "Resume",
+    "ButtonResumeAt": "Resume at {0}",
     "ButtonQueue": "Queue",
     "HeaderSelectServer": "Select Server",
     "HeaderPleaseSignIn": "Please Sign In",
