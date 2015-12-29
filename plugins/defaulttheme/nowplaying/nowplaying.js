@@ -242,13 +242,15 @@
                 return;
             }
 
-            var html = Emby.DateTime.getDisplayRunningTime(ticks);
+            require(['datetime'], function (datetime) {
+                var html = datetime.getDisplayRunningTime(ticks);
 
-            if (divider) {
-                html = '&nbsp;/&nbsp;' + html;
-            }
+                if (divider) {
+                    html = '&nbsp;/&nbsp;' + html;
+                }
 
-            elem.innerHTML = html;
+                elem.innerHTML = html;
+            });
         }
 
         function getHeaderElement() {
