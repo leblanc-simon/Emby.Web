@@ -5,7 +5,7 @@
         var element = view.querySelector('*[autofocus]');
         if (element) {
             focus(element);
-        } else if (defaultToFirst) {
+        } else if (defaultToFirst !== false) {
             element = getFocusableElements(view)[0];
 
             if (element) {
@@ -16,14 +16,14 @@
 
     function focus(element) {
 
-        if (element.tagName == 'PAPER-INPUT') {
+        if (element.tagName == 'PAPER-INPUT' || element.tagName == 'PAPER-DROPDOWN-MENU' || element.tagName == 'EMBY-DROPDOWN-MENU') {
             element = element.querySelector('input');
         }
 
         element.focus();
     }
 
-    var focusableTagNames = ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON', 'A', 'PAPER-BUTTON', 'PAPER-INPUT', 'PAPER-TEXTAREA', 'PAPER-ICON-BUTTON', 'PAPER-FAB', 'PAPER-ICON-ITEM', 'PAPER-MENU-ITEM'];
+    var focusableTagNames = ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON', 'A', 'PAPER-BUTTON', 'PAPER-INPUT', 'PAPER-TEXTAREA', 'PAPER-ICON-BUTTON', 'PAPER-FAB', 'PAPER-ICON-ITEM', 'PAPER-MENU-ITEM', 'PAPER-DROPDOWN-MENU', 'EMBY-DROPDOWN-MENU'];
     var focusableContainerTagNames = ['BODY', 'PAPER-DIALOG'];
     var focusableQuery = focusableTagNames.join(',') + ',.focusable';
 

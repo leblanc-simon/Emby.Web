@@ -223,8 +223,8 @@
                 loading.hide();
 
                 alert({
-                    text: Globalize.translate('MessageInvalidUser'),
-                    title: Globalize.translate('HeaderLoginFailure')
+                    text: Globalize.translate('core#MessageInvalidUser'),
+                    title: Globalize.translate('core#HeaderLoginFailure')
                 });
 
             });
@@ -282,8 +282,8 @@
                     require(['alert'], function (alert) {
 
                         alert({
-                            text: Globalize.translate("MessageUnableToConnectToServer"),
-                            title: Globalize.translate("HeaderConnectionFailure")
+                            text: Globalize.translate("core#MessageUnableToConnectToServer"),
+                            title: Globalize.translate("core#HeaderConnectionFailure")
                         });
                     });
                 }
@@ -369,7 +369,7 @@
         });
 
         items.push({
-            name: Globalize.translate('ButtonManualLogin'),
+            name: Globalize.translate('core#ButtonManualLogin'),
             showIcon: true,
             showImage: false,
             icon: 'lock',
@@ -380,7 +380,7 @@
         });
 
         items.push({
-            name: Globalize.translate('HeaderSignInWithConnect'),
+            name: Globalize.translate('core#HeaderSignInWithConnect'),
             showIcon: true,
             showImage: false,
             icon: 'cloud',
@@ -391,7 +391,7 @@
         });
 
         items.push({
-            name: Globalize.translate('ButtonChangeServer'),
+            name: Globalize.translate('core#ButtonChangeServer'),
             showIcon: true,
             showImage: false,
             icon: 'cast',
@@ -504,8 +504,8 @@
 
                 require(['alert'], function (alert) {
                     alert({
-                        text: Globalize.translate('MessageInvalidUser'),
-                        title: Globalize.translate('SignInError')
+                        text: Globalize.translate('core#MessageInvalidUser'),
+                        title: Globalize.translate('core#SignInError')
                     });
                 });
             });
@@ -638,7 +638,7 @@
         });
 
         items.push({
-            name: Globalize.translate('ButtonNewServer'),
+            name: Globalize.translate('core#ButtonNewServer'),
             showIcon: true,
             showImage: false,
             icon: 'add',

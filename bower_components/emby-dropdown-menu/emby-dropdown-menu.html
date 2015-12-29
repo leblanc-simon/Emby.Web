@@ -77,7 +77,7 @@ respectively.
   <template>
     <style>
       :host {
-        display: inline-block;
+        display: block;
         position: relative;
         text-align: left;
         cursor: pointer;
@@ -302,8 +302,7 @@ respectively.
         },
 
         keyBindings: {
-          'up down': 'open',
-          'esc': 'close'
+          //'enter': 'open'
         },
 
         hostAttributes: {
@@ -343,7 +342,7 @@ respectively.
         open: function () {
 
             var menuItems = [];
-            var items = this.contentElement.querySelectorAll('paper-item');
+            var items = this.contentElement.querySelectorAll('.dropdownItem');
 
             for (var i = 0, length = items.length; i < length; i++) {
 
@@ -426,6 +425,34 @@ respectively.
 
           this._setValue(value);
           this._setSelectedItemLabel(value);
+        },
+
+        getValue: function() {
+
+            return this.selectedItem.getAttribute('data-value');
+        },
+
+        setValue: function(value) {
+            
+            var item = this.contentElement.querySelector('.dropdownItem[data-value=\'' + value + '\']');
+
+            if (item) {
+                this._setSelectedItem(item);
+            }
+        },
+
+        setOptions: function(options) {
+            var html = options.map(function (i) {
+
+                return '<div class="dropdownItem" data-value="' + i.value + '">' + i.name + '</div>';
+
+            }).join('');
+
+            this.setOptionsHtml(html);
+        },
+
+        setOptionsHtml: function(html) {
+            this.contentElement.innerHTML = html;
         },
 
         /**
