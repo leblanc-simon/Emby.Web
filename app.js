@@ -2,7 +2,7 @@
 
     var connectionManager;
 
-    function defineRoute(newRoute) {
+    function defineRoute(newRoute, packageName) {
 
         var baseRoute = Emby.Page.baseUrl();
 
@@ -12,6 +12,7 @@
 
         console.log('Defining route: ' + path);
 
+        newRoute.packageName = packageName || 'core';
         Emby.Page.addRoute(path, newRoute);
     }
 
@@ -87,6 +88,18 @@
         });
 
         defineRoute({
+            path: '/settings/playback/playbacksettings.html',
+            id: 'playbacksettings',
+            transition: 'slide',
+            dependencies: ['settings/playback/playbacksettings',
+                    'emby-dropdown-menu'],
+            type: 'settings',
+            title: 'General',
+            category: 'Playback',
+            thumbImage: ''
+        });
+
+        defineRoute({
             path: '/index.html',
             id: 'index',
             isDefaultRoute: true,
@@ -105,7 +118,9 @@
 
             var plugin = plugins[i];
             if (plugin.getRoutes) {
-                plugin.getRoutes().forEach(defineRoute);
+                plugin.getRoutes().forEach(function (route) {
+                    defineRoute(route, plugin.packageName);
+                });
             }
         }
     }
@@ -193,6 +208,7 @@
             slideshow: "components/slideshow/slideshow",
             browserdeviceprofile: embyWebComponentsBowerPath + "/browserdeviceprofile",
             browser: embyWebComponentsBowerPath + "/browser",
+            qualityoptions: embyWebComponentsBowerPath + "/qualityoptions",
             isMobile: "bower_components/isMobile/isMobile.min",
             howler: 'bower_components/howler.js/howler.min',
             screenfull: 'bower_components/screenfull/dist/screenfull',

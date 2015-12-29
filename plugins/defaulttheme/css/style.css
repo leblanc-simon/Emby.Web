@@ -126,6 +126,15 @@ a {
     margin-left: 1em;
 }
 
+.externalPageContainer {
+    position: absolute;
+    top: 12%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
 .pageContainer {
     position: absolute;
     top: 0;
@@ -258,19 +267,19 @@ a {
         display: block !important;
     }
 
-    .userViewNames h2 {
-        margin-top: 0;
-        margin-bottom: 0;
-    }
+.userViewNames h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
 
-    .userViewNames .btnUserViewHeader {
-        min-width: initial;
-        text-transform: none !important;
-        margin-top: 0;
-        padding-top: .1em;
-        padding-bottom: .25em;
-        font-size: 106%;
-    }
+.userViewNames .btnUserViewHeader {
+    min-width: initial;
+    text-transform: none !important;
+    margin-top: 0;
+    padding-top: .1em;
+    padding-bottom: .25em;
+    font-size: 106%;
+}
 
 .userViewButtonText {
     font-size: 110%;
