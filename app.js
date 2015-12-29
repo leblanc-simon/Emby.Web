@@ -442,7 +442,15 @@
 
                 Emby.PluginManager.register(plugin);
 
-                resolve();
+                if (plugin.type != 'theme') {
+                    var translations = plugin.getTranslations ? plugin.getTranslations() : [];
+                    Globalize.loadTranslations({
+                        name: plugin.packageName,
+                        translations: translations
+                    }).then(resolve);
+                } else {
+                    resolve();
+                }
             });
         });
     }
