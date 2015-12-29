@@ -23,13 +23,19 @@ define(['actionsheet', 'datetime'], function (actionsheet, datetime) {
                 id: 'resume',
                 ironIcon: 'play-arrow'
             });
-        }
 
-        menuItems.push({
-            name: Globalize.translate('core#ButtonPlay'),
-            id: 'play',
-            ironIcon: 'play-arrow'
-        });
+            menuItems.push({
+                name: Globalize.translate('core#ButtonPlayFromBeginning'),
+                id: 'play',
+                ironIcon: 'play-arrow'
+            });
+        } else {
+            menuItems.push({
+                name: Globalize.translate('core#ButtonPlay'),
+                id: 'play',
+                ironIcon: 'play-arrow'
+            });
+        }
 
         if (Emby.PlaybackManager.canQueueMediaType(mediaType)) {
             menuItems.push({
