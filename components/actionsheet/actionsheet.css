@@ -1,0 +1,15 @@
+paper-dialog.actionSheet {
+    flex-direction: column;
+}
+
+.actionSheetMenuItem {
+    padding: .75em 1em;
+    margin: 0;
+}
+
+paper-dialog.actionSheet paper-dialog-scrollable {
+    max-height: 60%;
+    overflow: hidden;
+    /* Override default style being applied by polymer */
+    margin-bottom: 0;
+}

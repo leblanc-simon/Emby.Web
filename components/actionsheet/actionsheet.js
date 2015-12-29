@@ -1,4 +1,4 @@
-﻿define(['paperdialoghelper', 'paper-button'], function (paperdialoghelper) {
+﻿define(['paperdialoghelper', 'paper-button', 'css!components/actionsheet/actionsheet'], function (paperdialoghelper) {
 
     function show(options) {
 
@@ -20,7 +20,7 @@
 
         // There seems to be a bug with this in safari causing it to immediately roll up to 0 height
         // Set to false for now because it's handled upstream by paperdialoghelper
-        var isScrollable = false;
+        var isScrollable = true;
 
         if (isScrollable) {
             html += '<paper-dialog-scrollable>';

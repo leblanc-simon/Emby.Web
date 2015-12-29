@@ -1,4 +1,4 @@
-﻿define(['paper-dialog', 'scale-up-animation', 'fade-out-animation', 'fade-in-animation'], function () {
+﻿define(['paper-dialog', 'scale-up-animation', 'fade-out-animation', 'fade-in-animation', 'css!components/paperdialoghelper/paperdialoghelper'], function () {
 
     function paperDialogHashHandler(dlg, hash, resolve, lockDocumentScroll) {
 
