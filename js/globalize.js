@@ -13,7 +13,13 @@
             module = Emby.ThemeManager.getCurrentTheme().packageName;
         }
 
-        return allTranslations[module].dictionaries[getCurrentLocale()];
+        var translations = allTranslations[module];
+
+        if (!translations) {
+            return {};
+        }
+
+        return translations.dictionaries[getCurrentLocale()];
     }
 
     function loadTranslations(options) {
