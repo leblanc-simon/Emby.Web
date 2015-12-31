@@ -1424,14 +1424,16 @@ define(['events'], function (Events) {
             }
         }
 
-        window.addEventListener("beforeunload", function () {
+        window.addEventListener("beforeunload", function (e) {
 
             var player = currentPlayer;
 
             // Try to report playback stopped before the browser closes
             if (player && getPlayerData(player).currentProgressInterval) {
-
                 onPlaybackStopped.call(player);
+                self.stop();
+
+                event.returnValue = "Stopping current track...";
             }
         });
     }
