@@ -195,7 +195,7 @@
             soundeffects: "components/soundeffects",
             apphost: customPaths.apphost || "components/apphost",
             filesystem: customPaths.filesystem || "components/filesystem",
-            screensaverManager: "js/screensavermanager",
+            screensaverManager: "components/screensavermanager",
             viewManager: "components/viewmanager",
             slyScroller: "components/slyscroller",
             appsettings: "components/appsettings",

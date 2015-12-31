@@ -1,4 +1,4 @@
-define(['html!bower_components/paper-toast/paper-toast'], function () {
+define(['paper-toast'], function () {
 
     var toastId = 0;
 
