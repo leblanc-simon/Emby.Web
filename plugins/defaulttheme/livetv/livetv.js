@@ -35,10 +35,6 @@
 
         var tabs = [
         {
-            Name: Globalize.translate('Suggested'),
-            Id: "suggested"
-        },
-        {
             Name: Globalize.translate('Channels'),
             Id: "channels"
         },
