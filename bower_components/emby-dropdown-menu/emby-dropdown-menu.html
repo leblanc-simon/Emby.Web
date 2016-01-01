@@ -350,13 +350,17 @@ respectively.
 
             var menuItems = [];
             var items = this.contentElement.querySelectorAll('.dropdownItem');
+            var value = this.getValue();
 
             for (var i = 0, length = items.length; i < length; i++) {
 
+                var id = items[i].getAttribute('data-value');
+
                 menuItems.push({
                     name: items[i].innerText,
-                    id: items[i].getAttribute('data-value'),
-                    node: items[i]
+                    id: id,
+                    node: items[i],
+                    selected: id == value
                 });
             }
 

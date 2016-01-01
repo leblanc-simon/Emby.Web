@@ -36,7 +36,8 @@
 
             var option = options.items[i];
 
-            html += '<paper-button class="actionSheetMenuItem" data-id="' + option.id + '" style="display:block;">';
+            var autoFocus = option.selected ? ' autoFocus' : '';
+            html += '<paper-button' + autoFocus + ' class="actionSheetMenuItem" data-id="' + option.id + '" style="display:block;">';
 
             if (option.ironIcon) {
                 html += '<iron-icon icon="' + option.ironIcon + '"></iron-icon>';
