@@ -357,7 +357,7 @@ respectively.
                 var id = items[i].getAttribute('data-value');
 
                 menuItems.push({
-                    name: items[i].innerText,
+                    name: items[i].textContent || items[i].innerText || items[i].innerHTML,
                     id: id,
                     node: items[i],
                     selected: id == value

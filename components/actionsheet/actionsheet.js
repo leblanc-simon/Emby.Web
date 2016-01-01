@@ -20,11 +20,7 @@
 
         // There seems to be a bug with this in safari causing it to immediately roll up to 0 height
         // Set to false for now because it's handled upstream by paperdialoghelper
-        var isScrollable = true;
-
-        if (isScrollable) {
-            html += '<paper-dialog-scrollable>';
-        }
+        html += '<div class="actionSheetScroller">';
 
         // If any items have an icon, give them all an icon just to make sure they're all lined up evenly
         var renderIcon = options.items.filter(function (o) {
@@ -51,9 +47,7 @@
         }
         //html += '</div>';
 
-        if (isScrollable) {
-            html += '</paper-dialog-scrollable>';
-        }
+        html += '</div>';
 
         if (options.showCancel) {
             html += '<div class="buttons">';

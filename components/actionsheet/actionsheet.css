@@ -7,9 +7,16 @@ paper-dialog.actionSheet {
     margin: 0;
 }
 
-paper-dialog.actionSheet paper-dialog-scrollable {
+.actionSheetScroller {
     max-height: 60%;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     /* Override default style being applied by polymer */
     margin-bottom: 0;
+    scroll-behavior: smooth;
 }
+
+    .actionSheetScroller::-webkit-scrollbar, .actionSheetScroller::-webkit-scrollbar {
+        width: 0 !important;
+        display: none;
+    }
