@@ -28,9 +28,10 @@
 
         view.addEventListener('viewbeforehide', function (e) {
 
-            var selectStreamingBitrate = view.querySelector('.selectStreamingBitrate');
-
             require(['appsettings'], function (appSettings) {
+
+                var selectStreamingBitrate = view.querySelector('.selectStreamingBitrate');
+                var selectEnableCinemaMode = view.querySelector('.selectEnableCinemaMode');
 
                 if (selectStreamingBitrate.getValue()) {
                     appSettings.maxStreamingBitrate(selectStreamingBitrate.getValue());
@@ -38,6 +39,8 @@
                 } else {
                     appSettings.enableAutomaticBitrateDetection(true);
                 }
+
+                appSettings.enableCinemaMode(selectEnableCinemaMode.getValue() == 'true');
 
             });
         });
@@ -47,6 +50,9 @@
             Emby.FocusManager.autoFocus(view);
 
             require(['appsettings', 'qualityoptions'], function (appSettings, qualityoptions) {
+
+                var selectStreamingBitrate = view.querySelector('.selectStreamingBitrate');
+                var selectEnableCinemaMode = view.querySelector('.selectEnableCinemaMode');
 
                 var bitrateOptions = qualityoptions.getVideoQualityOptions().map(function (i) {
                     return {
@@ -60,7 +66,6 @@
                     value: ''
                 });
 
-                var selectStreamingBitrate = view.querySelector('.selectStreamingBitrate');
                 selectStreamingBitrate.setOptions(bitrateOptions);
 
                 if (appSettings.enableAutomaticBitrateDetection()) {
@@ -70,6 +75,7 @@
                 }
                 selectStreamingBitrate.setValue('2');
 
+                selectEnableCinemaMode.setValue(appSettings.enableCinemaMode());
             });
         }
     }
