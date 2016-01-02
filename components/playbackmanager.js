@@ -1,4 +1,4 @@
-define(['events'], function (Events) {
+define(['events', 'datetime'], function (Events, datetime) {
 
     function playbackManager() {
 
@@ -93,16 +93,20 @@ define(['events'], function (Events) {
             var locationType = item.LocationType;
             var mediaType = item.MediaType;
 
-            if (itemType == "Program") {
-                return false;
-            }
-
             if (itemType == "MusicGenre" || itemType == "Season" || itemType == "Series" || itemType == "BoxSet" || itemType == "MusicAlbum" || itemType == "MusicArtist" || itemType == "Playlist") {
                 return true;
             }
 
             if (locationType == "Virtual") {
-                return false;
+                if (itemType != "Program") {
+                    return false;
+                }
+            }
+
+            if (itemType == "Program") {
+                if (new Date().getTime() > datetime.parseISO8601Date(item.EndDate).getTime() || new Date().getTime() < datetime.parseISO8601Date(item.StartDate).getTime()) {
+                    return false;
+                }
             }
 
             return self.getPlayers().filter(function (p) {
@@ -264,7 +268,7 @@ define(['events'], function (Events) {
             var liveStreamId = Emby.Page.param('LiveStreamId', currentSrc);
 
             player.getDeviceProfile().then(function (deviceProfile) {
-                
+
                 var audioStreamIndex = params.AudioStreamIndex == null ? getPlayerData(player).subtitleStreamIndex : params.AudioStreamIndex;
                 var subtitleStreamIndex = params.SubtitleStreamIndex == null ? getPlayerData(player).audioStreamIndex : params.SubtitleStreamIndex;
 
@@ -616,7 +620,13 @@ define(['events'], function (Events) {
                 var firstItem = items[0];
                 var promise;
 
-                if (firstItem.Type == "Playlist") {
+                if (firstItem.Type == "Program") {
+
+                    promise = getItemsForPlayback({
+                        Ids: firstItem.ChannelId,
+                    });
+                }
+                else if (firstItem.Type == "Playlist") {
 
                     promise = getItemsForPlayback({
                         ParentId: firstItem.Id,
