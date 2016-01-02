@@ -1,7 +1,7 @@
-define([], function () {
+define(['browser'], function (browser) {
 
     function getKey(name, userId) {
-        
+
         if (userId) {
             name = userId + '-' + name;
         }
@@ -19,6 +19,24 @@ define([], function () {
     }
 
     return {
+        enableCinemaMode: function (val) {
+
+            if (val != null) {
+                set('enableCinemaMode', val.toString());
+            }
+
+            val = get('enableCinemaMode');
+
+            if (val) {
+                return val != 'false';
+            }
+
+            if (browser.mobile) {
+                return false;
+            }
+
+            return true;
+        },
         enableAutomaticBitrateDetection: function (val) {
 
             if (val != null) {

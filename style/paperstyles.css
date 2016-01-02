@@ -26,6 +26,7 @@ paper-icon-button paper-ripple {
 
 paper-input label, paper-input input, paper-dropdown-menu label, paper-checkbox label {
     font-size: inherit !important;
+    line-height: normal !important;
 }
 
 paper-dialog {

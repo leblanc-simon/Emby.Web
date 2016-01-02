@@ -41,5 +41,6 @@
     "PlaybackSettings": "Playback Settings",
     "MaxStreamingBitrate": "Max streaming bitrate",
     "OptionAutomatic": "Auto",
-    "ButtonPlayFromBeginning": "Play from beginning"
+    "ButtonPlayFromBeginning": "Play from beginning",
+    "EnableCinemaMode": "Enable cinema mode"
 }

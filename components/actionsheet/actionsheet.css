@@ -12,7 +12,7 @@ paper-dialog.actionSheet {
     overflow-x: hidden;
     overflow-y: auto;
     /* Override default style being applied by polymer */
-    margin-bottom: 0;
+    margin-bottom: 0!important;
     scroll-behavior: smooth;
 }
 
