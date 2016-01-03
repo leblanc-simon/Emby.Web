@@ -23,6 +23,23 @@ define(['events', 'datetime'], function (Events, datetime) {
             return data.streamInfo ? data.streamInfo.mediaSource : null;
         };
 
+        function getCurrentSubtitleStream(player) {
+
+            var index = getPlayerData(player).subtitleStreamIndex;
+
+            if (index == null || index == -1) {
+                return null;
+            }
+
+            return getSubtitleStream(player, index);
+        };
+
+        function getSubtitleStream(player, index) {
+            return self.currentMediaSource(player).MediaStreams.filter(function (s) {
+                return s.Type == 'Subtitle' && s.Index == index;
+            })[0];
+        };
+
         self.audioTracks = function (player) {
             var mediaSource = self.currentMediaSource(player);
 
@@ -182,9 +199,53 @@ define(['events', 'datetime'], function (Events, datetime) {
             player.setAudioStreamIndex(index);
         };
 
-        self.setSubtitleStreamIndex = function (player, index) {
+        self.setSubtitleStreamIndex = function (index) {
 
-            player.setSubtitleStreamIndex(index);
+            var player = currentPlayer;
+            var currentStream = getCurrentSubtitleStream(player);
+
+            var newStream = getSubtitleStream(player, index);
+
+            if (!currentStream && !newStream) return;
+
+            var selectedTrackElementIndex = -1;
+
+            if (currentStream && !newStream) {
+
+                if (currentStream.DeliveryMethod == 'Encode') {
+
+                    // Need to change the transcoded stream to remove subs
+                    changeStream(player, getCurrentTicks(player), { SubtitleStreamIndex: -1 });
+                }
+            }
+            else if (!currentStream && newStream) {
+
+                if (newStream.DeliveryMethod == 'External' || newStream.DeliveryMethod == 'Embed') {
+                    selectedTrackElementIndex = index;
+                } else {
+
+                    // Need to change the transcoded stream to add subs
+                    changeStream(player, getCurrentTicks(player), { SubtitleStreamIndex: index });
+                }
+            }
+            else if (currentStream && newStream) {
+
+                if (newStream.DeliveryMethod == 'External' || newStream.DeliveryMethod == 'Embed') {
+                    selectedTrackElementIndex = index;
+
+                    if (currentStream.DeliveryMethod != 'External' && currentStream.DeliveryMethod != 'Embed') {
+                        changeStream(player, getCurrentTicks(player), { SubtitleStreamIndex: -1 });
+                    }
+                } else {
+
+                    // Need to change the transcoded stream to add subs
+                    changeStream(player, getCurrentTicks(player), { SubtitleStreamIndex: index });
+                }
+            }
+
+            player.setSubtitleStreamIndex(selectedTrackElementIndex);
+
+            getPlayerData(player).subtitleStreamIndex = index;
         };
 
         self.stop = function () {
@@ -225,7 +286,10 @@ define(['events', 'datetime'], function (Events, datetime) {
         };
 
         self.seek = function (ticks) {
-            changeStream(ticks);
+
+            var player = self.currentPlayer();
+
+            changeStream(player, ticks);
         };
 
         self.fastForward = function () {
@@ -250,9 +314,7 @@ define(['events', 'datetime'], function (Events, datetime) {
             }
         }
 
-        function changeStream(ticks, params) {
-
-            var player = self.currentPlayer();
+        function changeStream(player, ticks, params) {
 
             if (canPlayerSeek() && params == null) {
 
@@ -420,6 +482,9 @@ define(['events', 'datetime'], function (Events, datetime) {
 
             if (!player) {
                 throw new Error('player cannot be null');
+            }
+            if (!player.name) {
+                throw new Error('player name cannot be null');
             }
             var state = playerStates[player.name];
 
@@ -927,7 +992,8 @@ define(['events', 'datetime'], function (Events, datetime) {
                 tracks.push({
                     url: textStreamUrl,
                     language: (textStream.Language || 'und'),
-                    isDefault: textStream.Index == mediaSource.DefaultSubtitleStreamIndex
+                    isDefault: textStream.Index == mediaSource.DefaultSubtitleStreamIndex,
+                    index: textStream.Index
                 });
             }
 

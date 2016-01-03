@@ -480,6 +480,7 @@
 
                 if (stream.Index == currentIndex) {
                     opt.ironIcon = "check";
+                    opt.selected = true;
                 }
 
                 return opt;
@@ -547,6 +548,7 @@
 
                 if (stream.Index == currentIndex) {
                     opt.ironIcon = "check";
+                    opt.selected = true;
                 }
 
                 return opt;
