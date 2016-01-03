@@ -153,6 +153,19 @@ define(['browser'], function (browser) {
             });
         }
 
+        self.setSubtitleStreamIndex = function (index) {
+
+            // map the metadata index to the element index
+            if (index != -1) {
+
+                var track = mediaElement.querySelector('track[data-index=\'' + index + '\']');
+
+                index = parseInt(track.getAttribute('data-elementindex'));
+            }
+
+            setCurrentTrackElement(index);
+        };
+
         // Save this for when playback stops, because querying the time at that point might return 0
         self.currentTime = function (val) {
 
@@ -435,11 +448,15 @@ define(['browser'], function (browser) {
         }
 
         function setTracks(elem, tracks) {
+
+            var elementIndex = 0;
             var html = tracks.map(function (t) {
 
                 var defaultAttribute = t.isDefault ? ' default' : '';
 
-                return '<track kind="subtitles" src="' + t.url + '" srclang="' + t.language + '"' + defaultAttribute + '></track>';
+                var txt = '<track data-index="' + t.index + '" data-elementindex="' + elementIndex + '" kind="subtitles" src="' + t.url + '" srclang="' + t.language + '"' + defaultAttribute + '></track>';
+                elementIndex++;
+                return txt;
 
             }).join('');
 
