@@ -223,10 +223,6 @@ define([], function () {
         var clockInterval;
         self.load = function () {
 
-            if (window.navigator.msPointerEnabled) {
-                document.documentElement.classList.add('noflex');
-            }
-
             updateClock();
             setInterval(updateClock, 50000);
             bindEvents();
@@ -234,7 +230,6 @@ define([], function () {
 
         self.unload = function () {
 
-            document.documentElement.classList.remove('noflex');
             unbindEvents();
 
             if (clockInterval) {
