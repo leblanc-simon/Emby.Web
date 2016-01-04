@@ -166,6 +166,14 @@ define(['browser'], function (browser) {
             setCurrentTrackElement(index);
         };
 
+        self.canSetAudioStreamIndex = function () {
+            return false;
+        };
+
+        self.setAudioStreamIndex = function (index) {
+
+        };
+
         // Save this for when playback stops, because querying the time at that point might return 0
         self.currentTime = function (val) {
 

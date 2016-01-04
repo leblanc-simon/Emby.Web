@@ -196,7 +196,15 @@ define(['events', 'datetime'], function (Events, datetime) {
 
         self.setAudioStreamIndex = function (player, index) {
 
-            player.setAudioStreamIndex(index);
+            var player = currentPlayer;
+
+            if (getPlayerData(player).streamInfo.playMethod == 'Transcode' || !player.canSetAudioStreamIndex()) {
+
+                changeStream(player, getCurrentTicks(player), { AudioStreamIndex: index });
+
+            } else {
+                player.setAudioStreamIndex(index);
+            }
         };
 
         self.setSubtitleStreamIndex = function (index) {
