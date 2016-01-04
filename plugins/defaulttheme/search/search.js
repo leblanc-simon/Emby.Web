@@ -174,12 +174,17 @@
             return document.querySelector('.themeHeader');
         }
 
+        view.addEventListener('viewbeforeshow', function (e) {
+
+            view.classList.add('hide');
+        });
+
         view.addEventListener('viewshow', function (e) {
 
             getHeaderElement().classList.add('searchHeader');
+            view.classList.remove('hide');
 
             Emby.Page.setTitle('');
-            document.querySelector('.headerSearchButton').classList.add('hide');
 
             var isRestored = e.detail.isRestored;
 
@@ -192,11 +197,10 @@
             }
         });
 
-        view.addEventListener('viewhide', function () {
+        view.addEventListener('viewbeforehide', function () {
 
+            view.classList.add('hide');
             getHeaderElement().classList.remove('searchHeader');
-
-            document.querySelector('.headerSearchButton').classList.remove('hide');
         });
 
         view.addEventListener('viewdestroy', function () {

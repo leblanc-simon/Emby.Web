@@ -2,8 +2,7 @@
     display: block;
     width: 94.5%;
     margin: auto;
-    bottom: 0;
-    top: 11.5%;
+    padding-top: 1vh;
 }
 
 .itemSection > h2 {

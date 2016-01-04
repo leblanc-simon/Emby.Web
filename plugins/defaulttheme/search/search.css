@@ -1,10 +1,16 @@
-.searchPageContainer {
+.searchHeader {
     position: absolute;
-    top: 5%;
-    left: 0;
-    right: 0;
-    bottom: 0;
 }
+
+    .searchHeader .headerRight {
+        display: none;
+    }
+
+    .searchHeader + .themeBody {
+        margin-top: 2%;
+        /* Make sure it's on top of the header */
+        z-index: 1;
+    }
 
 .searchFields {
     text-align: center;
@@ -47,6 +53,6 @@
     width: 16.66666666666666667%;
 }
 
-.searchHeader .headerRight {
-    display: none;
+.searchScrollFrame {
+    width: 100%;
 }

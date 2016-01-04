@@ -4,18 +4,24 @@
     cursor: none !important;
 }
 
-.mainAnimatedPages {
-    position: absolute;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    height: 100%;
+.themeContainer {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .themeHeader {
     /* This will ensure it is on top of the main body */
     z-index: 1;
+    width: 100%;
+}
+
+.themeBody {
+    flex-grow: 1;
 }
 
 .backdropImage {

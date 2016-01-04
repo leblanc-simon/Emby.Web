@@ -100,23 +100,20 @@ a {
 }
 
 .themeHeader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding-left: 2.3%;
-    padding-right: 2.3%;
     padding-top: 3vh;
+    padding-bottom: 1.5vh;
     display: flex;
     align-items: center;
 }
 
 .headerLeft {
     margin-right: auto;
+    margin-left: 2.3%;
 }
 
 .headerRight {
     margin-left: auto;
+    margin-right: 2.3%;
 }
 
 .headerClock {
@@ -126,31 +123,22 @@ a {
     margin-left: 1em;
 }
 
-.externalPageContainer {
-    position: absolute;
-    top: 12%;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
-}
-
 .pageContainer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     overflow: hidden;
     display: -ms-flex;
     display: -webkit-flex;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
-.noflex .pageContainer {
-    display: block;
+.externalPageContainer {
+    padding-top: 2vh;
 }
 
 .centeredPageContent {
@@ -174,7 +162,6 @@ a {
 }
 
 .tabbedPageContainer {
-    top: 10%;
     align-items: initial;
     justify-content: initial;
 }
