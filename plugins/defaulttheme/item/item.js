@@ -467,7 +467,7 @@
 
         return (mediaSource.MediaStreams || []).filter(function (i) {
 
-            return i.Type == streamType && ((i.Codec || '').indexOf(codec) != -1 || (i.Profile || '').toLowerCase() == codec);
+            return i.Type == streamType && ((i.Codec || '').indexOf(codec) != -1 || (i.Profile || '').indexOf(codec) != -1);
 
         }).length > 0;
 
