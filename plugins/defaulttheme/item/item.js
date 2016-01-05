@@ -330,7 +330,15 @@
     function renderDynamicMediaIcons(view, item) {
 
         var html = '';
+
+        if (!item.MediaSources) {
+            return html;
+        }
+
         var mediaSource = item.MediaSources[0];
+        if (!mediaSource) {
+            return html;
+        }
 
         var resolutionText = getResolutionText(item);
         if (resolutionText) {
