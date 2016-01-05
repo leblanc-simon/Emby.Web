@@ -93,6 +93,14 @@ paper-dialog {
     background: #F44336;
 }
 
+.tvUpcomingCard .cardImageContainer {
+    background-color: #009688;
+}
+
+.tvFavoritesCard .cardImageContainer {
+    background-color: #D32F2F;
+}
+
 .emptyStar {
     color: #bbb !important;
 }

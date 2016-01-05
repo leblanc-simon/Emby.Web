@@ -107,6 +107,36 @@
         Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'tv/tv.html?tab=' + tab + "&parentid=" + parentId));
     }
 
+    function loadImages(element, parentId) {
+
+        var options = {
+
+            SortBy: "IsFavoriteOrLiked,Random",
+            IncludeItemTypes: "Series",
+            Limit: 2,
+            Recursive: true,
+            ParentId: parentId,
+            EnableImageTypes: "Backdrop",
+            ImageTypes: "Backdrop"
+        };
+
+        Emby.Models.items(options).then(function (result) {
+
+            var items = result.Items;
+            var imgOptions = {
+                maxWidth: 240
+            };
+
+            if (items.length > 0) {
+                element.querySelector('.tvFavoritesCard .cardImage').style.backgroundImage = "url('" + Emby.Models.backdropImageUrl(items[0], imgOptions) + "')";
+            }
+
+            if (items.length > 1) {
+                element.querySelector('.tvUpcomingCard .cardImage').style.backgroundImage = "url('" + Emby.Models.backdropImageUrl(items[1], imgOptions) + "')";
+            }
+        });
+    }
+
     function view(element, parentId, autoFocus) {
 
         var self = this;
@@ -119,6 +149,7 @@
         loadResume(element, parentId);
         loadNextUp(element, parentId);
         loadLatest(element, parentId);
+        loadImages(element, parentId);
 
         element.querySelector('.allSeriesCard').addEventListener('click', function () {
             gotoTvView('series', parentId);
@@ -126,6 +157,14 @@
 
         element.querySelector('.tvGenresCard').addEventListener('click', function () {
             gotoTvView('genres', parentId);
+        });
+
+        element.querySelector('.tvUpcomingCard').addEventListener('click', function () {
+            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'tv/upcoming.html?parentid=' + parentId));
+        });
+
+        element.querySelector('.tvFavoritesCard').addEventListener('click', function () {
+            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'tv/favorites.html?parentid=' + parentId));
         });
 
         self.destroy = function () {

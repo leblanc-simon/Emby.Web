@@ -98,10 +98,13 @@ define(['datetime'], function (datetime) {
 
     function buildCardsHtmlInternal(items, apiClient, options) {
 
+        var isVertical;
+
         if (options.shape == 'autoHome') {
             setShapeHome(items, options);
         }
         else if (options.shape == 'autoVertical') {
+            isVertical = true;
             setShape(items, options);
         }
         else if (options.shape == 'auto') {
@@ -167,11 +170,26 @@ define(['datetime'], function (datetime) {
                         //html += '<paper-button>...</paper-button>';
 
                         html += '</div>';
+
+                        if (isVertical) {
+                            html += '</div>';
+                        }
                         hasOpenSection = false;
                     }
 
-                    html += '<div class="horizontalSection">';
-                    html += '<div class="sectionTitle">' + newIndexValue + '</div>';
+                    if (isVertical) {
+                        html += '<div class="verticalSection">';
+                    } else {
+                        html += '<div class="horizontalSection">';
+                    }
+                    if (isVertical) {
+                        html += '<h2>' + newIndexValue + '</h2>';
+                    } else {
+                        html += '<div class="sectionTitle">' + newIndexValue + '</div>';
+                    }
+                    if (isVertical) {
+                        html += '<div class="itemsContainer verticalItemsContainer">';
+                    }
                     currentIndexValue = newIndexValue;
                     hasOpenSection = true;
                 }
@@ -206,6 +224,10 @@ define(['datetime'], function (datetime) {
 
         if (hasOpenSection) {
             html += '</div>';
+
+            if (isVertical) {
+                html += '</div>';
+            }
         }
 
         return html;

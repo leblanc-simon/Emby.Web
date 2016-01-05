@@ -145,6 +145,10 @@ button.card {
     background-position: center center;
 }
 
+.coveredImage.noScale, .coveredImage.noScale .cardImage {
+    background-size: cover;
+}
+
 .cardFooter {
     padding: .25em .25em;
 }

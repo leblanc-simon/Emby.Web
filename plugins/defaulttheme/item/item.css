@@ -1,8 +1,4 @@
 .itemPageContainer {
-    display: block;
-    width: 94.5%;
-    margin: auto;
-    bottom: 0;
     top: 11.5%;
 }
 
@@ -13,26 +9,6 @@
 .itemFloatClear {
     clear: both;
 }
-
-.itemScrollContent {
-    padding: 0 2%;
-}
-
-    .itemScrollContent .backdropCard {
-        width: 25%;
-    }
-
-    .itemScrollContent .squareCard {
-        width: 16.66666666666666667%;
-    }
-
-    .itemScrollContent .portraitCard {
-        width: 16.66666666666666667%;
-    }
-
-    .itemScrollContent .personCard {
-        width: 14.285714285714285714285714285714%;
-    }
 
 .itemScrollFrame.clippedLeft {
     margin-left: 28%;
@@ -218,16 +194,6 @@
     .mediaInfoIcon path {
         fill: #fff;
     }
-
-.dvdIcon {
-    /* These have a lot of whitespace */
-    height: 70px;
-}
-
-.blurayIcon {
-    /* These have a lot of whitespace */
-    height: 64px;
-}
 
 .mediaInfoText {
     /*display: inline-block;

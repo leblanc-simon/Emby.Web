@@ -161,6 +161,24 @@ define([], function () {
             });
 
             routes.push({
+                path: Emby.PluginManager.mapPath(self, 'tv/favorites.html'),
+                id: 'defaulttheme-tvfavorites',
+                transition: 'slide',
+                dependencies: [
+                    Emby.PluginManager.mapPath(self, 'tv/favorites.js')
+                ]
+            });
+
+            routes.push({
+                path: Emby.PluginManager.mapPath(self, 'tv/upcoming.html'),
+                id: 'defaulttheme-tvupcoming',
+                transition: 'slide',
+                dependencies: [
+                    Emby.PluginManager.mapPath(self, 'tv/upcoming.js')
+                ]
+            });
+
+            routes.push({
                 path: Emby.PluginManager.mapPath(self, 'search/search.html'),
                 id: 'defaulttheme-search',
                 transition: 'slide',

@@ -2,7 +2,7 @@
     <div class="sectionTitle">&nbsp;</div>
     <div>
         <button type="button" class="card block wideSpotlightCard noScale">
-            <div class="cardImageContainer coveredImage cardBox">
+            <div class="cardImageContainer coveredImage cardBox noScale">
                 <div class="cardImage"></div>
 
 
@@ -11,24 +11,44 @@
                 </div>
             </div>
         </button>
-        <div>
-            <button type="button" class="card miniSpotlightCard backdropCard allSeriesCard" data-type="allseries">
-                <div class="cardImageContainer coveredImage cardBox">
+        <div style="display: flex;">
+            <button type="button" class="card squareCard allSeriesCard" data-type="allseries">
+                <div class="cardImageContainer coveredImage cardBox noScale">
 
                     <div class="cardImage"></div>
 
                     <div class="innerCardFooter">
-                        <div class="cardText">${AllSeries}</div>
+                        <div class="cardText">${Series}</div>
                     </div>
                 </div>
             </button>
-            <button type="button" class="card miniSpotlightCard backdropCard tvGenresCard" data-type="genres">
-                <div class="cardImageContainer coveredImage cardBox">
+            <button type="button" class="card squareCard tvFavoritesCard" data-type="genres">
+                <div class="cardImageContainer coveredImage cardBox noScale">
+
+                    <div class="cardImage"></div>
+
+                    <div class="innerCardFooter">
+                        <div class="cardText">${Favorites}</div>
+                    </div>
+                </div>
+            </button>
+            <button type="button" class="card squareCard tvGenresCard" data-type="genres">
+                <div class="cardImageContainer coveredImage cardBox noScale">
 
                     <div class="cardImage"></div>
 
                     <div class="innerCardFooter">
                         <div class="cardText">${Genres}</div>
+                    </div>
+                </div>
+            </button>
+            <button type="button" class="card squareCard tvUpcomingCard" data-type="genres">
+                <div class="cardImageContainer coveredImage cardBox noScale">
+
+                    <div class="cardImage"></div>
+
+                    <div class="innerCardFooter">
+                        <div class="cardText">${Upcoming}</div>
                     </div>
                 </div>
             </button>

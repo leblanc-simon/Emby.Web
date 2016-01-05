@@ -183,8 +183,20 @@ a {
     justify-content: initial;
 }
 
+.verticalPageContainer {
+    display: block;
+    width: 94.5%;
+    margin: auto;
+    bottom: 0;
+    top: 9%;
+}
+
 .itemScrollFrame.scrollFrameY {
     height: 100%;
+}
+
+.scrollFrameY > .scrollSlider {
+    padding: 0 2%;
 }
 
 /* 1080p */
@@ -446,22 +458,60 @@ paper-item-body .overview {
     margin-top: 1em;
 }
 
+.verticalItemsContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+    .verticalItemsContainer .backdropCard {
+        width: 25%;
+    }
+
+    .verticalItemsContainer .squareCard {
+        width: 16.66666666666666667%;
+    }
+
+    .verticalItemsContainer .portraitCard {
+        width: 16.66666666666666667%;
+    }
+
+    .verticalItemsContainer .personCard {
+        width: 14.285714285714285714285714285714%;
+    }
+
+
 /* 720p */
 @media all and (min-height: 720px) {
 
     .horizontalPageContent .squareCard .cardImageContainer {
-        width: 132px;
-        height: 132px;
+        width: 148px;
+        height: 148px;
     }
 
     .horizontalPageContent .backdropCard .cardImageContainer {
-        width: 220px;
-        height: 123.75px;
+        width: 265px;
+        height: 148px;
     }
 
     .horizontalPageContent .portraitCard .cardImageContainer {
-        width: 132px;
-        height: 198px;
+        width: 149px;
+        height: 224px;
+    }
+
+    .homePageContent .squareCard .cardImageContainer {
+        width: 148px;
+        height: 148px;
+    }
+
+    .homePageContent .backdropCard .cardImageContainer {
+        width: 265px;
+        height: 148px;
+    }
+
+    .homePageContent .portraitCard .cardImageContainer {
+        width: 149px;
+        height: 224px;
     }
 
     .horizontalPageContent .loginSquareCard {
@@ -488,18 +538,18 @@ paper-item-body .overview {
     }
 
     .homePageContent .squareCard .cardImageContainer {
-        width: 240px;
-        height: 240px;
+        width: 236px;
+        height: 236px;
     }
 
     .homePageContent .backdropCard .cardImageContainer {
-        width: 427px;
-        height: 240px;
+        width: 420px;
+        height: 236px;
     }
 
     .homePageContent .portraitCard .cardImageContainer {
-        width: 242px;
-        height: 363px;
+        width: 237px;
+        height: 356px;
     }
 
     .listPageContent .squareCard .cardImageContainer {
@@ -545,18 +595,18 @@ paper-item-body .overview {
     }
 
     .homePageContent .squareCard .cardImageContainer {
-        width: 330px;
-        height: 330px;
+        width: 324px;
+        height: 324px;
     }
 
     .homePageContent .backdropCard .cardImageContainer {
-        width: 587px;
-        height: 330px;
+        width: 576px;
+        height: 324px;
     }
 
     .homePageContent .portraitCard .cardImageContainer {
-        width: 331px;
-        height: 497px;
+        width: 325px;
+        height: 488px;
     }
 
     .listPageContent .squareCard .cardImageContainer {
@@ -680,4 +730,12 @@ paper-slider.noKnob #sliderKnob {
 
 paper-slider.noKnob:hover #sliderKnob {
     display: block;
+}
+
+.verticalSection {
+    margin-bottom: 70px;
+}
+
+.verticalSection > h2 {
+    margin-bottom: .25em;
 }
