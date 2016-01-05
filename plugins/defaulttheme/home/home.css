@@ -19,7 +19,7 @@
 @media all and (min-height: 1080px) {
 
     .wideSpotlightCard .cardImageContainer {
-        height: 480px;
+        height: 478px;
     }
 }
 
@@ -27,7 +27,7 @@
 @media all and (min-height: 1440px) {
 
     .wideSpotlightCard .cardImageContainer {
-        height: 655px;
+        height: 654px;
     }
 }
 
