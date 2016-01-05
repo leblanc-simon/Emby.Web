@@ -1,4 +1,4 @@
-define(['events', 'datetime'], function (Events, datetime) {
+define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSettings) {
 
     function playbackManager() {
 
@@ -765,7 +765,7 @@ define(['events', 'datetime'], function (Events, datetime) {
                 });
             };
 
-            if (options.startPositionTicks || firstItem.MediaType !== 'Video' || options.fullscreen === false) {
+            if (options.startPositionTicks || firstItem.MediaType !== 'Video' || options.fullscreen === false || !appSettings.enableCinemaMode()) {
 
                 currentPlayOptions = options;
                 playInternal(firstItem, options.startPositionTicks, afterPlayInternal);
@@ -800,9 +800,9 @@ define(['events', 'datetime'], function (Events, datetime) {
                 return;
             }
 
-            var depends = ['appsettings', 'connectionManager'];
+            var depends = ['connectionManager'];
 
-            require(depends, function (appSettings, connectionManager) {
+            require(depends, function (connectionManager) {
 
                 var apiClient = connectionManager.getApiClient(item.ServerId);
 
