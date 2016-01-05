@@ -207,46 +207,47 @@
     align-items: center;
 }
 
+.dynamicMediaInfoIcons {
+    display: flex;
+    align-items: center;
+}
+
 .mediaInfoIcon {
-    height: 38px;
+    height: 44px;
     fill: #ccc;
     color: #ccc;
     vertical-align: middle;
-    margin-right: 1em;
+    margin-right: 1.1em;
 }
 
     .mediaInfoIcon path {
-        fill: #ccc;
+        fill: #fff;
     }
 
 .dvdIcon {
     /* These have a lot of whitespace */
-    height: 60px;
+    height: 70px;
 }
 
 .blurayIcon {
     /* These have a lot of whitespace */
-    height: 50px;
-}
-
-.dtsIcon {
-    /* This one doesn't scale */
-    height: 48px;
+    height: 64px;
 }
 
 .mediaInfoText {
     display: inline-block;
-    padding: .25em .75em;
+    /* padding: .25em .75em; */
     margin-top: 0;
     margin-bottom: 0;
-    color: #000;
-    background: #ccc;
+    color: #fff;
+    /* background: #ccc; */
     border-radius: 3px;
-    font-weight: normal;
-    margin-right: 1em;
-    font-size: 90%;
+    font-weight: 400;
+    margin-right: .6em;
+    font-size: 160%;
     height: auto;
     text-transform: uppercase;
+    font-family: Lato;
 }
 
 .paperIconItemRightButton {
@@ -255,4 +256,8 @@
 
 .nextUpSection .backdropCard {
     width: 30%;
+}
+
+.mediaInfoImageIcon img {
+    max-height: 100%;
 }

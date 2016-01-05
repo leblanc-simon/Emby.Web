@@ -316,8 +316,28 @@
             view.querySelector('.blurayIcon').classList.add('hide');
         }
 
+        if (renderDynamicMediaIcons(view, item)) {
+            showMediaInfoIcons = true;
+        }
+
+        if (showMediaInfoIcons) {
+            view.querySelector('.mediaInfoIcons').classList.remove('hide');
+        } else {
+            view.querySelector('.mediaInfoIcons').classList.add('hide');
+        }
+    }
+
+    function renderDynamicMediaIcons(view, item) {
+
+        var html = '';
+        var mediaSource = item.MediaSources[0];
+
+        var resolutionText = getResolutionText(item);
+        if (resolutionText) {
+            html += '<div class="mediaInfoIcon mediaInfoText">' + resolutionText + '</div>';
+        }
+
         var channels = getChannels(item);
-        var mediaInfoChannels = view.querySelector('.mediaInfoChannels');
         var channelText;
 
         if (channels == 8) {
@@ -338,60 +358,55 @@
         }
 
         if (channelText) {
-            mediaInfoChannels.classList.remove('hide');
-            mediaInfoChannels.innerHTML = channelText;
-            showMediaInfoIcons = true;
-        } else {
-            mediaInfoChannels.classList.add('hide');
+            html += '<div class="mediaInfoIcon mediaInfoText">' + channelText + '</div>';
         }
 
-        var resolutionText = getResolutionText(item);
-
-        var mediaInfoResolution = view.querySelector('.mediaInfoResolution');
-        if (resolutionText) {
-            mediaInfoResolution.classList.remove('hide');
-            mediaInfoResolution.innerHTML = resolutionText;
-            showMediaInfoIcons = true;
-        } else {
-            mediaInfoResolution.classList.add('hide');
+        if (mediaSource.Container == 'mkv') {
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Media_MKV_white.png" />';
+        }
+        else if (mediaSource.Container == 'mp4') {
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Media_MP4_white.png" />';
+        }
+        else if (mediaSource.Container == 'mov') {
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Media_MOV_white.png" />';
+        } else if (mediaSource.Container) {
+            html += '<div class="mediaInfoIcon mediaInfoText">' + mediaSource.Container + '</div>';
         }
 
-        var audioCodecIcon = view.querySelector('.audioCodecIcon');
-        var audioCodecText = getAudioCodecText(item);
-        if (audioCodecText) {
-            audioCodecIcon.classList.remove('hide');
-            audioCodecIcon.innerHTML = audioCodecText;
-            showMediaInfoIcons = true;
-        } else {
-            audioCodecIcon.classList.add('hide');
+        if (hasCodec(mediaSource, 'Video', 'h264')) {
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Video_H264_white.png" />';
+        }
+        else if (hasCodec(mediaSource, 'Video', 'mpeg')) {
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Video_MPEG_white.png" />';
         }
 
-        if (showMediaInfoIcons) {
-            view.querySelector('.mediaInfoIcons').classList.remove('hide');
-        } else {
-            view.querySelector('.mediaInfoIcons').classList.add('hide');
+        if (hasCodec(mediaSource, 'Audio', 'aac')) {
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Audio_AAC_white.png" />';
         }
-    }
-
-    function getAudioCodecText(item) {
-
-        if (!item.MediaSources || !item.MediaSources.length) {
-            return null;
+        if (hasCodec(mediaSource, 'Audio', 'mp3')) {
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Audio_MP3_white.png" />';
         }
 
-        return item.MediaSources[0].MediaStreams.filter(function (i) {
+        if (hasCodec(mediaSource, 'Audio', 'ac3')) {
 
-            return i.Type == 'Audio';
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Audio_ac3_white.png" />';
+        }
+        if (hasCodec(mediaSource, 'Audio', 'truehd')) {
 
-        }).map(function (i) {
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Audio_DDHD_white.png" />';
+        }
+        if (hasCodec(mediaSource, 'Audio', 'dts-hd ma')) {
 
-            if ((i.Codec || '').toLowerCase() == 'dca') {
-                return i.Profile;
-            }
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Audio_dtsHD_white.png" />';
+        }
+        else if (hasCodec(mediaSource, 'Audio', 'dts')) {
 
-            return i.Codec;
-        })[0];
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Audio_dts_white.png" />';
+        }
 
+        view.querySelector('.dynamicMediaInfoIcons').innerHTML = html;
+
+        return html;
     }
 
     function getResolutionText(item) {
@@ -446,13 +461,9 @@
 
     }
 
-    function hasCodec(item, streamType, codec) {
+    function hasCodec(mediaSource, streamType, codec) {
 
-        if (!item.MediaSources || !item.MediaSources.length) {
-            return false;
-        }
-
-        return item.MediaSources[0].MediaStreams.filter(function (i) {
+        return (mediaSource.MediaStreams || []).filter(function (i) {
 
             return i.Type == streamType && ((i.Codec || '').toLowerCase() == codec || (i.Profile || '').toLowerCase() == codec);
 
