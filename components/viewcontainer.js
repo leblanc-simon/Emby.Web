@@ -1,6 +1,6 @@
 define([], function () {
 
-    var pageContainerCount = 4;
+    var pageContainerCount = document.querySelectorAll('.mainAnimatedPage').length;
     var animationDuration = 550;
 
     function loadView(options) {

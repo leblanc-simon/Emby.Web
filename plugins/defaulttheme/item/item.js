@@ -765,7 +765,7 @@
             html += section.name;
             html += '</h2>';
 
-            html += '<div class="itemsContainer">';
+            html += '<div class="itemsContainer verticalItemsContainer">';
             html += '</div>';
 
             html += '</div>';
