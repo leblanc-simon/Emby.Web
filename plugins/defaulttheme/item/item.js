@@ -302,20 +302,6 @@
 
         var showMediaInfoIcons = false;
 
-        if (item.VideoType == 'Dvd') {
-            view.querySelector('.dvdIcon').classList.remove('hide');
-            showMediaInfoIcons = true;
-        } else {
-            view.querySelector('.dvdIcon').classList.add('hide');
-        }
-
-        if (item.VideoType == 'BluRay') {
-            view.querySelector('.blurayIcon').classList.remove('hide');
-            showMediaInfoIcons = true;
-        } else {
-            view.querySelector('.blurayIcon').classList.add('hide');
-        }
-
         if (renderDynamicMediaIcons(view, item)) {
             showMediaInfoIcons = true;
         }
@@ -367,6 +353,14 @@
 
         if (channelText) {
             html += '<div class="mediaInfoIcon mediaInfoText">' + channelText + '</div>';
+        }
+
+        if (item.VideoType == 'Dvd') {
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Media_DVD_white.png" />';
+        }
+
+        if (item.VideoType == 'BluRay') {
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Media_BlueRay_white.png" />';
         }
 
         if (mediaSource.Container == 'mkv') {

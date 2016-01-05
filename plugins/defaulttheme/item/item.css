@@ -207,11 +207,6 @@
     align-items: center;
 }
 
-.dynamicMediaInfoIcons {
-    display: flex;
-    align-items: center;
-}
-
 .mediaInfoIcon {
     height: 44px;
     fill: #ccc;
