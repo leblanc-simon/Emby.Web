@@ -385,7 +385,7 @@
         if (hasCodec(mediaSource, 'Audio', 'aac')) {
             html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Audio_AAC_white.png" />';
         }
-        if (hasCodec(mediaSource, 'Audio', 'mp3')) {
+        else if (hasCodec(mediaSource, 'Audio', 'mp3')) {
             html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Audio_MP3_white.png" />';
         }
 
@@ -393,11 +393,11 @@
 
             html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Audio_ac3_white.png" />';
         }
-        if (hasCodec(mediaSource, 'Audio', 'truehd')) {
+        else if (hasCodec(mediaSource, 'Audio', 'truehd')) {
 
             html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Audio_DDHD_white.png" />';
         }
-        if (hasCodec(mediaSource, 'Audio', 'dts-hd ma')) {
+        else if (hasCodec(mediaSource, 'Audio', 'dts-hd ma')) {
 
             html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Audio_dtsHD_white.png" />';
         }
@@ -467,7 +467,7 @@
 
         return (mediaSource.MediaStreams || []).filter(function (i) {
 
-            return i.Type == streamType && ((i.Codec || '').toLowerCase() == codec || (i.Profile || '').toLowerCase() == codec);
+            return i.Type == streamType && ((i.Codec || '').indexOf(codec) != -1 || (i.Profile || '').toLowerCase() == codec);
 
         }).length > 0;
 
