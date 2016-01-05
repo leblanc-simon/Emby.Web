@@ -56,6 +56,66 @@
 
     function loadViewContent(page, id, type) {
 
+        var tabbedPage = this;
+
+        return new Promise(function (resolve, reject) {
+
+            if (self.listController) {
+                self.listController.destroy();
+            }
+
+            var pageParams = tabbedPage.params;
+
+            var autoFocus = false;
+
+            if (!tabbedPage.hasLoaded) {
+                autoFocus = true;
+                tabbedPage.hasLoaded = true;
+            }
+
+            switch (id) {
+
+                case 'channels':
+                    break;
+                case 'recordings':
+                    renderRecordings(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
+                    break;
+                case 'scheduled':
+                    break;
+                default:
+                    break;
+            }
+        });
+    }
+
+    function renderRecordings(page, pageParams, autoFocus, slyFrame, resolve) {
+
+        self.listController = new DefaultTheme.HorizontalList({
+
+            itemsContainer: page.querySelector('.contentScrollSlider'),
+            getItemsMethod: function (startIndex, limit) {
+                return Emby.Models.recordings({
+                    StartIndex: startIndex,
+                    Limit: limit,
+                    SortBy: "DateCreated,SortName",
+                    SortOrder: "Descending"
+                });
+            },
+            listCountElement: page.querySelector('.listCount'),
+            listNumbersElement: page.querySelector('.listNumbers'),
+            autoFocus: autoFocus,
+            selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
+            selectedIndexElement: page.querySelector('.selectedIndex'),
+            slyFrame: slyFrame,
+            onRender: function () {
+                if (resolve) {
+                    resolve();
+                    resolve = null;
+                }
+            }
+        });
+
+        self.listController.render();
     }
 
 })();

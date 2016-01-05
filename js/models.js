@@ -245,6 +245,22 @@
         });
     }
 
+    function recordings(options) {
+
+        return new Promise(function (resolve, reject) {
+
+            require(['connectionManager'], function (connectionManager) {
+
+                var apiClient = connectionManager.currentApiClient();
+
+                normalizeOptions(options);
+                options.UserId = apiClient.getCurrentUserId();
+
+                apiClient.getLiveTvRecordings(options).then(resolve, reject);
+            });
+        });
+    }
+
     function latestChannelItems(options) {
 
         return new Promise(function (resolve, reject) {
@@ -778,7 +794,8 @@
         favorite: favorite,
         clearLike: clearLike,
         search: search,
-        seriesImageUrl: seriesImageUrl
+        seriesImageUrl: seriesImageUrl,
+        recordings: recordings
     };
 
 })(this, document);
