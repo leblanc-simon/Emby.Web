@@ -569,7 +569,7 @@
             birthDateElem.classList.remove('hide');
 
             require(['datetime'], function (datetime) {
-                
+
                 var dateString = datetime.parseISO8601Date(item.PremiereDate).toDateString();
                 birthDateElem.innerHTML = Globalize.translate('BornValue', dateString);
             });
@@ -628,12 +628,7 @@
             return;
         }
 
-        Emby.Models.children(item, {
-
-            SortBy: 'SortName'
-
-        }).then(function (result) {
-
+        var onItemsResult = function (result) {
             if (!result.Items.length) {
                 section.classList.add('hide');
                 return;
@@ -649,7 +644,26 @@
             });
 
             Emby.ImageLoader.lazyChildren(section);
-        });
+        };
+
+        if (item.Type == 'MusicAlbum' || item.Type == 'Playlist') {
+
+            // Songs by album
+            Emby.Models.children(item, {
+                SortBy: 'SortName'
+
+            }).then(onItemsResult);
+        } else {
+
+            // Songs by artist
+            Emby.Models.items(item, {
+
+                SortBy: 'SortName',
+                MediaTypes: 'Audio',
+                ArtistIds: item.Id
+
+            }).then(onItemsResult);
+        }
     }
 
     function renderPeopleItems(view, item) {

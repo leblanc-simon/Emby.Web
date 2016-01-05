@@ -12,19 +12,23 @@ require(['inputmanager'], function (inputmanager) {
         inputmanager.notify();
     }
 
-    var lastMouseMoveData = {
-        x: 0,
-        y: 0
-    };
+    var lastMouseMoveData;
     document.addEventListener('mousemove', function (e) {
-
-        var obj = lastMouseMoveData;
 
         var eventX = e.screenX;
         var eventY = e.screenY;
 
         // if coord don't exist how could it move
         if (typeof eventX === "undefined" && typeof eventY === "undefined") {
+            return;
+        }
+
+        var obj = lastMouseMoveData;
+        if (!obj) {
+            lastMouseMoveData = {
+                x: eventX,
+                y: eventY
+            };
             return;
         }
 

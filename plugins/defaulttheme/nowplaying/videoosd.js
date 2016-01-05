@@ -203,18 +203,18 @@
             });
         }
 
-        var lastMouseMoveData = {
-            x: 0,
-            y: 0
-        };
+        var lastMouseMoveData;
         function onMouseMove(e) {
+
+            var eventX = e.screenX || 0;
+            var eventY = e.screenY || 0;
+
             var obj = lastMouseMoveData;
-
-            var eventX = e.screenX;
-            var eventY = e.screenY;
-
-            // if coord don't exist how could it move
-            if (typeof eventX === "undefined" && typeof eventY === "undefined") {
+            if (!obj) {
+                lastMouseMoveData = {
+                    x: eventX,
+                    y: eventY
+                };
                 return;
             }
 
@@ -223,6 +223,7 @@
                 return;
             }
 
+            console.log('x: ' + eventX + ' y: ' + eventY);
             obj.x = eventX;
             obj.y = eventY;
 
