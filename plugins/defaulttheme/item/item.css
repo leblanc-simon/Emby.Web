@@ -230,7 +230,7 @@
 }
 
 .mediaInfoText {
-    display: inline-block;
+    /*display: inline-block;
     padding: .2em .75em;
     margin-top: 0;
     margin-bottom: 0;
@@ -241,15 +241,17 @@
     margin-right: 1em;
     font-size: 90%;
     height: auto;
-    text-transform: uppercase;
-    /*display: inline-block;
+    text-transform: uppercase;*/
+    display: inline-block;
     margin-top: 0;
     margin-bottom: 0;
     font-weight: normal;
     margin-right: .6em;
     font-size: 160%;
     height: auto;
-    text-transform: uppercase;*/
+    text-transform: uppercase;
+    color: #eee;
+    font-weight: 300;
 }
 
 .paperIconItemRightButton {
