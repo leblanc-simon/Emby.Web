@@ -174,11 +174,11 @@ a {
 }
 
     .itemScrollFrame.scrollFrameX.noTopPadding {
-        padding-top: 1%;
+        padding-top: 1.3%;
     }
 
 .tabbedPageContainer {
-    top: 10%;
+    top: 10.5%;
     align-items: initial;
     justify-content: initial;
 }
@@ -306,7 +306,7 @@ a {
 }
 
 .sectionTitle {
-    font-size: 86%;
+    font-size: 90%;
     padding-left: .1em;
 }
 

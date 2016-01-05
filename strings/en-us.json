@@ -42,5 +42,6 @@
     "MaxStreamingBitrate": "Max streaming bitrate",
     "OptionAutomatic": "Auto",
     "ButtonPlayFromBeginning": "Play from beginning",
-    "EnableCinemaMode": "Enable cinema mode"
+    "EnableCinemaMode": "Enable cinema mode",
+    "EmbyConnect": "Emby Connect"
 }

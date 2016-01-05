@@ -379,7 +379,7 @@
         });
 
         items.push({
-            name: Globalize.translate('core#HeaderSignInWithConnect'),
+            name: Globalize.translate('core#EmbyConnect'),
             showIcon: true,
             showImage: false,
             icon: 'cloud',
