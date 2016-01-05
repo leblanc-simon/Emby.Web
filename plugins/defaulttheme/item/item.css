@@ -236,18 +236,17 @@
 
 .mediaInfoText {
     display: inline-block;
-    /* padding: .25em .75em; */
+    padding: .25em .75em;
     margin-top: 0;
     margin-bottom: 0;
-    color: #fff;
-    /* background: #ccc; */
+    color: #000;
+    background: #ddd;
     border-radius: 3px;
-    font-weight: 400;
-    margin-right: .6em;
-    font-size: 160%;
+    font-weight: normal;
+    margin-right: 1em;
+    font-size: 90%;
     height: auto;
     text-transform: uppercase;
-    font-family: Lato;
 }
 
 .paperIconItemRightButton {
