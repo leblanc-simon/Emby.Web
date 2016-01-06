@@ -82,7 +82,7 @@
 
             Emby.Models.upcoming({
                 ParentId: pageParams.parentid,
-                Limit: 50
+                Limit: 40
 
             }).then(function (result) {
 

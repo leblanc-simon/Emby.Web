@@ -655,7 +655,7 @@ paper-slider:hover #sliderKnob {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 300px;
+    width: 15%;
 }
 
 .selectedItemPanel {
