@@ -73,9 +73,8 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
         self.isPlayingVideo = function () {
             if (self.isPlaying()) {
                 var playerData = getPlayerData(currentPlayer);
-                var currentItem = playerData.streamInfo.item;
 
-                return currentItem.MediaType == 'Video';
+                return playerData.streamInfo.mediaType == 'Video';
             }
 
             return false;
@@ -84,9 +83,8 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
         self.isPlayingAudio = function () {
             if (self.isPlaying()) {
                 var playerData = getPlayerData(currentPlayer);
-                var currentItem = playerData.streamInfo.item;
 
-                return currentItem.MediaType == 'Audio';
+                return playerData.streamInfo.mediaType == 'Audio';
             }
 
             return false;
@@ -973,7 +971,8 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
                     playerStartPositionTicks: playerStartPositionTicks,
                     item: item,
                     mediaSource: mediaSource,
-                    textTracks: getTextTracks(apiClient, mediaSource)
+                    textTracks: getTextTracks(apiClient, mediaSource),
+                    mediaType: type
                 };
 
                 resolve(resultInfo);

@@ -78,7 +78,8 @@
             var parent = page.querySelector('.scrollSlider');
 
             Emby.Models.upcoming({
-                ParentId: pageParams.parentid
+                ParentId: pageParams.parentid,
+                Limit: 50
 
             }).then(function (result) {
 
