@@ -1513,8 +1513,9 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
 
             // Try to report playback stopped before the browser closes
             if (player && getPlayerData(player).currentProgressInterval) {
+                playNextAfterEnded = false;
                 onPlaybackStopped.call(player);
-                self.stop();
+                //self.stop();
 
                 event.returnValue = "Stopping current track...";
             }

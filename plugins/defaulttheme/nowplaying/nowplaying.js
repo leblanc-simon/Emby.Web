@@ -54,7 +54,7 @@
 
 
                 view.querySelector('.nowPlayingCardContainer').innerHTML = '';
-                view.querySelector('.nowPlayingMetadata').innerHTML = '&nbsp;<br/>&nbsp;';
+                view.querySelector('.nowPlayingMetadata').innerHTML = '&nbsp;<br/>&nbsp;<br/>&nbsp;';
                 view.querySelector('.userDataIcons').innerHTML = '';
 
                 nowPlayingVolumeSlider.disabled = true;

@@ -1102,7 +1102,7 @@
 
         Emby.Models.similar(item, {
 
-            Limit: 18
+            Limit: 12
 
         }).then(function (result) {
 

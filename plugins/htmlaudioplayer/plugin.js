@@ -110,7 +110,7 @@ define([], function () {
         var fadeTimeout;
         function fade(elem, callback) {
 
-            elem.volume = Math.max(0, elem.volume - .1);
+            elem.volume = Math.max(0, elem.volume - .15);
 
             if (!elem.volume) {
                 callback();
