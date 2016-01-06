@@ -552,21 +552,6 @@ paper-item-body .overview {
         height: 356px;
     }
 
-    .listPageContent .squareCard .cardImageContainer {
-        width: 243px;
-        height: 243px;
-    }
-
-    .listPageContent .backdropCard .cardImageContainer {
-        width: 432px;
-        height: 243px;
-    }
-
-    .listPageContent .portraitCard .cardImageContainer {
-        width: 245px;
-        height: 367px;
-    }
-
     .horizontalPageContent .loginSquareCard {
         width: 340px;
     }
@@ -607,21 +592,6 @@ paper-item-body .overview {
     .homePageContent .portraitCard .cardImageContainer {
         width: 325px;
         height: 488px;
-    }
-
-    .listPageContent .squareCard .cardImageContainer {
-        width: 330px;
-        height: 330px;
-    }
-
-    .listPageContent .backdropCard .cardImageContainer {
-        width: 587px;
-        height: 330px;
-    }
-
-    .listPageContent .portraitCard .cardImageContainer {
-        width: 331px;
-        height: 497px;
     }
 
     .horizontalPageContent .loginSquareCard {
@@ -680,15 +650,12 @@ paper-slider:hover #sliderKnob {
     background-image: url(images/rotten.png);
 }
 
-.listItemsMoreButtonContainer {
-    text-align: right;
-}
-
 .listItemsMoreButton {
-    margin: .25em .25em .25em 0;
-    padding: .3em .7em;
-    font-size: 84%;
     min-width: initial;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
 }
 
 .selectedItemPanel {
@@ -736,6 +703,6 @@ paper-slider.noKnob:hover #sliderKnob {
     margin-bottom: 70px;
 }
 
-.verticalSection > h2 {
-    margin-bottom: .25em;
-}
+    .verticalSection > h2 {
+        margin-bottom: .25em;
+    }

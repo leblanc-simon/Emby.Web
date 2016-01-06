@@ -102,11 +102,6 @@
         });
     }
 
-    function gotoTvView(tab, parentId) {
-
-        Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'tv/tv.html?tab=' + tab + "&parentid=" + parentId));
-    }
-
     function loadImages(element, parentId) {
 
         var options = {
@@ -152,11 +147,11 @@
         loadImages(element, parentId);
 
         element.querySelector('.allSeriesCard').addEventListener('click', function () {
-            gotoTvView('series', parentId);
+            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'tv/tv.html?parentid=' + parentId));
         });
 
         element.querySelector('.tvGenresCard').addEventListener('click', function () {
-            gotoTvView('genres', parentId);
+            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'tv/genres.html?parentid=' + parentId));
         });
 
         element.querySelector('.tvUpcomingCard').addEventListener('click', function () {

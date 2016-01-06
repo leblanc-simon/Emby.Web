@@ -54,10 +54,6 @@
                 {
                     Name: Globalize.translate('Series'),
                     Id: "series"
-                },
-                {
-                    Name: Globalize.translate('Genres'),
-                    Id: "genres"
                 }];
 
                 var tabbedPage = new DefaultTheme.TabbedPage(view, {
@@ -102,9 +98,6 @@
                         showAlphaPicker = true;
                         showListNumbers = true;
                         renderSeries(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
-                        break;
-                    case 'genres':
-                        renderGenres(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
                         break;
                     default:
                         break;
@@ -154,48 +147,6 @@
             });
 
             self.listController.render();
-        }
-
-        function renderGenres(page, pageParams, autoFocus, slyFrame, resolve) {
-
-            Emby.Models.genres({
-                ParentId: pageParams.parentid,
-                SortBy: "SortName"
-
-            }).then(function (genresResult) {
-
-                self.listController = new DefaultTheme.HorizontalList({
-
-                    itemsContainer: page.querySelector('.contentScrollSlider'),
-                    getItemsMethod: function (startIndex, limit) {
-                        return Emby.Models.items({
-                            StartIndex: startIndex,
-                            Limit: limit,
-                            ParentId: pageParams.parentid,
-                            IncludeItemTypes: "Series",
-                            Recursive: true,
-                            SortBy: "SortName",
-                            Fields: "Genres"
-                        });
-                    },
-                    autoFocus: autoFocus,
-                    slyFrame: slyFrame,
-                    onRender: function () {
-                        if (resolve) {
-                            resolve();
-                            resolve = null;
-                        }
-                    },
-                    cardOptions: {
-                        indexBy: 'Genres',
-                        genres: genresResult.Items,
-                        indexLimit: 4,
-                        parentId: pageParams.parentid
-                    }
-                });
-
-                self.listController.render();
-            });
         }
     }
 

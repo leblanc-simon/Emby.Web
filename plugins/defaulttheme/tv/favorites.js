@@ -26,6 +26,10 @@
 
         view.addEventListener('viewdestroy', function () {
 
+            if (self.focusHandler) {
+                self.focusHandler.destroy();
+                self.focusHandler = null;
+            }
         });
 
         function createVerticalScroller(view, pageInstance) {

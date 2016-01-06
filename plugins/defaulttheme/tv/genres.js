@@ -1,6 +1,6 @@
 (function () {
 
-    document.addEventListener("viewinit-defaulttheme-tvupcoming", function (e) {
+    document.addEventListener("viewinit-defaulttheme-tvgenres", function (e) {
 
         new page(e.target, e.detail.params);
     });
@@ -80,32 +80,45 @@
 
             var parent = page.querySelector('.scrollSlider');
 
-            Emby.Models.upcoming({
+            Emby.Models.genres({
                 ParentId: pageParams.parentid,
-                Limit: 50
+                SortBy: "SortName"
 
-            }).then(function (result) {
+            }).then(function (genresResult) {
 
-                buildCards(parent, result.Items);
+                Emby.Models.items({
+                    ParentId: pageParams.parentid,
+                    IncludeItemTypes: "Series",
+                    Recursive: true,
+                    SortBy: "SortName",
+                    Fields: "Genres"
 
-                if (autoFocus) {
-                    setTimeout(function () {
-                        var firstCard = parent.querySelector('.card');
-                        if (firstCard) {
-                            Emby.FocusManager.focus(firstCard);
-                        }
-                    }, 400);
-                }
+                }).then(function (result) {
+
+                    buildCards(parent, pageParams.parentid, result.Items, genresResult.Items);
+
+                    if (autoFocus) {
+                        setTimeout(function () {
+                            var firstCard = parent.querySelector('.card');
+                            if (firstCard) {
+                                Emby.FocusManager.focus(firstCard);
+                            }
+                        }, 400);
+                    }
+                });
             });
         }
 
-        function buildCards(parent, items) {
+        function buildCards(itemsContainer, parentId, items, genres) {
 
             DefaultTheme.CardBuilder.buildCards(items, {
-                itemsContainer: parent,
+                indexBy: 'Genres',
+                genres: genres,
+                indexLimit: 3,
+                parentId: parentId,
+                itemsContainer: itemsContainer,
                 shape: 'autoVertical',
                 scalable: true,
-                indexBy: 'PremiereDate',
                 preferThumb: true
             });
         }
