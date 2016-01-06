@@ -149,7 +149,7 @@ define([], function () {
             if (options.enableBackdrops !== false || selectedItemInfoInner) {
                 Emby.Models.item(id).then(function (item) {
 
-                    if (options.enableBackdrops !== false) {
+                    if (options.enableBackdrops) {
                         DefaultTheme.Backdrop.setBackdrops([item], true);
                     }
                     setSelectedInfo(card, item);

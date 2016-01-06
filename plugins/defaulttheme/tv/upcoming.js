@@ -66,7 +66,6 @@
                 self.focusHandler = new focusHandler({
                     parent: view.querySelector('.scrollSlider'),
                     slyFrame: slyFrame,
-                    zoomScale: '1.10',
                     enableBackdrops: true
                 });
 

@@ -619,8 +619,7 @@
             DefaultTheme.CardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
-                shape: 'backdropCard',
-                width: DefaultTheme.CardBuilder.homeThumbWidth,
+                shape: 'autoVertical',
                 showTitle: true,
                 scalable: true
             });

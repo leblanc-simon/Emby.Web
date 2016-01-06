@@ -34,7 +34,7 @@
         //document.querySelector('.themeContainer').classList.remove('staticBackdrop');
 
         if (isFocused) {
-
+            Emby.Backdrop.setBackdrops(items);
         } else {
             Emby.Backdrop.setBackdrops(items);
         }

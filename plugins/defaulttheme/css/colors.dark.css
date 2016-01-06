@@ -7,7 +7,7 @@ html {
 }
 
     .themeContainer.withBackdrop {
-        background-color: rgba(6, 6, 6, .94);
+        background-color: rgba(6, 6, 6, .9);
         transition: background-color 1000ms ease-out;
     }
 
@@ -177,5 +177,5 @@ paper-icon-button[disabled] {
 }
 
 .sectionTitle {
-    color: #aaa;
+    color: #ccc;
 }

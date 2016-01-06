@@ -178,14 +178,14 @@ a {
     }
 
 .tabbedPageContainer {
-    top: 10.5%;
+    top: 11%;
     align-items: initial;
     justify-content: initial;
 }
 
 .verticalPageContainer {
     display: block;
-    width: 96%;
+    width: 97%;
     margin: auto;
     bottom: 0;
     top: 9%;

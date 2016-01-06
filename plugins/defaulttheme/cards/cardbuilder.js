@@ -69,15 +69,15 @@ define(['datetime'], function (datetime) {
 
         if (primaryImageAspectRatio && primaryImageAspectRatio < .85) {
             options.shape = 'portraitCard';
-            options.width = 280;
+            options.width = 340;
         }
         else if (primaryImageAspectRatio && primaryImageAspectRatio > 1.34) {
             options.shape = 'backdropCard';
-            options.width = 384;
+            options.width = 500;
         }
         else {
             options.shape = 'squareCard';
-            options.width = 280;
+            options.width = 340;
         }
     }
 
