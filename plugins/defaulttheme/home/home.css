@@ -31,14 +31,6 @@
     }
 }
 
-.allSeriesCard .cardImage {
-    background-image: url(../css/images/tv.jpg);
-}
-
-.allMoviesCard .cardImage {
-    background-image: url(../css/images/movie.jpg);
-}
-
 .movieGenresCard .cardImage, .tvGenresCard .cardImage {
     background-image: url(../css/images/popcorn.jpg);
 }
