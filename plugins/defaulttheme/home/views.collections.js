@@ -2,13 +2,13 @@
 
     function loadAll(element, parentId, autoFocus) {
 
-        var options = {
+        Emby.Models.collections({
 
             ParentId: parentId,
-            EnableImageTypes: "Primary,Backdrop,Thumb"
-        };
+            EnableImageTypes: "Primary,Backdrop,Thumb",
+            SortBy: 'SortName'
 
-        Emby.Models.collections(options).then(function (result) {
+        }).then(function (result) {
 
             var section = element.querySelector('.allSection');
 

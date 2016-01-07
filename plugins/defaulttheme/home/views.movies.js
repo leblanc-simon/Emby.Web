@@ -142,11 +142,6 @@
         });
     }
 
-    function gotoMoviesView(tab, parentId) {
-
-        Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'movies/movies.html?tab=' + tab + "&parentid=" + parentId));
-    }
-
     function loadImages(element, parentId) {
 
         Emby.Models.items({
@@ -214,11 +209,19 @@
         loadRecommendations(element, parentId);
 
         element.querySelector('.allMoviesCard').addEventListener('click', function () {
-            gotoMoviesView('movies', parentId);
+            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'movies/movies.html?parentid=' + parentId));
         });
 
         element.querySelector('.movieGenresCard').addEventListener('click', function () {
             Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'genres/genres.html?type=movies&parentid=' + parentId));
+        });
+
+        element.querySelector('.movieCollectionsCard').addEventListener('click', function () {
+            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'list/list.html') + '?type=collections&parentid=' + parentId);
+        });
+
+        element.querySelector('.movieFavoritesCard').addEventListener('click', function () {
+            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'list/list.html') + '?type=favoritemovies&parentid=' + parentId);
         });
 
         self.destroy = function () {

@@ -26,7 +26,7 @@
                 Emby.Models.item(params.parentid).then(function (item) {
 
                     if (!params.genreId) {
-                        Emby.Page.setTitle(item.Name);
+                        setTitle(item.Name);
                     }
                     currentItem = item;
 
@@ -68,6 +68,17 @@
             }
 
         });
+
+        function setTitle(item) {
+
+            if (params.type == 'collections') {
+                Emby.Page.setTitle(Globalize.translate('Collections'));
+            } else if (params.type == 'favoritemovies') {
+                Emby.Page.setTitle(Globalize.translate('FavoriteMovies'));
+            } else {
+                Emby.Page.setTitle(item.Name);
+            }
+        }
 
         function play() {
 
@@ -195,6 +206,51 @@
         });
     }
 
+    function getItems(params, item, startIndex, limit) {
+
+        if (params.type == 'collections') {
+
+            return Emby.Models.collections({
+                ParentId: item.Id,
+                EnableImageTypes: "Primary,Backdrop,Thumb",
+                StartIndex: startIndex,
+                Limit: limit,
+                SortBy: 'SortName'
+            });
+        }
+
+        if (params.type == 'favoritemovies') {
+
+            return Emby.Models.items({
+                ParentId: item.Id,
+                EnableImageTypes: "Primary,Backdrop,Thumb",
+                StartIndex: startIndex,
+                Limit: limit,
+                SortBy: 'SortName',
+                IncludeItemTypes: 'Movie',
+                Recursive: true,
+                Filters: "IsFavorite"
+            });
+        }
+
+        if (params.genreId) {
+
+            return Emby.Models.items({
+                StartIndex: startIndex,
+                Limit: limit,
+                Recursive: true,
+                GenreIds: params.genreId,
+                ParentId: item.Id,
+                IncludeItemTypes: item.CollectionType == 'tvshows' ? 'Series' : (item.CollectionType == 'movies' ? 'Movie' : 'MusicAlbum')
+            });
+
+        }
+        return Emby.Models.children(item, {
+            StartIndex: startIndex,
+            Limit: limit
+        });
+    }
+
     function loadChildren(instance, view, item, loading) {
 
         instance.listController = new DefaultTheme.HorizontalList({
@@ -202,22 +258,7 @@
             itemsContainer: view.querySelector('.scrollSlider'),
             getItemsMethod: function (startIndex, limit) {
 
-                if (instance.params.genreId) {
-
-                    return Emby.Models.items({
-                        StartIndex: startIndex,
-                        Limit: limit,
-                        Recursive: true,
-                        GenreIds: instance.params.genreId,
-                        ParentId: item.Id,
-                        IncludeItemTypes: item.CollectionType == 'tvshows' ? 'Series' : (item.CollectionType == 'movies' ? 'Movie' : 'MusicAlbum')
-                    });
-
-                }
-                return Emby.Models.children(item, {
-                    StartIndex: startIndex,
-                    Limit: limit
-                });
+                return getItems(instance.params, item, startIndex, limit);
             },
             listCountElement: view.querySelector('.listCount'),
             listNumbersElement: view.querySelector('.listNumbers'),
