@@ -179,11 +179,11 @@ define([], function () {
             });
 
             routes.push({
-                path: Emby.PluginManager.mapPath(self, 'tv/genres.html'),
-                id: 'defaulttheme-tvgenres',
+                path: Emby.PluginManager.mapPath(self, 'genres/genres.html'),
+                id: 'defaulttheme-genres',
                 transition: 'slide',
                 dependencies: [
-                    Emby.PluginManager.mapPath(self, 'tv/genres.js')
+                    Emby.PluginManager.mapPath(self, 'genres/genres.js')
                 ]
             });
 

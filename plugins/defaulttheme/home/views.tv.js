@@ -155,7 +155,7 @@
         });
 
         element.querySelector('.tvGenresCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'tv/genres.html?parentid=' + parentId));
+            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'genres/genres.html?type=tv&parentid=' + parentId));
         });
 
         element.querySelector('.tvUpcomingCard').addEventListener('click', function () {

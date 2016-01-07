@@ -57,24 +57,12 @@
                     Id: "unwatched"
                 },
                 {
-                    Name: Globalize.translate('Collections'),
-                    Id: "collections"
-                },
-                {
-                    Name: Globalize.translate('Genres'),
-                    Id: "genres"
-                },
-                {
                     Name: Globalize.translate('Years'),
                     Id: "years"
                 },
                 {
                     Name: Globalize.translate('TopRated'),
                     Id: "toprated"
-                },
-                {
-                    Name: Globalize.translate('Favorites'),
-                    Id: "favorites"
                 }];
 
                 var tabbedPage = new DefaultTheme.TabbedPage(view, {
@@ -137,9 +125,6 @@
                         showListNumbers = true;
                         renderFavorites(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
                         break;
-                    case 'genres':
-                        renderGenres(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
-                        break;
                     default:
                         break;
                 }
@@ -154,49 +139,6 @@
                     self.alphaPicker.visible(showAlphaPicker);
                     self.alphaPicker.enabled(showAlphaPicker);
                 }
-            });
-        }
-
-        function renderGenres(page, pageParams, autoFocus, slyFrame, resolve) {
-
-            Emby.Models.genres({
-                ParentId: pageParams.parentid,
-                SortBy: "SortName"
-
-            }).then(function (genresResult) {
-
-                self.listController = new DefaultTheme.HorizontalList({
-
-                    itemsContainer: page.querySelector('.contentScrollSlider'),
-                    getItemsMethod: function (startIndex, limit) {
-                        return Emby.Models.items({
-                            StartIndex: startIndex,
-                            Limit: limit,
-                            ParentId: pageParams.parentid,
-                            IncludeItemTypes: "Movie",
-                            Recursive: true,
-                            SortBy: "SortName",
-                            Fields: "Genres"
-                        });
-                    },
-                    autoFocus: autoFocus,
-                    selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
-                    slyFrame: slyFrame,
-                    onRender: function () {
-                        if (resolve) {
-                            resolve();
-                            resolve = null;
-                        }
-                    },
-                    cardOptions: {
-                        indexBy: 'Genres',
-                        genres: genresResult.Items,
-                        indexLimit: 4,
-                        parentId: pageParams.parentid
-                    }
-                });
-
-                self.listController.render();
             });
         }
 

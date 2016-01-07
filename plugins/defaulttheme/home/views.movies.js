@@ -147,6 +147,58 @@
         Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'movies/movies.html?tab=' + tab + "&parentid=" + parentId));
     }
 
+    function loadImages(element, parentId) {
+
+        Emby.Models.items({
+
+            SortBy: "IsFavoriteOrLiked,Random",
+            IncludeItemTypes: "Movie",
+            Limit: 2,
+            Recursive: true,
+            ParentId: parentId,
+            EnableImageTypes: "Backdrop",
+            ImageTypes: "Backdrop"
+
+        }).then(function (result) {
+
+            var items = result.Items;
+            var imgOptions = {
+                maxWidth: 240
+            };
+
+            if (items.length > 0) {
+                element.querySelector('.movieFavoritesCard .cardImage').style.backgroundImage = "url('" + Emby.Models.backdropImageUrl(items[0], imgOptions) + "')";
+            }
+
+            if (items.length > 1) {
+                element.querySelector('.allMoviesCard .cardImage').style.backgroundImage = "url('" + Emby.Models.backdropImageUrl(items[1], imgOptions) + "')";
+            }
+        });
+
+        Emby.Models.items({
+
+            SortBy: "IsFavoriteOrLiked,Random",
+            IncludeItemTypes: "Movie",
+            Limit: 1,
+            Recursive: true,
+            ParentId: parentId,
+            EnableImageTypes: "Backdrop",
+            ImageTypes: "Backdrop"
+
+        }).then(function (result) {
+
+            var items = result.Items;
+            var imgOptions = {
+                maxWidth: 240
+            };
+
+            if (items.length > 0) {
+                element.querySelector('.movieCollectionsCard .cardImage').style.backgroundImage = "url('" + Emby.Models.backdropImageUrl(items[0], imgOptions) + "')";
+            }
+        });
+
+    }
+
     function view(element, parentId, autoFocus) {
 
         var self = this;
@@ -158,6 +210,7 @@
         loadResume(element, parentId);
         loadLatest(element, parentId);
         loadSpotlight(element, parentId);
+        loadImages(element, parentId);
         loadRecommendations(element, parentId);
 
         element.querySelector('.allMoviesCard').addEventListener('click', function () {
@@ -165,7 +218,7 @@
         });
 
         element.querySelector('.movieGenresCard').addEventListener('click', function () {
-            gotoMoviesView('genres', parentId);
+            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'genres/genres.html?type=movies&parentid=' + parentId));
         });
 
         self.destroy = function () {

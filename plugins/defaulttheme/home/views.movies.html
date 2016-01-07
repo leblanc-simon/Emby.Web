@@ -2,7 +2,7 @@
     <div class="sectionTitle">&nbsp;</div>
     <div>
         <button type="button" class="card block wideSpotlightCard noScale">
-            <div class="cardImageContainer coveredImage cardBox">
+            <div class="cardImageContainer coveredImage cardBox noScale">
                 <div class="cardImage"></div>
 
 
@@ -12,18 +12,38 @@
             </div>
         </button>
         <div style="display: flex;">
-            <button type="button" class="card miniSpotlightCard backdropCard allMoviesCard" data-type="allseries">
-                <div class="cardImageContainer coveredImage cardBox">
+            <button type="button" class="card backdropCard allMoviesCard" data-type="allseries">
+                <div class="cardImageContainer coveredImage cardBox noScale">
 
                     <div class="cardImage"></div>
 
                     <div class="innerCardFooter">
-                        <div class="cardText">${AllMovies}</div>
+                        <div class="cardText">${Movies}</div>
                     </div>
                 </div>
             </button>
-            <button type="button" class="card miniSpotlightCard backdropCard movieGenresCard" data-type="genres">
-                <div class="cardImageContainer coveredImage cardBox">
+            <button type="button" class="card squareCard movieCollectionsCard" data-type="genres">
+                <div class="cardImageContainer coveredImage cardBox noScale">
+
+                    <div class="cardImage"></div>
+
+                    <div class="innerCardFooter">
+                        <div class="cardText">${Collections}</div>
+                    </div>
+                </div>
+            </button>
+            <button type="button" class="card squareCard movieFavoritesCard" data-type="genres">
+                <div class="cardImageContainer coveredImage cardBox noScale">
+
+                    <div class="cardImage"></div>
+
+                    <div class="innerCardFooter">
+                        <div class="cardText">${Favorites}</div>
+                    </div>
+                </div>
+            </button>
+            <button type="button" class="card squareCard movieGenresCard" data-type="genres">
+                <div class="cardImageContainer coveredImage cardBox noScale">
 
                     <div class="cardImage"></div>
 

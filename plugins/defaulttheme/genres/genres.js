@@ -1,6 +1,6 @@
 (function () {
 
-    document.addEventListener("viewinit-defaulttheme-tvgenres", function (e) {
+    document.addEventListener("viewinit-defaulttheme-genres", function (e) {
 
         new page(e.target, e.detail.params);
     });
@@ -88,7 +88,7 @@
 
                 Emby.Models.items({
                     ParentId: pageParams.parentid,
-                    IncludeItemTypes: "Series",
+                    IncludeItemTypes: pageParams.type == 'movies' ? 'Movie' : 'Series',
                     Recursive: true,
                     SortBy: "SortName",
                     Fields: "Genres"
