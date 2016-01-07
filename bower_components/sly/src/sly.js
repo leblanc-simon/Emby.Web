@@ -60,6 +60,7 @@
 
         // Private variables
         var self = this;
+        self.options = o;
         var parallax = isNumber(frame);
 
         // Frame

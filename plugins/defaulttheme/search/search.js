@@ -121,7 +121,7 @@
             }
 
             cardOptions = cardOptions || {};
-            cardOptions.itemsContainer = section.querySelector('.items');
+            cardOptions.itemsContainer = section.querySelector('.itemsContainer');
             cardOptions.shape = 'autoVertical';
             cardOptions.scalable = true;
 

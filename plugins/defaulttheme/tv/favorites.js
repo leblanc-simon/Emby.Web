@@ -69,8 +69,7 @@
 
                 self.focusHandler = new focusHandler({
                     parent: view.querySelector('.scrollSlider'),
-                    slyFrame: slyFrame,
-                    zoomScale: '1.12'
+                    slyFrame: slyFrame
                 });
 
             });
