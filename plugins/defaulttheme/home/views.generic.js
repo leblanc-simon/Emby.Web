@@ -5,7 +5,8 @@
         var options = {
 
             ParentId: parentId,
-            EnableImageTypes: "Primary,Backdrop,Thumb"
+            EnableImageTypes: "Primary,Backdrop,Thumb",
+            SortBy: 'SortName'
         };
 
         Emby.Models.items(options).then(function (result) {
