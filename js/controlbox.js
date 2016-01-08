@@ -33,7 +33,7 @@
             if (apphost.supports('windowstate')) {
 
                 document.querySelector('.controlBox').classList.remove('hide');
-                updateWindowState(apphost.getWindowState());
+                //updateWindowState(apphost.getWindowState());
             } else {
 
                 document.querySelector('.controlBox').classList.add('hide');
