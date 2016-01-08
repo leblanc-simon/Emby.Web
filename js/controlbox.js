@@ -1,48 +1,36 @@
-(function () {
+define(['apphost'], function (apphost) {
 
     function bindEvents() {
 
         document.querySelector('.appExitButton').addEventListener('click', function () {
-            require(['apphost'], function (apphost) {
-                apphost.exit();
-            });
+            apphost.exit();
         });
 
         document.querySelector('.minimizeButton').addEventListener('click', function () {
-            require(['apphost'], function (apphost) {
-                apphost.setWindowState('Minimized');
-            });
+            apphost.setWindowState('Minimized');
         });
 
         document.querySelector('.maximizeButton').addEventListener('click', function () {
-            require(['apphost'], function (apphost) {
-
-                if (apphost.getWindowState() == 'Normal') {
-                    apphost.setWindowState('Maximized');
-                } else {
-                    apphost.setWindowState('Normal');
-                }
-            });
+            if (apphost.getWindowState() == 'Normal') {
+                apphost.setWindowState('Maximized');
+            } else {
+                apphost.setWindowState('Normal');
+            }
         });
     }
 
     function loadControlBox() {
 
-        require(['apphost'], function (apphost) {
+        if (apphost.supports('windowstate')) {
 
-            if (apphost.supports('windowstate')) {
+            document.querySelector('.controlBox').classList.remove('hide');
+            //updateWindowState(apphost.getWindowState());
+        } else {
 
-                document.querySelector('.controlBox').classList.remove('hide');
-                //updateWindowState(apphost.getWindowState());
-            } else {
-
-                document.querySelector('.controlBox').classList.add('hide');
-            }
-        });
-
+            document.querySelector('.controlBox').classList.add('hide');
+        }
     }
 
     loadControlBox();
     bindEvents();
-
-})(document);
+});
