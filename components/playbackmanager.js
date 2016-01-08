@@ -830,14 +830,20 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
             var player = getPlayer(item);
             var activePlayer = currentPlayer;
 
+            var promise;
+
             if (activePlayer) {
 
                 // TODO: if changing players within the same playlist, this will cause nextItem to be null
                 playNextAfterEnded = false;
-                onPlaybackChanging(activePlayer, player, item);
+                promise = onPlaybackChanging(activePlayer, player, item);
+            } else {
+                promise = Promise.resolve();
             }
 
-            player.getDeviceProfile().then(function (deviceProfile) {
+            Promise.all([promise, player.getDeviceProfile()]).then(function (responses) {
+
+                var deviceProfile = responses[1];
 
                 deviceProfile.MaxStreamingBitrate = Math.min(deviceProfile.MaxStreamingBitrate, maxBitrate);
 
@@ -1421,28 +1427,31 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
             var serverId = getPlayerData(activePlayer).streamInfo.item.ServerId;
 
             // User started playing something new while existing content is playing
+            var promise;
 
             if (activePlayer == newPlayer) {
 
                 // If we're staying with the same player, stop it
-                activePlayer.stop(false, false);
+                promise = activePlayer.stop(false, false);
 
             } else {
 
                 // If we're switching players, tear down the current one
-                activePlayer.stop(true, false);
+                promise = activePlayer.stop(true, false);
             }
 
-            reportPlayback(state, serverId, 'reportPlaybackStopped');
+            return promise.then(function() {
+                reportPlayback(state, serverId, 'reportPlaybackStopped');
 
-            clearProgressInterval(activePlayer);
+                clearProgressInterval(activePlayer);
 
-            Events.trigger(self, 'playbackstop', [{
-                player: activePlayer,
-                state: state,
-                nextItem: newItem,
-                nextMediaType: newItem.MediaType
-            }]);
+                Events.trigger(self, 'playbackstop', [{
+                    player: activePlayer,
+                    state: state,
+                    nextItem: newItem,
+                    nextMediaType: newItem.MediaType
+                }]);
+            });
         }
 
         Events.on(Emby.PluginManager, 'registered', function (e, plugin) {

@@ -198,21 +198,26 @@ define(['browser'], function (browser) {
 
         self.stop = function (destroyPlayer, reportEnded) {
 
-            var elem = mediaElement;
-            var src = currentSrc;
+            return new Promise(function (resolve, reject) {
 
-            if (elem && src) {
+                var elem = mediaElement;
+                var src = currentSrc;
 
-                elem.pause();
+                if (elem && src) {
 
-                destroyHlsPlayer();
+                    elem.pause();
 
-                onEndedInternal(reportEnded);
+                    destroyHlsPlayer();
 
-                if (destroyPlayer) {
-                    self.destroy();
+                    onEndedInternal(reportEnded);
+
+                    if (destroyPlayer) {
+                        self.destroy();
+                    }
                 }
-            }
+
+                resolve();
+            });
         };
 
         self.destroy = function () {

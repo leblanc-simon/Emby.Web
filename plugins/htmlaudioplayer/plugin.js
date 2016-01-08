@@ -73,34 +73,39 @@ define([], function () {
 
         self.stop = function (destroyPlayer, reportEnded) {
 
-            cancelFadeTimeout();
+            return new Promise(function (resolve, reject) {
 
-            var elem = mediaElement;
-            var src = currentSrc;
+                cancelFadeTimeout();
 
-            if (elem && src) {
+                var elem = mediaElement;
+                var src = currentSrc;
 
-                if (!destroyPlayer) {
+                if (elem && src) {
 
-                    if (!elem.paused) {
-                        elem.pause();
+                    if (!destroyPlayer) {
+
+                        if (!elem.paused) {
+                            elem.pause();
+                        }
+                        onEndedInternal(reportEnded);
+                        resolve();
+                        return;
                     }
-                    onEndedInternal(reportEnded);
-                    return;
+
+                    var originalVolume = elem.volume;
+
+                    fade(elem, function () {
+
+                        if (!elem.paused) {
+                            elem.pause();
+                        }
+
+                        elem.volume = originalVolume;
+                        onEndedInternal(reportEnded);
+                        resolve();
+                    });
                 }
-
-                var originalVolume = elem.volume;
-
-                fade(elem, function () {
-
-                    if (!elem.paused) {
-                        elem.pause();
-                    }
-
-                    elem.volume = originalVolume;
-                    onEndedInternal(reportEnded);
-                });
-            }
+            });
         };
 
         self.destroy = function() {
