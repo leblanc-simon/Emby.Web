@@ -647,6 +647,17 @@
             url: '/startup/manualserver.html'
         });
 
+        items.push({
+            name: Globalize.translate('core#EmbyConnect'),
+            showIcon: true,
+            showImage: false,
+            icon: 'cloud',
+            cardImageStyle: '',
+            cardType: 'embyconnect',
+            defaultText: true,
+            url: '/startup/connectlogin.html'
+        });
+
         var html = items.map(function (item) {
 
             var cardImageContainer;
