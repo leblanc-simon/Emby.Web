@@ -127,11 +127,7 @@
             }
 
             if (items.length > 1) {
-                element.querySelector('.tvUpcomingCard .cardImage').style.backgroundImage = "url('" + Emby.Models.backdropImageUrl(items[1], imgOptions) + "')";
-            }
-
-            if (items.length > 2) {
-                element.querySelector('.allSeriesCard .cardImage').style.backgroundImage = "url('" + Emby.Models.backdropImageUrl(items[2], imgOptions) + "')";
+                element.querySelector('.allSeriesCard .cardImage').style.backgroundImage = "url('" + Emby.Models.backdropImageUrl(items[1], imgOptions) + "')";
             }
         });
     }

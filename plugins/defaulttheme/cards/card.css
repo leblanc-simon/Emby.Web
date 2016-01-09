@@ -206,6 +206,8 @@ button.card {
     width: 50% !important;
     height: 50% !important;
     color: #fff;
+    position: relative;
+    top: -8%;
 }
 
 .cardCountIndicator {
