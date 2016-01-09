@@ -22,16 +22,6 @@
                     </div>
                 </div>
             </button>
-            <button type="button" class="card squareCard movieCollectionsCard" data-type="genres">
-                <div class="cardImageContainer coveredImage cardBox noScale">
-
-                    <div class="cardImage"></div>
-
-                    <div class="innerCardFooter">
-                        <div class="cardText">${Collections}</div>
-                    </div>
-                </div>
-            </button>
             <button type="button" class="card squareCard movieFavoritesCard" data-type="genres">
                 <div class="cardImageContainer coveredImage cardBox noScale">
 
@@ -42,10 +32,20 @@
                     </div>
                 </div>
             </button>
+            <button type="button" class="card squareCard movieCollectionsCard" data-type="genres">
+                <div class="cardImageContainer coveredImage cardBox noScale">
+
+                    <iron-icon class="cardImageIcon" icon="folder-open"></iron-icon>
+
+                    <div class="innerCardFooter">
+                        <div class="cardText">${Collections}</div>
+                    </div>
+                </div>
+            </button>
             <button type="button" class="card squareCard movieGenresCard" data-type="genres">
                 <div class="cardImageContainer coveredImage cardBox noScale">
 
-                    <div class="cardImage"></div>
+                    <iron-icon class="cardImageIcon" icon="movie-filter"></iron-icon>
 
                     <div class="innerCardFooter">
                         <div class="cardText">${Genres}</div>

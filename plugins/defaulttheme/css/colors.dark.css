@@ -93,6 +93,14 @@ paper-dialog {
     background: #F44336;
 }
 
+.movieCollectionsCard .cardImageContainer {
+    background-color: #009688;
+}
+
+.movieGenresCard .cardImageContainer {
+    background-color: #009688;
+}
+
 .tvUpcomingCard .cardImageContainer {
     background-color: #009688;
 }

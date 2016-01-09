@@ -169,29 +169,6 @@
                 element.querySelector('.allMoviesCard .cardImage').style.backgroundImage = "url('" + Emby.Models.backdropImageUrl(items[1], imgOptions) + "')";
             }
         });
-
-        Emby.Models.items({
-
-            SortBy: "IsFavoriteOrLiked,Random",
-            IncludeItemTypes: "Movie",
-            Limit: 1,
-            Recursive: true,
-            ParentId: parentId,
-            EnableImageTypes: "Backdrop",
-            ImageTypes: "Backdrop"
-
-        }).then(function (result) {
-
-            var items = result.Items;
-            var imgOptions = {
-                maxWidth: 240
-            };
-
-            if (items.length > 0) {
-                element.querySelector('.movieCollectionsCard .cardImage').style.backgroundImage = "url('" + Emby.Models.backdropImageUrl(items[0], imgOptions) + "')";
-            }
-        });
-
     }
 
     function view(element, parentId, autoFocus) {
