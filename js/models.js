@@ -751,6 +751,18 @@
         });
     }
 
+    function itemTrailers(id) {
+        return new Promise(function (resolve, reject) {
+
+            require(['connectionManager'], function (connectionManager) {
+
+                var apiClient = connectionManager.currentApiClient();
+
+                apiClient.getLocalTrailers(apiClient.getCurrentUserId(), id).then(resolve, reject);
+            });
+        });
+    }
+
     var myConnectionManager;
     function getConnectionManager() {
         return myConnectionManager;
@@ -795,7 +807,8 @@
         clearLike: clearLike,
         search: search,
         seriesImageUrl: seriesImageUrl,
-        recordings: recordings
+        recordings: recordings,
+        itemTrailers: itemTrailers
     };
 
 })(this, document);

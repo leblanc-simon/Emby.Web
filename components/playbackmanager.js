@@ -417,7 +417,12 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
         };
 
         self.playTrailer = function (item) {
+            Emby.Models.itemTrailers(item.Id).then(function (result) {
 
+                self.play({
+                    items: result
+                });
+            });
         };
 
         self.play = function (options) {
@@ -1440,7 +1445,7 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
                 promise = activePlayer.stop(true, false);
             }
 
-            return promise.then(function() {
+            return promise.then(function () {
                 reportPlayback(state, serverId, 'reportPlaybackStopped');
 
                 clearProgressInterval(activePlayer);
