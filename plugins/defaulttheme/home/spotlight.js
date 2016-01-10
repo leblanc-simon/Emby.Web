@@ -47,7 +47,7 @@
         }
     }
 
-    function startSpotlight(self, card, items, width) {
+    function startSpotlight(self, card, items, width, visibleinviewport) {
 
         if (!items.length) {
             return;
@@ -68,7 +68,7 @@
                 return;
             }
 
-            if (!Emby.Dom.visibleInViewport(card, false, 0)) {
+            if (!visibleinviewport(card, false, 0)) {
                 // If it's not visible on screen, skip it
                 return;
             }
@@ -87,7 +87,9 @@
 
         var self = this;
 
-        startSpotlight(self, card, items, width);
+        require(['visibleinviewport'], function (visibleinviewport) {
+            startSpotlight(self, card, items, width, visibleinviewport);
+        });
     }
 
     if (!globalScope.DefaultTheme) {

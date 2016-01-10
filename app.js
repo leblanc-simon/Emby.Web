@@ -210,6 +210,7 @@
             browserdeviceprofile: embyWebComponentsBowerPath + "/browserdeviceprofile",
             browser: embyWebComponentsBowerPath + "/browser",
             qualityoptions: embyWebComponentsBowerPath + "/qualityoptions",
+            visibleinviewport: embyWebComponentsBowerPath + "/visibleinviewport",
             isMobile: "bower_components/isMobile/isMobile.min",
             howler: 'bower_components/howler.js/howler.min',
             screenfull: 'bower_components/screenfull/dist/screenfull',
@@ -341,11 +342,11 @@
              'bower_components/page.js/page.js',
              'components/router',
              'pluginmanager',
+             'js/imageloader',
              'css!style/style.css',
              'js/globalize',
              'js/thememanager',
              'js/focusmanager',
-             'js/imageloader',
              'js/backdrops',
              'js/dom',
              'js/shortcuts'
@@ -365,12 +366,13 @@
                 list.push('bower_components/fetch/fetch');
             }
 
-            require(list, function (pageJs, pageObjects, pluginmanager) {
+            require(list, function (pageJs, pageObjects, pluginmanager, imageLoader) {
 
                 globalScope.page = pageJs;
                 globalScope.Emby.Page = pageObjects;
                 globalScope.Emby.TransparencyLevel = pageObjects.TransparencyLevel;
                 globalScope.Emby.PluginManager = pluginmanager;
+                globalScope.Emby.ImageLoader = imageLoader;
 
                 loadSecondLevelCoreDependencies(callback);
             });

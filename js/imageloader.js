@@ -1,4 +1,4 @@
-(function (globalScope) {
+define(['visibleinviewport'], function (visibleinviewport) {
 
     var thresholdX = screen.availWidth;
     var thresholdY = screen.availHeight;
@@ -6,7 +6,7 @@
     var wheelEvent = (document.implementation.hasFeature('Event.wheel', '3.0') ? 'wheel' : 'mousewheel');
 
     function isVisible(elem) {
-        return Emby.Dom.visibleInViewport(elem, true, thresholdX, thresholdY);
+        return visibleinviewport(elem, true, thresholdX, thresholdY);
     }
 
     function fillImage(elem) {
@@ -164,49 +164,7 @@
         return result;
     }
 
-    if (!globalScope.Emby) {
-        globalScope.Emby = {};
-    }
-
-    globalScope.Emby.ImageLoader = {
-        lazyChildren: lazyChildren,
-        getPrimaryImageAspectRatio: getPrimaryImageAspectRatio
-    };
-
-})(this);
-
-(function () {
-
-    //var worker = new Worker("js/imageloaderworker.js");
-
-    //var callbacks = {};
-
-    //worker.onmessage = function (event) {
-
-    //    var data = event.data.split('|');
-    //    var callback = callbacks[data[0]];
-
-    //    if (callback) {
-    //        callback(data[1]);
-    //    }
-    //}
-
     function setImageIntoElement(elem, url) {
-
-        //url += "&dt=" + new Date().getTime();
-
-        //worker.postMessage(url);
-
-        //callbacks[url] = function (blobUrl) {
-
-        //    callbacks[url] = null;
-
-        //    if (elem.tagName !== "IMG") {
-        //        elem.style.backgroundImage = "url('" + blobUrl + "')";
-        //    } else {
-        //        elem.setAttribute("src", blobUrl);
-        //    }
-        //};
 
         if (elem.tagName !== "IMG") {
 
@@ -226,27 +184,18 @@
         //fadeIn(elem, 1);
     }
 
-    function fadeIn(elem, iterations) {
-
-        var keyframes = [
-          { opacity: '0', offset: 0 },
-          { opacity: '1', offset: 1 }];
-        var timing = { duration: 200, iterations: iterations };
-        return elem.animate(keyframes, timing);
-    }
-
-    function simpleImageStore() {
-
-        var self = this;
-
-        self.setImageInto = setImageIntoElement;
-    }
-
     console.log('creating simpleImageStore');
-    window.ImageStore = new simpleImageStore();
+    window.ImageStore = {
+        setImageInto: setImageIntoElement
+    };
 
     if (navigator.webkitPersistentStorage) {
         require(['js/imagestore']);
     }
 
-})();
+    return {
+        lazyChildren: lazyChildren,
+        getPrimaryImageAspectRatio: getPrimaryImageAspectRatio
+    };
+
+});
