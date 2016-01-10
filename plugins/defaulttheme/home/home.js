@@ -70,7 +70,7 @@
 
                 var tabbedPage = new DefaultTheme.TabbedPage(view, {
                     handleFocus: true,
-                    immediateSpeed: 100,
+                    immediateSpeed: 100
                 });
                 tabbedPage.loadViewContent = loadViewContent;
                 tabbedPage.renderTabs(result.Items);

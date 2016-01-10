@@ -151,15 +151,15 @@
         });
 
         element.querySelector('.tvGenresCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'genres/genres.html?type=tv&parentid=' + parentId));
+            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'tv/tv.html?tab=genres&parentid=' + parentId));
         });
 
         element.querySelector('.tvUpcomingCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'tv/upcoming.html?parentid=' + parentId));
+            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'tv/tv.html?tab=upcoming&parentid=' + parentId));
         });
 
         element.querySelector('.tvFavoritesCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'tv/favorites.html?parentid=' + parentId));
+            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'tv/tv.html?tab=favorites&parentid=' + parentId));
         });
 
         self.destroy = function () {
