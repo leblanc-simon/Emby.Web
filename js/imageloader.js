@@ -1,19 +1,9 @@
-/**
- * jQuery Unveil
- * A very lightweight jQuery plugin to lazy load images
- * http://luis-almeida.github.com/unveil
- *
- * Licensed under the MIT license.
- * Copyright 2013 Luís Almeida
- * https://github.com/luis-almeida
- */
-
 (function (globalScope) {
-
-    var unveilId = 0;
 
     var thresholdX = screen.availWidth;
     var thresholdY = screen.availHeight;
+    thresholdX = 0;
+    thresholdY = 0;
     var wheelEvent = (document.implementation.hasFeature('Event.wheel', '3.0') ? 'wheel' : 'mousewheel');
 
     function isVisible(elem) {
@@ -28,25 +18,43 @@
         }
     }
 
-    function unveilElements(elems) {
+    function cancelAll(tokens) {
+        for (var i = 0, length = tokens.length; i < length; i++) {
 
-        if (!elems.length) {
+            tokens[i] = true;
+        }
+    }
+
+    function unveilElements(images) {
+
+        if (!images.length) {
             return;
         }
 
-        var images = elems;
-
-        unveilId++;
-
-        function unveil() {
+        var cancellationTokens = [];
+        function unveilInternal(tokenIndex) {
 
             var remaining = [];
+            var anyFound = false;
+            var out = false;
+
+            // TODO: This out construct assumes left to right, top to bottom
 
             for (var i = 0, length = images.length; i < length; i++) {
+
+                if (cancellationTokens[tokenIndex]) {
+                    console.log('cancel! ' + new Date().getTime());
+                    return;
+                }
                 var img = images[i];
-                if (isVisible(img)) {
+                if (!out && isVisible(img)) {
+                    anyFound = true;
                     fillImage(img);
                 } else {
+
+                    if (anyFound) {
+                        out = true;
+                    }
                     remaining.push(img);
                 }
             }
@@ -54,11 +62,23 @@
             images = remaining;
 
             if (!images.length) {
-                document.removeEventListener('focus', unveil);
-                document.removeEventListener('scroll', unveil);
-                document.removeEventListener(wheelEvent, unveil);
-                window.removeEventListener('resize', unveil);
+                document.removeEventListener('focus', unveil, true);
+                document.removeEventListener('scroll', unveil, true);
+                document.removeEventListener(wheelEvent, unveil, true);
+                window.removeEventListener('resize', unveil, true);
             }
+        }
+
+        function unveil() {
+
+            cancelAll(cancellationTokens);
+
+            var index = cancellationTokens.length;
+            cancellationTokens.length++;
+
+            setTimeout(function () {
+                unveilInternal(index);
+            }, 0);
         }
 
         document.addEventListener('scroll', unveil, true);
