@@ -143,11 +143,11 @@ define(['css!components/alphapicker/style.css'], function () {
             } else {
 
                 if (itemsContainer) {
-                    itemsContainer.removeEventListener('focus', onItemsFocusIn);
+                    itemsContainer.removeEventListener('focus', onItemsFocusIn, true);
                 }
 
                 element.removeEventListener('click', onAlphaPickerClick);
-                element.removeEventListener('focus', onAlphaPickerFocusIn);
+                element.removeEventListener('focus', onAlphaPickerFocusIn, true);
             }
         };
 

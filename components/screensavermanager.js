@@ -36,9 +36,9 @@ define([], function () {
                 activeScreenSaver = null;
             }
 
-            window.removeEventListener('click', hide);
-            window.removeEventListener('mousemove', hide);
-            window.removeEventListener('keydown', hide);
+            window.removeEventListener('click', hide, true);
+            window.removeEventListener('mousemove', hide, true);
+            window.removeEventListener('keydown', hide, true);
         }
 
         self.isShowing = function () {
