@@ -124,7 +124,9 @@
             if (isPrimary && chapter.ImageTag) {
 
                 var imgUrl = apiClient.getScaledImageUrl(itemId, {
-                    maxWidth: image.width,
+
+                    // TODO: Remove hard-coding
+                    maxWidth: 460,
                     tag: chapter.ImageTag,
                     type: "Chapter",
                     index: i
@@ -146,7 +148,9 @@
             if (isPrimary && person.PrimaryImageTag) {
 
                 var imgUrl = apiClient.getScaledImageUrl(person.Id, {
-                    maxWidth: image.width,
+
+                    // TODO: Remove hard-coding
+                    maxWidth: 260,
                     tag: person.PrimaryImageTag,
                     type: "Primary"
                 });

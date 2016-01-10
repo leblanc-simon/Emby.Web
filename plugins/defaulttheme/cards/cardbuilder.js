@@ -59,7 +59,7 @@ define(['datetime'], function (datetime) {
         else {
             options.shape = 'squareCard';
             options.rows = 3;
-            options.width = DefaultTheme.CardBuilder.homeSquareWidth;
+            options.width = 242;
         }
     }
 
@@ -1070,7 +1070,6 @@ define(['datetime'], function (datetime) {
         buildCards: buildCards,
         homeThumbWidth: 500,
         homePortraitWidth: 243,
-        homeSquareWidth: 242,
         getDisplayName: getDisplayName,
         getMediaInfoHtml: getMediaInfoHtml,
         getListViewHtml: getListViewHtml,
