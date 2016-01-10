@@ -535,7 +535,7 @@
             mediaInfoElem.innerHTML = mediaInfoHtml;
         }
 
-        var genres = [];
+        var genres = item.Genres || [];
         var genresHtml = genres.map(function (i) {
 
             return i;
