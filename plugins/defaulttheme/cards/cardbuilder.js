@@ -959,6 +959,7 @@ define(['datetime'], function (datetime) {
         var action = options.action || 'link';
 
         var isLargeStyle = options.imageSize == 'large';
+        var enableOverview = options.enableOverview;
 
         outerHtml += items.map(function (item) {
 
@@ -1028,7 +1029,7 @@ define(['datetime'], function (datetime) {
             if (!options.enableSideMediaInfo) {
                 lineCount++;
             }
-            if (options.enableOverview && item.Overview) {
+            if (enableOverview && item.Overview) {
                 lineCount++;
             }
 
@@ -1062,10 +1063,14 @@ define(['datetime'], function (datetime) {
                 html += '<div class="paperIconItemMediaInfo">' + getMediaInfoHtml(item) + '</div>';
             }
 
-            if (options.enableOverview && item.Overview) {
+            if (enableOverview && item.Overview) {
                 html += '<div secondary class="overview">';
                 html += item.Overview;
                 html += '</div>';
+
+                if (item.UserData && !item.UserData.Played) {
+                    enableOverview = false;
+                }
             }
 
             html += '</paper-item-body>';
