@@ -26,7 +26,7 @@
                 Emby.Models.item(params.parentid).then(function (item) {
 
                     if (!params.genreId) {
-                        setTitle(item.Name);
+                        setTitle(item);
                     }
                     currentItem = item;
 
