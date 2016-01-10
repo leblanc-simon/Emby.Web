@@ -427,7 +427,7 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
 
         self.play = function (options) {
 
-            validatePlayback(function () {
+            validatePlayback().then(function () {
                 if (typeof (options) === 'string') {
                     options = { ids: [options] };
                 }
@@ -481,7 +481,7 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
 
             Emby.Models.instantMix(id).then(function (result) {
 
-                validatePlayback(function () {
+                validatePlayback().then(function () {
                     playItems({
                         items: result.Items
                     });
@@ -648,13 +648,14 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
             return nowPlayingItem;
         }
 
-        function validatePlayback(fn) {
+        function validatePlayback() {
 
-            fn();
+            return new Promise(function (resolve, reject) {
 
-            //requirejs(["scripts/registrationservices"], function () {
-            //    RegistrationServices.validateFeature('playback').then(fn);
-            //});
+                require(["registrationservices"], function (registrationservices) {
+                    registrationservices.validateFeature('playback').then(resolve, reject);
+                });
+            });
         }
 
         function playItems(options, method) {
