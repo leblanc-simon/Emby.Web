@@ -190,15 +190,15 @@
         });
 
         element.querySelector('.movieGenresCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'genres/genres.html?type=movies&parentid=' + parentId));
+            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'movies/movies.html?tab=genres&parentid=' + parentId));
         });
 
         element.querySelector('.movieCollectionsCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'list/list.html') + '?type=collections&parentid=' + parentId);
+            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'movies/movies.html?tab=collections&parentid=' + parentId));
         });
 
         element.querySelector('.movieFavoritesCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'list/list.html') + '?type=favoritemovies&parentid=' + parentId);
+            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'movies/movies.html?tab=favorites&parentid=' + parentId));
         });
 
         self.destroy = function () {
