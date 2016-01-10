@@ -296,8 +296,8 @@ a {
     min-width: initial;
     text-transform: none !important;
     margin-top: 0;
-    padding-top: .1em;
-    padding-bottom: .25em;
+    padding-top: 0;
+    padding-bottom: .2em;
     font-size: 106%;
 }
 
@@ -407,7 +407,7 @@ paper-item-body .overview {
     left: 0;
     right: 10%;
     max-width: 60%;
-    font-size: 90%;
+    font-size: 84%;
     color: #ccc;
     /*position: relative;
     margin: auto;*/
@@ -415,7 +415,7 @@ paper-item-body .overview {
 
 .homePageContainer .selectedItemInfo {
     right: 2%;
-    bottom: 3%;
+    bottom: 2.5%;
 }
 
 .selectedItemInfo h2 {
