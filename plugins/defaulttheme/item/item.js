@@ -326,6 +326,13 @@
             return html;
         }
 
+        var videoStream = (mediaSource.MediaStreams || []).filter(function (i) {
+            return i.Type == 'Video';
+        })[0] || {};
+        var audioStream = (mediaSource.MediaStreams || []).filter(function (i) {
+            return i.Type == 'Audio';
+        })[0] || {};
+
         var resolutionText = getResolutionText(item);
         if (resolutionText) {
             html += '<div class="mediaInfoIcon mediaInfoText">' + resolutionText + '</div>';
@@ -363,30 +370,12 @@
             html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Media_BlueRay_white.png" />';
         }
 
-        if (mediaSource.Container == 'mkv') {
-            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Media_MKV_white.png" />';
-        }
-        else if (mediaSource.Container == 'mp4') {
-            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Media_MP4_white.png" />';
-        }
-        else if (mediaSource.Container == 'mov') {
-            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Media_MOV_white.png" />';
-        } else if (mediaSource.Container) {
+        if (mediaSource.Container) {
             html += '<div class="mediaInfoIcon mediaInfoText">' + mediaSource.Container + '</div>';
         }
 
-        if (hasCodec(mediaSource, 'Video', 'h264')) {
-            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Video_H264_white.png" />';
-        }
-        else if (hasCodec(mediaSource, 'Video', 'mpeg')) {
-            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Video_MPEG_white.png" />';
-        }
-
-        if (hasCodec(mediaSource, 'Audio', 'aac')) {
-            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Audio_AAC_white.png" />';
-        }
-        else if (hasCodec(mediaSource, 'Audio', 'mp3')) {
-            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Audio_MP3_white.png" />';
+        if (videoStream.Codec) {
+            html += '<div class="mediaInfoIcon mediaInfoText">' + videoStream.Codec + '</div>';
         }
 
         if (hasCodec(mediaSource, 'Audio', 'ac3')) {
@@ -404,6 +393,11 @@
         else if (hasCodec(mediaSource, 'Audio', 'dts')) {
 
             html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Audio_dts_white.png" />';
+
+        } else if (audioStream.Codec == 'dca' && audioStream.Profile) {
+            html += '<div class="mediaInfoIcon mediaInfoText">' + audioStream.Profile + '</div>';
+        } else if (audioStream.Codec) {
+            html += '<div class="mediaInfoIcon mediaInfoText">' + audioStream.Codec + '</div>';
         }
 
         view.querySelector('.dynamicMediaInfoIcons').innerHTML = html;

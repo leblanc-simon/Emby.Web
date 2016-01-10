@@ -197,7 +197,7 @@
     }
 
 .mediaInfoText {
-    /*display: inline-block;
+    display: inline-block;
     padding: .2em .75em;
     margin-top: 0;
     margin-bottom: 0;
@@ -208,8 +208,8 @@
     margin-right: 1em;
     font-size: 90%;
     height: auto;
-    text-transform: uppercase;*/
-    display: inline-block;
+    text-transform: uppercase;
+    /*display: inline-block;
     margin-top: 0;
     margin-bottom: 0;
     font-weight: normal;
@@ -218,7 +218,7 @@
     height: auto;
     text-transform: uppercase;
     color: #eee;
-    font-weight: 400;
+    font-weight: 400;*/
 }
 
 .paperIconItemRightButton {
