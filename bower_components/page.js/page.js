@@ -216,7 +216,14 @@
    * @api public
    */
 
-  page.back = function(path, state) {
+  page.back = function (path, state) {
+
+      if (enableHistory) {
+          // Keep it simple and mimic browser back
+          history.back();
+          return;
+      }
+
     if (page.len > 0) {
       // this may need more testing to see if all browsers
       // wait for the next tick to go back in history
