@@ -409,6 +409,8 @@ paper-item-body .overview {
     max-width: 60%;
     font-size: 90%;
     color: #ccc;
+    /*position: relative;
+    margin: auto;*/
 }
 
 .homePageContainer .selectedItemInfo {
@@ -646,12 +648,16 @@ paper-slider:hover #sliderKnob {
     background-image: url(images/rotten.png);
 }
 
-.listItemsMoreButton {
-    min-width: initial;
+.listItemsMoreButtonContainer {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 15%;
+}
+
+.listItemsMoreButton {
+    margin: .25em .25em .25em 0;
+    padding: .3em .7em;
+    font-size: 84%;
+    min-width: initial;
+    margin-left: auto;
 }
 
 .selectedItemPanel {

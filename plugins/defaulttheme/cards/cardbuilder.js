@@ -267,10 +267,8 @@ define(['datetime'], function (datetime) {
                 continue;
             }
 
-            html += '<div class="verticalSection">';
-            html += '<h2>' + item.Name + '</h2>';
-
-            html += '<div class="itemsContainer verticalItemsContainer">';
+            html += '<div class="horizontalSection focuscontainer-down">';
+            html += '<div class="sectionTitle">' + item.Name + '</div>';
 
             var showMoreButton = false;
             if (renderItems.length > options.indexLimit) {
@@ -278,6 +276,7 @@ define(['datetime'], function (datetime) {
                 showMoreButton = true;
             }
 
+            var itemsInRow = 0;
             var hasOpenRow = false;
             var hasOpenSection = false;
 
@@ -285,8 +284,27 @@ define(['datetime'], function (datetime) {
 
                 var currentItemHtml = '';
 
+                if (options.rows && itemsInRow == 0) {
+
+                    if (hasOpenRow) {
+                        currentItemHtml += '</div>';
+                        hasOpenRow = false;
+                    }
+
+                    currentItemHtml += '<div class="cardColumn">';
+                    hasOpenRow = true;
+                }
+
                 var cardClass = className;
                 currentItemHtml += buildCard(i, renderItem, apiClient, options, cardClass);
+
+                itemsInRow++;
+
+                if (options.rows && itemsInRow >= options.rows) {
+                    currentItemHtml += '</div>';
+                    hasOpenRow = false;
+                    itemsInRow = 0;
+                }
 
                 return currentItemHtml;
 
@@ -294,10 +312,11 @@ define(['datetime'], function (datetime) {
 
 
             if (showMoreButton) {
+                html += '<div class="listItemsMoreButtonContainer">';
                 html += '<paper-button class="listItemsMoreButton" data-parentid="' + options.parentId + '" data-indextype="Genres" data-indexvalue="' + item.Id + '" raised>MORE</paper-button>';
+                html += '</div>';
             }
 
-            html += '</div>';
             html += '</div>';
             html += '</div>';
         }
