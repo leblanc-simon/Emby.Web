@@ -1,4 +1,4 @@
-﻿(function () {
+﻿define(['cryptojs-md5'], function (paperdialoghelper) {
 
     function setImageIntoElement(elem, url) {
 
@@ -12,7 +12,7 @@
     }
 
     // Request Quota (only for File System API)  
-    var requestedBytes = 1024 * 1024 * 1000; 
+    var requestedBytes = 1024 * 1024 * 1000;
     var imageCacheDirectoryEntry;
     var imageCacheFolder = 'images';
 
@@ -50,122 +50,113 @@
 
         });
 
-    var fileSystem;
+    function getCacheKey(url) {
 
-    function imageFileStore() {
+        // Try to strip off the domain to share the cache between local and remote connections
+        var index = url.indexOf('://');
 
-        var self = this;
+        if (index != -1) {
+            url = url.substring(index + 3);
 
-        function getCacheKey(url) {
-
-            // Try to strip off the domain to share the cache between local and remote connections
-            var index = url.indexOf('://');
+            index = url.indexOf('/');
 
             if (index != -1) {
-                url = url.substring(index + 3);
-
-                index = url.indexOf('/');
-
-                if (index != -1) {
-                    url = url.substring(index + 1);
-                }
-
+                url = url.substring(index + 1);
             }
 
-            return CryptoJS.MD5(url).toString();
         }
 
-        function downloadToFile(url, dir, filename, callback, errorCallback) {
+        return CryptoJS.MD5(url).toString();
+    }
 
-            console.log('Downloading ' + url);
+    function downloadToFile(url, dir, filename, callback, errorCallback) {
 
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', url, true);
-            xhr.responseType = "arraybuffer";
+        console.log('Downloading ' + url);
 
-            xhr.onload = function (e) {
-                if (this.status == 200) {
-                    writeData(dir, filename, this.getResponseHeader('Content-Type'), this.response, callback, errorCallback);
-                } else {
-                    errorCallback();
-                }
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.responseType = "arraybuffer";
+
+        xhr.onload = function (e) {
+            if (this.status == 200) {
+                writeData(dir, filename, this.getResponseHeader('Content-Type'), this.response, callback, errorCallback);
+            } else {
+                errorCallback();
             }
-
-            xhr.send();
         }
 
-        function writeData(dir, filename, fileType, data, callback, errorCallback) {
+        xhr.send();
+    }
 
-            dir.getFile(filename, { create: true }, function (fileEntry) {
+    function writeData(dir, filename, fileType, data, callback, errorCallback) {
 
-                // Create a FileWriter object for our FileEntry (log.txt).
-                fileEntry.createWriter(function (fileWriter) {
+        dir.getFile(filename, { create: true }, function (fileEntry) {
 
-                    fileWriter.onwriteend = function (e) {
-                        callback(fileEntry);
-                    };
+            // Create a FileWriter object for our FileEntry (log.txt).
+            fileEntry.createWriter(function (fileWriter) {
 
-                    fileWriter.onerror = errorCallback;
+                fileWriter.onwriteend = function (e) {
+                    callback(fileEntry);
+                };
 
-                    // Create a new Blob and write it to log.txt.
-                    var blob = new Blob([data], { type: fileType });
+                fileWriter.onerror = errorCallback;
 
-                    fileWriter.write(blob);
+                // Create a new Blob and write it to log.txt.
+                var blob = new Blob([data], { type: fileType });
 
-                }, errorCallback);
+                fileWriter.write(blob);
 
             }, errorCallback);
-        }
 
-        self.getImageUrl = function (originalUrl) {
+        }, errorCallback);
+    }
 
-            return new Promise(function (resolve, reject) {
+    function getImageUrl(originalUrl) {
 
-                if (originalUrl.indexOf('tag=') != -1) {
-                    originalUrl += "&accept=webp";
-                }
+        return new Promise(function (resolve, reject) {
 
-                var key = getCacheKey(originalUrl);
+            if (originalUrl.indexOf('tag=') != -1) {
+                originalUrl += "&accept=webp";
+            }
 
-                var fileEntryCallback = function (fileEntry) {
-                    resolve(fileEntry.toURL());
-                };
+            var key = getCacheKey(originalUrl);
 
-                var errorCallback = function (e) {
-                    console.log('Imagestore error: ' + e.name);
-                    reject();
-                };
+            var fileEntryCallback = function (fileEntry) {
+                resolve(fileEntry.toURL());
+            };
 
-                if (!fileSystem || !imageCacheDirectoryEntry) {
-                    errorCallback('');
-                    return;
-                }
+            var errorCallback = function (e) {
+                console.log('Imagestore error: ' + e.name);
+                reject();
+            };
 
-                var path = '/' + imageCacheFolder + "/" + key;
+            if (!fileSystem || !imageCacheDirectoryEntry) {
+                errorCallback('');
+                return;
+            }
 
-                fileSystem.root.getFile(path, { create: false }, fileEntryCallback, function () {
+            var path = '/' + imageCacheFolder + "/" + key;
 
-                    downloadToFile(originalUrl, imageCacheDirectoryEntry, key, fileEntryCallback, errorCallback);
-                });
+            fileSystem.root.getFile(path, { create: false }, fileEntryCallback, function () {
+
+                downloadToFile(originalUrl, imageCacheDirectoryEntry, key, fileEntryCallback, errorCallback);
             });
-        };
+        });
+    }
 
-        self.setImageInto = function (elem, url) {
+    var fileSystem;
 
-            self.getImageUrl(url).then(function (localUrl) {
+    window.ImageStore = {
+        setImageInto: function (elem, url) {
+
+            getImageUrl(url).then(function (localUrl) {
 
                 setImageIntoElement(elem, localUrl);
 
             }, function () {
                 setImageIntoElement(elem, url);
             });
-        };
+        }
+    };
 
-        window.ImageStore = self;
-    }
-
-    require(['cryptojs-md5'], function () {
-        new imageFileStore();
-    });
-
-})();
+});

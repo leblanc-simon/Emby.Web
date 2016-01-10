@@ -42,7 +42,7 @@ define(['datetime'], function (datetime) {
         return name;
     }
 
-    function setShapeHome(items, options) {
+    function setShapeHorizontal(items, options, isHome) {
 
         var primaryImageAspectRatio = Emby.ImageLoader.getPrimaryImageAspectRatio(items) || 0;
 
@@ -63,7 +63,7 @@ define(['datetime'], function (datetime) {
         }
     }
 
-    function setShape(items, options) {
+    function setShapeVertical(items, options) {
 
         var primaryImageAspectRatio = Emby.ImageLoader.getPrimaryImageAspectRatio(items) || 0;
 
@@ -105,14 +105,14 @@ define(['datetime'], function (datetime) {
         var isVertical;
 
         if (options.shape == 'autoHome') {
-            setShapeHome(items, options);
+            setShapeHorizontal(items, options, true);
         }
         else if (options.shape == 'autoVertical') {
             isVertical = true;
-            setShape(items, options);
+            setShapeVertical(items, options);
         }
         else if (options.shape == 'auto') {
-            setShapeHome(items, options);
+            setShapeHorizontal(items, options);
         }
 
         if (options.indexBy == 'Genres') {
@@ -1068,9 +1068,9 @@ define(['datetime'], function (datetime) {
     var cardBuilder = {
         buildCardsHtml: buildCardsHtml,
         buildCards: buildCards,
-        homeThumbWidth: 600,
-        homePortraitWidth: 500,
-        homeSquareWidth: 330,
+        homeThumbWidth: 500,
+        homePortraitWidth: 243,
+        homeSquareWidth: 242,
         getDisplayName: getDisplayName,
         getMediaInfoHtml: getMediaInfoHtml,
         getListViewHtml: getListViewHtml,
