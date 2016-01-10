@@ -1,10 +1,17 @@
 define(['connectionManager', 'paperdialoghelper', 'shell', 'css!components/registrationservices/style'], function (connectionManager, paperdialoghelper, shell) {
 
+    var validatedFeatures = [];
+
     function validateFeature(feature, showOverlay) {
+
+        if (validatedFeatures.indexOf(feature) != -1) {
+            return Promise.resolve();
+        }
 
         return connectionManager.getRegistrationInfo('embytheater-unlock', connectionManager.currentApiClient()).then(function (registrationInfo) {
 
             if (registrationInfo.IsRegistered && !registrationInfo.IsTrial) {
+                validatedFeatures.push(feature);
                 return Promise.resolve();
             }
 
