@@ -259,6 +259,8 @@
         };
 
         var baseRoute = window.location.href.split('?')[0].replace('/index.html', '');
+        // support hashbang
+        baseRoute = baseRoute.split('#')[0];
         if (baseRoute.lastIndexOf('/') == baseRoute.length - 1) {
             baseRoute = baseRoute.substring(0, baseRoute.length - 1);
         }

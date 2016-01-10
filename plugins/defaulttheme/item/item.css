@@ -198,7 +198,7 @@
 
 .mediaInfoText {
     display: inline-block;
-    padding: .2em .75em;
+    padding: .2em .65em;
     margin-top: 0;
     margin-bottom: 0;
     color: #000;
@@ -206,7 +206,7 @@
     border-radius: 3px;
     font-weight: normal;
     margin-right: 1em;
-    font-size: 90%;
+    font-size: 84%;
     height: auto;
     text-transform: uppercase;
     /*display: inline-block;
