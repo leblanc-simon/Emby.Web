@@ -92,6 +92,10 @@ paper-button {
         vertical-align: middle;
     }
 
+    paper-button iron-icon + span {
+        margin-left: .5em;
+    }
+
     paper-button[focused], paper-button:focus {
         font-weight: normal !important;
     }

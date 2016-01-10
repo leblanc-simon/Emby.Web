@@ -154,15 +154,19 @@ paper-item-body [secondary] {
     color: #bbb !important;
 }
 
-paper-icon-item[focused] {
-    background-color: rgba(30,30,30,.90);
-    border: 1px solid #52B54B;
-    outline: none !important;
+paper-icon-item {
+    border: 1px solid transparent;
 }
 
-paper-icon-item:focus::before {
-    display: none;
-}
+    paper-icon-item[focused] {
+        background-color: rgba(20,20,20,.90);
+        border: 1px solid #52B54B;
+        outline: none !important;
+    }
+
+    paper-icon-item:focus::before {
+        display: none;
+    }
 
 .btnUserData {
     color: #aaa;
