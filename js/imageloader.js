@@ -2,8 +2,7 @@
 
     var thresholdX = screen.availWidth;
     var thresholdY = screen.availHeight;
-    thresholdX = 0;
-    thresholdY = 0;
+
     var wheelEvent = (document.implementation.hasFeature('Event.wheel', '3.0') ? 'wheel' : 'mousewheel');
 
     function isVisible(elem) {
@@ -43,7 +42,6 @@
             for (var i = 0, length = images.length; i < length; i++) {
 
                 if (cancellationTokens[tokenIndex]) {
-                    console.log('cancel! ' + new Date().getTime());
                     return;
                 }
                 var img = images[i];
@@ -78,7 +76,7 @@
 
             setTimeout(function () {
                 unveilInternal(index);
-            }, 0);
+            }, 1);
         }
 
         document.addEventListener('scroll', unveil, true);
