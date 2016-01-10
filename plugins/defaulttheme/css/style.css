@@ -113,10 +113,14 @@ a {
 
 .headerLeft {
     margin-right: auto;
+    display: flex;
+    align-items: center;
 }
 
 .headerRight {
     margin-left: auto;
+    display: flex;
+    align-items: center;
 }
 
 .headerClock {
@@ -454,10 +458,6 @@ paper-item-body .overview {
     text-overflow: ellipsis;
 }
 
-.alphaPicker {
-    margin-top: 1em;
-}
-
 .verticalItemsContainer {
     display: flex;
     flex-direction: row;
@@ -559,10 +559,6 @@ paper-item-body .overview {
 
 /* 2560 * 1440 */
 @media all and (min-height: 1440px) {
-
-    .alphaPicker {
-        margin-top: 0;
-    }
 
     .horizontalPageContent .squareCard .cardImageContainer {
         width: 280px;
