@@ -363,11 +363,11 @@
         }
 
         if (item.VideoType == 'Dvd') {
-            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Media_DVD_white.png" />';
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath('defaulttheme', 'css/mediaicons/S_Media_DVD_white.png') + '" />';
         }
 
         if (item.VideoType == 'BluRay') {
-            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Media_BlueRay_white.png" />';
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath('defaulttheme', 'css/mediaicons/S_Media_BlueRay_white.png') + '" />';
         }
 
         if (mediaSource.Container) {
@@ -380,19 +380,19 @@
 
         if (hasCodec(mediaSource, 'Audio', 'ac3')) {
 
-            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Audio_ac3_white.png" />';
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath('defaulttheme', 'css/mediaicons/S_Audio_ac3_white.png') + '" />';
         }
         else if (hasCodec(mediaSource, 'Audio', 'truehd')) {
 
-            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Audio_DDHD_white.png" />';
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath('defaulttheme', 'css/mediaicons/S_Audio_DDHD_white.png') + '" />';
         }
         else if (hasCodec(mediaSource, 'Audio', 'dts-hd ma')) {
 
-            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Audio_dtsHD_white.png" />';
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath('defaulttheme', 'css/mediaicons/S_Audio_dtsHD_white.png') + '" />';
         }
         else if (hasCodec(mediaSource, 'Audio', 'dts')) {
 
-            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="../css/mediaicons/S_Audio_dts_white.png" />';
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath('defaulttheme', 'css/mediaicons/S_Audio_dts_white.png') + '" />';
 
         } else if (audioStream.Codec == 'dca' && audioStream.Profile) {
             html += '<div class="mediaInfoIcon mediaInfoText">' + audioStream.Profile + '</div>';
