@@ -185,7 +185,7 @@
 }
 
 .mediaInfoIcon {
-    height: 44px;
+    height: 40px;
     fill: #ccc;
     color: #ccc;
     vertical-align: middle;
@@ -214,11 +214,11 @@
     margin-bottom: 0;
     font-weight: normal;
     margin-right: .6em;
-    font-size: 160%;
+    font-size: 150%;
     height: auto;
     text-transform: uppercase;
     color: #eee;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .paperIconItemRightButton {
