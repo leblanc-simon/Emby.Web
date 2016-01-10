@@ -647,7 +647,7 @@ define(['datetime'], function (datetime) {
     function buildCards(items, options) {
 
         // Abort if the container has been disposed
-        if (!Emby.Dom.isInDocument(options.itemsContainer)) {
+        if (!document.body.contains(options.itemsContainer)) {
             return;
         }
 

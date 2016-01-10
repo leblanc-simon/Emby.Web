@@ -63,7 +63,7 @@
 
         self.interval = setInterval(function () {
 
-            if (!Emby.Dom.isInDocument(card)) {
+            if (!document.body.contains(card)) {
                 clearInterval(self.interval);
                 return;
             }

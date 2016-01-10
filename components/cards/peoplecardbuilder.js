@@ -78,7 +78,7 @@ define([], function () {
     function buildPeopleCards(items, options) {
 
         // Abort if the container has been disposed
-        if (!Emby.Dom.isInDocument(options.parentContainer)) {
+        if (!document.body.contains(options.parentContainer)) {
             return;
         }
 

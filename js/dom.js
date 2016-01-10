@@ -43,20 +43,11 @@
         return vVisible && hVisible;
     }
 
-    function isInDocument(card) {
-
-        if (document.contains) {
-            return document.contains(card);
-        }
-        return document.body.contains(card);
-    }
-
     if (!globalScope.Emby) {
         globalScope.Emby = {};
     }
 
     globalScope.Emby.Dom = {
-        isInDocument: isInDocument,
         visibleInViewport: visibleInViewport,
         parentWithClass: parentWithClass
     };

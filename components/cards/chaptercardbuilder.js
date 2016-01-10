@@ -68,7 +68,7 @@ define([], function () {
     function buildChapterCards(item, chapters, options) {
 
         // Abort if the container has been disposed
-        if (!Emby.Dom.isInDocument(options.parentContainer)) {
+        if (!document.body.contains(options.parentContainer)) {
             return;
         }
 
