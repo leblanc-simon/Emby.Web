@@ -61,13 +61,15 @@
     var cacheParam = new Date().getTime();
     function loadTranslation(translations, lang) {
 
+        lang = normalizeLocaleName(lang);
+
         var filtered = translations.filter(function (t) {
-            return t.lang == lang;
+            return normalizeLocaleName(t.lang) == lang;
         });
 
         if (!filtered.length) {
             filtered = translations.filter(function (t) {
-                return t.lang == 'en-us';
+                return normalizeLocaleName(t.lang) == 'en-us';
             });
         }
 
