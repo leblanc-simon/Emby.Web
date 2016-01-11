@@ -189,10 +189,6 @@
             Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'movies/movies.html?parentid=' + parentId));
         });
 
-        element.querySelector('.movieGenresCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'movies/movies.html?tab=genres&parentid=' + parentId));
-        });
-
         element.querySelector('.movieCollectionsCard').addEventListener('click', function () {
             Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'movies/movies.html?tab=collections&parentid=' + parentId));
         });

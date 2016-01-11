@@ -150,10 +150,6 @@
             Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'tv/tv.html?parentid=' + parentId));
         });
 
-        element.querySelector('.tvGenresCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'tv/tv.html?tab=genres&parentid=' + parentId));
-        });
-
         element.querySelector('.tvUpcomingCard').addEventListener('click', function () {
             Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'tv/tv.html?tab=upcoming&parentid=' + parentId));
         });
