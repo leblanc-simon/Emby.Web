@@ -127,7 +127,14 @@
                 cardImageContainer = '<div class="cardImage" style="background-image:url(\'' + route.thumbImage + '\');"></div>';
             }
             else {
-                cardImageContainer = '<iron-icon class="cardImageIcon" icon="settings"></iron-icon>';
+
+                var icon = 'settings';
+
+                if (route.category == 'Playback') {
+                    icon = 'ondemand-video';
+                }
+
+                cardImageContainer = '<iron-icon class="cardImageIcon" icon="' + icon + '"></iron-icon>';
             }
 
             var tagName = 'paper-button';
