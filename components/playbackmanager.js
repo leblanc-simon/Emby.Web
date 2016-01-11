@@ -192,7 +192,7 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
             }
         };
 
-        self.setAudioStreamIndex = function (player, index) {
+        self.setAudioStreamIndex = function (index) {
 
             var player = currentPlayer;
 
