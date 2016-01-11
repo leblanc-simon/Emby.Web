@@ -378,23 +378,7 @@
             html += '<div class="mediaInfoIcon mediaInfoText">' + videoStream.Codec + '</div>';
         }
 
-        if (hasCodec(mediaSource, 'Audio', 'ac3')) {
-
-            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath('defaulttheme', 'css/mediaicons/S_Audio_ac3_white.png') + '" />';
-        }
-        else if (hasCodec(mediaSource, 'Audio', 'truehd')) {
-
-            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath('defaulttheme', 'css/mediaicons/S_Audio_DDHD_white.png') + '" />';
-        }
-        else if (hasCodec(mediaSource, 'Audio', 'dts-hd ma')) {
-
-            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath('defaulttheme', 'css/mediaicons/S_Audio_dtsHD_white.png') + '" />';
-        }
-        else if (hasCodec(mediaSource, 'Audio', 'dts')) {
-
-            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath('defaulttheme', 'css/mediaicons/S_Audio_dts_white.png') + '" />';
-
-        } else if (audioStream.Codec == 'dca' && audioStream.Profile) {
+        if (audioStream.Codec == 'dca' && audioStream.Profile) {
             html += '<div class="mediaInfoIcon mediaInfoText">' + audioStream.Profile + '</div>';
         } else if (audioStream.Codec) {
             html += '<div class="mediaInfoIcon mediaInfoText">' + audioStream.Codec + '</div>';

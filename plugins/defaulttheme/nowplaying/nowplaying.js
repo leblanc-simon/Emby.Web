@@ -91,9 +91,9 @@
         function onPlaybackStop(e, stopInfo) {
 
             releasePlayer();
-            setCurrentItem(null);
 
             if (stopInfo.nextMediaType != 'Audio') {
+                setCurrentItem(null);
                 Emby.Page.back();
             }
         }
