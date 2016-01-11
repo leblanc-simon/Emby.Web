@@ -527,7 +527,7 @@
 
         var baseUrl = Emby.Page.baseUrl() + '/strings/';
 
-        var languages = ['en-us'];
+        var languages = ['en-US'];
 
         var translations = languages.map(function (i) {
             return {
