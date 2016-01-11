@@ -767,6 +767,18 @@
         });
     }
 
+    function extras(id) {
+        return new Promise(function (resolve, reject) {
+
+            require(['connectionManager'], function (connectionManager) {
+
+                var apiClient = connectionManager.currentApiClient();
+
+                apiClient.getSpecialFeatures(apiClient.getCurrentUserId(), id).then(resolve, reject);
+            });
+        });
+    }
+
     var myConnectionManager;
     function getConnectionManager() {
         return myConnectionManager;
@@ -812,7 +824,8 @@
         search: search,
         seriesImageUrl: seriesImageUrl,
         recordings: recordings,
-        itemTrailers: itemTrailers
+        itemTrailers: itemTrailers,
+        extras: extras
     };
 
 })(this, document);

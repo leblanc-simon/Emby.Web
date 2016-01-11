@@ -41,6 +41,7 @@
                         renderMediaInfoIcons(view, item);
                         renderPeople(view, item);
                         renderScenes(view, item);
+                        renderExtras(view, item);
                         renderSimilar(view, item);
                         createVerticalScroller(view, self);
 
@@ -1041,6 +1042,35 @@
                     itemsContainer: section.querySelector('.itemsContainer'),
                     coverImage: true
                 });
+            });
+        });
+    }
+
+    function renderExtras(view, item) {
+
+        var section = view.querySelector('.extrasSection');
+
+        if (!item.SpecialFeatureCount) {
+            section.classList.add('hide');
+            return;
+        }
+
+        Emby.Models.extras(item.Id).then(function (items) {
+
+            if (!items.length) {
+                section.classList.add('hide');
+                return;
+            }
+
+            section.classList.remove('hide');
+
+            DefaultTheme.CardBuilder.buildCards(items, {
+                parentContainer: section,
+                itemsContainer: section.querySelector('.itemsContainer'),
+                shape: 'autoVertical',
+                scalable: true,
+                showTitle: true,
+                action: 'playallfromhere'
             });
         });
     }
