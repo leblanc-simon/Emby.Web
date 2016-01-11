@@ -333,6 +333,14 @@
             return i.Type == 'Audio';
         })[0] || {};
 
+        if (item.VideoType == 'Dvd') {
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath('defaulttheme', 'css/mediaicons/S_Media_DVD_white.png') + '" />';
+        }
+
+        if (item.VideoType == 'BluRay') {
+            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath('defaulttheme', 'css/mediaicons/S_Media_BlueRay_white.png') + '" />';
+        }
+
         var resolutionText = getResolutionText(item);
         if (resolutionText) {
             html += '<div class="mediaInfoIcon mediaInfoText">' + resolutionText + '</div>';
@@ -360,14 +368,6 @@
 
         if (channelText) {
             html += '<div class="mediaInfoIcon mediaInfoText">' + channelText + '</div>';
-        }
-
-        if (item.VideoType == 'Dvd') {
-            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath('defaulttheme', 'css/mediaicons/S_Media_DVD_white.png') + '" />';
-        }
-
-        if (item.VideoType == 'BluRay') {
-            html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath('defaulttheme', 'css/mediaicons/S_Media_BlueRay_white.png') + '" />';
         }
 
         if (mediaSource.Container) {
