@@ -238,6 +238,7 @@
             return Emby.Models.items({
                 StartIndex: startIndex,
                 Limit: limit,
+                SortBy: 'SortName',
                 Recursive: true,
                 GenreIds: params.genreId,
                 ParentId: item.Id,
