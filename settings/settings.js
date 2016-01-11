@@ -91,11 +91,11 @@
                         html += '</div>';
                     }
 
-                    html += '<div>';
+                    html += '<div class="verticalSection">';
                     html += '<h1>';
                     html += category;
                     html += '</h1>';
-                    html += '<div>';
+                    html += '<div class="itemsContainer verticalItemsContainer">';
                 }
 
                 currentCategory = category;
