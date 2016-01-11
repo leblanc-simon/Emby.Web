@@ -1,10 +1,32 @@
 (function (globalScope) {
 
     var allTranslations = {};
+    var currentCulture;
 
     function getCurrentLocale() {
 
-        return 'en-us';
+        return currentCulture;
+    }
+
+    function updateCurrentCulture() {
+        var culture = navigator.language || navigator.userLanguage || 'en-us';
+
+        currentCulture = normalizeLocaleName(culture);
+    }
+
+    function normalizeLocaleName(culture) {
+
+        culture = culture.replace('_', '-');
+
+        // If it's de-DE, convert to just de
+        var parts = culture.split('-');
+        if (parts.length == 2) {
+            if (parts[0].toLowerCase() == parts[1].toLowerCase()) {
+                culture = parts[0].toLowerCase();
+            }
+        }
+
+        return culture;
     }
 
     function getDictionary(module) {
@@ -145,6 +167,8 @@
         html = html.replace('${' + key + '}', val);
         return translateHtml(html, module);
     }
+
+    updateCurrentCulture();
 
     globalScope.Globalize = {
         translate: translate,
