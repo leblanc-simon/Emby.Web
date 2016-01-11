@@ -26,7 +26,7 @@
             }
         }
 
-        return culture;
+        return culture.toLowerCase();
     }
 
     function getDictionary(module) {
@@ -81,6 +81,7 @@
             }
 
             var url = filtered[0].path;
+
             url += url.indexOf('?') == -1 ? '?' : '&';
             url += 'v=' + cacheParam;
 
