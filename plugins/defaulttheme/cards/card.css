@@ -75,10 +75,6 @@ button.card {
 
     .card[focused] .cardBox, .card:focus .cardBox {
         border-color: #fff;
-        /*border-color: rgba(0, 0, 0, .6);*/
-        /*-moz-box-shadow: #fff 0px 0px 1px 4px;
-        box-shadow: #fff 0px 0px 1px 4px;*/
-        /*border-radius: 5px!important;*/
     }
 
 /*.card[focused]:not(.noScale) .cardBox, .card:focus:not(.noScale) .cardBox {
@@ -145,9 +141,9 @@ button.card {
     background-position: center center;
 }
 
-.coveredImage.noScale, .coveredImage.noScale .cardImage {
-    background-size: cover;
-}
+    .coveredImage.noScale, .coveredImage.noScale .cardImage {
+        background-size: cover;
+    }
 
 .cardFooter {
     padding: .25em .25em;
@@ -211,13 +207,13 @@ button.card {
 }
 
 .cardCountIndicator {
-    right: 5px;
-    top: 5px;
+    right: .5vh;
+    top: .5vh;
     position: absolute;
     background: rgba(82,181,75,1);
     border-radius: 500px;
-    width: 40px;
-    height: 40px;
+    width: 3.8vh;
+    height: 3.8vh;
     display: -ms-flex;
     display: -webkit-flex;
     display: flex;
@@ -229,13 +225,13 @@ button.card {
 }
 
 .playedIndicator {
-    right: 5px;
-    top: 5px;
+    right: .5vh;
+    top: .5vh;
     position: absolute;
     background: rgba(82,181,75,1);
     border-radius: 500px;
-    width: 40px;
-    height: 40px;
+    width: 3.8vh;
+    height: 3.8vh;
     display: -ms-flex;
     display: -webkit-flex;
     display: flex;
@@ -244,20 +240,11 @@ button.card {
     color: #fff;
 }
 
-.emptyCardImageContainer {
-    font-size: 90%;
-}
-
-/* 2560 * 1440 */
-@media all and (min-height: 1440px) {
-
-    .playedIndicator {
-        width: 56px;
-        height: 56px;
+    .playedIndicator iron-icon {
+        width: 2.23vh;
+        height: 2.23vh;
     }
 
-        .playedIndicator iron-icon {
-            width: 34px;
-            height: 34px;
-        }
+.emptyCardImageContainer {
+    font-size: 90%;
 }
