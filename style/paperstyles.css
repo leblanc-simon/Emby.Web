@@ -34,6 +34,16 @@ paper-dialog {
     font-family: inherit !important;
 }
 
+    paper-dialog > * {
+        /* Don't like this but it's better than the px-value that polymer sets */
+        margin-top: 1em;
+    }
+
+        paper-dialog > *:first-child {
+            /* Don't like this but it's better than the px-value that polymer sets */
+            margin-top: 1em;
+        }
+
 paper-toast {
     font-size: inherit !important;
 }

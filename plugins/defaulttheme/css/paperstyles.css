@@ -2,10 +2,6 @@ paper-dialog .buttons {
     padding: 2em 1em 1em 2em;
 }
 
-paper-dialog > * {
-    margin-top: 40px;
-}
-
 paper-progress.block {
     display: block;
     width: 100%;
@@ -45,14 +41,14 @@ paper-icon-item {
     }
 
 .paperIconItemImage {
-    width: 80px;
-    height: 80px;
+    width: 7.4vh;
+    height: 7.4vh;
     background-repeat: no-repeat;
     background-size: contain;
 }
 
 paper-icon-item #contentIcon {
-    width: 95px;
+    width: 8.8vh;
 }
 
 paper-icon-item.largeImage #contentIcon {
@@ -66,7 +62,7 @@ paper-icon-item.largeImage {
 
     paper-icon-item.largeImage .paperIconItemImage {
         width: 100%;
-        height: 263px;
+        height: 24.4vh;
         background-position: center center;
         position: relative;
     }
@@ -80,21 +76,4 @@ paper-icon-item.largeImage {
 
 paper-icon-item[focused] paper-item-body div {
     color: inherit !important;
-}
-
-/* 2560 * 1440 */
-@media all and (min-height: 1440px) {
-
-    .paperIconItemImage {
-        width: 120px;
-        height: 120px;
-    }
-
-    paper-icon-item #contentIcon {
-        width: 135px;
-    }
-
-    paper-icon-item.largeImage .paperIconItemImage {
-        height: 362px;
-    }
 }

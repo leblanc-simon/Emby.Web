@@ -106,7 +106,8 @@
 
     .detailImageContainer paper-progress {
         position: relative;
-        top: -6px;
+        /* Matches paper-progress height set in paperstyles */
+        top: -.56vh;
     }
 
 .detailImage {

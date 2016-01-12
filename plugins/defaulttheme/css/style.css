@@ -598,11 +598,11 @@ paper-item-body .overview {
 }
 
 .paper-progress-0 #progressContainer.paper-progress, .paper-progress-0 .indeterminate.paper-progress:after {
-    height: 6px;
+    height: .56vh;
 }
 
 paper-slider #progressContainer {
-    height: 6px !important;
+    height: .56vh !important;
 }
 
 paper-slider #sliderKnob {
