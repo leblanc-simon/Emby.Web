@@ -1,74 +1,25 @@
 paper-icon-button.mediumSizeIcon {
-    height: 40px;
-    width: 40px;
+    height: 4.6vh;
+    width: 4.6vh;
+}
+
+iron-icon.mediumSizeIcon {
+    height: 3.7vh !important;
+    width: 3.7vh !important;
 }
 
 .largeIcon {
-    width: 48px;
-    height: 48px;
+    width: 5.2vh;
+    height: 5.2vh;
 }
 
 .xlargePaperIconButton {
-    width: 50px;
-    height: 50px;
+    width: 7.4vh;
+    height: 7.4vh;
 }
 
-/* 1080p */
-@media all and (min-height: 1080px) {
-
-    paper-icon-button.mediumSizeIcon {
-        height: 50px;
-        width: 50px;
+    /* Tone these down a little because they end up looking massive */
+    .xlargePaperIconButton[icon='thumb-up'], .xlargePaperIconButton[icon='thumb-down'], .xlargePaperIconButton[icon='favorite'] {
+        width: 5.9vh;
+        height: 5.9vh;
     }
-
-    iron-icon.mediumSizeIcon {
-        height: 40px !important;
-        width: 40px !important;
-    }
-
-    .largeIcon {
-        width: 56px;
-        height: 56px;
-    }
-
-    .xlargePaperIconButton {
-        width: 80px;
-        height: 80px;
-    }
-
-        /* Tone these down a little because they end up looking massive */
-        .xlargePaperIconButton[icon='thumb-up'], .xlargePaperIconButton[icon='thumb-down'], .xlargePaperIconButton[icon='favorite'] {
-            width: 64px;
-            height: 64px;
-        }
-}
-
-/* 2560 * 1440 */
-@media all and (min-height: 1440px) {
-
-    paper-icon-button.mediumSizeIcon {
-        width: 56px;
-        height: 56px;
-    }
-
-    iron-icon.mediumSizeIcon {
-        height: 48px !important;
-        width: 48px !important;
-    }
-
-    .largeIcon {
-        width: 64px;
-        height: 64px;
-    }
-
-    .xlargePaperIconButton {
-        width: 100px;
-        height: 100px;
-    }
-
-        /* Tone these down a little because they end up looking massive */
-        .xlargePaperIconButton[icon='thumb-up'], .xlargePaperIconButton[icon='thumb-down'], .xlargePaperIconButton[icon='favorite'] {
-            width: 80px;
-            height: 80px;
-        }
-}
