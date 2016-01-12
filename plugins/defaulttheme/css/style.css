@@ -267,25 +267,6 @@ a {
     padding-left: .1em;
 }
 
-.horizontalPageContent .squareCard .cardImageContainer {
-    width: 132px;
-    height: 132px;
-}
-
-.horizontalPageContent .backdropCard .cardImageContainer {
-    width: 220px;
-    height: 123.75px;
-}
-
-.horizontalPageContent .portraitCard .cardImageContainer {
-    width: 132px;
-    height: 198px;
-}
-
-.horizontalPageContent .loginSquareCard {
-    width: 230px;
-}
-
 .mediaInfoItem {
     display: inline-block;
     margin: 0 .9em 0 0;
