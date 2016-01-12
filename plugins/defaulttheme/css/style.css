@@ -433,6 +433,21 @@ paper-item-body .overview {
     height: 32.96vh;
 }
 
+.listPageContent .squareCard .cardImageContainer {
+    width: 21.5vh;
+    height: 21.5vh;
+}
+
+.listPageContent .backdropCard .cardImageContainer {
+    width: 38.222vh;
+    height: 21.5vh;
+}
+
+.listPageContent .portraitCard .cardImageContainer {
+    width: 21.7333vh;
+    height: 32.6vh;
+}
+
 .horizontalPageContent .loginSquareCard {
     width: 35.2vh;
 }
