@@ -454,10 +454,6 @@ paper-item-body .overview {
         width: 149px;
         height: 224px;
     }
-
-    .horizontalPageContent .loginSquareCard {
-        width: 280px;
-    }
 }
 
 /* 1080p */
@@ -491,10 +487,6 @@ paper-item-body .overview {
     .homePageContent .portraitCard .cardImageContainer {
         width: 237px;
         height: 356px;
-    }
-
-    .horizontalPageContent .loginSquareCard {
-        width: 340px;
     }
 }
 
@@ -530,10 +522,10 @@ paper-item-body .overview {
         width: 325px;
         height: 488px;
     }
+}
 
-    .horizontalPageContent .loginSquareCard {
-        width: 400px;
-    }
+.horizontalPageContent .loginSquareCard {
+    width: 17.8vw;
 }
 
 .paper-progress-0 #progressContainer.paper-progress, .paper-progress-0 .indeterminate.paper-progress:after {
