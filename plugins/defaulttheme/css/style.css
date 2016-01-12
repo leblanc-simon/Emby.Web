@@ -7,11 +7,11 @@ a {
 }
 
 .headerLogo {
-    background-position: center center;
+    background-position: left center;
     background-repeat: no-repeat;
-    background-size: cover;
-    width: 132px;
-    height: 40px;
+    background-size: contain;
+    width: 6.9vw;
+    height: 3.7vh;
     vertical-align: middle;
     display: inline-block;
 }
@@ -20,64 +20,22 @@ a {
     display: inline-block;
     vertical-align: middle;
     margin: 0;
-    height: 40px;
+    height: 5.6vh;
 }
 
 .pageTitleWithLogo {
     background-position: left center;
     background-size: contain;
     background-repeat: no-repeat;
-    width: 300px;
+    width: 20.83vw;
 }
 
 .headerAudioPlayerButton {
     color: #52B54B;
 }
 
-/* 720p */
-@media all and (min-height: 720px) {
-
-    .headerLogo {
-        width: 132px;
-        height: 40px;
-    }
-
-    .pageTitle {
-        height: 50px;
-    }
-}
-
-/* 720p */
-@media all and (min-height: 1080px) {
-
-    .pageTitle {
-        height: 60px;
-    }
-
-    .pageTitleWithLogo {
-        width: 400px;
-    }
-}
-
-/* 2560 * 1440 */
-@media all and (min-height: 1440px) {
-
-    .headerLogo {
-        width: 231px;
-        height: 70px;
-    }
-
-    .pageTitle {
-        height: 70px;
-    }
-
-    .pageTitleWithLogo {
-        width: 500px;
-    }
-}
-
 .headerBackButton {
-    margin-left: -30px;
+    margin-left: -1.6vw;
     padding: 0 4px;
 }
 
@@ -158,9 +116,8 @@ a {
 }
 
 .centeredPageContent {
-    width: 70%;
-    max-width: 800px;
-    margin: 0 auto;
+    width: 50%;
+    margin: 14vh auto auto;
 }
 
 .itemScrollFrame.scrollFrameX .scrollSlider {
@@ -203,22 +160,6 @@ a {
     padding: 0 2%;
 }
 
-/* 1080p */
-@media all and (min-height: 1080px) {
-
-    .centeredPageContent {
-        /* If the content is small, try to prevent it from getting shoved too far down the screen*/
-        min-height: 70%;
-    }
-}
-
-@media all and (min-width: 2000px) {
-
-    .centeredPageContent {
-        max-width: 50%;
-    }
-}
-
 .centeredPageContent h1, .horizontalPageContent h1 {
     margin-top: 0;
 }
@@ -229,7 +170,7 @@ a {
 
 .fieldDescription {
     font-size: 85%;
-    padding: 5px 0;
+    padding: .2em 0;
 }
 
 .scrollFrameY {
@@ -260,8 +201,8 @@ a {
     }
 
 ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 1vh;
+    height: 1vh;
 }
 
 ::-webkit-scrollbar-button:start:decrement,
@@ -351,8 +292,8 @@ a {
 }
 
 iron-icon.mediaInfoItem {
-    width: 44px;
-    height: 44px;
+    width: 4vh;
+    height: 4vh;
     margin-right: .6em;
 }
 
@@ -383,17 +324,15 @@ h2.listItemTitle {
 }
 
 .starRatingContainer {
-    display: inline-block;
+    display: inline-flex;
     vertical-align: middle;
     padding-top: 0;
     padding-bottom: 0;
-    position: relative;
-    top: -3px;
 }
 
     .starRatingContainer iron-icon {
-        width: 34px;
-        height: 34px;
+        width: 3.15vh;
+        height: 3.15vh;
         color: #CB272A;
     }
 
@@ -429,13 +368,13 @@ paper-item-body .overview {
 }
 
     .selectedItemMediaInfo iron-icon {
-        width: 32px;
-        height: 32px;
+        width: 2.96vh;
+        height: 2.96vh;
     }
 
     .selectedItemMediaInfo .starRatingContainer iron-icon {
-        width: 32px;
-        height: 32px;
+        width: 2.96vh;
+        height: 2.96vh;
     }
 
 .selectedItemInfoInnerWithLogo {
@@ -633,18 +572,18 @@ paper-slider:hover #sliderKnob {
 }
 
 .criticRatingFresh {
-    padding-left: 34px;
+    padding-left: 3.15vh;
     background-position: left center;
     background-repeat: no-repeat;
-    background-size: auto 28px;
+    background-size: auto 2.6vh;
     background-image: url(images/fresh.png);
 }
 
 .criticRatingRotten {
-    padding-left: 34px;
+    padding-left: 3.15vh;
     background-position: left center;
     background-repeat: no-repeat;
-    background-size: auto 28px;
+    background-size: auto 2.6vh;
     background-image: url(images/rotten.png);
 }
 
