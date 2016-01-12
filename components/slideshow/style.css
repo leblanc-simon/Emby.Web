@@ -37,8 +37,8 @@
 .btnSlideshowExit {
     z-index: 1002;
     position: absolute;
-    top: .5em;
-    right: .5em;
+    top: 1.25%;
+    right: 1%;
 }
 
 .slideshowControlBar {

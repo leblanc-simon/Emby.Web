@@ -6,10 +6,10 @@
 
 .mainAnimatedPages {
     position: absolute;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     height: 100%;
 }
 
@@ -114,8 +114,8 @@ iron-overlay-backdrop.iron-overlay-backdrop-0[opened] {
 }
 
 .controlBoxButton {
-    width: 36px;
-    height: 36px;
+    width: 3.3vh;
+    height: 3.3vh;
     padding: 0 8px;
     margin: 0;
 }

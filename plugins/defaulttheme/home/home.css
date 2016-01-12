@@ -30,7 +30,3 @@
         height: 654px;
     }
 }
-
-.movieGenresCard .cardImage, .tvGenresCard .cardImage {
-    background-image: url(../css/images/popcorn.jpg);
-}
