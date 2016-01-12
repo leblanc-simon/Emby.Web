@@ -114,8 +114,8 @@ iron-overlay-backdrop.iron-overlay-backdrop-0[opened] {
 }
 
 .controlBoxButton {
-    width: 3.3vh;
-    height: 3.3vh;
+    height: 36px;
+    width: 36px;
     padding: 0 8px;
     margin: 0;
 }

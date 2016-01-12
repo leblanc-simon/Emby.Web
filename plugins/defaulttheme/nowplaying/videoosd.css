@@ -39,7 +39,7 @@
 
 .osdVolumeSlider {
     display: inline-flex !important;
-    width: 150px;
+    width: 8vw;
 }
 
 .volumeButtons {
@@ -67,9 +67,9 @@
         right: 0;
         height: auto;
         width: 100%;
-        -moz-box-shadow: 0px 0 20px #000;
-        -webkit-box-shadow: 0px 0 20px #000;
-        box-shadow: 0px 0 20px #000;
+        -moz-box-shadow: 0 0 1.9vh #000;
+        -webkit-box-shadow: 0 0 1.9vh #000;
+        box-shadow: 0 0 1.9vh #000;
         border: solid 1px #222;
     }
 
@@ -81,13 +81,11 @@
 .osdMediaInfo {
     margin-left: 1em;
     color: #eee;
+    display: flex;
+    align-items: flex-end;
 }
 
 .osdTextContainer {
     display: flex;
     align-items: baseline;
 }
-
-    .osdTextContainer .starRatingContainer {
-        top: -6px;
-    }

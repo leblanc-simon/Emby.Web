@@ -222,8 +222,7 @@
             if (Math.abs(eventX - obj.x) < 10 && Math.abs(eventY - obj.y) < 10) {
                 return;
             }
-
-            console.log('x: ' + eventX + ' y: ' + eventY);
+			
             obj.x = eventX;
             obj.y = eventY;
 
