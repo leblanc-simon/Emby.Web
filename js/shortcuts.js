@@ -1,5 +1,23 @@
 (function (globalScope) {
 
+    function playAllFromHere(card) {
+        var cards = card.parentNode.querySelectorAll('.itemAction[data-id]');
+        var ids = [];
+
+        var foundCard = false;
+        for (var i = 0, length = cards.length; i < length; i++) {
+            if (cards[i] == card) {
+                foundCard = true;
+            }
+            if (foundCard) {
+                ids.push(cards[i].getAttribute('data-id'));
+            }
+        }
+        Emby.PlaybackManager.play({
+            ids: ids
+        });
+    }
+
     // Add some shortcuts
     document.addEventListener('click', function (e) {
 
@@ -37,22 +55,7 @@
                 }
 
                 else if (action == 'playallfromhere') {
-
-                    var cards = card.parentNode.querySelectorAll('.itemAction[data-id]');
-                    var ids = [];
-
-                    var foundCard = false;
-                    for (var i = 0, length = cards.length; i < length; i++) {
-                        if (cards[i] == card) {
-                            foundCard = true;
-                        }
-                        if (foundCard) {
-                            ids.push(cards[i].getAttribute('data-id'));
-                        }
-                    }
-                    Emby.PlaybackManager.play({
-                        ids: ids
-                    });
+                    playAllFromHere(card);
                 }
 
                 else if (action == 'setplaylistindex') {
