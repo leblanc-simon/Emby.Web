@@ -737,7 +737,7 @@
 
             var html = '';
 
-            html += '<div class="itemSection personSection" data-type="' + section.type + '">';
+            html += '<div class="verticalSection personSection" data-type="' + section.type + '">';
 
             html += '<h2>';
             html += section.name;
