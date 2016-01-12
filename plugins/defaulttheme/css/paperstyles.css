@@ -13,6 +13,7 @@ paper-progress.transparent #progressContainer {
 
 .paper-slider-0 #sliderKnobInner.paper-slider {
     background-color: #52B54B;
+    border-color: #52B54B;
 }
 
 .paper-slider-0 paper-ripple.paper-slider {
