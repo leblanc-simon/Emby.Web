@@ -421,107 +421,34 @@ paper-item-body .overview {
         width: 14.285714285714285714285714285714%;
     }
 
-
-/* 720p */
-@media all and (min-height: 720px) {
-
-    .horizontalPageContent .squareCard .cardImageContainer {
-        width: 148px;
-        height: 148px;
-    }
-
-    .horizontalPageContent .backdropCard .cardImageContainer {
-        width: 265px;
-        height: 148px;
-    }
-
-    .horizontalPageContent .portraitCard .cardImageContainer {
-        width: 149px;
-        height: 224px;
-    }
-
-    .homePageContent .squareCard .cardImageContainer {
-        width: 148px;
-        height: 148px;
-    }
-
-    .homePageContent .backdropCard .cardImageContainer {
-        width: 265px;
-        height: 148px;
-    }
-
-    .homePageContent .portraitCard .cardImageContainer {
-        width: 149px;
-        height: 224px;
-    }
+.horizontalPageContent .squareCard .cardImageContainer {
+    width: 20.83vh;
+    height: 20.83vh;
 }
 
-/* 1080p */
-@media all and (min-height: 1080px) {
-
-    .horizontalPageContent .squareCard .cardImageContainer {
-        width: 225px;
-        height: 225px;
-    }
-
-    .horizontalPageContent .backdropCard .cardImageContainer {
-        width: 400px;
-        height: 225px;
-    }
-
-    .horizontalPageContent .portraitCard .cardImageContainer {
-        width: 227px;
-        height: 341px;
-    }
-
-    .homePageContent .squareCard .cardImageContainer {
-        width: 236px;
-        height: 236px;
-    }
-
-    .homePageContent .backdropCard .cardImageContainer {
-        width: 420px;
-        height: 236px;
-    }
-
-    .homePageContent .portraitCard .cardImageContainer {
-        width: 237px;
-        height: 356px;
-    }
+.horizontalPageContent .backdropCard .cardImageContainer {
+    width: 37.04vh;
+    height: 20.83vh;
 }
 
-/* 2560 * 1440 */
-@media all and (min-height: 1440px) {
+.horizontalPageContent .portraitCard .cardImageContainer {
+    width: 21.02vh;
+    height: 31.57vh;
+}
 
-    .horizontalPageContent .squareCard .cardImageContainer {
-        width: 280px;
-        height: 280px;
-    }
+.homePageContent .squareCard .cardImageContainer {
+    width: 21.85vh;
+    height: 21.85vh;
+}
 
-    .horizontalPageContent .backdropCard .cardImageContainer {
-        width: 498px;
-        height: 280px;
-    }
+.homePageContent .backdropCard .cardImageContainer {
+    width: 38.89vh;
+    height: 21.85vh;
+}
 
-    .horizontalPageContent .portraitCard .cardImageContainer {
-        width: 282px;
-        height: 423px;
-    }
-
-    .homePageContent .squareCard .cardImageContainer {
-        width: 324px;
-        height: 324px;
-    }
-
-    .homePageContent .backdropCard .cardImageContainer {
-        width: 576px;
-        height: 324px;
-    }
-
-    .homePageContent .portraitCard .cardImageContainer {
-        width: 325px;
-        height: 488px;
-    }
+.homePageContent .portraitCard .cardImageContainer {
+    width: 21.94vh;
+    height: 32.96vh;
 }
 
 .horizontalPageContent .loginSquareCard {

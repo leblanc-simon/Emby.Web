@@ -4,29 +4,5 @@
 
     .wideSpotlightCard .cardImageContainer {
         width: auto !important;
-        height: 271.125px;
+        height: 44.26vh;
     }
-
-/* 720p */
-@media all and (min-height: 720px) {
-
-    .wideSpotlightCard .cardImageContainer {
-        height: 302px;
-    }
-}
-
-/* 1080p */
-@media all and (min-height: 1080px) {
-
-    .wideSpotlightCard .cardImageContainer {
-        height: 478px;
-    }
-}
-
-/* 2560 * 1440 */
-@media all and (min-height: 1440px) {
-
-    .wideSpotlightCard .cardImageContainer {
-        height: 654px;
-    }
-}
