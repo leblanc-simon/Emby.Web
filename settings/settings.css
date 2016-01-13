@@ -1,3 +1,7 @@
 .settingsPageContainer h1 {
     margin-bottom: 0;
 }
+
+.settingsPageContainer .backdropCard {
+    width: 20%;
+}
