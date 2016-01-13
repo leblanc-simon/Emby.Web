@@ -77,7 +77,7 @@ define([], function () {
             return languages.map(function (i) {
                 return {
                     lang: i,
-                    path: Emby.PluginManager.mapPath(self, 'strings' + i + '.json')
+                    path: Emby.PluginManager.mapPath(self, 'strings/' + i + '.json')
                 };
             });
         };
