@@ -102,9 +102,9 @@ define([], function () {
                 id: 'defaulttheme-item',
                 transition: 'slide',
                 dependencies: [
-                    Emby.PluginManager.mapPath(self, 'item/item.js'),
                     'css!' + Emby.PluginManager.mapPath(self, 'item/item.css')
-                ]
+                ],
+                controller: Emby.PluginManager.mapPath(self, 'item/item.js')
             });
 
             routes.push({

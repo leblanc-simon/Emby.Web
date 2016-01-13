@@ -113,10 +113,23 @@ define(['loading', 'viewManager', 'events'], function (loading, viewManager, Eve
     function handleRoute(ctx, next, route) {
 
         authenticate(ctx, route, function () {
+            initRoute(ctx, next, route);
+        });
+    }
 
-            require(route.dependencies || [], function () {
-                sendRouteToViewManager(ctx, next, route);
-            });
+    function initRoute(ctx, next, route) {
+
+        var onInitComplete = function (controllerFactory) {
+            sendRouteToViewManager(ctx, next, route, controllerFactory);
+        };
+
+        require(route.dependencies || [], function () {
+
+            if (route.controller) {
+                require([route.controller], onInitComplete);
+            } else {
+                onInitComplete();
+            }
         });
     }
 
@@ -128,7 +141,7 @@ define(['loading', 'viewManager', 'events'], function (loading, viewManager, Eve
     }
 
     var currentViewLoadRequest;
-    function sendRouteToViewManager(ctx, next, route) {
+    function sendRouteToViewManager(ctx, next, route, controllerFactory) {
 
         cancelCurrentLoadRequest();
 
@@ -141,6 +154,7 @@ define(['loading', 'viewManager', 'events'], function (loading, viewManager, Eve
             isBack: isBackNav,
             state: ctx.state,
             type: route.type,
+            controllerFactory: controllerFactory,
             options: {
                 supportsThemeMedia: route.supportsThemeMedia || false
             }

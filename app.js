@@ -84,15 +84,16 @@
             path: '/settings/settings.html',
             id: 'settings',
             transition: 'slide',
-            dependencies: ['settings/settings', 'css!settings/settings.css']
+            dependencies: ['css!settings/settings.css'],
+            controller: 'settings/settings'
         });
 
         defineRoute({
             path: '/settings/playback.html',
             id: 'playbacksettings',
             transition: 'slide',
-            dependencies: ['settings/playback',
-                    'emby-dropdown-menu'],
+            dependencies: ['emby-dropdown-menu'],
+            controller: 'settings/playback',
             type: 'settings',
             title: 'General',
             category: 'Playback',
@@ -103,8 +104,8 @@
             path: '/settings/display.html',
             id: 'displaysettings',
             transition: 'slide',
-            dependencies: ['settings/display',
-                    'emby-dropdown-menu'],
+            dependencies: ['emby-dropdown-menu'],
+            controller: 'settings/display',
             type: 'settings',
             title: 'General',
             category: 'Display',

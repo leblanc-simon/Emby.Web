@@ -1,148 +1,4 @@
-(function () {
-
-    document.addEventListener("viewinit-defaulttheme-item", function (e) {
-
-        new itemPage(e.target, e.detail.params);
-    });
-
-    function itemPage(view, params) {
-
-        var self = this;
-        var currentItem;
-
-        view.addEventListener('viewshow', function (e) {
-
-            var isRestored = e.detail.isRestored;
-
-            require(['loading'], function (loading) {
-
-                if (!isRestored) {
-                    loading.show();
-                }
-
-                Emby.Models.item(params.id).then(function (item) {
-
-                    currentItem = item;
-
-                    // If it's a person, leave the backdrop image from wherever we came from
-                    if (item.Type != 'Person') {
-                        DefaultTheme.Backdrop.setBackdrops([item]);
-                        setTitle(item);
-                    }
-
-                    var userDataIconsSelector = enableTrackList(item) || item.Type == 'MusicArtist' ? '.itemPageFixedLeft .itemPageUserDataIcons' : '.mainSection .itemPageUserDataIcons';
-                    view.querySelector(userDataIconsSelector).innerHTML = DefaultTheme.UserData.getIconsHtml(item, true, "mediumSizeIcon");
-
-                    if (!isRestored) {
-                        renderName(view, item);
-                        renderImage(view, item);
-                        renderChildren(view, item);
-                        renderDetails(view, item);
-                        renderMediaInfoIcons(view, item);
-                        renderPeople(view, item);
-                        renderScenes(view, item);
-                        renderExtras(view, item);
-                        renderSimilar(view, item);
-                        createVerticalScroller(view, self);
-
-                        var mainSection = view.querySelector('.mainSection');
-                        var itemScrollFrame = view.querySelector('.itemScrollFrame');
-
-                        if (enableTrackList(item) || item.Type == 'MusicArtist') {
-                            mainSection.classList.remove('focusable');
-                            itemScrollFrame.classList.add('clippedLeft');
-                            view.querySelector('.itemPageFixedLeft').classList.remove('hide');
-                        } else {
-                            mainSection.classList.add('focusable');
-                            itemScrollFrame.classList.remove('clippedLeft');
-                            view.querySelector('.itemPageFixedLeft').classList.add('hide');
-                            mainSection.focus = focusMainSection;
-                        }
-
-                        if (item.Type == 'Person') {
-                            mainSection.classList.add('miniMainSection');
-                        } else {
-                            mainSection.classList.remove('miniMainSection');
-                        }
-
-                        if (enableTrackList(item) || item.Type == 'MusicArtist') {
-                            Emby.FocusManager.autoFocus(view, true);
-                        } else {
-                            focusMainSection.call(mainSection);
-                        }
-                    }
-
-                    // Always refresh this
-                    renderNextUp(view, item);
-
-                    if (Emby.PlaybackManager.canQueue(item)) {
-                        view.querySelector('.itemPageFixedLeft .btnQueue').classList.remove('hide');
-                    } else {
-                        view.querySelector('.itemPageFixedLeft .btnQueue').classList.add('hide');
-                    }
-
-                    loading.hide();
-                });
-            });
-
-            if (!isRestored) {
-
-                view.querySelector('.itemPageFixedLeft .btnPlay').addEventListener('click', play);
-                view.querySelector('.mainSection .btnPlay').addEventListener('click', play);
-
-                view.querySelector('.itemPageFixedLeft .btnQueue').addEventListener('click', queue);
-
-                view.querySelector('.btnTrailer').addEventListener('click', playTrailer);
-                view.querySelector('.btnInstantMix').addEventListener('click', instantMix);
-
-                view.querySelector('.itemPageFixedLeft .btnShuffle').addEventListener('click', shuffle);
-                view.querySelector('.mainSection .btnShuffle').addEventListener('click', shuffle);
-            }
-        });
-
-        view.addEventListener('viewdestroy', function () {
-
-            if (self.focusHandler) {
-                self.focusHandler.destroy();
-                self.focusHandler = null
-            }
-            if (self.slyFrame) {
-                self.slyFrame.destroy();
-            }
-        });
-
-        function playTrailer() {
-            Emby.PlaybackManager.playTrailer(currentItem);
-        }
-
-        function play() {
-
-            if (currentItem.IsFolder) {
-                Emby.PlaybackManager.play({
-                    items: [currentItem]
-                });
-            } else {
-                require(['playmenu'], function (playmenu) {
-                    playmenu.show(currentItem);
-                });
-            }
-        }
-
-        function queue() {
-
-            Emby.PlaybackManager.queue({
-                items: [currentItem]
-            });
-        }
-
-        function instantMix() {
-            Emby.PlaybackManager.instantMix(currentItem.Id);
-        }
-
-        function shuffle() {
-            Emby.PlaybackManager.shuffle(currentItem.Id);
-        }
-    }
+define(['loading', 'datetime'], function (loading, datetime) {
 
     function focusMainSection() {
 
@@ -170,7 +26,7 @@
 
     function createVerticalScroller(view, pageInstance) {
 
-        require(["slyScroller", 'loading'], function (slyScroller, loading) {
+        require(["slyScroller"], function (slyScroller) {
 
             var scrollFrame = view.querySelector('.scrollFrame');
 
@@ -560,11 +416,8 @@
         if (item.PremiereDate && item.Type == 'Person') {
             birthDateElem.classList.remove('hide');
 
-            require(['datetime'], function (datetime) {
-
-                var dateString = datetime.parseISO8601Date(item.PremiereDate).toDateString();
-                birthDateElem.innerHTML = Globalize.translate('BornValue', dateString);
-            });
+            var dateString = datetime.parseISO8601Date(item.PremiereDate).toDateString();
+            birthDateElem.innerHTML = Globalize.translate('BornValue', dateString);
         } else {
             birthDateElem.classList.add('hide');
         }
@@ -1135,4 +988,139 @@
         });
     }
 
-})();
+    return function (view, params) {
+
+        var self = this;
+        var currentItem;
+
+        view.addEventListener('viewshow', function (e) {
+
+            var isRestored = e.detail.isRestored;
+
+            if (!isRestored) {
+                loading.show();
+            }
+
+            Emby.Models.item(params.id).then(function (item) {
+
+                currentItem = item;
+
+                // If it's a person, leave the backdrop image from wherever we came from
+                if (item.Type != 'Person') {
+                    DefaultTheme.Backdrop.setBackdrops([item]);
+                    setTitle(item);
+                }
+
+                var userDataIconsSelector = enableTrackList(item) || item.Type == 'MusicArtist' ? '.itemPageFixedLeft .itemPageUserDataIcons' : '.mainSection .itemPageUserDataIcons';
+                view.querySelector(userDataIconsSelector).innerHTML = DefaultTheme.UserData.getIconsHtml(item, true, "mediumSizeIcon");
+
+                if (!isRestored) {
+                    renderName(view, item);
+                    renderImage(view, item);
+                    renderChildren(view, item);
+                    renderDetails(view, item);
+                    renderMediaInfoIcons(view, item);
+                    renderPeople(view, item);
+                    renderScenes(view, item);
+                    renderExtras(view, item);
+                    renderSimilar(view, item);
+                    createVerticalScroller(view, self);
+
+                    var mainSection = view.querySelector('.mainSection');
+                    var itemScrollFrame = view.querySelector('.itemScrollFrame');
+
+                    if (enableTrackList(item) || item.Type == 'MusicArtist') {
+                        mainSection.classList.remove('focusable');
+                        itemScrollFrame.classList.add('clippedLeft');
+                        view.querySelector('.itemPageFixedLeft').classList.remove('hide');
+                    } else {
+                        mainSection.classList.add('focusable');
+                        itemScrollFrame.classList.remove('clippedLeft');
+                        view.querySelector('.itemPageFixedLeft').classList.add('hide');
+                        mainSection.focus = focusMainSection;
+                    }
+
+                    if (item.Type == 'Person') {
+                        mainSection.classList.add('miniMainSection');
+                    } else {
+                        mainSection.classList.remove('miniMainSection');
+                    }
+
+                    if (enableTrackList(item) || item.Type == 'MusicArtist') {
+                        Emby.FocusManager.autoFocus(view, true);
+                    } else {
+                        focusMainSection.call(mainSection);
+                    }
+                }
+
+                // Always refresh this
+                renderNextUp(view, item);
+
+                if (Emby.PlaybackManager.canQueue(item)) {
+                    view.querySelector('.itemPageFixedLeft .btnQueue').classList.remove('hide');
+                } else {
+                    view.querySelector('.itemPageFixedLeft .btnQueue').classList.add('hide');
+                }
+
+                loading.hide();
+            });
+
+            if (!isRestored) {
+
+                view.querySelector('.itemPageFixedLeft .btnPlay').addEventListener('click', play);
+                view.querySelector('.mainSection .btnPlay').addEventListener('click', play);
+
+                view.querySelector('.itemPageFixedLeft .btnQueue').addEventListener('click', queue);
+
+                view.querySelector('.btnTrailer').addEventListener('click', playTrailer);
+                view.querySelector('.btnInstantMix').addEventListener('click', instantMix);
+
+                view.querySelector('.itemPageFixedLeft .btnShuffle').addEventListener('click', shuffle);
+                view.querySelector('.mainSection .btnShuffle').addEventListener('click', shuffle);
+            }
+        });
+
+        view.addEventListener('viewdestroy', function () {
+
+            if (self.focusHandler) {
+                self.focusHandler.destroy();
+                self.focusHandler = null
+            }
+            if (self.slyFrame) {
+                self.slyFrame.destroy();
+            }
+        });
+
+        function playTrailer() {
+            Emby.PlaybackManager.playTrailer(currentItem);
+        }
+
+        function play() {
+
+            if (currentItem.IsFolder) {
+                Emby.PlaybackManager.play({
+                    items: [currentItem]
+                });
+            } else {
+                require(['playmenu'], function (playmenu) {
+                    playmenu.show(currentItem);
+                });
+            }
+        }
+
+        function queue() {
+
+            Emby.PlaybackManager.queue({
+                items: [currentItem]
+            });
+        }
+
+        function instantMix() {
+            Emby.PlaybackManager.instantMix(currentItem.Id);
+        }
+
+        function shuffle() {
+            Emby.PlaybackManager.shuffle(currentItem.Id);
+        }
+    }
+});

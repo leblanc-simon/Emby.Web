@@ -1,25 +1,16 @@
-(function (document) {
+define(['loading'], function (loading) {
 
-    document.addEventListener("viewinit-settings", function (e) {
-
-        new settingsPage(e.target);
-    });
-
-    function settingsPage(view) {
+    return function (view, params) {
 
         var self = this;
 
         view.addEventListener('viewbeforeshow', function (e) {
 
-            var element = e.detail.element;
-            var params = e.detail.params;
             var isRestored = e.detail.isRestored;
 
             Emby.Page.setTitle(Globalize.translate('Settings'));
 
-            require(['loading'], function (loading) {
-                loading.hide();
-            });
+            loading.hide();
 
             if (!isRestored) {
                 renderSettings();
@@ -179,9 +170,6 @@
             }
 
         }
-
-        view.addEventListener('viewdestroy', function () {
-        });
     }
 
-})(document);
+});

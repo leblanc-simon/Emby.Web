@@ -16,7 +16,16 @@ define(['viewcontainer', 'bower_components/query-string/index'], function (viewc
 
             var eventDetail = getViewEventDetail(newView, options, false);
 
-            newView.dispatchEvent(new CustomEvent("viewinit-" + viewId, eventDetail));
+            if (options.controllerFactory) {
+
+                // Use controller method
+                var controller = new options.controllerFactory(newView, eventDetail.detail.params);
+
+            } else {
+
+                // Use event method
+                newView.dispatchEvent(new CustomEvent("viewinit-" + viewId, eventDetail));
+            }
         }
 
         dispatchViewEvent(newView, 'viewbeforeshow', isRestored);

@@ -1,18 +1,11 @@
-require(['usersettings', 'loading'], function (userSettings, loading) {
+define(['loading', 'usersettings'], function (loading, userSettings) {
 
-    document.addEventListener("viewinit-displaysettings", function (e) {
-
-        new settingsPage(e.target);
-    });
-
-    function settingsPage(view) {
+    return function (view, params) {
 
         var self = this;
 
         view.addEventListener('viewbeforeshow', function (e) {
 
-            var element = e.detail.element;
-            var params = e.detail.params;
             var isRestored = e.detail.isRestored;
 
             Emby.Page.setTitle(Globalize.translate('core#DisplaySettings'));
