@@ -168,11 +168,6 @@ a {
     width: 100%;
 }
 
-.fieldDescription {
-    font-size: 85%;
-    padding: .2em 0;
-}
-
 .scrollFrameY {
     overflow: hidden;
 }

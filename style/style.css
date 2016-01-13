@@ -119,3 +119,7 @@ iron-overlay-backdrop.iron-overlay-backdrop-0[opened] {
     padding: 0 8px;
     margin: 0;
 }
+
+.fieldDescription {
+    font-size: 85%;
+}

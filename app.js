@@ -201,6 +201,7 @@
             viewManager: "components/viewmanager",
             slyScroller: "components/slyscroller",
             appsettings: "components/appsettings",
+            usersettings: "components/usersettings",
             tvguide: "components/tvguide/guide",
             actionsheet: "components/actionsheet/actionsheet",
             playmenu: "components/playmenu",
@@ -527,7 +528,7 @@
 
         var baseUrl = Emby.Page.baseUrl() + '/strings/';
 
-        var languages = ['en-US'];
+        var languages = ['en-US', 'de', 'fr', 'nl', 'pt-BR', 'pt-PT', 'ru', 'sv', 'zh-CN', 'zh-TW'];
 
         var translations = languages.map(function (i) {
             return {

@@ -52,6 +52,8 @@ define(['browser'], function (browser) {
             }
 
             return parseInt(get('preferredVideoBitrate') || '') || 1500000;
-        }
+        },
+        set: set,
+        get: get
     };
 });

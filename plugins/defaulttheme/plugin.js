@@ -72,12 +72,14 @@ define([], function () {
 
             var files = [];
 
-            files.push({
-                lang: 'en-us',
-                path: Emby.PluginManager.mapPath(self, 'strings/en-us.json')
-            });
+            var languages = ['en-US', 'de', 'fr', 'nl', 'pt-BR', 'pt-PT', 'ru', 'sv'];
 
-            return files;
+            return languages.map(function (i) {
+                return {
+                    lang: i,
+                    path: Emby.PluginManager.mapPath(self, 'strings' + i + '.json')
+                };
+            });
         };
 
         self.getRoutes = function () {

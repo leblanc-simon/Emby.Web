@@ -29,6 +29,11 @@ paper-input label, paper-input input, paper-dropdown-menu label, paper-checkbox 
     line-height: normal !important;
 }
 
+.label-is-floating label {
+    /* Offset the 75% scale */
+    font-size: 133% !important;
+}
+
 paper-dialog {
     font-size: inherit !important;
     font-family: inherit !important;
@@ -109,3 +114,16 @@ paper-button {
     paper-button[focused], paper-button:focus {
         font-weight: normal !important;
     }
+
+emby-dropdown-menu {
+    margin-bottom: 1em;
+}
+
+    emby-dropdown-menu + .fieldDescription {
+        margin-top: -1em;
+        margin-bottom: 1em;
+    }
+
+paper-input + .fieldDescription {
+    padding: .2em 0;
+}
