@@ -139,7 +139,7 @@
                 cardImageContainer = '<iron-icon class="cardImageIcon" icon="' + icon + '"></iron-icon>';
             }
 
-            var tagName = 'paper-button';
+            var tagName = 'button';
             var innerOpening = '<div class="cardBox">';
             var innerClosing = '</div>';
 
