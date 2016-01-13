@@ -88,14 +88,26 @@
         });
 
         defineRoute({
-            path: '/settings/playback/playbacksettings.html',
+            path: '/settings/playback.html',
             id: 'playbacksettings',
             transition: 'slide',
-            dependencies: ['settings/playback/playbacksettings',
+            dependencies: ['settings/playback',
                     'emby-dropdown-menu'],
             type: 'settings',
             title: 'General',
             category: 'Playback',
+            thumbImage: ''
+        });
+
+        defineRoute({
+            path: '/settings/display.html',
+            id: 'displaysettings',
+            transition: 'slide',
+            dependencies: ['settings/display',
+                    'emby-dropdown-menu'],
+            type: 'settings',
+            title: 'General',
+            category: 'Display',
             thumbImage: ''
         });
 
@@ -248,7 +260,7 @@
 
         var config = {
 
-            waitSeconds: 30,
+            waitSeconds: 40,
             urlArgs: urlArgs,
 
             paths: paths,

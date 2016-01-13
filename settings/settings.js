@@ -114,7 +114,7 @@
             view.querySelector('.dynamicRoutes').innerHTML = html;
             Emby.ImageLoader.lazyChildren(view);
 
-            setTimeout(function() {
+            setTimeout(function () {
                 Emby.FocusManager.autoFocus(view, true);
             }, 300);
         }
@@ -132,6 +132,8 @@
 
                 if (route.category == 'Playback') {
                     icon = 'ondemand-video';
+                } else if (route.category == 'Display') {
+                    icon = 'view-list';
                 }
 
                 cardImageContainer = '<iron-icon class="cardImageIcon" icon="' + icon + '"></iron-icon>';
@@ -170,6 +172,8 @@
                     return Globalize.translate('core#Playback');
                 case 'Theme':
                     return Globalize.translate('core#Themes');
+                case 'Display':
+                    return Globalize.translate('core#Display');
                 default:
                     return Globalize.translate('core#Other');
             }

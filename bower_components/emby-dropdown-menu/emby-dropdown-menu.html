@@ -439,7 +439,9 @@ respectively.
 
         getValue: function() {
 
-            return this.selectedItem.getAttribute('data-value');
+            var selected = this.selectedItem;
+
+            return selected ? selected.getAttribute('data-value') : null;
         },
 
         setValue: function(value) {

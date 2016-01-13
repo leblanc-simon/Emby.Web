@@ -44,5 +44,7 @@
     "ButtonInstantMix": "Instant Mix",
     "PlaybackSettings": "Playback Settings",
     "MaxStreamingBitrate": "Max streaming bitrate",
-    "OptionAutomatic": "Auto"
+    "OptionAutomatic": "Auto",
+    "DisplayLanguage": "Display language",
+    "DisplaySettings":  "Display Settings"
 }

@@ -24,7 +24,7 @@ html {
 }
 
 paper-input label, paper-checkbox label, emby-dropdown-menu label {
-    color: #ccc !important;
+    color: #bbb !important;
 }
 
 paper-input .focused-line {
