@@ -1,4 +1,8 @@
 {
+    "TooltipFavorite": "Favorite",
+    "TooltipLike": "Like",
+    "TooltipDislike": "Dislike",
+    "TooltipPlayed": "Played",
     "ButtonCancel": "Cancel",
     "AllSeries": "All Series",
     "Genres": "Genres",
