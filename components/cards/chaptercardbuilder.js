@@ -2,7 +2,23 @@ define(['datetime'], function (datetime) {
 
     function buildChapterCardsHtml(item, chapters, options) {
 
-        var className = 'card scalableCard itemAction backdropCard';
+        var className = 'card scalableCard itemAction chapterCard';
+
+        var mediaStreams = ((item.MediaSources || [])[0] || {}).MediaStreams || [];
+        var videoStream = mediaStreams.filter(function (i) {
+            return i.Type == 'Video';
+        })[0] || {};
+
+        var shape = 'backdropCard';
+
+        if (videoStream.Width && videoStream.Height) {
+
+            if ((videoStream.Width / videoStream.Height) <= 1.34) {
+                shape = 'squareCard';
+            }
+        }
+
+        className += ' ' + shape;
 
         if (options.block || options.rows) {
             className += ' block';

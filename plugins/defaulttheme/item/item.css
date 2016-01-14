@@ -203,3 +203,7 @@
 .mediaInfoImageIcon img {
     max-height: 100%;
 }
+
+.squareCard.chapterCard {
+    width: 20%;
+}
