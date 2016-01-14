@@ -608,6 +608,7 @@ define(['datetime'], function (datetime) {
         }
 
         var showTitle = options.showTitle || imgInfo.forceName;
+        var showParentTitle = options.showParentTitle || (imgInfo.forceName && item.Type == 'Episode');
 
         if (!imgUrl) {
             cardImageContainerOpen += '<div class="cardText cardCenteredText">' + getDisplayName(item) + '</div>';
@@ -615,7 +616,7 @@ define(['datetime'], function (datetime) {
 
         var nameHtml = '';
 
-        if (options.showParentTitle) {
+        if (showParentTitle) {
             nameHtml += '<div class="cardText">' + (item.EpisodeTitle ? item.Name : (item.SeriesName || item.Album || item.AlbumArtist || item.GameSystem || "")) + '</div>';
         }
 
