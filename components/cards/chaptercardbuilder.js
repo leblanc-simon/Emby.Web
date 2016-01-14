@@ -1,4 +1,4 @@
-define([], function () {
+define(['datetime'], function (datetime) {
 
     function buildChapterCardsHtml(item, chapters, options) {
 
@@ -43,7 +43,8 @@ define([], function () {
         var cardImageContainer = imgUrl ? ('<div class="' + cardImageContainerClass + ' lazy" data-src="' + imgUrl + '">') : ('<div class="' + cardImageContainerClass + '">');
 
         var nameHtml = '';
-        nameHtml += '<div class="cardText">' + chapter.Name + '</div>';
+        //nameHtml += '<div class="cardText">' + chapter.Name + '</div>';
+        nameHtml += '<div class="cardText">' + datetime.getDisplayRunningTime(chapter.StartPositionTicks) + '</div>';
 
         var html = '\
 <button type="button" class="' + className + '"' + dataAttributes + '> \
