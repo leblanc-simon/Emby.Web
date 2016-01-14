@@ -71,6 +71,12 @@
         -webkit-box-shadow: 0 0 1.9vh #000;
         box-shadow: 0 0 1.9vh #000;
         border: solid 1px #222;
+        user-drag: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-drag: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
     }
 
 .osdTitle {
