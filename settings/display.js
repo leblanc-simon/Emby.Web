@@ -30,7 +30,7 @@ define(['loading', 'usersettings'], function (loading, userSettings) {
 
             var selectLanguage = view.querySelector('.selectLanguage');
 
-            selectLanguage.setValue(userSettings.get('language'));
+            selectLanguage.setValue(userSettings.get('language') || '');
         }
     }
 
