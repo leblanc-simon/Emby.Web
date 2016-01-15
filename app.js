@@ -515,7 +515,7 @@
         presentationDependencies.push('js/input/onscreenkeyboard');
         presentationDependencies.push('js/input/keyboard');
 
-        presentationDependencies.push('js/controlbox');
+        presentationDependencies.push('components/controlbox');
 
         require(presentationDependencies, function (events) {
 

@@ -13,6 +13,10 @@ define([], function () {
 
         function showScreenSaver(screensaver) {
 
+            if (activeScreenSaver) {
+                throw new Error('An existing screensaver is already active.');
+            }
+
             console.log('Showing screensaver ' + screensaver.name);
 
             screensaver.show();
@@ -88,7 +92,7 @@ define([], function () {
         };
 
         function onInterval() {
-            
+
             if (self.isShowing()) {
                 return;
             }
