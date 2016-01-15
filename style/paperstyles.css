@@ -35,7 +35,7 @@ paper-input label, paper-input input, paper-dropdown-menu label, paper-checkbox 
 }
 
 .label-is-floating input {
-    margin-top: 1em;
+    margin-top: .8em;
 }
 
 paper-dialog {
