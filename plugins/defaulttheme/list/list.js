@@ -1,11 +1,107 @@
-(function () {
+define(['loading', 'slyScroller'], function (loading, slyScroller) {
 
-    document.addEventListener("viewinit-defaulttheme-list", function (e) {
+    function createHorizontalScroller(instance, view, item, loading) {
 
-        new listPage(e.target, e.detail.params);
-    });
+        var scrollFrame = view.querySelector('.scrollFrame');
 
-    function listPage(view, params) {
+        scrollFrame.style.display = 'block';
+
+        var options = {
+            horizontal: 1,
+            itemNav: 0,
+            mouseDragging: 1,
+            touchDragging: 1,
+            slidee: view.querySelector('.scrollSlider'),
+            itemSelector: '.card',
+            smart: true,
+            releaseSwing: true,
+            scrollBar: view.querySelector('.scrollbar'),
+            scrollBy: 200,
+            speed: 270,
+            elasticBounds: 1,
+            dragHandle: 1,
+            dynamicHandle: 1,
+            clickBar: 1,
+            //centerOffset: window.innerWidth * .05,
+            scrollWidth: 200000
+        };
+
+        slyScroller.create(scrollFrame, options).then(function (slyFrame) {
+            slyFrame.init();
+            instance.slyFrame = slyFrame;
+            loadChildren(instance, view, item, loading);
+        });
+    }
+
+    function getItems(params, item, startIndex, limit) {
+
+        if (params.type == 'collections') {
+
+            return Emby.Models.collections({
+                ParentId: item.Id,
+                EnableImageTypes: "Primary,Backdrop,Thumb",
+                StartIndex: startIndex,
+                Limit: limit,
+                SortBy: 'SortName'
+            });
+        }
+
+        if (params.type == 'favoritemovies') {
+
+            return Emby.Models.items({
+                ParentId: item.Id,
+                EnableImageTypes: "Primary,Backdrop,Thumb",
+                StartIndex: startIndex,
+                Limit: limit,
+                SortBy: 'SortName',
+                IncludeItemTypes: 'Movie',
+                Recursive: true,
+                Filters: "IsFavorite"
+            });
+        }
+
+        if (params.genreId) {
+
+            return Emby.Models.items({
+                StartIndex: startIndex,
+                Limit: limit,
+                SortBy: 'SortName',
+                Recursive: true,
+                GenreIds: params.genreId,
+                ParentId: item.Id,
+                IncludeItemTypes: item.CollectionType == 'tvshows' ? 'Series' : (item.CollectionType == 'movies' ? 'Movie' : 'MusicAlbum')
+            });
+
+        }
+        return Emby.Models.children(item, {
+            StartIndex: startIndex,
+            Limit: limit
+        });
+    }
+
+    function loadChildren(instance, view, item, loading) {
+
+        instance.listController = new DefaultTheme.HorizontalList({
+
+            itemsContainer: view.querySelector('.scrollSlider'),
+            getItemsMethod: function (startIndex, limit) {
+
+                return getItems(instance.params, item, startIndex, limit);
+            },
+            listCountElement: view.querySelector('.listCount'),
+            listNumbersElement: view.querySelector('.listNumbers'),
+            selectedItemInfoElement: view.querySelector('.selectedItemInfoInner'),
+            selectedIndexElement: view.querySelector('.selectedIndex'),
+            slyFrame: instance.slyFrame,
+            cardOptions: {
+                coverImage: true
+            }
+        });
+
+        instance.listController.render();
+    }
+
+    return function (view, params) {
 
         var self = this;
         self.params = params;
@@ -15,50 +111,47 @@
 
             var isRestored = e.detail.isRestored;
 
-            require(['loading'], function (loading) {
+            if (!isRestored) {
+                loading.show();
+
+                view.querySelector('.scrollSlider').addEventListener('click', onItemsContainerClick);
+            }
+
+            Emby.Models.item(params.parentid).then(function (item) {
+
+                if (!params.genreId) {
+                    setTitle(item);
+                }
+                currentItem = item;
 
                 if (!isRestored) {
-                    loading.show();
-
-                    view.querySelector('.scrollSlider').addEventListener('click', onItemsContainerClick);
+                    createHorizontalScroller(self, view, item, loading);
                 }
 
-                Emby.Models.item(params.parentid).then(function (item) {
-
-                    if (!params.genreId) {
-                        setTitle(item);
-                    }
-                    currentItem = item;
-
-                    if (!isRestored) {
-                        createHorizontalScroller(self, view, item, loading);
-                    }
-
-                    if (!params.genreId) {
-                        view.querySelector('.listPageButtons').classList.add('hide');
-                    }
-                });
-
-                if (params.genreId) {
-                    Emby.Models.item(params.genreId).then(function (item) {
-
-                        currentItem = item;
-                        Emby.Page.setTitle(item.Name);
-
-                        if (item.Type == 'MusicGenre') {
-                            view.querySelector('.listPageButtons').classList.remove('hide');
-                        } else {
-                            view.querySelector('.listPageButtons').classList.add('hide');
-                        }
-
-                        if (Emby.PlaybackManager.canQueue(item)) {
-                            view.querySelector('.btnQueue').classList.remove('hide');
-                        } else {
-                            view.querySelector('.btnQueue').classList.add('hide');
-                        }
-                    });
+                if (!params.genreId) {
+                    view.querySelector('.listPageButtons').classList.add('hide');
                 }
             });
+
+            if (params.genreId) {
+                Emby.Models.item(params.genreId).then(function (item) {
+
+                    currentItem = item;
+                    Emby.Page.setTitle(item.Name);
+
+                    if (item.Type == 'MusicGenre') {
+                        view.querySelector('.listPageButtons').classList.remove('hide');
+                    } else {
+                        view.querySelector('.listPageButtons').classList.add('hide');
+                    }
+
+                    if (Emby.PlaybackManager.canQueue(item)) {
+                        view.querySelector('.btnQueue').classList.remove('hide');
+                    } else {
+                        view.querySelector('.btnQueue').classList.add('hide');
+                    }
+                });
+            }
 
             if (!isRestored) {
                 view.querySelector('.btnPlay').addEventListener('click', play);
@@ -170,108 +263,4 @@
         }
     }
 
-    function createHorizontalScroller(instance, view, item, loading) {
-
-        require(["slyScroller", 'loading'], function (slyScroller, loading) {
-
-            var scrollFrame = view.querySelector('.scrollFrame');
-
-            scrollFrame.style.display = 'block';
-
-            var options = {
-                horizontal: 1,
-                itemNav: 0,
-                mouseDragging: 1,
-                touchDragging: 1,
-                slidee: view.querySelector('.scrollSlider'),
-                itemSelector: '.card',
-                smart: true,
-                releaseSwing: true,
-                scrollBar: view.querySelector('.scrollbar'),
-                scrollBy: 200,
-                speed: 270,
-                elasticBounds: 1,
-                dragHandle: 1,
-                dynamicHandle: 1,
-                clickBar: 1,
-                //centerOffset: window.innerWidth * .05,
-                scrollWidth: 200000
-            };
-
-            slyScroller.create(scrollFrame, options).then(function (slyFrame) {
-                slyFrame.init();
-                instance.slyFrame = slyFrame;
-                loadChildren(instance, view, item, loading);
-            });
-        });
-    }
-
-    function getItems(params, item, startIndex, limit) {
-
-        if (params.type == 'collections') {
-
-            return Emby.Models.collections({
-                ParentId: item.Id,
-                EnableImageTypes: "Primary,Backdrop,Thumb",
-                StartIndex: startIndex,
-                Limit: limit,
-                SortBy: 'SortName'
-            });
-        }
-
-        if (params.type == 'favoritemovies') {
-
-            return Emby.Models.items({
-                ParentId: item.Id,
-                EnableImageTypes: "Primary,Backdrop,Thumb",
-                StartIndex: startIndex,
-                Limit: limit,
-                SortBy: 'SortName',
-                IncludeItemTypes: 'Movie',
-                Recursive: true,
-                Filters: "IsFavorite"
-            });
-        }
-
-        if (params.genreId) {
-
-            return Emby.Models.items({
-                StartIndex: startIndex,
-                Limit: limit,
-                SortBy: 'SortName',
-                Recursive: true,
-                GenreIds: params.genreId,
-                ParentId: item.Id,
-                IncludeItemTypes: item.CollectionType == 'tvshows' ? 'Series' : (item.CollectionType == 'movies' ? 'Movie' : 'MusicAlbum')
-            });
-
-        }
-        return Emby.Models.children(item, {
-            StartIndex: startIndex,
-            Limit: limit
-        });
-    }
-
-    function loadChildren(instance, view, item, loading) {
-
-        instance.listController = new DefaultTheme.HorizontalList({
-
-            itemsContainer: view.querySelector('.scrollSlider'),
-            getItemsMethod: function (startIndex, limit) {
-
-                return getItems(instance.params, item, startIndex, limit);
-            },
-            listCountElement: view.querySelector('.listCount'),
-            listNumbersElement: view.querySelector('.listNumbers'),
-            selectedItemInfoElement: view.querySelector('.selectedItemInfoInner'),
-            selectedIndexElement: view.querySelector('.selectedIndex'),
-            slyFrame: instance.slyFrame,
-            cardOptions: {
-                coverImage: true
-            }
-        });
-
-        instance.listController.render();
-    }
-
-})();
+});

@@ -111,9 +111,7 @@ define([], function () {
                 path: Emby.PluginManager.mapPath(self, 'list/list.html'),
                 id: 'defaulttheme-list',
                 transition: 'slide',
-                dependencies: [
-                    Emby.PluginManager.mapPath(self, 'list/list.js')
-                ]
+                controller: Emby.PluginManager.mapPath(self, 'list/list.js')
             });
 
             routes.push({
