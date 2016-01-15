@@ -1,6 +1,7 @@
 {
     "ButtonPlayFromBeginning": "Reproduzir desde o in\u00edcio",
     "EnableCinemaMode": "Ativar cinema mode",
+    "EnableCinemaModeHelp": "Requires setup in Emby Server",
     "EmbyConnect": "Emby Connect",
     "HeaderWelcomeToEmby": "Bem Vindo ao Emby",
     "EmbyIntroMessage": "Com o Emby voc\u00ea pode, facilmente, fazer stream de v\u00eddeos, m\u00fasicas e fotos para smart phones, tablets e outros dispositivos a partir do servidor Emby.",
@@ -43,5 +44,7 @@
     "ButtonInstantMix": "Mixagem Instant\u00e2nea",
     "PlaybackSettings": "Ajustes de Reprodu\u00e7\u00e3o",
     "MaxStreamingBitrate": "Taxa de bits m\u00e1xima para streaming",
-    "OptionAutomatic": "Auto"
+    "OptionAutomatic": "Auto",
+    "DisplayLanguage": "Display language",
+    "DisplaySettings": "Display Settings"
 }

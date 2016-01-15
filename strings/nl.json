@@ -1,6 +1,7 @@
 {
     "ButtonPlayFromBeginning": "Play from beginning",
     "EnableCinemaMode": "Enable cinema mode",
+    "EnableCinemaModeHelp": "Requires setup in Emby Server",
     "EmbyConnect": "Emby Connect",
     "HeaderWelcomeToEmby": "Welkom bij Emby",
     "EmbyIntroMessage": "Met Emby kunt u eenvoudig films, muziek en foto's naar uw telefoon, tablet en andere apparatuur streamen.",
@@ -43,5 +44,7 @@
     "ButtonInstantMix": "Instant Mix",
     "PlaybackSettings": "Afspeel instellingen",
     "MaxStreamingBitrate": "Max Streaming Bitrate",
-    "OptionAutomatic": "Automatisch"
+    "OptionAutomatic": "Automatisch",
+    "DisplayLanguage": "Display language",
+    "DisplaySettings": "Display Settings"
 }

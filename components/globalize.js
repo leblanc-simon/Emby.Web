@@ -1,4 +1,4 @@
-(function (globalScope) {
+define(['connectionManager', 'usersettings', 'events'], function (connectionManager, userSettings, events) {
 
     var allTranslations = {};
     var currentCulture;
@@ -9,9 +9,37 @@
     }
 
     function updateCurrentCulture() {
-        var culture = navigator.language || navigator.userLanguage || 'en-us';
+
+        var culture;
+        try {
+            culture = userSettings.get('language');
+        } catch (err) {
+
+        }
+        culture = culture || navigator.language || navigator.userLanguage || 'en-us';
 
         currentCulture = normalizeLocaleName(culture);
+
+        ensureTranslations(currentCulture);
+    }
+
+    function ensureTranslations(culture) {
+
+        for (var i in allTranslations) {
+            ensureTranslation(allTranslations[i], culture);
+        }
+    }
+
+    function ensureTranslation(translationInfo, culture) {
+
+        if (translationInfo.dictionaries[culture]) {
+            return Promise.resolve();
+        }
+
+        return loadTranslation(translationInfo.translations, culture).then(function (dictionary) {
+
+            translationInfo.dictionaries[culture] = dictionary;
+        });
     }
 
     function normalizeLocaleName(culture) {
@@ -52,10 +80,8 @@
         };
 
         var locale = getCurrentLocale();
-        return loadTranslation(options.translations, locale).then(function (dictionary) {
 
-            allTranslations[options.name].dictionaries[locale] = dictionary;
-        });
+        return ensureTranslation(allTranslations[options.name], locale);
     }
 
     var cacheParam = new Date().getTime();
@@ -173,10 +199,17 @@
 
     updateCurrentCulture();
 
-    globalScope.Globalize = {
+    events.on(connectionManager, 'localusersignedin', updateCurrentCulture);
+    events.on(userSettings, 'change', function (e, name) {
+        if (name == 'language') {
+            updateCurrentCulture();
+        }
+    });
+
+    return {
         translate: translate,
         translateHtml: translateHtml,
         loadTranslations: loadTranslations
     };
 
-})(this, document);
+});

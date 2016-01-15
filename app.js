@@ -2,6 +2,14 @@
 
     var connectionManager;
 
+    function getRequirePromise(deps) {
+
+        return new Promise(function (resolve, reject) {
+
+            require(deps, resolve);
+        });
+    }
+
     function defineRoute(newRoute, packageName) {
 
         var baseRoute = Emby.Page.baseUrl();
@@ -166,12 +174,17 @@
         return caps;
     }
 
+    function defineConnectionManager(connectionManager) {
+        define('connectionManager', [], function () {
+            return connectionManager;
+        });
+    }
+
     function createConnectionManager() {
 
         return new Promise(function (resolve, reject) {
 
-            require(['apphost', 'credentialprovider'], function (apphost, credentialProvider) {
-
+            require(['apphost', 'credentialprovider', 'events'], function (apphost, credentialProvider, events) {
                 var credentialProviderInstance = new credentialProvider();
 
                 if (window.location.href.indexOf('clear=1') != -1) {
@@ -182,14 +195,61 @@
 
                     connectionManager = new MediaBrowser.ConnectionManager(credentialProviderInstance, appInfo.appName, appInfo.appVersion, appInfo.deviceName, appInfo.deviceId, getCapabilities(apphost), window.devicePixelRatio);
 
-                    define('connectionManager', [], function () {
-                        return connectionManager;
-                    });
-
+                    defineConnectionManager(connectionManager);
+                    bindConnectionManagerEvents(connectionManager, events);
                     resolve();
                 });
             });
         });
+    }
+
+    var localApiClient;
+
+    function bindConnectionManagerEvents(connectionManager, events) {
+
+        connectionManager.currentLoggedInServer = function () {
+            var server = localApiClient ? localApiClient.serverInfo() : null;
+
+            if (server) {
+                if (server.UserId && server.AccessToken) {
+                    return server;
+                }
+            }
+
+            return null;
+        };
+
+        connectionManager.currentApiClient = function () {
+
+            if (!localApiClient) {
+                var server = connectionManager.getLastUsedServer();
+                localApiClient = connectionManager.getApiClient(server.Id);
+            }
+            return localApiClient;
+        };
+
+        events.on(connectionManager, 'apiclientcreated', function (e, newApiClient) {
+
+            //$(newApiClient).on("websocketmessage", Dashboard.onWebSocketMessageReceived).on('requestfail', Dashboard.onRequestFail);
+        });
+
+        events.on(connectionManager, 'localusersignedin', function (e, user) {
+
+            localApiClient = connectionManager.getApiClient(user.ServerId);
+
+            document.dispatchEvent(new CustomEvent("usersignedin", {
+                detail: {
+                    user: user,
+                    apiClient: localApiClient
+                }
+            }));
+        });
+
+        events.on(connectionManager, 'localusersignedout', function (e) {
+
+            document.dispatchEvent(new CustomEvent("usersignedout", {}));
+        });
+
     }
 
     function initRequire(customPaths) {
@@ -342,7 +402,7 @@
 
         require(list, function (connectionManagerExports) {
 
-            window.MediaBrowser = window.MediaBrowser || {};
+            globalScope.MediaBrowser = globalScope.MediaBrowser || {};
             for (var i in connectionManagerExports) {
                 MediaBrowser[i] = connectionManagerExports[i];
             }
@@ -362,7 +422,6 @@
              'pluginmanager',
              'js/imageloader',
              'css!style/style.css',
-             'js/globalize',
              'js/thememanager',
              'js/focusmanager',
              'js/backdrops',
@@ -443,35 +502,22 @@
 
         console.log('Loading plugin: ' + url);
 
-        return new Promise(function (resolve, reject) {
+        return getRequirePromise([url]).then(function (pluginFactory) {
 
-            require([url], function (pluginFactory) {
+            var plugin = new pluginFactory();
 
-                var plugin = new pluginFactory();
+            var urlLower = url.toLowerCase();
+            if (urlLower.indexOf('http:') == -1 && urlLower.indexOf('https:') == -1 && urlLower.indexOf('file:') == -1) {
+                if (url.indexOf(Emby.Page.baseUrl()) != 0) {
 
-                var urlLower = url.toLowerCase();
-                if (urlLower.indexOf('http:') == -1 && urlLower.indexOf('https:') == -1 && urlLower.indexOf('file:') == -1) {
-                    if (url.indexOf(Emby.Page.baseUrl()) != 0) {
-
-                        url = Emby.Page.baseUrl() + '/' + url;
-                    }
+                    url = Emby.Page.baseUrl() + '/' + url;
                 }
+            }
 
-                var separatorIndex = Math.max(url.lastIndexOf('/'), url.lastIndexOf('\\'));
-                plugin.baseUrl = url.substring(0, separatorIndex);
+            var separatorIndex = Math.max(url.lastIndexOf('/'), url.lastIndexOf('\\'));
+            plugin.baseUrl = url.substring(0, separatorIndex);
 
-                Emby.PluginManager.register(plugin);
-
-                if (plugin.type != 'theme') {
-                    var translations = plugin.getTranslations ? plugin.getTranslations() : [];
-                    Globalize.loadTranslations({
-                        name: plugin.packageName,
-                        translations: translations
-                    }).then(resolve);
-                } else {
-                    resolve();
-                }
-            });
+            Emby.PluginManager.register(plugin);
         });
     }
 
@@ -488,9 +534,10 @@
 
         loadCoreDependencies(function () {
 
+            defineCoreRoutes();
+
             loadPlugins(startInfo.plugins || []).then(function () {
 
-                defineCoreRoutes();
                 definePluginRoutes();
 
                 createConnectionManager().then(function () {
@@ -501,38 +548,63 @@
         });
     }
 
+    function loadGlobalizaton() {
+
+        return getRequirePromise(['components/globalize']).then(function (globalize) {
+
+            globalScope.Globalize = globalize;
+
+            var promises = Emby.PluginManager.plugins().filter(function (p) {
+                return p.type != 'theme';
+
+            }).map(function (plugin) {
+
+                var translations = plugin.getTranslations ? plugin.getTranslations() : [];
+                return Globalize.loadTranslations({
+                    name: plugin.packageName,
+                    translations: translations
+                });
+            });
+
+            return Promise.all(promises);
+        });
+    }
+
     function loadPresentation() {
 
-        var presentationDependencies = [];
+        loadGlobalizaton().then(function () {
 
-        presentationDependencies.push('events');
-        presentationDependencies.push('js/models');
-        presentationDependencies.push('js/soundeffectplayer');
-        presentationDependencies.push('js/thememediaplayer');
+            var presentationDependencies = [];
 
-        presentationDependencies.push('js/input/gamepad');
-        presentationDependencies.push('js/input/mouse');
-        presentationDependencies.push('js/input/onscreenkeyboard');
-        presentationDependencies.push('js/input/keyboard');
+            presentationDependencies.push('events');
+            presentationDependencies.push('js/models');
+            presentationDependencies.push('js/soundeffectplayer');
+            presentationDependencies.push('js/thememediaplayer');
 
-        presentationDependencies.push('components/controlbox');
+            presentationDependencies.push('js/input/gamepad');
+            presentationDependencies.push('js/input/mouse');
+            presentationDependencies.push('js/input/onscreenkeyboard');
+            presentationDependencies.push('js/input/keyboard');
 
-        require(presentationDependencies, function (events) {
+            presentationDependencies.push('components/controlbox');
 
-            window.Events = events;
+            require(presentationDependencies, function (events) {
 
-            console.log('Loading presentation');
+                globalScope.Events = events;
 
-            // Start by loading the default theme. Once a user is logged in we can change the theme based on settings
-            loadDefaultTheme(function () {
+                console.log('Loading presentation');
 
-                document.documentElement.classList.remove('preload');
+                // Start by loading the default theme. Once a user is logged in we can change the theme based on settings
+                loadDefaultTheme(function () {
 
-                Emby.Page.start();
+                    document.documentElement.classList.remove('preload');
 
-                document.dispatchEvent(new CustomEvent("appready", {}));
+                    Emby.Page.start();
 
-                loadCoreDictionary();
+                    document.dispatchEvent(new CustomEvent("appready", {}));
+
+                    loadCoreDictionary();
+                });
             });
         });
     }

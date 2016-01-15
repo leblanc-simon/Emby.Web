@@ -1,4 +1,4 @@
-define(['loading', 'viewManager', 'events'], function (loading, viewManager, Events) {
+define(['loading', 'viewManager'], function (loading, viewManager) {
 
     var connectionManager;
 
@@ -202,7 +202,6 @@ define(['loading', 'viewManager', 'events'], function (loading, viewManager, Eve
 
             connectionManager.connect().then(function (result) {
 
-                bindConnectionManagerEvents(connectionManager);
                 firstConnectionResult = result;
 
                 loading.hide();
@@ -224,55 +223,6 @@ define(['loading', 'viewManager', 'events'], function (loading, viewManager, Eve
         }
 
         return true;
-    }
-
-    var localApiClient;
-
-    function bindConnectionManagerEvents(connectionManager) {
-
-        connectionManager.currentLoggedInServer = function () {
-            var server = localApiClient ? localApiClient.serverInfo() : null;
-
-            if (server) {
-                if (server.UserId && server.AccessToken) {
-                    return server;
-                }
-            }
-
-            return null;
-        };
-
-        connectionManager.currentApiClient = function () {
-
-            if (!localApiClient) {
-                var server = connectionManager.getLastUsedServer();
-                localApiClient = connectionManager.getApiClient(server.Id);
-            }
-            return localApiClient;
-        };
-
-        Events.on(connectionManager, 'apiclientcreated', function (e, newApiClient) {
-
-            //$(newApiClient).on("websocketmessage", Dashboard.onWebSocketMessageReceived).on('requestfail', Dashboard.onRequestFail);
-        });
-
-        Events.on(connectionManager, 'localusersignedin', function (e, user) {
-
-            localApiClient = connectionManager.getApiClient(user.ServerId);
-
-            document.dispatchEvent(new CustomEvent("usersignedin", {
-                detail: {
-                    user: user,
-                    apiClient: localApiClient
-                }
-            }));
-        });
-
-        Events.on(connectionManager, 'localusersignedout', function (e) {
-
-            document.dispatchEvent(new CustomEvent("usersignedout", {}));
-        });
-
     }
 
     function authenticate(ctx, route, callback) {

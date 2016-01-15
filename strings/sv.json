@@ -1,6 +1,7 @@
 {
     "ButtonPlayFromBeginning": "Play from beginning",
     "EnableCinemaMode": "Enable cinema mode",
+    "EnableCinemaModeHelp": "Requires setup in Emby Server",
     "EmbyConnect": "Emby Connect",
     "HeaderWelcomeToEmby": "V\u00e4lkommen till Emby",
     "EmbyIntroMessage": "Med Emby kan du enkelt streama video, musik och bilder till smarta mobiler, surfplattor och andra enheter fr\u00e5n din Emby Server.",
@@ -43,5 +44,7 @@
     "ButtonInstantMix": "Direktmix",
     "PlaybackSettings": "Inst\u00e4llningar Uppspelning",
     "MaxStreamingBitrate": "Maximal frekvens bitstr\u00f6m",
-    "OptionAutomatic": "Automatisk"
+    "OptionAutomatic": "Automatisk",
+    "DisplayLanguage": "Display language",
+    "DisplaySettings": "Display Settings"
 }

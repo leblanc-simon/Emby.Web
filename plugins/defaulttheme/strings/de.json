@@ -1,4 +1,8 @@
 {
+    "TooltipFavorite": "Favorite",
+    "TooltipLike": "Like",
+    "TooltipDislike": "Dislike",
+    "TooltipPlayed": "Played",
     "ButtonCancel": "Abbrechen",
     "AllSeries": "Alle Serien",
     "Genres": "Genres",
@@ -71,5 +75,6 @@
     "FavoriteArtists": "Lieblingsk\u00fcnstler",
     "FavoriteSeries": "Lieblingsserien",
     "FavoriteEpisodes": "Lieblingsepisoden",
-    "FavoriteMovies": "Favorite Movies"
+    "FavoriteMovies": "Favorite Movies",
+    "CastAndCrew": "Cast & Crew"
 }
