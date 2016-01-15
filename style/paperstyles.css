@@ -30,8 +30,12 @@ paper-input label, paper-input input, paper-dropdown-menu label, paper-checkbox 
 }
 
 .label-is-floating label {
-    /* Offset the 75% scale */
-    font-size: 133% !important;
+    /* Remove the 75% scale */
+    transform: translateY(-50%)!important;
+}
+
+.label-is-floating input {
+    margin-top: 1em;
 }
 
 paper-dialog {
