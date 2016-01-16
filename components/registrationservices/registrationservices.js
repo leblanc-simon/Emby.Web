@@ -1,4 +1,4 @@
-define(['connectionManager', 'paperdialoghelper', 'shell', 'css!components/registrationservices/style'], function (connectionManager, paperdialoghelper, shell) {
+define(['connectionManager', 'paperdialoghelper', 'css!components/registrationservices/style'], function (connectionManager, paperdialoghelper) {
 
     var validatedFeatures = [];
 
@@ -52,7 +52,9 @@ define(['connectionManager', 'paperdialoghelper', 'shell', 'css!components/regis
 
         dlg.querySelector('.register').addEventListener('click', function (e) {
 
-            shell.openUrl('http://emby.media/premiere');
+            require(['shell'], function (shell) {
+                shell.openUrl('http://emby.media/premiere');
+            });
         });
 
         dlg.querySelector('.btnRegistrationBack').addEventListener('click', function (e) {
