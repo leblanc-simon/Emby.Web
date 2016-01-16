@@ -61,6 +61,7 @@ define([], function () {
                         keys.push(navigator.userAgent);
                         keys.push((navigator.cpuClass || ""));
                         keys.push(appName);
+                        keys.push(new Date().getTime());
 
                         var randomId = CryptoJS.SHA1(keys.join('|')).toString();
                         appStorage.setItem(key, randomId);
