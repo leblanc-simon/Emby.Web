@@ -1,11 +1,12 @@
 {
-    "TooltipFavorite": "Favorite",
-    "TooltipLike": "Like",
-    "TooltipDislike": "Dislike",
-    "TooltipPlayed": "Played",
+    "TooltipFavorite": "Favorito",
+    "TooltipLike": "Gostar",
+    "TooltipDislike": "N\u00e3o Gostar",
+    "TooltipPlayed": "Reproduzido",
     "ButtonCancel": "Cancelar",
     "AllSeries": "Todas as S\u00e9ries",
     "Genres": "G\u00e9neros",
+    "Extras": "Extras",
     "NextUp": "A Seguir",
     "LatestEpisodes": "\u00daltimos Epis\u00f3dios",
     "ContinueWatching": "Continuar a Ver",
@@ -76,5 +77,10 @@
     "FavoriteSeries": "S\u00e9ries Favoritas",
     "FavoriteEpisodes": "Epis\u00f3dios Favoritos",
     "FavoriteMovies": "Filmes Favoritos",
-    "CastAndCrew": "Cast & Crew"
+    "CastAndCrew": "Elenco e Equipa",
+    "Unwatched": "Por ver",
+    "Movies": "Filmes",
+    "Collections": "Cole\u00e7\u00f5es",
+    "Years": "Anos",
+    "Favorites": "Favoritos"
 }

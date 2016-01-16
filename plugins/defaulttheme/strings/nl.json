@@ -1,11 +1,12 @@
 {
-    "TooltipFavorite": "Favorite",
-    "TooltipLike": "Like",
-    "TooltipDislike": "Dislike",
-    "TooltipPlayed": "Played",
+    "TooltipFavorite": "Favoriet",
+    "TooltipLike": "Leuk",
+    "TooltipDislike": "Niet leuk",
+    "TooltipPlayed": "Afgespeeld",
     "ButtonCancel": "Annuleren",
     "AllSeries": "Alle Series",
     "Genres": "Genres",
+    "Extras": "Extras",
     "NextUp": "Eerstvolgende",
     "LatestEpisodes": "Nieuwste Afleveringen",
     "ContinueWatching": "Kijken hervatten",
@@ -75,6 +76,11 @@
     "FavoriteArtists": "Favoriete Artiesten",
     "FavoriteSeries": "Favoriete Series",
     "FavoriteEpisodes": "Favoriete Afleveringen",
-    "FavoriteMovies": "Favorite Movies",
-    "CastAndCrew": "Cast & Crew"
+    "FavoriteMovies": "Favoriete Films",
+    "CastAndCrew": "Cast & Crew",
+    "Unwatched": "Unwatched",
+    "Movies": "Movies",
+    "Collections": "Collections",
+    "Years": "Years",
+    "Favorites": "Favorites"
 }

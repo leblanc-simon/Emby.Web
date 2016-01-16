@@ -6,6 +6,7 @@
     "ButtonCancel": "Cancelar",
     "AllSeries": "Todas as S\u00e9ries",
     "Genres": "G\u00eaneros",
+    "Extras": "Extras",
     "NextUp": "Pr\u00f3ximos",
     "LatestEpisodes": "Epis\u00f3dios Recentes",
     "ContinueWatching": "Continuar Assistindo",
@@ -76,5 +77,10 @@
     "FavoriteSeries": "S\u00e9ries Favoritas",
     "FavoriteEpisodes": "Epis\u00f3dios Favoritos",
     "FavoriteMovies": "Filmes Favoritos",
-    "CastAndCrew": "Cast & Crew"
+    "CastAndCrew": "Cast & Crew",
+    "Unwatched": "Unwatched",
+    "Movies": "Movies",
+    "Collections": "Collections",
+    "Years": "Years",
+    "Favorites": "Favorites"
 }

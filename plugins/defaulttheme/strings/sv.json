@@ -6,6 +6,7 @@
     "ButtonCancel": "Avbryt",
     "AllSeries": "Alla serier",
     "Genres": "Genrer",
+    "Extras": "Extras",
     "NextUp": "N\u00e4sta p\u00e5 tur",
     "LatestEpisodes": "Nytillkomna avsnitt",
     "ContinueWatching": "Forts\u00e4tt titta",
@@ -76,5 +77,10 @@
     "FavoriteSeries": "Favoritserier",
     "FavoriteEpisodes": "Favoritavsnitt",
     "FavoriteMovies": "Favorite Movies",
-    "CastAndCrew": "Cast & Crew"
+    "CastAndCrew": "Cast & Crew",
+    "Unwatched": "Unwatched",
+    "Movies": "Movies",
+    "Collections": "Collections",
+    "Years": "Years",
+    "Favorites": "Favorites"
 }
