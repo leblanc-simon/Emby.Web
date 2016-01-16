@@ -4,17 +4,15 @@ define(['connectionManager', 'paperdialoghelper', 'css!components/registrationse
 
     function validateFeature(feature, showOverlay) {
 
-        //return Promise.reject();
-
         if (validatedFeatures.indexOf(feature) != -1) {
-            //return Promise.resolve();
+            return Promise.resolve();
         }
 
         return connectionManager.getRegistrationInfo('embytheater-unlock', connectionManager.currentApiClient()).then(function (registrationInfo) {
 
             if (registrationInfo.IsRegistered && !registrationInfo.IsTrial) {
                 validatedFeatures.push(feature);
-                //return Promise.resolve();
+                return Promise.resolve();
             }
 
             if (showOverlay !== false) {
