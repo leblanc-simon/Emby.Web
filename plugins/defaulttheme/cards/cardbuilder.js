@@ -345,6 +345,20 @@ define(['datetime'], function (datetime) {
         return date;
     }
 
+    function getDesiredAspect(shape) {
+
+        switch (shape) {
+        
+            case 'squareCard':
+                return 1;
+            case 'backdropCard':
+                return (16/9);
+            case 'portraitCard':
+                return (2 / 3);
+        }
+        return null;
+    }
+
     function getCardImageUrl(item, apiClient, options) {
 
         var width = options.width;
@@ -411,7 +425,12 @@ define(['datetime'], function (datetime) {
                 forceName = true;
             }
 
-            coverImage = height != null;
+            if (primaryImageAspectRatio) {
+                var uiAspect = getDesiredAspect(options.shape);
+                if (uiAspect) {
+                    coverImage = Math.abs(primaryImageAspectRatio - uiAspect) <= .2;
+                }
+            }
 
         } else if (item.PrimaryImageTag) {
 
@@ -427,7 +446,13 @@ define(['datetime'], function (datetime) {
             if (options.preferThumb && options.showTitle !== false) {
                 forceName = true;
             }
-            coverImage = width != null;
+
+            if (primaryImageAspectRatio) {
+                var uiAspect = getDesiredAspect(options.shape);
+                if (uiAspect) {
+                    coverImage = Math.abs(primaryImageAspectRatio - uiAspect) <= .2;
+                }
+            }
         }
         else if (item.ParentPrimaryImageTag) {
 
@@ -448,7 +473,12 @@ define(['datetime'], function (datetime) {
                 tag: item.AlbumPrimaryImageTag
             });
 
-            coverImage = width != null;
+            if (primaryImageAspectRatio) {
+                var uiAspect = getDesiredAspect(options.shape);
+                if (uiAspect) {
+                    coverImage = Math.abs(primaryImageAspectRatio - uiAspect) <= .2;
+                }
+            }
         }
         else if (item.Type == 'Season' && item.ImageTags && item.ImageTags.Thumb) {
 

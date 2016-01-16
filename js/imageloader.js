@@ -142,13 +142,15 @@ define(['visibleinviewport'], function (visibleinviewport) {
             result = (values[half - 1] + values[half]) / 2.0;
 
         // If really close to 2:3 (poster image), just return 2:3
-        if (Math.abs(0.66666666667 - result) <= .15) {
-            return 0.66666666667;
+        var aspect2x3 = 2 / 3;
+        if (Math.abs(aspect2x3 - result) <= .15) {
+            return aspect2x3;
         }
 
         // If really close to 16:9 (episode image), just return 16:9
-        if (Math.abs(1.777777778 - result) <= .2) {
-            return 1.777777778;
+        var aspect16x9 = 16 / 9;
+        if (Math.abs(aspect16x9 - result) <= .2) {
+            return aspect16x9;
         }
 
         // If really close to 1 (square image), just return 1
@@ -157,8 +159,9 @@ define(['visibleinviewport'], function (visibleinviewport) {
         }
 
         // If really close to 4:3 (poster image), just return 2:3
-        if (Math.abs(1.33333333333 - result) <= .15) {
-            return 1.33333333333;
+        var aspect4x3 = 4 / 3;
+        if (Math.abs(aspect4x3 - result) <= .15) {
+            return aspect4x3;
         }
 
         return result;

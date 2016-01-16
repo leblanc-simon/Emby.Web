@@ -34,7 +34,7 @@ paper-input label, paper-input input, paper-dropdown-menu label, paper-checkbox 
     transform: translateY(-50%)!important;
 }
 
-.label-is-floating input {
+paper-input input {
     margin-top: .8em;
 }
 
