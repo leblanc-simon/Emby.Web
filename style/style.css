@@ -90,7 +90,6 @@ iron-overlay-backdrop.iron-overlay-backdrop-0[opened] {
     }
 
 .windowDragRegion {
-    -webkit-app-region: drag;
     position: fixed;
     top: 0;
     left: 0;
@@ -99,6 +98,10 @@ iron-overlay-backdrop.iron-overlay-backdrop-0[opened] {
     /* This will ensure it is on top of the main body and the themeHeader */
     z-index: 2;
 }
+
+    .windowDragRegion:not(.nodrag) {
+        -webkit-app-region: drag;
+    }
 
     .windowDragRegion * {
         -webkit-app-region: no-drag;
