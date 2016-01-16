@@ -302,6 +302,12 @@
             chaptercardbuilder: 'components/cards/chaptercardbuilder'
         };
 
+        if (navigator.webkitPersistentStorage) {
+            paths.imageloader = embyWebComponentsBowerPath + "/images/persistentimageloader";
+        } else {
+            paths.imageloader = embyWebComponentsBowerPath + "/images/basicimageloader";
+        }
+
         paths.hlsjs = bowerPath + "/hls.js/dist/hls.min";
         paths.viewcontainer = 'components/viewcontainer';
 
@@ -420,7 +426,7 @@
              'bower_components/page.js/page.js',
              'components/router',
              'pluginmanager',
-             'js/imageloader',
+             'bower_components/emby-webcomponents/images/imagehelper',
              'css!style/style.css',
              'js/thememanager',
              'js/focusmanager',

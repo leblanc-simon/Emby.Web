@@ -1,4 +1,4 @@
-define(['visibleinviewport'], function (visibleinviewport) {
+define(['visibleinviewport', 'imageloader'], function (visibleinviewport, imageLoader) {
 
     var thresholdX = screen.availWidth;
     var thresholdY = screen.availHeight;
@@ -12,7 +12,7 @@ define(['visibleinviewport'], function (visibleinviewport) {
     function fillImage(elem) {
         var source = elem.getAttribute('data-src');
         if (source) {
-            ImageStore.setImageInto(elem, source);
+            imageLoader.loadImage(elem, source);
             elem.setAttribute("data-src", '');
         }
     }
@@ -165,35 +165,6 @@ define(['visibleinviewport'], function (visibleinviewport) {
         }
 
         return result;
-    }
-
-    function setImageIntoElement(elem, url) {
-
-        if (elem.tagName !== "IMG") {
-
-            var tmp = new Image();
-
-            tmp.onload = function () {
-
-                elem.style.backgroundImage = "url('" + url + "')";
-            };
-            tmp.src = url;
-
-
-        } else {
-            elem.setAttribute("src", url);
-        }
-
-        //fadeIn(elem, 1);
-    }
-
-    console.log('creating simpleImageStore');
-    window.ImageStore = {
-        setImageInto: setImageIntoElement
-    };
-
-    if (navigator.webkitPersistentStorage) {
-        require(['js/imagestore']);
     }
 
     return {

@@ -1,4 +1,4 @@
-﻿define(['cryptojs-md5'], function (paperdialoghelper) {
+define(['cryptojs-md5'], function () {
 
     function setImageIntoElement(elem, url) {
 
@@ -146,8 +146,8 @@
 
     var fileSystem;
 
-    window.ImageStore = {
-        setImageInto: function (elem, url) {
+    return {
+        loadImage: function (elem, url) {
 
             getImageUrl(url).then(function (localUrl) {
 
