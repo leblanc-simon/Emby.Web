@@ -199,9 +199,11 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
             if (getPlayerData(player).streamInfo.playMethod == 'Transcode' || !player.canSetAudioStreamIndex()) {
 
                 changeStream(player, getCurrentTicks(player), { AudioStreamIndex: index });
+                getPlayerData(player).audioStreamIndex = index;
 
             } else {
                 player.setAudioStreamIndex(index);
+                getPlayerData(player).audioStreamIndex = index;
             }
         };
 
