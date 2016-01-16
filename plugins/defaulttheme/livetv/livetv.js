@@ -76,6 +76,7 @@
             switch (id) {
 
                 case 'channels':
+                    renderChannels(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
                     break;
                 case 'recordings':
                     renderRecordings(page, pageParams, autoFocus, tabbedPage.bodySlyFrame, resolve);
@@ -86,6 +87,36 @@
                     break;
             }
         });
+    }
+
+    function renderChannels(page, pageParams, autoFocus, slyFrame, resolve) {
+
+        self.listController = new DefaultTheme.HorizontalList({
+
+            itemsContainer: page.querySelector('.contentScrollSlider'),
+            getItemsMethod: function (startIndex, limit) {
+                return Emby.Models.liveTvChannels({
+                    StartIndex: startIndex,
+                    Limit: limit,
+                    SortBy: "DateCreated,SortName",
+                    SortOrder: "Descending"
+                });
+            },
+            listCountElement: page.querySelector('.listCount'),
+            listNumbersElement: page.querySelector('.listNumbers'),
+            autoFocus: autoFocus,
+            selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
+            selectedIndexElement: page.querySelector('.selectedIndex'),
+            slyFrame: slyFrame,
+            onRender: function () {
+                if (resolve) {
+                    resolve();
+                    resolve = null;
+                }
+            }
+        });
+
+        self.listController.render();
     }
 
     function renderRecordings(page, pageParams, autoFocus, slyFrame, resolve) {

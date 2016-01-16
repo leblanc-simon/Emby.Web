@@ -265,6 +265,21 @@
         });
     }
 
+    function liveTvChannels(options) {
+        return new Promise(function (resolve, reject) {
+
+            require(['connectionManager'], function (connectionManager) {
+
+                var apiClient = connectionManager.currentApiClient();
+
+                normalizeOptions(options);
+                options.UserId = apiClient.getCurrentUserId();
+
+                apiClient.getLiveTvChannels(options).then(resolve, reject);
+            });
+        });
+    }
+
     function latestChannelItems(options) {
 
         return new Promise(function (resolve, reject) {
@@ -824,6 +839,7 @@
         search: search,
         seriesImageUrl: seriesImageUrl,
         recordings: recordings,
+        liveTvChannels: liveTvChannels,
         itemTrailers: itemTrailers,
         extras: extras
     };
