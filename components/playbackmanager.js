@@ -429,12 +429,46 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
 
         self.play = function (options) {
 
-            validatePlayback().then(function () {
+            var onValidationComplete = function () {
                 if (typeof (options) === 'string') {
                     options = { ids: [options] };
                 }
 
                 playItems(options);
+            };
+            validatePlayback().then(onValidationComplete, function () {
+                onValidationComplete();
+                startAutoStopTimer();
+            });
+        };
+
+        var autoStopTimeout;
+        var lockedTimeLimitMs = 60000;
+        function startAutoStopTimer() {
+            stopAutoStopTimer();
+            autoStopTimeout = setTimeout(onAutoStopTimeout, lockedTimeLimitMs);
+        }
+
+        function onAutoStopTimeout() {
+            stopAutoStopTimer();
+            self.stop();
+        }
+
+        function stopAutoStopTimer() {
+
+            var timeout = autoStopTimeout;
+            if (timeout) {
+                clearTimeout(timeout);
+                autoStopTimeout = null;
+            }
+        }
+
+        self.instantMix = function (id) {
+
+            Emby.Models.instantMix(id).then(function (result) {
+                self.play({
+                    items: result.Items
+                });
             });
         };
 
@@ -476,18 +510,6 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
 
                 });
 
-            });
-        };
-
-        self.instantMix = function (id) {
-
-            Emby.Models.instantMix(id).then(function (result) {
-
-                validatePlayback().then(function () {
-                    playItems({
-                        items: result.Items
-                    });
-                });
             });
         };
 

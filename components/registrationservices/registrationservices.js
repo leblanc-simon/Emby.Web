@@ -4,15 +4,17 @@ define(['connectionManager', 'paperdialoghelper', 'css!components/registrationse
 
     function validateFeature(feature, showOverlay) {
 
+        //return Promise.reject();
+
         if (validatedFeatures.indexOf(feature) != -1) {
-            return Promise.resolve();
+            //return Promise.resolve();
         }
 
         return connectionManager.getRegistrationInfo('embytheater-unlock', connectionManager.currentApiClient()).then(function (registrationInfo) {
 
             if (registrationInfo.IsRegistered && !registrationInfo.IsTrial) {
                 validatedFeatures.push(feature);
-                return Promise.resolve();
+                //return Promise.resolve();
             }
 
             if (showOverlay !== false) {
@@ -41,8 +43,11 @@ define(['connectionManager', 'paperdialoghelper', 'css!components/registrationse
         html += '<p>If you have Emby Premiere, just sign in with Emby Connect, or connect to your Emby Server using your local network connection.</p>';
 
         html += '<br/>';
-        html += '<paper-button raised class="register">';
+        html += '<paper-button raised class="register block">';
         html += 'Get Emby Premiere';
+        html += '</paper-button>';
+        html += '<paper-button raised class="tryPlay block">';
+        html += 'Play One Minute';
         html += '</paper-button>';
 
         html += '</div>';
@@ -55,6 +60,11 @@ define(['connectionManager', 'paperdialoghelper', 'css!components/registrationse
             require(['shell'], function (shell) {
                 shell.openUrl('http://emby.media/premiere');
             });
+        });
+
+        dlg.querySelector('.tryPlay').addEventListener('click', function (e) {
+
+            paperdialoghelper.close(dlg);
         });
 
         dlg.querySelector('.btnRegistrationBack').addEventListener('click', function (e) {
