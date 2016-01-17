@@ -329,7 +329,7 @@
 
         var config = {
 
-            waitSeconds: 40,
+            waitSeconds: 0,
             urlArgs: urlArgs,
 
             paths: paths,
