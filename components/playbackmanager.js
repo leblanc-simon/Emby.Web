@@ -300,6 +300,47 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
             changeStream(player, ticks);
         };
 
+        self.nextChapter = function () {
+
+            var player = self.currentPlayer();
+            var item = self.currentItem(player);
+
+            var ticks = getCurrentTicks(player);
+
+            var nextChapter = (item.Chapters || []).filter(function (i) {
+
+                return i.StartPositionTicks > ticks;
+
+            })[0];
+
+            if (nextChapter) {
+                self.seek(nextChapter.StartPositionTicks);
+            } else {
+                self.nextTrack();
+            }
+        };
+
+        self.previousChapter = function () {
+            var player = self.currentPlayer();
+            var item = self.currentItem(player);
+
+            var ticks = getCurrentTicks(player);
+
+            // Go back 10 seconds
+            ticks -= 100000000;
+
+            var previousChapters = (item.Chapters || []).filter(function (i) {
+
+                return i.StartPositionTicks <= ticks;
+            });
+
+            if (previousChapters.length) {
+                self.seek(previousChapters[previousChapters.length - 1].StartPositionTicks);
+            } else {
+                self.previousTrack();
+            }
+        };
+
         self.fastForward = function () {
 
         };

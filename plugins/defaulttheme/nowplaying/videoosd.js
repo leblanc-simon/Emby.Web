@@ -104,6 +104,10 @@
             osdPoster.innerHTML = '';
         }
 
+        function isOsdOpen() {
+            return !getHeaderElement().classList.contains('hide');
+        }
+
         function showOsd() {
 
             slideDownToShow(getHeaderElement());
@@ -233,10 +237,18 @@
 
             switch (e.detail.command) {
 
+                case 'left':
+                    if (!isOsdOpen()) {
+                        Emby.PlaybackManager.previousChapter();
+                    }
+                    break;
+                case 'right':
+                    if (!isOsdOpen()) {
+                        Emby.PlaybackManager.nextChapter();
+                    }
+                    break;
                 case 'up':
                 case 'down':
-                case 'left':
-                case 'right':
                 case 'select':
                 case 'menu':
                 case 'info':
