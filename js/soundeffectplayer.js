@@ -1,27 +1,13 @@
-(function (globalScope, document) {
+define(['soundeffects'], function (soundeffects) {
 
-    var effects;
-    var soundEffectPlayer;
+    var effects = {};
 
-    function load() {
+    function reload() {
 
-        require(['soundeffects'], function (soundeffects) {
-
-            soundEffectPlayer = soundeffects;
-
-            var soundeffectPlugin = Emby.PluginManager.ofType('soundeffects')[0];
-
-            if (soundeffectPlugin) {
-
-                effects = soundeffectPlugin.getEffects();
-                window.addEventListener('keydown', onKeyDown);
-            }
-        });
-    }
-
-    function unload() {
-        window.removeEventListener('keydown', onKeyDown);
-        effects = null;
+        var soundeffectPlugin = Emby.PluginManager.ofType('soundeffects')[0];
+        if (soundeffectPlugin) {
+            effects = soundeffectPlugin.getEffects();
+        }
     }
 
     function onKeyDown(evt) {
@@ -47,12 +33,14 @@
         var effect = effects[type];
 
         if (effect) {
-            soundEffectPlayer.play({
+            soundeffects.play({
                 path: effect
             });
         }
     }
 
-    load();
+    window.addEventListener('keydown', onKeyDown);
 
-})(this, document);
+    reload();
+
+});

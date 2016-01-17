@@ -25,7 +25,12 @@
                 elasticBounds: 1,
                 dragHandle: 1,
                 dynamicHandle: 1,
-                clickBar: 1
+                clickBar: 1,
+                elasticBounds: 1,
+                dragHandle: 1,
+                dynamicHandle: 1,
+                clickBar: 1,
+                scrollWidth: userViewNames.querySelectorAll('.btnUserViewHeader').length * (screen.width / 5)
             };
 
             slyScroller.create(scrollFrame, options).then(function (slyFrame) {

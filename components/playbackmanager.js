@@ -1554,9 +1554,6 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
             if (player && getPlayerData(player).currentProgressInterval) {
                 playNextAfterEnded = false;
                 onPlaybackStopped.call(player);
-                //self.stop();
-
-                event.returnValue = "Stopping current track...";
             }
         });
     }
