@@ -105,7 +105,8 @@
             type: 'settings',
             title: 'General',
             category: 'Playback',
-            thumbImage: ''
+            thumbImage: '',
+            order: -1
         });
 
         defineRoute({
@@ -117,7 +118,8 @@
             type: 'settings',
             title: 'General',
             category: 'Display',
-            thumbImage: ''
+            thumbImage: '',
+            order: -1
         });
 
         defineRoute({
