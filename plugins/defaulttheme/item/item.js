@@ -733,12 +733,15 @@ define(['loading', 'datetime'], function (loading, datetime) {
             return;
         }
 
-        Emby.Models.children(item, {
-
-            SortBy: 'SortName',
+        var options = {
             Fields: "Overview"
+        };
 
-        }).then(function (result) {
+        if (item.Type != 'BoxSet') {
+            options.SortBy = 'SortName';
+        }
+
+        Emby.Models.children(item, options).then(function (result) {
 
             if (!result.Items.length) {
                 section.classList.add('hide');
