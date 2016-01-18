@@ -1,4 +1,4 @@
-define(['loading'], function (loading) {
+define(['loading', 'apphost'], function (loading, apphost) {
 
     return function (view, params) {
 
@@ -13,6 +13,8 @@ define(['loading'], function (loading) {
             loading.hide();
 
             if (!isRestored) {
+
+                view.querySelector('.appInfo').innerHTML = apphost.appName() + ' ' + apphost.appVersion();
                 renderSettings();
             }
         });

@@ -33,6 +33,38 @@ define([], function () {
             // Web-based implementation can't really do much
             return false;
         },
+        appName: function () {
+            return 'Emby Theater';
+        },
+        appVersion: function () {
+            return '3.0';
+        },
+        deviceName: function () {
+            return "Web Browser";
+        },
+        deviceId: function () {
+
+            var deviceId = appStorage.getItem(key);
+
+            if (deviceId) {
+                return Promise.resolve(deviceId);
+            } else {
+                return new Promise(function (resolve, reject) {
+
+                    require(['cryptojs-sha1'], function () {
+                        var keys = [];
+                        keys.push(navigator.userAgent);
+                        keys.push((navigator.cpuClass || ""));
+                        keys.push(appName);
+                        keys.push(new Date().getTime());
+
+                        var randomId = CryptoJS.SHA1(keys.join('|')).toString();
+                        appStorage.setItem(key, randomId);
+                        resolve(randomId);
+                    });
+                });
+            }
+        },
         appInfo: function () {
 
             return new Promise(function (resolve, reject) {
@@ -40,7 +72,7 @@ define([], function () {
                 var deviceName = "Web Browser";
                 var appName = 'Emby Theater';
 
-                function onDeviceAdAcquired(id) {
+                function onDeviceIdAcquired(id) {
 
                     resolve({
                         deviceId: id,
@@ -54,7 +86,7 @@ define([], function () {
                 var deviceId = appStorage.getItem(key);
 
                 if (deviceId) {
-                    onDeviceAdAcquired(deviceId);
+                    onDeviceIdAcquired(deviceId);
                 } else {
                     require(['cryptojs-sha1'], function () {
                         var keys = [];
@@ -65,7 +97,7 @@ define([], function () {
 
                         var randomId = CryptoJS.SHA1(keys.join('|')).toString();
                         appStorage.setItem(key, randomId);
-                        onDeviceAdAcquired(randomId);
+                        onDeviceIdAcquired(randomId);
                     });
                 }
             });
