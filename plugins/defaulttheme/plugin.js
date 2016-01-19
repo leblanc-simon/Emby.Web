@@ -88,7 +88,6 @@ define(['playbackManager'], function (playbackManager) {
 
             routes.push({
                 path: Emby.PluginManager.mapPath(self, 'home.html'),
-                id: 'defaulttheme-home',
                 transition: 'slide',
                 type: 'home',
                 controller: Emby.PluginManager.mapPath(self, 'home/home.js'),
@@ -99,7 +98,6 @@ define(['playbackManager'], function (playbackManager) {
 
             routes.push({
                 path: Emby.PluginManager.mapPath(self, 'item/item.html'),
-                id: 'defaulttheme-item',
                 transition: 'slide',
                 dependencies: [
                     'css!' + Emby.PluginManager.mapPath(self, 'item/item.css')
@@ -109,35 +107,30 @@ define(['playbackManager'], function (playbackManager) {
 
             routes.push({
                 path: Emby.PluginManager.mapPath(self, 'list/list.html'),
-                id: 'defaulttheme-list',
                 transition: 'slide',
                 controller: Emby.PluginManager.mapPath(self, 'list/list.js')
             });
 
             routes.push({
                 path: Emby.PluginManager.mapPath(self, 'music/music.html'),
-                id: 'defaulttheme-music',
                 transition: 'slide',
                 controller: Emby.PluginManager.mapPath(self, 'music/music.js')
             });
 
             routes.push({
                 path: Emby.PluginManager.mapPath(self, 'movies/movies.html'),
-                id: 'defaulttheme-movies',
                 transition: 'slide',
                 controller: Emby.PluginManager.mapPath(self, 'movies/movies.js')
             });
 
             routes.push({
                 path: Emby.PluginManager.mapPath(self, 'livetv/livetv.html'),
-                id: 'defaulttheme-livetv',
                 transition: 'slide',
                 controller: Emby.PluginManager.mapPath(self, 'livetv/livetv.js')
             });
 
             routes.push({
                 path: Emby.PluginManager.mapPath(self, 'livetv/guide.html'),
-                id: 'defaulttheme-guide',
                 transition: 'slide',
                 controller: Emby.PluginManager.mapPath(self, 'livetv/guide.js'),
                 dependencies: [
@@ -147,14 +140,12 @@ define(['playbackManager'], function (playbackManager) {
 
             routes.push({
                 path: Emby.PluginManager.mapPath(self, 'tv/tv.html'),
-                id: 'defaulttheme-tv',
                 transition: 'slide',
                 controller: Emby.PluginManager.mapPath(self, 'tv/tv.js')
             });
 
             routes.push({
                 path: Emby.PluginManager.mapPath(self, 'search/search.html'),
-                id: 'defaulttheme-search',
                 transition: 'slide',
                 controller: Emby.PluginManager.mapPath(self, 'search/search.js'),
                 dependencies: [
@@ -164,7 +155,6 @@ define(['playbackManager'], function (playbackManager) {
 
             routes.push({
                 path: Emby.PluginManager.mapPath(self, 'nowplaying/nowplaying.html'),
-                id: 'defaulttheme-nowplaying',
                 transition: 'slide',
                 controller: Emby.PluginManager.mapPath(self, 'nowplaying/nowplaying.js'),
                 dependencies: [
@@ -175,7 +165,6 @@ define(['playbackManager'], function (playbackManager) {
 
             routes.push({
                 path: Emby.PluginManager.mapPath(self, 'nowplaying/playlist.html'),
-                id: 'defaulttheme-nowplayingplaylist',
                 transition: 'slide',
                 controller: Emby.PluginManager.mapPath(self, 'nowplaying/playlist.js'),
                 dependencies: [
@@ -186,7 +175,6 @@ define(['playbackManager'], function (playbackManager) {
 
             routes.push({
                 path: Emby.PluginManager.mapPath(self, 'nowplaying/videoosd.html'),
-                id: 'defaulttheme-videoosd',
                 transition: 'fade',
                 controller: Emby.PluginManager.mapPath(self, 'nowplaying/videoosd.js'),
                 dependencies: [
@@ -198,7 +186,6 @@ define(['playbackManager'], function (playbackManager) {
 
             //routes.push({
             //    path: Emby.PluginManager.mapPath(self, 'settings/settings.html'),
-            //    id: 'defaulttheme-settings',
             //    transition: 'slide',
             //    dependencies: [
             //        Emby.PluginManager.mapPath(self, 'settings/settings.js')

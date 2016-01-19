@@ -148,7 +148,6 @@ define(['loading', 'viewManager'], function (loading, viewManager) {
         var isBackNav = ctx.isBack;
 
         var currentRequest = {
-            id: route.id,
             url: baseUrl() + ctx.path,
             transition: route.transition,
             isBack: isBackNav,

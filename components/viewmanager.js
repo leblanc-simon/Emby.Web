@@ -12,8 +12,6 @@ define(['viewcontainer', 'bower_components/query-string/index'], function (viewc
         if (!newView.initComplete) {
             newView.initComplete = true;
 
-            var viewId = options.id;
-
             var eventDetail = getViewEventDetail(newView, options, false);
 
             if (options.controllerFactory) {
@@ -21,10 +19,6 @@ define(['viewcontainer', 'bower_components/query-string/index'], function (viewc
                 // Use controller method
                 var controller = new options.controllerFactory(newView, eventDetail.detail.params);
 
-            } else {
-
-                // Use event method
-                newView.dispatchEvent(new CustomEvent("viewinit-" + viewId, eventDetail));
             }
         }
 
@@ -33,7 +27,6 @@ define(['viewcontainer', 'bower_components/query-string/index'], function (viewc
 
     function onViewChange(view, options, isRestore) {
 
-        var viewId = options.id;
         var viewType = options.type;
 
         var lastView = currentView;
@@ -52,7 +45,6 @@ define(['viewcontainer', 'bower_components/query-string/index'], function (viewc
             view.activeElement.focus();
         }
 
-        view.dispatchEvent(new CustomEvent("viewshow-" + viewId, eventDetail));
         view.dispatchEvent(new CustomEvent("viewshow", eventDetail));
     }
 
@@ -60,7 +52,6 @@ define(['viewcontainer', 'bower_components/query-string/index'], function (viewc
 
         view.dispatchEvent(new CustomEvent(eventName, {
             detail: {
-                id: view.getAttribute('data-id'),
                 type: view.getAttribute('data-type'),
                 isRestored: isRestored
             },
@@ -78,7 +69,6 @@ define(['viewcontainer', 'bower_components/query-string/index'], function (viewc
 
         return {
             detail: {
-                id: view.getAttribute('data-id'),
                 type: view.getAttribute('data-type'),
                 params: params,
                 isRestored: isRestore,

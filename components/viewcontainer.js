@@ -28,7 +28,7 @@ define([], function () {
                     pageIndex = 0;
                 }
 
-                var html = '<div class="page-view" data-id="' + options.id + '" data-type="' + (options.type || '') + '" data-url="' + options.url + '">';
+                var html = '<div class="page-view" data-type="' + (options.type || '') + '" data-url="' + options.url + '">';
                 html += options.view;
                 html += '</div>';
 

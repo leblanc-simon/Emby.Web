@@ -37,60 +37,50 @@
 
         page.base(baseRoute);
 
-        var deps = ['startup/startup'];
         var startupRoot = '/startup/';
-
-        var suffix = "";
 
         defineRoute({
             path: startupRoot + 'login.html',
-            id: 'login',
             transition: 'slide',
-            dependencies: deps
+            controller: 'startup/login'
         });
 
         defineRoute({
             path: startupRoot + 'manuallogin.html',
-            contentPath: startupRoot + 'manuallogin' + suffix + '.html',
-            id: 'manuallogin',
+            contentPath: startupRoot + 'manuallogin.html',
             transition: 'slide',
-            dependencies: deps
+            controller: 'startup/manuallogin'
         });
 
         defineRoute({
             path: startupRoot + 'welcome.html',
-            contentPath: startupRoot + 'welcome' + suffix + '.html',
-            id: 'welcome',
+            contentPath: startupRoot + 'welcome.html',
             transition: 'slide',
-            dependencies: deps
+            controller: 'startup/welcome'
         });
 
         defineRoute({
             path: startupRoot + 'connectlogin.html',
-            contentPath: startupRoot + 'connectlogin' + suffix + '.html',
-            id: 'connectlogin',
+            contentPath: startupRoot + 'connectlogin.html',
             transition: 'slide',
-            dependencies: deps
+            controller: 'startup/connectlogin'
         });
 
         defineRoute({
             path: startupRoot + 'manualserver.html',
-            contentPath: startupRoot + 'manualserver' + suffix + '.html',
-            id: 'manualserver',
+            contentPath: startupRoot + 'manualserver.html',
             transition: 'slide',
-            dependencies: deps
+            controller: 'startup/manualserver'
         });
 
         defineRoute({
             path: startupRoot + 'selectserver.html',
-            id: 'selectserver',
             transition: 'slide',
-            dependencies: deps
+            controller: 'startup/selectserver'
         });
 
         defineRoute({
             path: '/settings/settings.html',
-            id: 'settings',
             transition: 'slide',
             dependencies: ['css!settings/settings.css'],
             controller: 'settings/settings'
@@ -98,7 +88,6 @@
 
         defineRoute({
             path: '/settings/playback.html',
-            id: 'playbacksettings',
             transition: 'slide',
             dependencies: ['emby-dropdown-menu'],
             controller: 'settings/playback',
@@ -111,7 +100,6 @@
 
         defineRoute({
             path: '/settings/display.html',
-            id: 'displaysettings',
             transition: 'slide',
             dependencies: ['emby-dropdown-menu'],
             controller: 'settings/display',
@@ -124,7 +112,6 @@
 
         defineRoute({
             path: '/index.html',
-            id: 'index',
             isDefaultRoute: true,
             transition: 'slide',
             dependencies: []
