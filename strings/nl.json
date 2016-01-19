@@ -1,7 +1,8 @@
 {
-    "ButtonPlayFromBeginning": "Play from beginning",
-    "EnableCinemaMode": "Enable cinema mode",
-    "EnableCinemaModeHelp": "Requires setup in Emby Server",
+    "GuestStar": "Guest star",
+    "ButtonPlayFromBeginning": "Afspelen vanaf begin",
+    "EnableCinemaMode": "Cinema Mode inschakelen",
+    "EnableCinemaModeHelp": "Vereist setup in Emby Server",
     "EmbyConnect": "Emby Connect",
     "HeaderWelcomeToEmby": "Welkom bij Emby",
     "EmbyIntroMessage": "Met Emby kunt u eenvoudig films, muziek en foto's naar uw telefoon, tablet en andere apparatuur streamen.",
@@ -45,6 +46,6 @@
     "PlaybackSettings": "Afspeel instellingen",
     "MaxStreamingBitrate": "Max Streaming Bitrate",
     "OptionAutomatic": "Automatisch",
-    "DisplayLanguage": "Display language",
-    "DisplaySettings": "Display Settings"
+    "DisplayLanguage": "Weergave taal",
+    "DisplaySettings": "Weergave instellingen"
 }

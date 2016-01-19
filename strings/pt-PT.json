@@ -1,7 +1,8 @@
 {
+    "GuestStar": "Guest star",
     "ButtonPlayFromBeginning": "Reproduzir do in\u00edcio",
     "EnableCinemaMode": "Ativar modo cinema",
-    "EnableCinemaModeHelp": "Requires setup in Emby Server",
+    "EnableCinemaModeHelp": "Requer configura\u00e7\u00e3o no Emby Server",
     "EmbyConnect": "Emby Connect",
     "HeaderWelcomeToEmby": "Bem-vindo ao Emby",
     "EmbyIntroMessage": "Com o Emby, pode facilmente reproduzir v\u00eddeos, m\u00fasicas e fotos em smart phones e em outros dispositivos atrav\u00e9s do Servidor Emby.",
@@ -45,6 +46,6 @@
     "PlaybackSettings": "Op\u00e7\u00f5es de Reprodu\u00e7\u00e3o",
     "MaxStreamingBitrate": "Taxa de bits m\u00e1xima:",
     "OptionAutomatic": "Autom\u00e1tico",
-    "DisplayLanguage": "Display language",
-    "DisplaySettings": "Display Settings"
+    "DisplayLanguage": "Idioma de visualiza\u00e7\u00e3o",
+    "DisplaySettings": "Defini\u00e7\u00f5es de Visualiza\u00e7\u00e3o"
 }

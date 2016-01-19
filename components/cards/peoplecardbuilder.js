@@ -50,7 +50,7 @@ define([], function () {
             nameHtml += '<div class="cardText">as ' + person.Role + '</div>';
         }
         else if (person.Type) {
-            nameHtml += '<div class="cardText">' + person.Type + '</div>';
+            nameHtml += '<div class="cardText">' + Globalize.translate('core#' + person.Type) + '</div>';
         } else {
             nameHtml += '<div class="cardText">&nbsp;</div>';
         }

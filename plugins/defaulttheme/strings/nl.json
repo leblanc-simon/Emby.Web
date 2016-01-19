@@ -6,7 +6,7 @@
     "ButtonCancel": "Annuleren",
     "AllSeries": "Alle Series",
     "Genres": "Genres",
-    "Extras": "Extras",
+    "Extras": "Extra's",
     "NextUp": "Eerstvolgende",
     "LatestEpisodes": "Nieuwste Afleveringen",
     "ContinueWatching": "Kijken hervatten",
@@ -78,9 +78,9 @@
     "FavoriteEpisodes": "Favoriete Afleveringen",
     "FavoriteMovies": "Favoriete Films",
     "CastAndCrew": "Cast & Crew",
-    "Unwatched": "Unwatched",
-    "Movies": "Movies",
-    "Collections": "Collections",
-    "Years": "Years",
-    "Favorites": "Favorites"
+    "Unwatched": "Ongezien",
+    "Movies": "Films",
+    "Collections": "Verzamelingen",
+    "Years": "Jaren",
+    "Favorites": "Favorieten"
 }
