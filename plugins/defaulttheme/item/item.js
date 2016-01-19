@@ -759,7 +759,10 @@ define(['loading', 'datetime', 'playbackManager'], function (loading, datetime, 
 
             Emby.ImageLoader.lazyChildren(section);
 
-            focusFirstUnWatched(result.Items, section);
+            // Sometimes this doesn't work without some delay after setting innerHTMl
+            setTimeout(function () {
+                focusFirstUnWatched(result.Items, section);
+            }, 100);
 
             section.removeEventListener('keydown', onEpisodeListKeyDown);
             section.addEventListener('keydown', onEpisodeListKeyDown);
