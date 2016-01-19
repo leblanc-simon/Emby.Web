@@ -1,11 +1,47 @@
-(function () {
+define(['loading', 'alphapicker', 'slyScroller'], function (loading, alphaPicker, slyScroller) {
 
-    document.addEventListener("viewinit-defaulttheme-search", function (e) {
+    function createVerticalScroller(view, pageInstance) {
 
-        new searchPage(e.target, e.detail.params);
-    });
+        var scrollFrame = view.querySelector('.scrollFrameY');
 
-    function searchPage(view, params) {
+        var options = {
+            horizontal: 0,
+            itemNav: 0,
+            mouseDragging: 1,
+            touchDragging: 1,
+            slidee: view.querySelector('.scrollSlider'),
+            itemSelector: '.card',
+            smart: true,
+            scrollBy: 200,
+            speed: 270,
+            dragHandle: 1,
+            dynamicHandle: 1,
+            clickBar: 1,
+            scrollWidth: 10000
+        };
+
+        slyScroller.create(scrollFrame, options).then(function (slyFrame) {
+            pageInstance.verticalSlyFrame = slyFrame;
+            slyFrame.init();
+            initFocusHandler(view, slyFrame);
+        });
+    }
+
+    function initFocusHandler(view, slyFrame) {
+
+        var searchResults = view.querySelector('.searchResults');
+
+        require([Emby.PluginManager.mapPath('defaulttheme', 'cards/focushandler.js')], function (focusHandler) {
+
+            self.focusHandler = new focusHandler({
+                parent: searchResults,
+                slyFrame: slyFrame
+            });
+
+        });
+    }
+
+    return function (view, params) {
 
         var self = this;
 
@@ -130,18 +166,15 @@
 
         function initAlphaPicker(view) {
 
-            require(['alphapicker'], function (alphaPicker) {
+            var alphaPickerElement = view.querySelector('.alphaPicker');
 
-                var alphaPickerElement = view.querySelector('.alphaPicker');
-
-                self.alphaPicker = new alphaPicker({
-                    element: alphaPickerElement,
-                    mode: 'keyboard'
-                });
-
-                self.alphaPicker.focus();
-                alphaPickerElement.addEventListener('alphavalueclicked', onAlphaValueClicked);
+            self.alphaPicker = new alphaPicker({
+                element: alphaPickerElement,
+                mode: 'keyboard'
             });
+
+            self.alphaPicker.focus();
+            alphaPickerElement.addEventListener('alphavalueclicked', onAlphaValueClicked);
         }
 
         var searchTimeout;
@@ -214,48 +247,4 @@
         });
     }
 
-    function createVerticalScroller(view, pageInstance) {
-
-        require(["slyScroller", 'loading'], function (slyScroller, loading) {
-
-            var scrollFrame = view.querySelector('.scrollFrameY');
-
-            var options = {
-                horizontal: 0,
-                itemNav: 0,
-                mouseDragging: 1,
-                touchDragging: 1,
-                slidee: view.querySelector('.scrollSlider'),
-                itemSelector: '.card',
-                smart: true,
-                scrollBy: 200,
-                speed: 270,
-                dragHandle: 1,
-                dynamicHandle: 1,
-                clickBar: 1,
-                scrollWidth: 10000
-            };
-
-            slyScroller.create(scrollFrame, options).then(function (slyFrame) {
-                pageInstance.verticalSlyFrame = slyFrame;
-                slyFrame.init();
-                initFocusHandler(view, slyFrame);
-            });
-        });
-    }
-
-    function initFocusHandler(view, slyFrame) {
-
-        var searchResults = view.querySelector('.searchResults');
-
-        require([Emby.PluginManager.mapPath('defaulttheme', 'cards/focushandler.js')], function (focusHandler) {
-
-            self.focusHandler = new focusHandler({
-                parent: searchResults,
-                slyFrame: slyFrame
-            });
-
-        });
-    }
-
-})();
+});

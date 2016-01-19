@@ -1,11 +1,6 @@
-(function () {
+define(['loading', 'alphapicker'], function (loading, alphaPicker) {
 
-    document.addEventListener("viewinit-defaulttheme-movies", function (e) {
-
-        new moviesPage(e.target, e.detail.params);
-    });
-
-    function moviesPage(view, params) {
+    return function (view, params) {
 
         var self = this;
 
@@ -13,15 +8,12 @@
 
             DefaultTheme.Backdrop.setStaticBackdrop();
 
-            require(['loading'], function (loading) {
+            if (!self.tabbedPage) {
+                loading.show();
+                renderTabs(view, params.tab, self, params);
+            }
 
-                if (!self.tabbedPage) {
-                    loading.show();
-                    renderTabs(view, params.tab, self, params);
-                }
-
-                Emby.Page.setTitle('');
-            });
+            Emby.Page.setTitle('');
         });
 
         view.addEventListener('viewdestroy', function () {
@@ -39,53 +31,50 @@
 
         function renderTabs(view, initialTabId, pageInstance, params) {
 
-            require(['alphapicker'], function (alphaPicker) {
-
-                self.alphaPicker = new alphaPicker({
-                    element: view.querySelector('.alphaPicker'),
-                    itemsContainer: view.querySelector('.contentScrollSlider'),
-                    itemClass: 'card'
-                });
-
-                var tabs = [
-                {
-                    Name: Globalize.translate('Movies'),
-                    Id: "movies"
-                },
-                {
-                    Name: Globalize.translate('Unwatched'),
-                    Id: "unwatched"
-                },
-                {
-                    Name: Globalize.translate('Collections'),
-                    Id: "collections"
-                },
-                {
-                    Name: Globalize.translate('Genres'),
-                    Id: "genres"
-                },
-                {
-                    Name: Globalize.translate('Years'),
-                    Id: "years"
-                },
-                {
-                    Name: Globalize.translate('TopRated'),
-                    Id: "toprated"
-                },
-                {
-                    Name: Globalize.translate('Favorites'),
-                    Id: "favorites"
-                }];
-
-                var tabbedPage = new DefaultTheme.TabbedPage(view, {
-                    alphaPicker: self.alphaPicker
-                });
-
-                tabbedPage.loadViewContent = loadViewContent;
-                tabbedPage.params = params;
-                tabbedPage.renderTabs(tabs, initialTabId);
-                pageInstance.tabbedPage = tabbedPage;
+            self.alphaPicker = new alphaPicker({
+                element: view.querySelector('.alphaPicker'),
+                itemsContainer: view.querySelector('.contentScrollSlider'),
+                itemClass: 'card'
             });
+
+            var tabs = [
+            {
+                Name: Globalize.translate('Movies'),
+                Id: "movies"
+            },
+            {
+                Name: Globalize.translate('Unwatched'),
+                Id: "unwatched"
+            },
+            {
+                Name: Globalize.translate('Collections'),
+                Id: "collections"
+            },
+            {
+                Name: Globalize.translate('Genres'),
+                Id: "genres"
+            },
+            {
+                Name: Globalize.translate('Years'),
+                Id: "years"
+            },
+            {
+                Name: Globalize.translate('TopRated'),
+                Id: "toprated"
+            },
+            {
+                Name: Globalize.translate('Favorites'),
+                Id: "favorites"
+            }];
+
+            var tabbedPage = new DefaultTheme.TabbedPage(view, {
+                alphaPicker: self.alphaPicker
+            });
+
+            tabbedPage.loadViewContent = loadViewContent;
+            tabbedPage.params = params;
+            tabbedPage.renderTabs(tabs, initialTabId);
+            pageInstance.tabbedPage = tabbedPage;
         }
 
         function loadViewContent(page, id, type) {
@@ -393,4 +382,4 @@
         }
     }
 
-})();
+});

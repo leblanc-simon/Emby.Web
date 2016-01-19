@@ -1,11 +1,20 @@
-(function () {
+define(['loading'], function (loading) {
 
-    document.addEventListener("viewinit-defaulttheme-home", function (e) {
+    function loadViewHtml(page, parentId, html, viewName, autoFocus) {
 
-        new homePage(e.target, e.detail.params);
-    });
+        var homeScrollContent = page.querySelector('.contentScrollSlider');
 
-    function homePage(view, params) {
+        html = html;
+        homeScrollContent.innerHTML = Globalize.translateHtml(html, 'defaulttheme');
+
+        require([Emby.PluginManager.mapPath('defaulttheme', 'home/views.' + viewName + '.js')], function () {
+
+            var homePanel = homeScrollContent;
+            new DefaultTheme[viewName + 'View'](homePanel, parentId, autoFocus);
+        });
+    }
+
+    return function (view, params) {
 
         var self = this;
 
@@ -19,12 +28,9 @@
 
             if (!isRestored) {
 
-                require(['loading'], function (loading) {
+                loading.show();
 
-                    loading.show();
-
-                    renderTabs(view, self);
-                });
+                renderTabs(view, self);
                 //require(['actionsheet'], function (actionsheet) {
 
                 //    actionsheet.show({
@@ -131,18 +137,4 @@
         }
     }
 
-    function loadViewHtml(page, parentId, html, viewName, autoFocus) {
-
-        var homeScrollContent = page.querySelector('.contentScrollSlider');
-
-        html = html;
-        homeScrollContent.innerHTML = Globalize.translateHtml(html, 'defaulttheme');
-
-        require([Emby.PluginManager.mapPath('defaulttheme', 'home/views.' + viewName + '.js')], function () {
-
-            var homePanel = homeScrollContent;
-            new DefaultTheme[viewName + 'View'](homePanel, parentId, autoFocus);
-        });
-    }
-
-})();
+});

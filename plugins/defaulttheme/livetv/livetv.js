@@ -1,35 +1,4 @@
-(function () {
-
-    document.addEventListener("viewinit-defaulttheme-livetv", function (e) {
-
-        new liveTVPage(e.target, e.detail.params);
-    });
-
-    function liveTVPage(view, params) {
-
-        var self = this;
-
-        view.addEventListener('viewshow', function (e) {
-
-            require(['loading'], function (loading) {
-
-                if (!self.tabbedPage) {
-                    loading.show();
-                    renderTabs(view, params.tab, self, params);
-                }
-
-                Emby.Page.setTitle(Globalize.translate('LiveTV'));
-                Emby.Backdrop.clear();
-            });
-        });
-
-        view.addEventListener('viewdestroy', function () {
-
-            if (self.tabbedPage) {
-                self.tabbedPage.destroy();
-            }
-        });
-    }
+define(['loading', 'alphapicker'], function (loading, alphaPicker) {
 
     function renderTabs(view, initialTabId, pageInstance, params) {
 
@@ -149,4 +118,30 @@
         self.listController.render();
     }
 
-})();
+    return function (view, params) {
+
+        var self = this;
+
+        view.addEventListener('viewshow', function (e) {
+
+            require(['loading'], function (loading) {
+
+                if (!self.tabbedPage) {
+                    loading.show();
+                    renderTabs(view, params.tab, self, params);
+                }
+
+                Emby.Page.setTitle(Globalize.translate('LiveTV'));
+                Emby.Backdrop.clear();
+            });
+        });
+
+        view.addEventListener('viewdestroy', function () {
+
+            if (self.tabbedPage) {
+                self.tabbedPage.destroy();
+            }
+        });
+    }
+
+});

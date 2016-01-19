@@ -91,8 +91,8 @@ define(['playbackManager'], function (playbackManager) {
                 id: 'defaulttheme-home',
                 transition: 'slide',
                 type: 'home',
+                controller: Emby.PluginManager.mapPath(self, 'home/home.js'),
                 dependencies: [
-                    Emby.PluginManager.mapPath(self, 'home/home.js'),
                     'css!' + Emby.PluginManager.mapPath(self, 'home/home.css')
                 ]
             });
@@ -118,35 +118,29 @@ define(['playbackManager'], function (playbackManager) {
                 path: Emby.PluginManager.mapPath(self, 'music/music.html'),
                 id: 'defaulttheme-music',
                 transition: 'slide',
-                dependencies: [
-                    Emby.PluginManager.mapPath(self, 'music/music.js')
-                ]
+                controller: Emby.PluginManager.mapPath(self, 'music/music.js')
             });
 
             routes.push({
                 path: Emby.PluginManager.mapPath(self, 'movies/movies.html'),
                 id: 'defaulttheme-movies',
                 transition: 'slide',
-                dependencies: [
-                    Emby.PluginManager.mapPath(self, 'movies/movies.js')
-                ]
+                controller: Emby.PluginManager.mapPath(self, 'movies/movies.js')
             });
 
             routes.push({
                 path: Emby.PluginManager.mapPath(self, 'livetv/livetv.html'),
                 id: 'defaulttheme-livetv',
                 transition: 'slide',
-                dependencies: [
-                    Emby.PluginManager.mapPath(self, 'livetv/livetv.js')
-                ]
+                controller: Emby.PluginManager.mapPath(self, 'livetv/livetv.js')
             });
 
             routes.push({
                 path: Emby.PluginManager.mapPath(self, 'livetv/guide.html'),
                 id: 'defaulttheme-guide',
                 transition: 'slide',
+                controller: Emby.PluginManager.mapPath(self, 'livetv/guide.js'),
                 dependencies: [
-                    Emby.PluginManager.mapPath(self, 'livetv/guide.js'),
                     'css!' + Emby.PluginManager.mapPath(self, 'livetv/guide.css')
                 ]
             });
@@ -155,44 +149,15 @@ define(['playbackManager'], function (playbackManager) {
                 path: Emby.PluginManager.mapPath(self, 'tv/tv.html'),
                 id: 'defaulttheme-tv',
                 transition: 'slide',
-                dependencies: [
-                    Emby.PluginManager.mapPath(self, 'tv/tv.js')
-                ]
-            });
-
-            routes.push({
-                path: Emby.PluginManager.mapPath(self, 'tv/favorites.html'),
-                id: 'defaulttheme-tvfavorites',
-                transition: 'slide',
-                dependencies: [
-                    Emby.PluginManager.mapPath(self, 'tv/favorites.js')
-                ]
-            });
-
-            routes.push({
-                path: Emby.PluginManager.mapPath(self, 'tv/upcoming.html'),
-                id: 'defaulttheme-tvupcoming',
-                transition: 'slide',
-                dependencies: [
-                    Emby.PluginManager.mapPath(self, 'tv/upcoming.js')
-                ]
-            });
-
-            routes.push({
-                path: Emby.PluginManager.mapPath(self, 'genres/genres.html'),
-                id: 'defaulttheme-genres',
-                transition: 'slide',
-                dependencies: [
-                    Emby.PluginManager.mapPath(self, 'genres/genres.js')
-                ]
+                controller: Emby.PluginManager.mapPath(self, 'tv/tv.js')
             });
 
             routes.push({
                 path: Emby.PluginManager.mapPath(self, 'search/search.html'),
                 id: 'defaulttheme-search',
                 transition: 'slide',
+                controller: Emby.PluginManager.mapPath(self, 'search/search.js'),
                 dependencies: [
-                    Emby.PluginManager.mapPath(self, 'search/search.js'),
                     'css!' + Emby.PluginManager.mapPath(self, 'search/search.css')
                 ]
             });

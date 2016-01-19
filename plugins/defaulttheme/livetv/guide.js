@@ -1,11 +1,6 @@
-(function () {
+define(['tvguide'], function (tvguide) {
 
-    document.addEventListener("viewinit-defaulttheme-guide", function (e) {
-
-        new guidePage(e.target, e.detail.params);
-    });
-
-    function guidePage(view, params) {
+    return function (view, params) {
 
         var self = this;
         var guideInstance;
@@ -26,13 +21,10 @@
 
         function initGuide() {
 
-            require(['tvguide'], function (guide) {
-
-                guideInstance = new guide({
-                    element: view.querySelector('.epg')
-                });
+            guideInstance = new tvguide({
+                element: view.querySelector('.epg')
             });
         }
     }
 
-})();
+});
