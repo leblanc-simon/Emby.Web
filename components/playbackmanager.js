@@ -1,4 +1,4 @@
-define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSettings) {
+define(['events', 'datetime', 'appsettings', 'pluginManager'], function (Events, datetime, appSettings, pluginManager) {
 
     function playbackManager() {
 
@@ -67,7 +67,8 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
         };
 
         self.isPlaying = function () {
-            return currentPlayer != null && currentPlayer.currentSrc() != null;
+            var player = currentPlayer;
+            return player != null && player.currentSrc() != null;
         };
 
         self.isPlayingVideo = function () {
@@ -92,7 +93,7 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
 
         self.getPlayers = function () {
 
-            var players = Emby.PluginManager.ofType('mediaplayer');
+            var players = pluginManager.ofType('mediaplayer');
 
             players.sort(function (a, b) {
 
@@ -419,21 +420,21 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
             });
         };
 
-        function changeStreamToUrl(apiClient, mediaRenderer, playSessionId, streamInfo, newPositionTicks) {
+        function changeStreamToUrl(apiClient, player, playSessionId, streamInfo, newPositionTicks) {
 
-            clearProgressInterval(mediaRenderer);
+            clearProgressInterval(player);
 
-            getPlayerData(mediaRenderer).isChangingStream = true;
+            getPlayerData(player).isChangingStream = true;
 
-            if (getPlayerData(mediaRenderer).MediaType == "Video") {
+            if (getPlayerData(player).MediaType == "Video") {
                 apiClient.stopActiveEncodings(playSessionId).then(function () {
 
-                    setSrcIntoRenderer(apiClient, mediaRenderer, streamInfo);
+                    setSrcIntoRenderer(apiClient, player, streamInfo);
                 });
 
             } else {
 
-                setSrcIntoRenderer(apiClient, mediaRenderer, streamInfo);
+                setSrcIntoRenderer(apiClient, player, streamInfo);
             }
         }
 
@@ -1525,7 +1526,7 @@ define(['events', 'datetime', 'appsettings'], function (Events, datetime, appSet
             });
         }
 
-        Events.on(Emby.PluginManager, 'registered', function (e, plugin) {
+        Events.on(pluginManager, 'registered', function (e, plugin) {
 
             if (plugin.type == 'mediaplayer') {
 

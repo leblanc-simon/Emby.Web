@@ -1,4 +1,4 @@
-define(['loading', 'datetime'], function (loading, datetime) {
+define(['loading', 'datetime', 'playbackManager'], function (loading, datetime, playbackManager) {
 
     function focusMainSection() {
 
@@ -350,7 +350,7 @@ define(['loading', 'datetime'], function (loading, datetime) {
             view.querySelector('.btnTrailer').classList.add('hide');
         }
 
-        if (Emby.PlaybackManager.canPlay(item)) {
+        if (playbackManager.canPlay(item)) {
             view.querySelector('.itemPageFixedLeft .btnPlay').classList.remove('hide');
             view.querySelector('.mainSection .btnPlay').classList.remove('hide');
         } else {
@@ -1059,7 +1059,7 @@ define(['loading', 'datetime'], function (loading, datetime) {
                 // Always refresh this
                 renderNextUp(view, item);
 
-                if (Emby.PlaybackManager.canQueue(item)) {
+                if (playbackManager.canQueue(item)) {
                     view.querySelector('.itemPageFixedLeft .btnQueue').classList.remove('hide');
                 } else {
                     view.querySelector('.itemPageFixedLeft .btnQueue').classList.add('hide');
@@ -1095,13 +1095,13 @@ define(['loading', 'datetime'], function (loading, datetime) {
         });
 
         function playTrailer() {
-            Emby.PlaybackManager.playTrailer(currentItem);
+            playbackManager.playTrailer(currentItem);
         }
 
         function play() {
 
             if (currentItem.IsFolder) {
-                Emby.PlaybackManager.play({
+                playbackManager.play({
                     items: [currentItem]
                 });
             } else {
@@ -1113,17 +1113,17 @@ define(['loading', 'datetime'], function (loading, datetime) {
 
         function queue() {
 
-            Emby.PlaybackManager.queue({
+            playbackManager.queue({
                 items: [currentItem]
             });
         }
 
         function instantMix() {
-            Emby.PlaybackManager.instantMix(currentItem.Id);
+            playbackManager.instantMix(currentItem.Id);
         }
 
         function shuffle() {
-            Emby.PlaybackManager.shuffle(currentItem.Id);
+            playbackManager.shuffle(currentItem.Id);
         }
     }
 });

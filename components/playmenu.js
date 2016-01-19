@@ -1,4 +1,4 @@
-define(['actionsheet', 'datetime'], function (actionsheet, datetime) {
+define(['actionsheet', 'datetime', 'playbackManager'], function (actionsheet, datetime, playbackManager) {
 
     function show(item) {
 
@@ -9,7 +9,7 @@ define(['actionsheet', 'datetime'], function (actionsheet, datetime) {
         var resumePositionTicks = item.UserData ? item.UserData.PlaybackPositionTicks : null;
 
         if (!resumePositionTicks && mediaType != "Audio" && !isFolder) {
-            Emby.PlaybackManager.play({
+            playbackManager.play({
                 items: [item]
             });
             return;
@@ -37,7 +37,7 @@ define(['actionsheet', 'datetime'], function (actionsheet, datetime) {
             });
         }
 
-        if (Emby.PlaybackManager.canQueueMediaType(mediaType)) {
+        if (playbackManager.canQueueMediaType(mediaType)) {
             menuItems.push({
                 name: Globalize.translate('core#ButtonQueue'),
                 id: 'queue',
@@ -68,22 +68,22 @@ define(['actionsheet', 'datetime'], function (actionsheet, datetime) {
                 switch (id) {
 
                     case 'play':
-                        Emby.PlaybackManager.play(itemId);
+                        playbackManager.play(itemId);
                         break;
                     case 'resume':
-                        Emby.PlaybackManager.play({
+                        playbackManager.play({
                             ids: [itemId],
                             startPositionTicks: resumePositionTicks
                         });
                         break;
                     case 'queue':
-                        Emby.PlaybackManager.queue(itemId);
+                        playbackManager.queue(itemId);
                         break;
                     case 'instantmix':
-                        Emby.PlaybackManager.instantMix(itemId);
+                        playbackManager.instantMix(itemId);
                         break;
                     case 'shuffle':
-                        Emby.PlaybackManager.shuffle(itemId);
+                        playbackManager.shuffle(itemId);
                         break;
                     default:
                         break;

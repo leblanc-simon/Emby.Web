@@ -1,4 +1,4 @@
-(function (document) {
+define(['playbackManager'], function (playbackManager) {
 
     var currentOwnerId;
     var currentThemeIds = [];
@@ -9,7 +9,7 @@
 
             // Stop if a theme song from another ownerId
             // Leave it alone if anything else (e.g user playing a movie)
-            if (!currentOwnerId && Emby.PlaybackManager.isPlaying()) {
+            if (!currentOwnerId && playbackManager.isPlaying()) {
                 return;
             }
 
@@ -19,7 +19,7 @@
 
             currentOwnerId = ownerId;
 
-            Emby.PlaybackManager.play({
+            playbackManager.play({
                 items: items,
                 fullscreen: false
             });
@@ -27,7 +27,7 @@
         } else {
 
             if (currentOwnerId) {
-                Emby.PlaybackManager.stop();
+                playbackManager.stop();
             }
 
             currentOwnerId = null;
@@ -91,4 +91,4 @@
     //    }
     //});
 
-})(document);
+});

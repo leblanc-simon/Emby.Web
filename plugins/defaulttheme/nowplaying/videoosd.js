@@ -1,11 +1,6 @@
-(function () {
+define(['playbackManager', 'inputmanager', 'datetime'], function (playbackManager, inputManager, datetime) {
 
-    document.addEventListener("viewinit-defaulttheme-videoosd", function (e) {
-
-        new nowPlayingPage(e.target, e.detail.params);
-    });
-
-    function nowPlayingPage(view, params) {
+    return function (view, params) {
 
         var self = this;
         var currentPlayer;
@@ -57,13 +52,13 @@
                 nowPlayingVolumeSlider.disabled = false;
                 nowPlayingPositionSlider.disabled = false;
 
-                if (Emby.PlaybackManager.subtitleTracks(player).length) {
+                if (playbackManager.subtitleTracks(player).length) {
                     view.querySelector('.btnSubtitles').classList.remove('hide');
                 } else {
                     view.querySelector('.btnSubtitles').classList.add('hide');
                 }
 
-                if (Emby.PlaybackManager.audioTracks(player).length > 1) {
+                if (playbackManager.audioTracks(player).length > 1) {
                     view.querySelector('.btnAudio').classList.remove('hide');
                 } else {
                     view.querySelector('.btnAudio').classList.add('hide');
@@ -226,7 +221,7 @@
             if (Math.abs(eventX - obj.x) < 10 && Math.abs(eventY - obj.y) < 10) {
                 return;
             }
-			
+
             obj.x = eventX;
             obj.y = eventY;
 
@@ -239,12 +234,12 @@
 
                 case 'left':
                     if (!isOsdOpen()) {
-                        Emby.PlaybackManager.previousChapter();
+                        playbackManager.previousChapter();
                     }
                     break;
                 case 'right':
                     if (!isOsdOpen()) {
-                        Emby.PlaybackManager.nextChapter();
+                        playbackManager.nextChapter();
                     }
                     break;
                 case 'up':
@@ -267,7 +262,7 @@
 
             if (player) {
                 bindToPlayer(player);
-                setCurrentItem(Emby.PlaybackManager.currentItem(player), player);
+                setCurrentItem(playbackManager.currentItem(player), player);
             } else {
                 setCurrentItem(null);
             }
@@ -294,29 +289,25 @@
 
         view.addEventListener('viewshow', function (e) {
 
-            Events.on(Emby.PlaybackManager, 'playbackstart', onPlaybackStart);
-            Events.on(Emby.PlaybackManager, 'playbackstop', onPlaybackStop);
+            Events.on(playbackManager, 'playbackstart', onPlaybackStart);
+            Events.on(playbackManager, 'playbackstop', onPlaybackStop);
 
-            onPlaybackStart(e, Emby.PlaybackManager.currentPlayer());
+            onPlaybackStart(e, playbackManager.currentPlayer());
             document.addEventListener('mousemove', onMouseMove);
 
             showOsd();
 
-            require(['inputmanager'], function (inputmanager) {
-                inputmanager.on(window, onInputCommand);
-            });
+            inputManager.on(window, onInputCommand);
         });
 
         view.addEventListener('viewbeforehide', function () {
             stopHideTimer();
             getHeaderElement().classList.remove('osdHeader');
             document.removeEventListener('mousemove', onMouseMove);
-            Events.off(Emby.PlaybackManager, 'playbackstart', onPlaybackStart);
-            Events.off(Emby.PlaybackManager, 'playbackstop', onPlaybackStop);
+            Events.off(playbackManager, 'playbackstart', onPlaybackStart);
+            Events.off(playbackManager, 'playbackstop', onPlaybackStop);
 
-            require(['inputmanager'], function (inputmanager) {
-                inputmanager.off(window, onInputCommand);
-            });
+            inputManager.off(window, onInputCommand);
         });
 
         function bindToPlayer(player) {
@@ -366,7 +357,7 @@
 
         function updatePlaystate(player) {
 
-            if (Emby.PlaybackManager.paused()) {
+            if (playbackManager.paused()) {
                 view.querySelector('.btnPause').icon = 'play-arrow';
             } else {
                 view.querySelector('.btnPause').icon = 'pause';
@@ -376,10 +367,10 @@
         function updateVolume(player) {
 
             if (!nowPlayingVolumeSlider.dragging) {
-                nowPlayingVolumeSlider.value = Emby.PlaybackManager.volume();
+                nowPlayingVolumeSlider.value = playbackManager.volume();
             }
 
-            if (Emby.PlaybackManager.isMuted()) {
+            if (playbackManager.isMuted()) {
                 view.querySelector('.buttonMute').icon = 'volume-off';
             } else {
                 view.querySelector('.buttonMute').icon = 'volume-up';
@@ -388,9 +379,9 @@
 
         function updatePlaylist() {
 
-            var items = Emby.PlaybackManager.playlist();
+            var items = playbackManager.playlist();
 
-            var index = Emby.PlaybackManager.currentPlaylistIndex();
+            var index = playbackManager.currentPlaylistIndex();
 
             if (index == 0) {
                 view.querySelector('.btnPreviousTrack').disabled = true;
@@ -409,7 +400,7 @@
 
             if (!nowPlayingPositionSlider.dragging) {
 
-                var state = Emby.PlaybackManager.getPlayerState(player);
+                var state = playbackManager.getPlayerState(player);
                 var playState = state.PlayState || {};
                 var nowPlayingItem = state.NowPlayingItem || {};
 
@@ -439,24 +430,22 @@
                 return;
             }
 
-            require(['datetime'], function (datetime) {
-                var html = datetime.getDisplayRunningTime(ticks);
+            var html = datetime.getDisplayRunningTime(ticks);
 
-                if (divider) {
-                    html = '&nbsp;/&nbsp;' + html;
-                }
+            if (divider) {
+                html = '&nbsp;/&nbsp;' + html;
+            }
 
-                elem.innerHTML = html;
-            });
+            elem.innerHTML = html;
         }
 
         function showAudioTrackSelection() {
 
             var player = currentPlayer;
 
-            var audioTracks = Emby.PlaybackManager.audioTracks(player);
+            var audioTracks = playbackManager.audioTracks(player);
 
-            var currentIndex = Emby.PlaybackManager.getPlayerState(player).PlayState.AudioStreamIndex;
+            var currentIndex = playbackManager.getPlayerState(player).PlayState.AudioStreamIndex;
 
             var menuItems = audioTracks.map(function (stream) {
 
@@ -507,7 +496,7 @@
 
                         var index = parseInt(id);
                         if (index != currentIndex) {
-                            Emby.PlaybackManager.setAudioStreamIndex(index);
+                            playbackManager.setAudioStreamIndex(index);
                         }
                     }
                 });
@@ -519,9 +508,9 @@
 
             var player = currentPlayer;
 
-            var streams = Emby.PlaybackManager.subtitleTracks(player);
+            var streams = playbackManager.subtitleTracks(player);
 
-            var currentIndex = Emby.PlaybackManager.getPlayerState(player).PlayState.SubtitleStreamIndex;
+            var currentIndex = playbackManager.getPlayerState(player).PlayState.SubtitleStreamIndex;
             if (currentIndex == null) {
                 currentIndex = -1;
             }
@@ -574,7 +563,7 @@
                     callback: function (id) {
                         var index = parseInt(id);
                         if (index != currentIndex) {
-                            Emby.PlaybackManager.setSubtitleStreamIndex(index);
+                            playbackManager.setSubtitleStreamIndex(index);
                         }
                     }
                 });
@@ -590,48 +579,48 @@
         window.addEventListener('keydown', function (e) {
 
             if (e.keyCode == 32) {
-                Emby.PlaybackManager.playPause();
+                playbackManager.playPause();
             }
         });
 
         view.querySelector('.pageContainer').addEventListener('click', function () {
 
-            Emby.PlaybackManager.playPause();
+            playbackManager.playPause();
         });
 
         view.querySelector('.buttonMute').addEventListener('click', function () {
 
-            Emby.PlaybackManager.toggleMute();
+            playbackManager.toggleMute();
         });
 
         nowPlayingVolumeSlider.addEventListener('change', function () {
 
-            Emby.PlaybackManager.volume(this.value);
+            playbackManager.volume(this.value);
         });
 
         nowPlayingPositionSlider.addEventListener('change', function () {
 
-            Emby.PlaybackManager.seekPercent(parseFloat(this.value), currentPlayer);
+            playbackManager.seekPercent(parseFloat(this.value), currentPlayer);
         });
 
         view.querySelector('.btnPreviousTrack').addEventListener('click', function () {
 
-            Emby.PlaybackManager.previousTrack();
+            playbackManager.previousTrack();
         });
 
         view.querySelector('.btnPause').addEventListener('click', function () {
 
-            Emby.PlaybackManager.playPause();
+            playbackManager.playPause();
         });
 
         view.querySelector('.btnStop').addEventListener('click', function () {
 
-            Emby.PlaybackManager.stop();
+            playbackManager.stop();
         });
 
         view.querySelector('.btnNextTrack').addEventListener('click', function () {
 
-            Emby.PlaybackManager.nextTrack();
+            playbackManager.nextTrack();
         });
 
         view.querySelector('.btnAudio').addEventListener('click', showAudioTrackSelection);
@@ -639,12 +628,12 @@
 
         function onViewHideStopPlayback() {
 
-            if (Emby.PlaybackManager.isPlayingVideo()) {
+            if (playbackManager.isPlayingVideo()) {
 
                 // Unbind this event so that we don't go back twice
-                Events.off(Emby.PlaybackManager, 'playbackstop', onPlaybackStop);
+                Events.off(playbackManager, 'playbackstop', onPlaybackStop);
 
-                Emby.PlaybackManager.stop();
+                playbackManager.stop();
 
                 // or 
                 //Emby.Page.setTransparency(Emby.TransparencyLevel.Backdrop);
@@ -656,7 +645,7 @@
             view.removeEventListener('viewbeforehide', onViewHideStopPlayback);
 
             if (enabled) {
-                if (Emby.PlaybackManager.isPlayingVideo()) {
+                if (playbackManager.isPlayingVideo()) {
                     view.addEventListener('viewbeforehide', onViewHideStopPlayback);
                 }
             }
@@ -664,4 +653,4 @@
 
     }
 
-})();
+});

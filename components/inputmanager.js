@@ -1,4 +1,4 @@
-define([], function () {
+define(['playbackManager'], function (playbackManager) {
 
     var lastInputTime = new Date().getTime();
 
@@ -93,10 +93,10 @@ define([], function () {
             case 'info':
                 break;
             case 'next':
-                Emby.PlaybackManager.nextTrack();
+                playbackManager.nextTrack();
                 break;
             case 'previous':
-                Emby.PlaybackManager.previousTrack();
+                playbackManager.previousTrack();
                 break;
             case 'guide':
                 break;
@@ -107,21 +107,21 @@ define([], function () {
             case 'livetv':
                 break;
             case 'togglemute':
-                Emby.PlaybackManager.toggleMute();
+                playbackManager.toggleMute();
                 break;
             case 'volumedown':
-                Emby.PlaybackManager.volumeDown();
+                playbackManager.volumeDown();
                 break;
             case 'volumeup':
-                Emby.PlaybackManager.volumeUp();
+                playbackManager.volumeUp();
                 break;
             case 'play':
                 break;
             case 'playpause':
-                Emby.PlaybackManager.playPause();
+                playbackManager.playPause();
                 break;
             case 'stop':
-                Emby.PlaybackManager.stop();
+                playbackManager.stop();
                 break;
             case 'changezoom':
                 break;
@@ -134,10 +134,10 @@ define([], function () {
             case 'favorites':
                 break;
             case 'fastforward':
-                Emby.PlaybackManager.fastForward();
+                playbackManager.fastForward();
                 break;
             case 'rewind':
-                Emby.PlaybackManager.rewind();
+                playbackManager.rewind();
                 break;
             default:
                 break;

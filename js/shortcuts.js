@@ -1,4 +1,4 @@
-(function (globalScope) {
+define(['playbackManager'], function (playbackManager) {
 
     function playAllFromHere(card) {
         var cards = card.parentNode.querySelectorAll('.itemAction[data-id]');
@@ -13,7 +13,7 @@
                 ids.push(cards[i].getAttribute('data-id'));
             }
         }
-        Emby.PlaybackManager.play({
+        playbackManager.play({
             ids: ids
         });
     }
@@ -41,14 +41,14 @@
                 }
 
                 else if (action == 'instantmix') {
-                    Emby.PlaybackManager.instantMix(id);
+                    playbackManager.instantMix(id);
                 }
 
                 else if (action == 'play') {
 
                     var startPositionTicks = parseInt(card.getAttribute('data-startpositionticks') || '0');
 
-                    Emby.PlaybackManager.play({
+                    playbackManager.play({
                         ids: [id],
                         startPositionTicks: startPositionTicks
                     });
@@ -65,4 +65,5 @@
         }
     });
 
-})(this);
+
+});

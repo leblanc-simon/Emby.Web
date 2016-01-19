@@ -1,4 +1,4 @@
-define([], function () {
+define(['playbackManager'], function (playbackManager) {
 
     function updateClock() {
 
@@ -201,8 +201,8 @@ define([], function () {
                 path: Emby.PluginManager.mapPath(self, 'nowplaying/nowplaying.html'),
                 id: 'defaulttheme-nowplaying',
                 transition: 'slide',
+                controller: Emby.PluginManager.mapPath(self, 'nowplaying/nowplaying.js'),
                 dependencies: [
-                    Emby.PluginManager.mapPath(self, 'nowplaying/nowplaying.js'),
                     'css!' + Emby.PluginManager.mapPath(self, 'nowplaying/nowplaying.css')
                 ],
                 supportsThemeMedia: true
@@ -212,8 +212,8 @@ define([], function () {
                 path: Emby.PluginManager.mapPath(self, 'nowplaying/playlist.html'),
                 id: 'defaulttheme-nowplayingplaylist',
                 transition: 'slide',
+                controller: Emby.PluginManager.mapPath(self, 'nowplaying/playlist.js'),
                 dependencies: [
-                    Emby.PluginManager.mapPath(self, 'nowplaying/playlist.js'),
                     'css!' + Emby.PluginManager.mapPath(self, 'item/item.css')
                 ],
                 supportsThemeMedia: true
@@ -223,8 +223,8 @@ define([], function () {
                 path: Emby.PluginManager.mapPath(self, 'nowplaying/videoosd.html'),
                 id: 'defaulttheme-videoosd',
                 transition: 'fade',
+                controller: Emby.PluginManager.mapPath(self, 'nowplaying/videoosd.js'),
                 dependencies: [
-                    Emby.PluginManager.mapPath(self, 'nowplaying/videoosd.js'),
                     'css!' + Emby.PluginManager.mapPath(self, 'nowplaying/videoosd.css')
                 ],
                 type: 'video-osd',
@@ -355,8 +355,8 @@ define([], function () {
             document.addEventListener('usersignedout', onLocalUserSignedOut);
             document.addEventListener('viewshow', onViewShow);
 
-            Events.on(Emby.PlaybackManager, 'playbackstart', onPlaybackStart);
-            Events.on(Emby.PlaybackManager, 'playbackstop', onPlaybackStop);
+            Events.on(playbackManager, 'playbackstart', onPlaybackStart);
+            Events.on(playbackManager, 'playbackstop', onPlaybackStop);
         }
 
         function unbindEvents() {
@@ -365,13 +365,13 @@ define([], function () {
             document.removeEventListener('usersignedout', onLocalUserSignedOut);
             document.removeEventListener('viewshow', onViewShow);
 
-            Events.off(Emby.PlaybackManager, 'playbackstart', onPlaybackStart);
-            Events.off(Emby.PlaybackManager, 'playbackstop', onPlaybackStop);
+            Events.off(playbackManager, 'playbackstart', onPlaybackStart);
+            Events.off(playbackManager, 'playbackstop', onPlaybackStop);
         }
 
         function onPlaybackStart(e) {
 
-            if (Emby.PlaybackManager.isPlayingAudio()) {
+            if (playbackManager.isPlayingAudio()) {
                 document.querySelector('.headerAudioPlayerButton').classList.remove('hide');
             } else {
                 document.querySelector('.headerAudioPlayerButton').classList.add('hide');

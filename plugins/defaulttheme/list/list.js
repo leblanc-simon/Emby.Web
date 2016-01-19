@@ -1,4 +1,4 @@
-define(['loading', 'slyScroller'], function (loading, slyScroller) {
+define(['loading', 'slyScroller', 'playbackManager'], function (loading, slyScroller, playbackManager) {
 
     function createHorizontalScroller(instance, view, item, loading) {
 
@@ -145,7 +145,7 @@ define(['loading', 'slyScroller'], function (loading, slyScroller) {
                         view.querySelector('.listPageButtons').classList.add('hide');
                     }
 
-                    if (Emby.PlaybackManager.canQueue(item)) {
+                    if (playbackManager.canQueue(item)) {
                         view.querySelector('.btnQueue').classList.remove('hide');
                     } else {
                         view.querySelector('.btnQueue').classList.add('hide');
@@ -175,24 +175,24 @@ define(['loading', 'slyScroller'], function (loading, slyScroller) {
 
         function play() {
 
-            Emby.PlaybackManager.play({
+            playbackManager.play({
                 items: [currentItem]
             });
         }
 
         function queue() {
 
-            Emby.PlaybackManager.queue({
+            playbackManager.queue({
                 items: [currentItem]
             });
         }
 
         function instantMix() {
-            Emby.PlaybackManager.instantMix(currentItem.Id);
+            playbackManager.instantMix(currentItem.Id);
         }
 
         function shuffle() {
-            Emby.PlaybackManager.shuffle(currentItem.Id);
+            playbackManager.shuffle(currentItem.Id);
         }
 
         view.addEventListener('viewdestroy', function () {

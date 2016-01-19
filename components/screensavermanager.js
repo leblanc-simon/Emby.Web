@@ -1,10 +1,22 @@
-define([], function () {
+define(['events', 'playbackManager'], function (events, playbackManager) {
 
     function getMinIdleTime() {
         // Returns the minimum amount of idle time required before the screen saver can be displayed
         //return 3000;
         return 180000;
     }
+
+    var lastFunctionalEvent = 0;
+    function getFunctionalEventIdleTime() {
+        return new Date().getTime() - lastFunctionalEvent;
+    }
+
+    events.on(playbackManager, 'playbackstop', function (e, stopInfo) {
+        var state = stopInfo.state;
+        if (state.NowPlayingItem && state.NowPlayingItem.MediaType == 'Video') {
+            lastFunctionalEvent = new Date().getTime();
+        }
+    });
 
     function ScreenSaverManager() {
 
@@ -99,9 +111,11 @@ define([], function () {
 
             require(['inputmanager'], function (inputmanager) {
 
-                var minIdleTime = getMinIdleTime();
+                if (inputmanager.idleTime() < getMinIdleTime()) {
+                    return;
+                }
 
-                if (minIdleTime > inputmanager.idleTime()) {
+                if (getFunctionalEventIdleTime < getMinIdleTime()) {
                     return;
                 }
 

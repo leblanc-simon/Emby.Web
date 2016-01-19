@@ -293,8 +293,8 @@
             howler: 'bower_components/howler.js/howler.min',
             screenfull: 'bower_components/screenfull/dist/screenfull',
             events: 'bower_components/emby-apiclient/events',
-            pluginmanager: 'components/pluginmanager',
-            playbackmanager: 'components/playbackmanager',
+            pluginManager: 'components/pluginmanager',
+            playbackManager: 'components/playbackmanager',
             credentialprovider: 'bower_components/emby-apiclient/credentials',
             apiclient: 'bower_components/emby-apiclient/apiclient',
             connectservice: 'bower_components/emby-apiclient/connectservice',
@@ -427,7 +427,7 @@
             var list = [
              'bower_components/page.js/page.js',
              'components/router',
-             'pluginmanager',
+             'pluginManager',
              'bower_components/emby-webcomponents/images/imagehelper',
              'css!style/style.css',
              'js/thememanager',
@@ -468,17 +468,10 @@
 
         var secondLevelDeps = [];
 
-        // needs to be after the plugin manager
-        secondLevelDeps.push('playbackmanager');
-
         secondLevelDeps.push('neon-animated-pages');
 
         // Second level dependencies that have to be loaded after the first set
-        require(secondLevelDeps, function (playbackmanager) {
-
-            globalScope.Emby.PlaybackManager = playbackmanager;
-            callback();
-        });
+        require(secondLevelDeps, callback);
     }
 
     function loadPlugins(externalPlugins) {
