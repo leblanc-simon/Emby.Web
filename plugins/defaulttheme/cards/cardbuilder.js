@@ -1,4 +1,4 @@
-define(['datetime'], function (datetime) {
+define(['datetime', 'imageLoader', 'connectionManager'], function (datetime, imageLoader, connectionManager) {
 
     function getDisplayName(item, displayAsSpecial, includeParentInfo) {
 
@@ -44,7 +44,7 @@ define(['datetime'], function (datetime) {
 
     function setShapeHorizontal(items, options, isHome) {
 
-        var primaryImageAspectRatio = Emby.ImageLoader.getPrimaryImageAspectRatio(items) || 0;
+        var primaryImageAspectRatio = imageLoader.getPrimaryImageAspectRatio(items) || 0;
 
         if (primaryImageAspectRatio && primaryImageAspectRatio < .85) {
             options.shape = 'portraitCard';
@@ -65,7 +65,7 @@ define(['datetime'], function (datetime) {
 
     function setShapeVertical(items, options) {
 
-        var primaryImageAspectRatio = Emby.ImageLoader.getPrimaryImageAspectRatio(items) || 0;
+        var primaryImageAspectRatio = imageLoader.getPrimaryImageAspectRatio(items) || 0;
 
         if (options.preferThumb) {
             options.shape = 'backdropCard';
@@ -363,7 +363,7 @@ define(['datetime'], function (datetime) {
 
         var width = options.width;
         var height = null;
-        var primaryImageAspectRatio = Emby.ImageLoader.getPrimaryImageAspectRatio([item]);
+        var primaryImageAspectRatio = imageLoader.getPrimaryImageAspectRatio([item]);
         var forceName = false;
         var imgUrl = null;
         var coverImage = false;
@@ -710,24 +710,21 @@ define(['datetime'], function (datetime) {
             }
         }
 
-        require(['connectionManager'], function (connectionManager) {
+        var apiClient = connectionManager.currentApiClient();
 
-            var apiClient = connectionManager.currentApiClient();
+        var html = buildCardsHtmlInternal(items, apiClient, options);
 
-            var html = buildCardsHtmlInternal(items, apiClient, options);
+        options.itemsContainer.innerHTML = html;
 
-            options.itemsContainer.innerHTML = html;
+        imageLoader.lazyChildren(options.itemsContainer);
 
-            Emby.ImageLoader.lazyChildren(options.itemsContainer);
+        if (options.autoFocus) {
+            Emby.FocusManager.autoFocus(options.itemsContainer, true);
+        }
 
-            if (options.autoFocus) {
-                Emby.FocusManager.autoFocus(options.itemsContainer, true);
-            }
-
-            if (options.indexBy == 'Genres') {
-                options.itemsContainer.addEventListener('click', onItemsContainerClick);
-            }
-        });
+        if (options.indexBy == 'Genres') {
+            options.itemsContainer.addEventListener('click', onItemsContainerClick);
+        }
     }
 
     function onItemsContainerClick(e) {

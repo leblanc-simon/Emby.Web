@@ -288,7 +288,8 @@
             serverdiscovery: customPaths.serverdiscovery || "bower_components/emby-apiclient/serverdiscovery",
             wakeonlan: customPaths.wakeonlan || "bower_components/emby-apiclient/wakeonlan",
             peoplecardbuilder: 'components/cards/peoplecardbuilder',
-            chaptercardbuilder: 'components/cards/chaptercardbuilder'
+            chaptercardbuilder: 'components/cards/chaptercardbuilder',
+            imageLoader: 'bower_components/emby-webcomponents/images/imagehelper'
         };
 
         if (navigator.webkitPersistentStorage) {
@@ -415,7 +416,6 @@
              'bower_components/page.js/page.js',
              'components/router',
              'pluginManager',
-             'bower_components/emby-webcomponents/images/imagehelper',
              'css!style/style.css',
              'js/thememanager',
              'js/focusmanager',
@@ -438,13 +438,12 @@
                 list.push('bower_components/fetch/fetch');
             }
 
-            require(list, function (pageJs, pageObjects, pluginmanager, imageLoader) {
+            require(list, function (pageJs, pageObjects, pluginmanager) {
 
                 globalScope.page = pageJs;
                 globalScope.Emby.Page = pageObjects;
                 globalScope.Emby.TransparencyLevel = pageObjects.TransparencyLevel;
                 globalScope.Emby.PluginManager = pluginmanager;
-                globalScope.Emby.ImageLoader = imageLoader;
 
                 loadSecondLevelCoreDependencies(callback);
             });

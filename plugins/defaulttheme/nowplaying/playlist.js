@@ -1,4 +1,4 @@
-define(['playbackManager', 'slyScroller', 'loading'], function (playbackManager, slyScroller, loading) {
+define(['playbackManager', 'slyScroller', 'loading', 'imageLoader'], function (playbackManager, slyScroller, loading, imageLoader) {
 
     function createVerticalScroller(view, pageInstance) {
 
@@ -79,7 +79,7 @@ define(['playbackManager', 'slyScroller', 'loading'], function (playbackManager,
                 enableSideMediaInfo: true
             });
 
-            Emby.ImageLoader.lazyChildren(section);
+            imageLoader.lazyChildren(section);
 
             Emby.FocusManager.autoFocus(section, true);
             updateCurrentPlaylistItem();

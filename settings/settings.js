@@ -1,4 +1,4 @@
-define(['loading', 'apphost'], function (loading, apphost) {
+define(['loading', 'apphost', 'imageLoader'], function (loading, apphost, imageLoader) {
 
     return function (view, params) {
 
@@ -115,7 +115,7 @@ define(['loading', 'apphost'], function (loading, apphost) {
             }
 
             view.querySelector('.dynamicRoutes').innerHTML = html;
-            Emby.ImageLoader.lazyChildren(view);
+            imageLoader.lazyChildren(view);
 
             setTimeout(function () {
                 Emby.FocusManager.autoFocus(view, true);

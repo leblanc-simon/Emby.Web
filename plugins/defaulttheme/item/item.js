@@ -1,4 +1,4 @@
-define(['loading', 'datetime', 'playbackManager'], function (loading, datetime, playbackManager) {
+define(['loading', 'datetime', 'playbackManager', 'imageLoader'], function (loading, datetime, playbackManager, imageLoader) {
 
     function focusMainSection() {
 
@@ -487,7 +487,7 @@ define(['loading', 'datetime', 'playbackManager'], function (loading, datetime, 
                 enableSideMediaInfo: true
             });
 
-            Emby.ImageLoader.lazyChildren(section);
+            imageLoader.lazyChildren(section);
         };
 
         if (item.Type == 'MusicAlbum' || item.Type == 'Playlist') {
@@ -757,7 +757,7 @@ define(['loading', 'datetime', 'playbackManager'], function (loading, datetime, 
                 imageSize: 'large'
             });
 
-            Emby.ImageLoader.lazyChildren(section);
+            imageLoader.lazyChildren(section);
 
             // Sometimes this doesn't work without some delay after setting innerHTMl
             setTimeout(function () {

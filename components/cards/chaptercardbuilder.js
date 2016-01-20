@@ -1,4 +1,4 @@
-define(['datetime'], function (datetime) {
+define(['datetime', 'imageLoader'], function (datetime, imageLoader) {
 
     function buildChapterCardsHtml(item, chapters, options) {
 
@@ -102,7 +102,7 @@ define(['datetime'], function (datetime) {
 
         options.itemsContainer.innerHTML = html;
 
-        Emby.ImageLoader.lazyChildren(options.itemsContainer);
+        imageLoader.lazyChildren(options.itemsContainer);
     }
 
     return {

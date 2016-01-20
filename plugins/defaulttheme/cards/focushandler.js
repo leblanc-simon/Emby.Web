@@ -1,4 +1,4 @@
-define([], function () {
+define(['imageLoader'], function (imageLoader) {
 
     function focusHandler(options) {
 
@@ -247,7 +247,7 @@ define([], function () {
             html += '</div>';
 
             elem.innerHTML = html;
-            Emby.ImageLoader.lazyChildren(elem);
+            imageLoader.lazyChildren(elem);
         }
 
         function clearSelectedItemInfo() {

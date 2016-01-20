@@ -89,7 +89,10 @@
 
                 if (recs) {
                     recs.innerHTML = values.join('');
-                    Emby.ImageLoader.lazyChildren(recs);
+
+                    require(['imageLoader'], function (imageLoader) {
+                        imageLoader.lazyChildren(recs);
+                    });
                 }
             });
         });

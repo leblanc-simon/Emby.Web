@@ -1,4 +1,4 @@
-define([], function () {
+define(['imageLoader'], function (imageLoader) {
 
     function buildPeopleCardsHtml(people, options) {
 
@@ -95,7 +95,7 @@ define([], function () {
 
         options.itemsContainer.innerHTML = html;
 
-        Emby.ImageLoader.lazyChildren(options.itemsContainer);
+        imageLoader.lazyChildren(options.itemsContainer);
     }
 
     return {
