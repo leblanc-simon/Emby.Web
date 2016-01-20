@@ -1,5 +1,5 @@
 {
-    "GuestStar": "Guest star",
+    "GuestStar": "Estrella invitada",
     "ButtonPlayFromBeginning": "Reproducir desde el inicio",
     "EnableCinemaMode": "Habilitar modo cine",
     "EnableCinemaModeHelp": "Requiere configurarse en el Servidor Emby",
@@ -35,7 +35,7 @@
     "HeaderConnectionFailure": "Fallo de Conexi\u00f3n",
     "MessageUnableToConnectToServer": "No pudimos conectarnos al servidor seleccionado en este momento. Por favor aseg\u00farese de que este corriendo e intente de nuevo.",
     "ButtonConnect": "Conectar",
-    "LabelServerHost": "Host:",
+    "LabelServerHost": "Servidor:",
     "LabelServerHostHelp": "192.168.1.100 o https:\/\/miservidor.com",
     "LabelServerPort": "Puerto:",
     "HeaderNewServer": "Nuevo Servidor",
