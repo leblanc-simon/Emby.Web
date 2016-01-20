@@ -19,7 +19,7 @@ define(['connectionManager', 'usersettings', 'events'], function (connectionMana
         if (navigator.languages && navigator.languages.length) {
             return navigator.languages[0];
         }
-        alert('nulll');
+
         return 'en-us'
     }
 
