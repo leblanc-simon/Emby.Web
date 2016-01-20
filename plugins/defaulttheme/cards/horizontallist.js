@@ -26,7 +26,7 @@
 
                 loading.show();
 
-                getItemsMethod(0, 1500).then(function (result) {
+                getItemsMethod(0, 2000).then(function (result) {
 
                     // Normalize between the different response types
                     if (result.Items == null && result.TotalRecordCount == null) {
