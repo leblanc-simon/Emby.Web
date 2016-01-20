@@ -116,6 +116,10 @@ define(['playbackManager'], function (playbackManager) {
                 playbackManager.volumeUp();
                 break;
             case 'play':
+                playbackManager.unpause();
+                break;
+            case 'pause':
+                playbackManager.pause();
                 break;
             case 'playpause':
                 playbackManager.playPause();
