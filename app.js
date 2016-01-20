@@ -292,9 +292,9 @@
         };
 
         if (navigator.webkitPersistentStorage) {
-            paths.imageloader = embyWebComponentsBowerPath + "/images/persistentimageloader";
+            paths.imageFetcher = embyWebComponentsBowerPath + "/images/persistentimagefetcher";
         } else {
-            paths.imageloader = embyWebComponentsBowerPath + "/images/basicimageloader";
+            paths.imageFetcher = embyWebComponentsBowerPath + "/images/basicimagefetcher";
         }
 
         paths.hlsjs = bowerPath + "/hls.js/dist/hls.min";

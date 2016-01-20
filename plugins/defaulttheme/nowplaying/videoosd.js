@@ -613,11 +613,6 @@ define(['playbackManager', 'inputmanager', 'datetime'], function (playbackManage
             playbackManager.playPause();
         });
 
-        view.querySelector('.btnStop').addEventListener('click', function () {
-
-            playbackManager.stop();
-        });
-
         view.querySelector('.btnNextTrack').addEventListener('click', function () {
 
             playbackManager.nextTrack();
