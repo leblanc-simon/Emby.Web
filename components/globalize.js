@@ -8,6 +8,21 @@ define(['connectionManager', 'usersettings', 'events'], function (connectionMana
         return currentCulture;
     }
 
+    function getDefaultLanguage() {
+
+        if (navigator.language) {
+            return navigator.language;
+        }
+        if (navigator.userLanguage) {
+            return navigator.userLanguage;
+        }
+        if (navigator.languages && navigator.languages.length) {
+            return navigator.languages[0];
+        }
+        alert('nulll');
+        return 'en-us'
+    }
+
     function updateCurrentCulture() {
 
         var culture;
@@ -16,7 +31,7 @@ define(['connectionManager', 'usersettings', 'events'], function (connectionMana
         } catch (err) {
 
         }
-        culture = culture || navigator.language || navigator.userLanguage || 'en-us';
+        culture = culture || getDefaultLanguage();
 
         currentCulture = normalizeLocaleName(culture);
 
