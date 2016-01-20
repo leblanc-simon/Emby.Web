@@ -59,7 +59,7 @@ define(['datetime'], function (datetime) {
         var cardImageContainer = imgUrl ? ('<div class="' + cardImageContainerClass + ' lazy" data-src="' + imgUrl + '">') : ('<div class="' + cardImageContainerClass + '">');
 
         var nameHtml = '';
-        //nameHtml += '<div class="cardText">' + chapter.Name + '</div>';
+        nameHtml += '<div class="cardText">' + chapter.Name + '</div>';
         nameHtml += '<div class="cardText">' + datetime.getDisplayRunningTime(chapter.StartPositionTicks) + '</div>';
 
         var html = '\
