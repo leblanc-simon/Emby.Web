@@ -344,10 +344,33 @@ define(['events', 'datetime', 'appsettings', 'pluginManager'], function (Events,
 
         self.fastForward = function () {
 
+            var player = self.currentPlayer();
+            var ticks = getCurrentTicks(player);
+
+            // Go back 15 seconds
+            ticks += 150000000;
+
+            var data = getPlayerData(player).streamInfo;
+            var mediaSource = data.mediaSource;
+
+            if (mediaSource) {
+                var runTimeTicks = mediaSource.RunTimeTicks || 0;
+
+                if (ticks < runTimeTicks) {
+                    self.seek(ticks);
+                }
+            }
         };
 
         self.rewind = function () {
 
+            var player = self.currentPlayer();
+            var ticks = getCurrentTicks(player);
+
+            // Go back 15 seconds
+            ticks -= 150000000;
+
+            self.seek(Math.max(0, ticks));
         };
 
         // Returns true if the player can seek using native client-side seeking functions
