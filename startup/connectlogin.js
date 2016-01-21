@@ -1,56 +1,136 @@
-define(['loading', 'connectionManager', 'startup/startuphelper'], function (loading, connectionManager, startupHelper) {
+define(['loading', 'connectionManager', 'startup/startuphelper', 'shell'], function (loading, connectionManager, startupHelper, shell) {
 
     return function (view, params) {
 
         var self = this;
 
-        view.addEventListener("viewshow", function (e) {
+        var currentPinInfo;
+        var currentInterval;
+
+        function showPinErrorMessage(key) {
+
+            var pinMessage = view.querySelector('.pinMessage');
+            pinMessage.classList.remove('hide');
+            pinMessage.innerHTML = Globalize.translate('core#' + key);
+        }
+
+        function createPin() {
+
+            loading.show();
+
+            view.querySelector('.pinMessage').classList.add('hide');
+            view.querySelector('.pinCodeValue').innerHTML = '&nbsp;';
+            stopPolling();
+
+            connectionManager.createPin().then(function (result) {
+
+                currentPinInfo = result;
+                view.querySelector('.pinCodeValue').innerHTML = result.Pin;
+                startPolling();
+                loading.hide();
+
+            }, function () {
+                loading.hide();
+                showPinErrorMessage('CreatePinErrorMessage');
+            });
+        }
+
+        function pollPinStatus() {
+            connectionManager.getPinStatus(currentPinInfo).then(function (pinStatus) {
+
+                if (pinStatus.IsConfirmed) {
+
+                    stopPolling();
+                    onPinConfirmed();
+
+                } else if (pinStatus.IsExpired) {
+                    stopPolling();
+                    showPinErrorMessage('PinExpiredMessage');
+                }
+            });
+        }
+
+        function startPolling() {
+            currentInterval = setInterval(pollPinStatus, 3000);
+        }
+
+        function stopPolling() {
+
+            if (currentInterval) {
+                clearInterval(currentInterval);
+                currentInterval = null;
+            }
+        }
+
+        function onPinConfirmed() {
+
+            loading.show();
+
+            connectionManager.exchangePin(currentPinInfo).then(function () {
+
+                connectionManager.connect().then(function (result) {
+
+                    loading.hide();
+
+                    if (result.State == MediaBrowser.ConnectionState.ConnectSignIn) {
+                        Emby.Page.show('/startup/manualserver.html');
+                    } else {
+                        startupHelper.handleConnectionResult(result, view);
+                    }
+                });
+            });
+        }
+
+        function bindEvents() {
+
+            view.querySelector('.btnSkipConnect').addEventListener('click', function (e) {
+
+                loading.show();
+
+                connectionManager.connect().then(function (result) {
+
+                    loading.hide();
+
+                    if (result.State == MediaBrowser.ConnectionState.ConnectSignIn) {
+                        Emby.Page.show('/startup/manualserver.html');
+                    } else {
+                        startupHelper.handleConnectionResult(result, view);
+                    }
+                });
+            });
+
+            view.querySelector('.btnNewPin').addEventListener('click', function (e) {
+
+                createPin();
+            });
+
+            view.querySelector('.lnkPinSignIn').addEventListener('click', function (e) {
+
+                shell.openUrl(e.target.href);
+                e.preventDefault();
+                return false;
+            });
+        }
+
+        view.addEventListener("viewbeforeshow", function (e) {
 
             var isRestored = e.detail.isRestored;
+            currentPinInfo = null;
 
             Emby.Page.setTitle(null);
             Emby.Backdrop.clear();
 
             if (!isRestored) {
-                view.querySelector('form').addEventListener('submit', function (e) {
 
-                    startupHelper.signIntoConnect(view);
-                    e.preventDefault();
-                    return false;
-                });
-
-                view.querySelector('.btnSkipConnect').addEventListener('click', function (e) {
-
-                    loading.show();
-
-                    connectionManager.connect().then(function (result) {
-
-                        loading.hide();
-
-                        if (result.State == MediaBrowser.ConnectionState.ConnectSignIn) {
-                            Emby.Page.show('/startup/manualserver.html');
-                        } else {
-                            startupHelper.handleConnectionResult(result, view);
-                        }
-                    });
-                });
-
-                var paperSubmit = view.querySelector('.paperSubmit');
-                if (paperSubmit) {
-                    // This element won't be here in the lite version
-                    paperSubmit.addEventListener('click', function (e) {
-
-                        // Do a fake form submit this the button isn't a real submit button
-                        var fakeSubmit = document.createElement('input');
-                        fakeSubmit.setAttribute('type', 'submit');
-                        fakeSubmit.style.display = 'none';
-                        var form = view.querySelector('form');
-                        form.appendChild(fakeSubmit);
-                        fakeSubmit.click();
-                        form.removeChild(fakeSubmit);
-                    });
-                }
+                view.querySelector('.pinCodeHeader').innerHTML = Globalize.translate('core#ConnectPinCodeHeader', '<a class="lnkPinSignIn" href="http://emby.media/pin" target="_blank">http://emby.media/pin</a>');
+                createPin();
+                bindEvents();
             }
+        });
+
+        view.addEventListener("viewhide", function (e) {
+
+            stopPolling();
         });
     }
 

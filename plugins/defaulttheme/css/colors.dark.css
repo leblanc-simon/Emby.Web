@@ -2,6 +2,11 @@ html {
     color: #fff;
 }
 
+a {
+    color: #52B54B;
+    outline: none !important;
+}
+
 .themeContainer {
     background: #121212;
 }
