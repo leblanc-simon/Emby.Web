@@ -90,7 +90,26 @@ define(['paperdialoghelper'], function (paperdialoghelper) {
             return str.split(find).join(replace);
         }
 
+        function parentWithTag(elem, tagName) {
+
+            while (elem.tagName != tagName) {
+                elem = elem.parentNode;
+
+                if (!elem) {
+                    return null;
+                }
+            }
+
+            return elem;
+        }
+
+        function setFieldValue(field, value) {
+            
+        }
+
         function onKeyClick(dlg, field, key) {
+
+            field = parentWithTag(field, 'PAPER-INPUT') || field;
 
             switch (key) {
 
