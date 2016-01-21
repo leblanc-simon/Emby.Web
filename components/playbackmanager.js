@@ -374,22 +374,21 @@ define(['events', 'datetime', 'appsettings', 'pluginManager'], function (Events,
         };
 
         // Returns true if the player can seek using native client-side seeking functions
-        function canPlayerSeek() {
+        function canPlayerSeek(player) {
 
-            var mediaRenderer = self.currentPlayer();
-            var currentSrc = mediaRenderer.currentSrc();
+            var currentSrc = player.currentSrc();
 
             if ((currentSrc || '').indexOf('.m3u8') != -1) {
                 return true;
             } else {
-                var duration = mediaRenderer.duration();
+                var duration = player.duration();
                 return duration && !isNaN(duration) && duration != Number.POSITIVE_INFINITY && duration != Number.NEGATIVE_INFINITY;
             }
         }
 
         function changeStream(player, ticks, params) {
 
-            if (canPlayerSeek() && params == null) {
+            if (canPlayerSeek(player) && params == null) {
 
                 player.currentTime(ticks / 10000);
                 return;
@@ -640,7 +639,7 @@ define(['events', 'datetime', 'appsettings', 'pluginManager'], function (Events,
                     RunTimeTicks: mediaSource.RunTimeTicks
                 };
 
-                state.PlayState.CanSeek = (mediaSource.RunTimeTicks || 0) > 0 || canPlayerSeek();
+                state.PlayState.CanSeek = (mediaSource.RunTimeTicks || 0) > 0 || canPlayerSeek(player);
             }
 
             if (item) {
