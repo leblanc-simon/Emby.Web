@@ -104,7 +104,7 @@ define(['paperdialoghelper'], function (paperdialoghelper) {
         }
 
         function setFieldValue(field, value) {
-            
+
         }
 
         function onKeyClick(dlg, field, key) {
@@ -133,7 +133,7 @@ define(['paperdialoghelper'], function (paperdialoghelper) {
                     break;
             }
 
-            var displayValue = field.value;
+            var displayValue = getDisplayValue(field);
 
             if (field.type == 'password') {
                 var length = displayValue.length;
@@ -144,6 +144,20 @@ define(['paperdialoghelper'], function (paperdialoghelper) {
             }
 
             dlg.querySelector('.keyboardValue').innerHTML = replaceAll(displayValue || '&nbsp;', ' ', '&nbsp;');
+        }
+
+        function getDisplayValue(field) {
+            var displayValue = field.value;
+
+            if (field.type == 'password') {
+                var length = displayValue.length;
+                displayValue = '';
+                while (displayValue.length < length) {
+                    displayValue += '*';
+                }
+            }
+
+            return displayValue;
         }
 
         function showInternal(options) {
@@ -163,7 +177,7 @@ define(['paperdialoghelper'], function (paperdialoghelper) {
                 html += '</h1>';
             }
 
-            html += '<div class="keyboardValue">' + (options.field.value || '&nbsp;') + '</div>';
+            html += '<div class="keyboardValue">' + (getDisplayValue(options.field) || '&nbsp;') + '</div>';
 
             var layout = getKeys();
 
@@ -210,6 +224,11 @@ define(['paperdialoghelper'], function (paperdialoghelper) {
                 if (btn) {
                     onKeyClick(dlg, options.field, btn.getAttribute('data-key'));
                 }
+            });
+
+            dlg.querySelector('.btnKeyboardExit').addEventListener('click', function (e) {
+
+                paperdialoghelper.close(dlg);
             });
 
             paperdialoghelper.open(dlg);
