@@ -1,4 +1,4 @@
-(function (document) {
+require(['inputmanager'], function (inputManager) {
 
     function hasBuiltInKeyboard() {
 
@@ -33,18 +33,39 @@
     }
 
     if (!hasBuiltInKeyboard()) {
-        document.addEventListener('focus', function (evt) {
+        document.addEventListener('keypress', function (evt) {
 
             var tag = evt.target.tagName;
 
-            if ((evt.target.isContentEditable || tag === 'INPUT' || tag === 'TEXTAREA')) {
+            if (evt.keyCode == 13 && (evt.target.isContentEditable || (tag === 'INPUT' || tag === 'TEXTAREA')) && !evt.target.readonly) {
 
                 if (enableKeyboard(evt.target)) {
                     var keyboard = getKeyboard();
 
                     if (keyboard) {
 
-                        keyboard.show(evt.target);
+                        var options = {
+                            field: evt.target
+                        };
+
+                        var label;
+
+                        if (evt.target.id) {
+                            var label = document.querySelector('label[for=\'' + evt.target.id + '\']');
+                        }
+
+                        if (!label) {
+                            var labelledBy = evt.target.getAttribute('aria-labelledby');
+                            if (labelledBy) {
+                                label = document.querySelector('#' + labelledBy);
+                            }
+                        }
+
+                        if (label) {
+                            options.label = label.innerHTML;
+                        }
+
+                        keyboard.show(options);
                         evt.preventDefault();
                         return false;
                     }
@@ -71,4 +92,4 @@
         return Emby.PluginManager.ofType('keyboard')[0];
     }
 
-})(document);
+});

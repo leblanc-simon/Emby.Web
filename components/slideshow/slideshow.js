@@ -23,7 +23,7 @@ define(['paperdialoghelper', 'inputmanager', 'css!components/slideshow/style', '
             html += '<div class="slideshowImage"></div><h1 class="slideshowImageText"></h1>';
 
             if (options.interactive) {
-                html += '<paper-icon-button icon="close" class="btnSlideshowExit largeIcon"></paper-icon-button>';
+                html += '<paper-icon-button icon="close" class="btnSlideshowExit"></paper-icon-button>';
 
                 html += '<div class="slideshowControlBar">';
                 html += '<paper-icon-button icon="arrow-back" class="btnSlideshowPrevious largeIcon"></paper-icon-button>';

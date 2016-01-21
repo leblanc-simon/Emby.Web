@@ -34,7 +34,7 @@ define(['connectionManager', 'paperdialoghelper', 'css!components/registrationse
         var html = '';
         html += '<div class="registrationDialogContent">';
 
-        html += '<paper-icon-button icon="arrow-back" class="btnRegistrationBack largeIcon" tabindex="-1"></paper-icon-button>';
+        html += '<paper-icon-button icon="arrow-back" class="btnRegistrationBack" tabindex="-1"></paper-icon-button>';
 
         html += '<h1>Unlock this feature with Emby Premiere</h1>';
 

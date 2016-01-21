@@ -39,6 +39,8 @@
     position: absolute;
     top: 1.25%;
     right: 1%;
+    width: 5.2vh;
+    height: 5.2vh;
 }
 
 .slideshowControlBar {
