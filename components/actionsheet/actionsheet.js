@@ -6,7 +6,9 @@
         // positionTo
         // showCancel
         // title
-        var dlg = paperdialoghelper.createDialog();
+        var dlg = paperdialoghelper.createDialog({
+            removeOnClose: true
+        });
 
         dlg.classList.add('actionSheet');
 
@@ -55,8 +57,6 @@
             html += '</div>';
         }
 
-        html += '</paper-dialog>';
-
         dlg.innerHTML = html;
         document.body.appendChild(dlg);
 
@@ -85,9 +85,7 @@
 
         });
 
-        paperdialoghelper.open(dlg).then(function () {
-            dlg.parentNode.removeChild(dlg);
-        });
+        paperdialoghelper.open(dlg);
     }
 
     return {
