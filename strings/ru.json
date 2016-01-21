@@ -47,5 +47,10 @@
     "MaxStreamingBitrate": "\u041c\u0430\u043a\u0441. \u043f\u043e\u0442\u043e\u043a\u043e\u0432\u0430\u044f \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u044c \u0442\u0440\u0430\u043d\u0441\u043b\u044f\u0446\u0438\u0438",
     "OptionAutomatic": "\u0410\u0432\u0442\u043e",
     "DisplayLanguage": "\u042f\u0437\u044b\u043a \u043e\u0442\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u044f",
-    "DisplaySettings": "\u041f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u044b \u043e\u0442\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u044f"
+    "DisplaySettings": "\u041f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u044b \u043e\u0442\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u044f",
+    "ButtonGenerateNewPin": "Generate New Pin",
+    "ConnectLoginHelp1": "With Emby Connect you can easily access your Emby Server wherever you are and share servers with your family and friends.",
+    "CreatePinErrorMessage": "An error occurred while creating a pin code. Please click Generate New Pin to try again.",
+    "PinExpiredMessage": "The pin code has expired. Please click Generate New Pin to try again.",
+    "ConnectPinCodeHeader": "To sign in with Emby Connect, visit {0} and enter the following pin code:"
 }
