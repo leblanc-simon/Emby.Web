@@ -473,8 +473,6 @@
         'plugins/defaultsoundeffects/plugin.js'
         ];
 
-        list.push('plugins/wmctheme/plugin.js');
-
         for (var i = 0, length = externalPlugins.length; i < length; i++) {
             list.push(externalPlugins[i]);
         }
