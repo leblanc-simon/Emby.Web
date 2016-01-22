@@ -1,4 +1,4 @@
-define([], function () {
+define(['pluginManager'], function (pluginManager) {
 
     return function () {
 
@@ -150,7 +150,7 @@ define([], function () {
 
         self.show = function () {
 
-            require(['css!' + Emby.PluginManager.mapPath(self, 'style.css')], function () {
+            require(['css!' + pluginManager.mapPath(self, 'style.css')], function () {
 
                 var elem = document.querySelector('.logoScreenSaver');
 
@@ -159,7 +159,7 @@ define([], function () {
                     elem.classList.add('logoScreenSaver');
                     document.body.appendChild(elem);
 
-                    elem.innerHTML = '<img class="logoScreenSaverImage" src="' + Emby.PluginManager.mapPath(self, 'logowhite.png') + '" />';
+                    elem.innerHTML = '<img class="logoScreenSaverImage" src="' + pluginManager.mapPath(self, 'logowhite.png') + '" />';
                 }
 
                 stopInterval();

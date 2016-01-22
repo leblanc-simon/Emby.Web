@@ -1,4 +1,4 @@
-define([], function () {
+define(['pluginManager'], function (pluginManager) {
 
     return function () {
 
@@ -10,8 +10,8 @@ define([], function () {
 
         self.getEffects = function() {
             return {
-                navigation: Emby.PluginManager.mapPath(self, 'navigation.wav'),
-                select: Emby.PluginManager.mapPath(self, 'select.wav')
+                navigation: pluginManager.mapPath(self, 'navigation.wav'),
+                select: pluginManager.mapPath(self, 'select.wav')
             };
         };
     }

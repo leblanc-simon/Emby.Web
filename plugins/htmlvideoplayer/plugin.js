@@ -1,4 +1,4 @@
-define(['browser'], function (browser) {
+define(['browser', 'pluginManager'], function (browser, pluginManager) {
 
     return function () {
 
@@ -576,7 +576,7 @@ define(['browser'], function (browser) {
 
                 if (!dlg) {
 
-                    require(['loading', 'css!' + Emby.PluginManager.mapPath(self, 'style.css')], function (loading) {
+                    require(['loading', 'css!' + pluginManager.mapPath(self, 'style.css')], function (loading) {
 
                         loading.show();
 

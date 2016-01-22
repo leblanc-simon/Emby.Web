@@ -1,4 +1,4 @@
-define(['paperdialoghelper'], function (paperdialoghelper) {
+define(['paperdialoghelper', 'pluginManager'], function (paperdialoghelper, pluginManager) {
 
     return function () {
 
@@ -17,7 +17,7 @@ define(['paperdialoghelper'], function (paperdialoghelper) {
                     return;
                 }
 
-                require([Emby.PluginManager.mapPath(self, 'keylime.js')], function () {
+                require([pluginManager.mapPath(self, 'keylime.js')], function () {
                     window.keyLime.config = window.keyLime.config || {};
                     window.keyLime.config.noauto = true;
                     resolve();

@@ -1,4 +1,4 @@
-define([], function () {
+define(['pluginManager'], function (pluginManager) {
 
     return function () {
 
@@ -9,13 +9,13 @@ define([], function () {
         self.packageName = 'wmctheme';
 
         self.getHeaderTemplate = function () {
-            return Emby.PluginManager.mapPath(self, 'header.html');
+            return pluginManager.mapPath(self, 'header.html');
         };
 
         self.getDependencies = function () {
 
             var files = [
-                'css!' + Emby.PluginManager.mapPath(self, 'css/style')
+                'css!' + pluginManager.mapPath(self, 'css/style')
             ];
 
             return files;
@@ -34,7 +34,7 @@ define([], function () {
             var routes = [];
 
             routes.push({
-                path: Emby.PluginManager.mapPath(self, 'home.html'),
+                path: pluginManager.mapPath(self, 'home.html'),
                 id: 'wmctheme-home',
                 transition: 'fade',
                 type: 'home',
@@ -45,7 +45,7 @@ define([], function () {
         };
 
         self.getHomeRoute = function () {
-            return Emby.PluginManager.mapPath(self, 'home.html');
+            return pluginManager.mapPath(self, 'home.html');
         };
 
         self.load = function () {
