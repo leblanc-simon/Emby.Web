@@ -1,4 +1,4 @@
-define(['playbackManager'], function (playbackManager) {
+define(['playbackManager', 'pluginManager'], function (playbackManager, pluginManager) {
 
     function updateClock() {
 
@@ -36,27 +36,27 @@ define(['playbackManager'], function (playbackManager) {
         self.packageName = 'defaulttheme';
 
         self.getHeaderTemplate = function () {
-            return Emby.PluginManager.mapPath(self, 'header.html');
+            return pluginManager.mapPath(self, 'header.html');
         };
 
         self.getDependencies = function () {
 
             var list = [
-                'css!' + Emby.PluginManager.mapPath(self, 'css/style'),
-                'css!' + Emby.PluginManager.mapPath(self, 'cards/card'),
-                'css!' + Emby.PluginManager.mapPath(self, 'css/colors.dark'),
-                'css!' + Emby.PluginManager.mapPath(self, 'css/paperstyles'),
-                'css!' + Emby.PluginManager.mapPath(self, 'css/papericonbutton'),
-                Emby.PluginManager.mapPath(self, 'backdrop.js'),
-                Emby.PluginManager.mapPath(self, 'cards/cardbuilder.js'),
-                Emby.PluginManager.mapPath(self, 'cards/userdata.js'),
-                Emby.PluginManager.mapPath(self, 'cards/tabbedpage.js'),
-                Emby.PluginManager.mapPath(self, 'cards/horizontallist.js')
+                'css!' + pluginManager.mapPath(self, 'css/style'),
+                'css!' + pluginManager.mapPath(self, 'cards/card'),
+                'css!' + pluginManager.mapPath(self, 'css/colors.dark'),
+                'css!' + pluginManager.mapPath(self, 'css/paperstyles'),
+                'css!' + pluginManager.mapPath(self, 'css/papericonbutton'),
+                pluginManager.mapPath(self, 'backdrop.js'),
+                pluginManager.mapPath(self, 'cards/cardbuilder.js'),
+                pluginManager.mapPath(self, 'cards/userdata.js'),
+                pluginManager.mapPath(self, 'cards/tabbedpage.js'),
+                pluginManager.mapPath(self, 'cards/horizontallist.js')
             ];
 
-            list.push('css!' + Emby.PluginManager.mapPath(self, 'css/fonts'));
+            list.push('css!' + pluginManager.mapPath(self, 'css/fonts'));
 
-            list.push('html!' + Emby.PluginManager.mapPath(self, 'icons.html'));
+            list.push('html!' + pluginManager.mapPath(self, 'icons.html'));
             list.push('paper-button');
             list.push('paper-icon-button');
             list.push('paper-input');
@@ -77,7 +77,7 @@ define(['playbackManager'], function (playbackManager) {
             return languages.map(function (i) {
                 return {
                     lang: i,
-                    path: Emby.PluginManager.mapPath(self, 'strings/' + i + '.json')
+                    path: pluginManager.mapPath(self, 'strings/' + i + '.json')
                 };
             });
         };
@@ -87,108 +87,108 @@ define(['playbackManager'], function (playbackManager) {
             var routes = [];
 
             routes.push({
-                path: Emby.PluginManager.mapPath(self, 'home.html'),
+                path: pluginManager.mapPath(self, 'home.html'),
                 transition: 'slide',
                 type: 'home',
-                controller: Emby.PluginManager.mapPath(self, 'home/home.js'),
+                controller: pluginManager.mapPath(self, 'home/home.js'),
                 dependencies: [
-                    'css!' + Emby.PluginManager.mapPath(self, 'home/home.css')
+                    'css!' + pluginManager.mapPath(self, 'home/home.css')
                 ]
             });
 
             routes.push({
-                path: Emby.PluginManager.mapPath(self, 'item/item.html'),
+                path: pluginManager.mapPath(self, 'item/item.html'),
                 transition: 'slide',
                 dependencies: [
-                    'css!' + Emby.PluginManager.mapPath(self, 'item/item.css')
+                    'css!' + pluginManager.mapPath(self, 'item/item.css')
                 ],
-                controller: Emby.PluginManager.mapPath(self, 'item/item.js')
+                controller: pluginManager.mapPath(self, 'item/item.js')
             });
 
             routes.push({
-                path: Emby.PluginManager.mapPath(self, 'list/list.html'),
+                path: pluginManager.mapPath(self, 'list/list.html'),
                 transition: 'slide',
-                controller: Emby.PluginManager.mapPath(self, 'list/list.js')
+                controller: pluginManager.mapPath(self, 'list/list.js')
             });
 
             routes.push({
-                path: Emby.PluginManager.mapPath(self, 'music/music.html'),
+                path: pluginManager.mapPath(self, 'music/music.html'),
                 transition: 'slide',
-                controller: Emby.PluginManager.mapPath(self, 'music/music.js')
+                controller: pluginManager.mapPath(self, 'music/music.js')
             });
 
             routes.push({
-                path: Emby.PluginManager.mapPath(self, 'movies/movies.html'),
+                path: pluginManager.mapPath(self, 'movies/movies.html'),
                 transition: 'slide',
-                controller: Emby.PluginManager.mapPath(self, 'movies/movies.js')
+                controller: pluginManager.mapPath(self, 'movies/movies.js')
             });
 
             routes.push({
-                path: Emby.PluginManager.mapPath(self, 'livetv/livetv.html'),
+                path: pluginManager.mapPath(self, 'livetv/livetv.html'),
                 transition: 'slide',
-                controller: Emby.PluginManager.mapPath(self, 'livetv/livetv.js')
+                controller: pluginManager.mapPath(self, 'livetv/livetv.js')
             });
 
             routes.push({
-                path: Emby.PluginManager.mapPath(self, 'livetv/guide.html'),
+                path: pluginManager.mapPath(self, 'livetv/guide.html'),
                 transition: 'slide',
-                controller: Emby.PluginManager.mapPath(self, 'livetv/guide.js'),
+                controller: pluginManager.mapPath(self, 'livetv/guide.js'),
                 dependencies: [
-                    'css!' + Emby.PluginManager.mapPath(self, 'livetv/guide.css')
+                    'css!' + pluginManager.mapPath(self, 'livetv/guide.css')
                 ]
             });
 
             routes.push({
-                path: Emby.PluginManager.mapPath(self, 'tv/tv.html'),
+                path: pluginManager.mapPath(self, 'tv/tv.html'),
                 transition: 'slide',
-                controller: Emby.PluginManager.mapPath(self, 'tv/tv.js')
+                controller: pluginManager.mapPath(self, 'tv/tv.js')
             });
 
             routes.push({
-                path: Emby.PluginManager.mapPath(self, 'search/search.html'),
+                path: pluginManager.mapPath(self, 'search/search.html'),
                 transition: 'slide',
-                controller: Emby.PluginManager.mapPath(self, 'search/search.js'),
+                controller: pluginManager.mapPath(self, 'search/search.js'),
                 dependencies: [
-                    'css!' + Emby.PluginManager.mapPath(self, 'search/search.css')
+                    'css!' + pluginManager.mapPath(self, 'search/search.css')
                 ]
             });
 
             routes.push({
-                path: Emby.PluginManager.mapPath(self, 'nowplaying/nowplaying.html'),
+                path: pluginManager.mapPath(self, 'nowplaying/nowplaying.html'),
                 transition: 'slide',
-                controller: Emby.PluginManager.mapPath(self, 'nowplaying/nowplaying.js'),
+                controller: pluginManager.mapPath(self, 'nowplaying/nowplaying.js'),
                 dependencies: [
-                    'css!' + Emby.PluginManager.mapPath(self, 'nowplaying/nowplaying.css')
-                ],
-                supportsThemeMedia: true
-            });
-
-            routes.push({
-                path: Emby.PluginManager.mapPath(self, 'nowplaying/playlist.html'),
-                transition: 'slide',
-                controller: Emby.PluginManager.mapPath(self, 'nowplaying/playlist.js'),
-                dependencies: [
-                    'css!' + Emby.PluginManager.mapPath(self, 'item/item.css')
+                    'css!' + pluginManager.mapPath(self, 'nowplaying/nowplaying.css')
                 ],
                 supportsThemeMedia: true
             });
 
             routes.push({
-                path: Emby.PluginManager.mapPath(self, 'nowplaying/videoosd.html'),
+                path: pluginManager.mapPath(self, 'nowplaying/playlist.html'),
+                transition: 'slide',
+                controller: pluginManager.mapPath(self, 'nowplaying/playlist.js'),
+                dependencies: [
+                    'css!' + pluginManager.mapPath(self, 'item/item.css')
+                ],
+                supportsThemeMedia: true
+            });
+
+            routes.push({
+                path: pluginManager.mapPath(self, 'nowplaying/videoosd.html'),
                 transition: 'fade',
-                controller: Emby.PluginManager.mapPath(self, 'nowplaying/videoosd.js'),
+                controller: pluginManager.mapPath(self, 'nowplaying/videoosd.js'),
                 dependencies: [
-                    'css!' + Emby.PluginManager.mapPath(self, 'nowplaying/videoosd.css')
+                    'css!' + pluginManager.mapPath(self, 'nowplaying/videoosd.css')
                 ],
                 type: 'video-osd',
                 supportsThemeMedia: true
             });
 
             //routes.push({
-            //    path: Emby.PluginManager.mapPath(self, 'settings/settings.html'),
+            //    path: pluginManager.mapPath(self, 'settings/settings.html'),
             //    transition: 'slide',
             //    dependencies: [
-            //        Emby.PluginManager.mapPath(self, 'settings/settings.js')
+            //        pluginManager.mapPath(self, 'settings/settings.js')
             //    ],
             //    type: 'settings',
             //    title: 'Default Theme',
@@ -218,11 +218,11 @@ define(['playbackManager'], function (playbackManager) {
         };
 
         self.getHomeRoute = function () {
-            return Emby.PluginManager.mapPath(self, 'home.html');
+            return pluginManager.mapPath(self, 'home.html');
         };
 
         self.getVideoOsdRoute = function () {
-            return Emby.PluginManager.mapPath(self, 'nowplaying/videoosd.html');
+            return pluginManager.mapPath(self, 'nowplaying/videoosd.html');
         };
 
         self.showItem = function (item) {
@@ -237,9 +237,9 @@ define(['playbackManager'], function (playbackManager) {
             }
 
             if (showList) {
-                Emby.Page.show(Emby.PluginManager.mapPath(self, 'list/list.html') + '?parentid=' + item.Id, { item: item });
+                Emby.Page.show(pluginManager.mapPath(self, 'list/list.html') + '?parentid=' + item.Id, { item: item });
             } else {
-                Emby.Page.show(Emby.PluginManager.mapPath(self, 'item/item.html') + '?id=' + item.Id, { item: item });
+                Emby.Page.show(pluginManager.mapPath(self, 'item/item.html') + '?id=' + item.Id, { item: item });
             }
         };
 
@@ -261,11 +261,11 @@ define(['playbackManager'], function (playbackManager) {
 
         self.search = function () {
 
-            Emby.Page.show(Emby.PluginManager.mapPath(self, 'search/search.html'));
+            Emby.Page.show(pluginManager.mapPath(self, 'search/search.html'));
         };
 
         self.showNowPlaying = function () {
-            Emby.Page.show(Emby.PluginManager.mapPath(self, 'nowplaying/nowplaying.html'));
+            Emby.Page.show(pluginManager.mapPath(self, 'nowplaying/nowplaying.html'));
         };
 
         self.showUserMenu = function () {
@@ -281,7 +281,7 @@ define(['playbackManager'], function (playbackManager) {
 
         function showBackMenuInternal(callback, showHome) {
 
-            require([Emby.PluginManager.mapPath(self, 'backmenu/backmenu.js'), 'css!' + Emby.PluginManager.mapPath(self, 'backmenu/backmenu.css')], function () {
+            require([pluginManager.mapPath(self, 'backmenu/backmenu.js'), 'css!' + pluginManager.mapPath(self, 'backmenu/backmenu.css')], function () {
                 DefaultTheme.BackMenu.show({
                     callback: callback,
                     showHome: showHome
@@ -384,7 +384,7 @@ define(['playbackManager'], function (playbackManager) {
             var enableSubduedBackdrop = viewId != 'defaulttheme-item' && viewId != 'defaulttheme-nowplaying' && viewId != 'defaulttheme-nowplayingplaylist';
             DefaultTheme.Backdrop.subdued(enableSubduedBackdrop);
             //blurBackdrop(enableBlur);
-            //Emby.Backdrop.setBackdrop(Emby.PluginManager.mapPath(self, 'css/skin-dark/blur6.png'));
+            //Emby.Backdrop.setBackdrop(pluginManager.mapPath(self, 'css/skin-dark/blur6.png'));
         }
 
         function blurBackdrop(enabled) {
