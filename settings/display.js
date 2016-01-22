@@ -1,4 +1,4 @@
-define(['loading', 'usersettings'], function (loading, userSettings) {
+define(['loading', 'userSettings'], function (loading, userSettings) {
 
     return function (view, params) {
 
