@@ -24,7 +24,7 @@ paper-icon-button paper-ripple {
     color: inherit !important;
 }
 
-paper-input label, paper-input input, paper-dropdown-menu label, paper-checkbox label {
+paper-input label, paper-input input, paper-dropdown-menu label, emby-dropdown-menu label, paper-checkbox label {
     font-size: inherit !important;
     line-height: normal !important;
 }
@@ -122,11 +122,6 @@ paper-button {
 emby-dropdown-menu {
     margin-bottom: 1em;
 }
-
-    emby-dropdown-menu + .fieldDescription {
-        margin-top: -1em;
-        margin-bottom: 1em;
-    }
 
 paper-input + .fieldDescription {
     padding: .2em 0;

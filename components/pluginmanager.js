@@ -51,5 +51,8 @@ define(['events'], function (Events) {
         };
     }
 
-    return new pluginManager();
+    var instance = new pluginManager();
+    window.Emby = window.Emby || {};
+    window.Emby.PluginManager = instance;
+    return instance;
 });

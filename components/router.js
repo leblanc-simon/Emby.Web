@@ -1,4 +1,4 @@
-define(['loading', 'viewManager'], function (loading, viewManager) {
+define(['loading', 'viewManager', 'themeManager'], function (loading, viewManager, themeManager) {
 
     var connectionManager;
 
@@ -55,7 +55,7 @@ define(['loading', 'viewManager'], function (loading, viewManager) {
             case MediaBrowser.ConnectionState.SignedIn:
                 {
                     loading.hide();
-                    Emby.ThemeManager.loadUserTheme();
+                    themeManager.loadUserTheme();
                 }
                 break;
             case MediaBrowser.ConnectionState.ServerSignIn:
@@ -252,7 +252,7 @@ define(['loading', 'viewManager'], function (loading, viewManager) {
             }
             else if (route.isDefaultRoute) {
                 console.log('Emby.Page - loading theme home page');
-                Emby.ThemeManager.loadUserTheme();
+                themeManager.loadUserTheme();
             } else {
                 console.log('Emby.Page - next()');
                 callback();
@@ -277,7 +277,7 @@ define(['loading', 'viewManager'], function (loading, viewManager) {
     var isHandlingBackToDefault;
     function handleBackToDefault() {
 
-        Emby.ThemeManager.loadUserTheme();
+        themeManager.loadUserTheme();
 
         if (isHandlingBackToDefault) {
             return;
@@ -286,16 +286,16 @@ define(['loading', 'viewManager'], function (loading, viewManager) {
         isHandlingBackToDefault = true;
 
         // This must result in a call to either 
-        // Emby.ThemeManager.loadUserTheme();
+        // themeManager.loadUserTheme();
         // Logout
         // Or exit app
 
-        Emby.ThemeManager.getCurrentTheme().showBackMenu(function (wasCancelled) {
+        themeManager.getCurrentTheme().showBackMenu(function (wasCancelled) {
 
             isHandlingBackToDefault = false;
 
             if (wasCancelled) {
-                //Emby.ThemeManager.loadUserTheme();
+                //themeManager.loadUserTheme();
             }
         });
     }
@@ -404,7 +404,7 @@ define(['loading', 'viewManager'], function (loading, viewManager) {
 
     function goHome() {
 
-        show(Emby.ThemeManager.getCurrentTheme().getHomeRoute());
+        show(themeManager.getCurrentTheme().getHomeRoute());
     }
 
     function showItem(item) {
@@ -413,12 +413,12 @@ define(['loading', 'viewManager'], function (loading, viewManager) {
             Emby.Models.item(item).then(showItem);
 
         } else {
-            Emby.ThemeManager.getCurrentTheme().showItem(item);
+            themeManager.getCurrentTheme().showItem(item);
         }
     }
 
     function setTitle(title) {
-        Emby.ThemeManager.getCurrentTheme().setTitle(title);
+        themeManager.getCurrentTheme().setTitle(title);
     }
 
     function gotoSettings() {
@@ -430,7 +430,7 @@ define(['loading', 'viewManager'], function (loading, viewManager) {
     }
 
     function showVideoOsd() {
-        return show(Emby.ThemeManager.getCurrentTheme().getVideoOsdRoute());
+        return show(themeManager.getCurrentTheme().getVideoOsdRoute());
     }
 
     var allRoutes = [];

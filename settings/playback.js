@@ -1,4 +1,4 @@
-define(['loading', 'appsettings', 'qualityoptions'], function (loading, appSettings, qualityoptions) {
+define(['loading', 'appsettings', 'qualityoptions', 'userSettings'], function (loading, appSettings, qualityoptions, userSettings) {
 
     return function (view, params) {
 
@@ -29,7 +29,7 @@ define(['loading', 'appsettings', 'qualityoptions'], function (loading, appSetti
                 appSettings.enableAutomaticBitrateDetection(true);
             }
 
-            appSettings.enableCinemaMode(selectEnableCinemaMode.getValue() == 'true');
+            userSettings.enableCinemaMode(selectEnableCinemaMode.getValue() == 'true');
         });
 
         function renderSettings() {
@@ -60,7 +60,7 @@ define(['loading', 'appsettings', 'qualityoptions'], function (loading, appSetti
             }
             selectStreamingBitrate.setValue('2');
 
-            selectEnableCinemaMode.setValue(appSettings.enableCinemaMode());
+            selectEnableCinemaMode.setValue(userSettings.enableCinemaMode());
         }
     }
 

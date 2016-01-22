@@ -1,4 +1,4 @@
-define(['events', 'datetime', 'appsettings', 'pluginManager'], function (Events, datetime, appSettings, pluginManager) {
+define(['events', 'datetime', 'appsettings', 'pluginManager', 'userSettings'], function (Events, datetime, appSettings, pluginManager, userSettings) {
 
     function playbackManager() {
 
@@ -857,7 +857,7 @@ define(['events', 'datetime', 'appsettings', 'pluginManager'], function (Events,
                 });
             };
 
-            if (options.startPositionTicks || firstItem.MediaType !== 'Video' || options.fullscreen === false || !appSettings.enableCinemaMode()) {
+            if (options.startPositionTicks || firstItem.MediaType !== 'Video' || options.fullscreen === false || !userSettings.enableCinemaMode()) {
 
                 currentPlayOptions = options;
                 playInternal(firstItem, options.startPositionTicks, afterPlayInternal);

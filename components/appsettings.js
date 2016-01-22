@@ -1,4 +1,4 @@
-define(['browser'], function (browser) {
+define([], function () {
 
     function getKey(name, userId) {
 
@@ -19,24 +19,6 @@ define(['browser'], function (browser) {
     }
 
     return {
-        enableCinemaMode: function (val) {
-
-            if (val != null) {
-                set('enableCinemaMode', val.toString());
-            }
-
-            val = get('enableCinemaMode');
-
-            if (val) {
-                return val != 'false';
-            }
-
-            if (browser.mobile) {
-                return false;
-            }
-
-            return true;
-        },
         enableAutomaticBitrateDetection: function (val) {
 
             if (val != null) {

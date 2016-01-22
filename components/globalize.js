@@ -1,4 +1,4 @@
-define(['connectionManager', 'usersettings', 'events'], function (connectionManager, userSettings, events) {
+define(['connectionManager', 'userSettings', 'events', 'themeManager'], function (connectionManager, userSettings, events, themeManager) {
 
     var allTranslations = {};
     var currentCulture;
@@ -75,7 +75,7 @@ define(['connectionManager', 'usersettings', 'events'], function (connectionMana
     function getDictionary(module) {
 
         if (module == 'theme') {
-            module = Emby.ThemeManager.getCurrentTheme().packageName;
+            module = themeManager.getCurrentTheme().packageName;
         }
 
         var translations = allTranslations[module];

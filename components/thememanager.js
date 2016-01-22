@@ -1,4 +1,4 @@
-(function (globalScope, document) {
+define([], function () {
 
     var currentTheme;
     var currentThemeDependencies = [];
@@ -109,14 +109,9 @@
         });
     }
 
-    if (!globalScope.Emby) {
-        globalScope.Emby = {};
-    }
-
-    globalScope.Emby.ThemeManager = {
+    return {
         getCurrentTheme: getCurrentTheme,
         loadTheme: loadTheme,
         loadUserTheme: loadUserTheme
     };
-
-})(this, document);
+});

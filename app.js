@@ -2,14 +2,6 @@
 
     var connectionManager;
 
-    function getRequirePromise(deps) {
-
-        return new Promise(function (resolve, reject) {
-
-            require(deps, resolve);
-        });
-    }
-
     function defineRoute(newRoute, packageName) {
 
         var baseRoute = Emby.Page.baseUrl();
@@ -263,7 +255,7 @@
             viewManager: "components/viewmanager",
             slyScroller: "components/slyscroller",
             appsettings: "components/appsettings",
-            usersettings: "components/usersettings",
+            userSettings: "components/usersettings",
             tvguide: "components/tvguide/guide",
             actionsheet: "components/actionsheet/actionsheet",
             playmenu: "components/playmenu",
@@ -281,6 +273,7 @@
             screenfull: 'bower_components/screenfull/dist/screenfull',
             events: 'bower_components/emby-apiclient/events',
             pluginManager: 'components/pluginmanager',
+            themeManager: 'components/thememanager',
             playbackManager: 'components/playbackmanager',
             credentialprovider: 'bower_components/emby-apiclient/credentials',
             apiclient: 'bower_components/emby-apiclient/apiclient',
@@ -387,6 +380,13 @@
         define("paper-dropdown-menu", ["html!" + bowerPath + "/paper-dropdown-menu/paper-dropdown-menu.html", 'paper-base']);
         define("emby-dropdown-menu", ["html!" + bowerPath + "/emby-dropdown-menu/emby-dropdown-menu.html", 'paper-base']);
         define("paper-listbox", ["html!" + bowerPath + "/paper-listbox/paper-listbox.html", 'paper-base']);
+
+        define('connectionManagerResolver', [], function () {
+            return function () {
+                return connectionManager;
+            };
+        });
+
     }
 
     function loadApiClientDependencies(callback) {
@@ -415,9 +415,7 @@
             var list = [
              'bower_components/page.js/page.js',
              'components/router',
-             'pluginManager',
              'css!style/style.css',
-             'js/thememanager',
              'js/focusmanager',
              'js/backdrops',
              'js/dom',
@@ -438,12 +436,11 @@
                 list.push('bower_components/fetch/fetch');
             }
 
-            require(list, function (pageJs, pageObjects, pluginmanager) {
+            require(list, function (pageJs, pageObjects) {
 
                 globalScope.page = pageJs;
                 globalScope.Emby.Page = pageObjects;
                 globalScope.Emby.TransparencyLevel = pageObjects.TransparencyLevel;
-                globalScope.Emby.PluginManager = pluginmanager;
 
                 loadSecondLevelCoreDependencies(callback);
             });
@@ -489,28 +486,33 @@
 
         console.log('Loading plugin: ' + url);
 
-        return getRequirePromise([url]).then(function (pluginFactory) {
+        return new Promise(function (resolve, reject) {
 
-            var plugin = new pluginFactory();
+            require([url], function (pluginFactory) {
+                var plugin = new pluginFactory();
 
-            var urlLower = url.toLowerCase();
-            if (urlLower.indexOf('http:') == -1 && urlLower.indexOf('https:') == -1 && urlLower.indexOf('file:') == -1) {
-                if (url.indexOf(Emby.Page.baseUrl()) != 0) {
+                var urlLower = url.toLowerCase();
+                if (urlLower.indexOf('http:') == -1 && urlLower.indexOf('https:') == -1 && urlLower.indexOf('file:') == -1) {
+                    if (url.indexOf(Emby.Page.baseUrl()) != 0) {
 
-                    url = Emby.Page.baseUrl() + '/' + url;
+                        url = Emby.Page.baseUrl() + '/' + url;
+                    }
                 }
-            }
 
-            var separatorIndex = Math.max(url.lastIndexOf('/'), url.lastIndexOf('\\'));
-            plugin.baseUrl = url.substring(0, separatorIndex);
+                var separatorIndex = Math.max(url.lastIndexOf('/'), url.lastIndexOf('\\'));
+                plugin.baseUrl = url.substring(0, separatorIndex);
 
-            Emby.PluginManager.register(plugin);
+                Emby.PluginManager.register(plugin);
+                resolve();
+            });
         });
     }
 
     function loadDefaultTheme(callback) {
 
-        Emby.ThemeManager.loadTheme('defaulttheme', callback);
+        require(['themeManager'], function (themeManager) {
+            themeManager.loadTheme('defaulttheme', callback);
+        });
     }
 
     function start() {
@@ -523,11 +525,11 @@
 
             defineCoreRoutes();
 
-            loadPlugins(startInfo.plugins || []).then(function () {
+            createConnectionManager().then(function () {
 
-                definePluginRoutes();
+                loadPlugins(startInfo.plugins || []).then(function () {
 
-                createConnectionManager().then(function () {
+                    definePluginRoutes();
 
                     require(startInfo.scripts || [], loadPresentation);
                 });
@@ -537,23 +539,26 @@
 
     function loadGlobalizaton() {
 
-        return getRequirePromise(['components/globalize']).then(function (globalize) {
+        return new Promise(function (resolve, reject) {
 
-            globalScope.Globalize = globalize;
+            require(['components/globalize', 'pluginManager'], function (globalize, pluginManager) {
 
-            var promises = Emby.PluginManager.plugins().filter(function (p) {
-                return p.type != 'theme';
+                globalScope.Globalize = globalize;
 
-            }).map(function (plugin) {
+                var promises = pluginManager.plugins().filter(function (p) {
+                    return p.type != 'theme';
 
-                var translations = plugin.getTranslations ? plugin.getTranslations() : [];
-                return Globalize.loadTranslations({
-                    name: plugin.packageName,
-                    translations: translations
+                }).map(function (plugin) {
+
+                    var translations = plugin.getTranslations ? plugin.getTranslations() : [];
+                    return Globalize.loadTranslations({
+                        name: plugin.packageName,
+                        translations: translations
+                    });
                 });
-            });
 
-            return Promise.all(promises);
+                Promise.all(promises).then(resolve, reject);
+            });
         });
     }
 

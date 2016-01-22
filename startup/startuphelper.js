@@ -1,4 +1,4 @@
-define(['connectionManager', 'loading'], function (connectionManager, loading) {
+define(['connectionManager', 'loading', 'themeManager'], function (connectionManager, loading, themeManager) {
 
     function signIntoConnect(view) {
 
@@ -32,7 +32,7 @@ define(['connectionManager', 'loading'], function (connectionManager, loading) {
 
         var horizontalPageContent = view.querySelector('.pageContainer');
         zoomOut(horizontalPageContent, 1).onfinish = function () {
-            Emby.ThemeManager.loadUserTheme();
+            themeManager.loadUserTheme();
 
         };
     }

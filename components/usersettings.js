@@ -1,6 +1,8 @@
-define(['appsettings', 'connectionManager', 'events'], function (appsettings, connectionManager, events) {
+define(['appsettings', 'connectionManagerResolver', 'events', 'browser'], function (appsettings, connectionManagerResolver, events, browser) {
 
     function getUserId() {
+
+        var connectionManager = connectionManagerResolver();
 
         if (connectionManager.currentApiClient) {
             return connectionManager.currentApiClient().getCurrentUserId();
@@ -30,6 +32,26 @@ define(['appsettings', 'connectionManager', 'events'], function (appsettings, co
             }
             return appsettings.get(name, userId);
         };
+
+        self.enableCinemaMode = function (val) {
+
+            if (val != null) {
+                self.set('enableCinemaMode', val.toString());
+            }
+
+            val = self.get('enableCinemaMode');
+
+            if (val) {
+                return val != 'false';
+            }
+
+            if (browser.mobile) {
+                return false;
+            }
+
+            return true;
+        };
+
     };
 
     return new obj();
