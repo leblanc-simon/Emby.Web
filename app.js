@@ -486,7 +486,7 @@
 
         return new Promise(function (resolve, reject) {
 
-            require([url], function (pluginFactory) {
+            require([url, 'pluginManager'], function (pluginFactory, pluginManager) {
                 var plugin = new pluginFactory();
 
                 var urlLower = url.toLowerCase();
@@ -500,7 +500,7 @@
                 var separatorIndex = Math.max(url.lastIndexOf('/'), url.lastIndexOf('\\'));
                 plugin.baseUrl = url.substring(0, separatorIndex);
 
-                Emby.PluginManager.register(plugin);
+                pluginManager.register(plugin);
                 resolve();
             });
         });

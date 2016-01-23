@@ -52,6 +52,18 @@ define(['appsettings', 'connectionManagerResolver', 'events', 'browser'], functi
             return true;
         };
 
+        self.serverConfig = function (config) {
+
+            if (config) {
+
+            } else {
+
+                return connectionManagerResolver().currentApiClient().getUser(getUserId()).then(function (user) {
+
+                    return user.Configuration;
+                });
+            }
+        };
     };
 
     return new obj();

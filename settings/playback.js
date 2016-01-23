@@ -61,6 +61,12 @@ define(['loading', 'appsettings', 'qualityoptions', 'userSettings'], function (l
             selectStreamingBitrate.setValue('2');
 
             selectEnableCinemaMode.setValue(userSettings.enableCinemaMode());
+
+            userSettings.serverConfig().then(function(config) {
+
+                view.querySelector('.selectPlayDefaultAudioTrack').setValue(config.PlayDefaultAudioTrack);
+
+            });
         }
     }
 
