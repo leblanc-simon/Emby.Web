@@ -302,8 +302,7 @@ define(['loading', 'viewManager', 'themeManager'], function (loading, viewManage
 
     function loadContent(ctx, route, html, request) {
 
-        // TODO: replace with route package name
-        html = Globalize.translateHtml(html, route.packageName);
+        html = Globalize.translateHtml(html, route.dictionary);
         request.view = html;
 
         viewManager.loadView(request);

@@ -2,7 +2,7 @@
 
     var connectionManager;
 
-    function defineRoute(newRoute, packageName) {
+    function defineRoute(newRoute, dictionary) {
 
         var baseRoute = Emby.Page.baseUrl();
 
@@ -12,7 +12,7 @@
 
         console.log('Defining route: ' + path);
 
-        newRoute.packageName = packageName || 'core';
+        newRoute.dictionary = newRoute.dictionary || dictionary || 'core';
         Emby.Page.addRoute(path, newRoute);
     }
 
@@ -488,26 +488,10 @@
 
     function loadPlugin(url) {
 
-        console.log('Loading plugin: ' + url);
-
         return new Promise(function (resolve, reject) {
 
-            require([url, 'pluginManager'], function (pluginFactory, pluginManager) {
-                var plugin = new pluginFactory();
-
-                var urlLower = url.toLowerCase();
-                if (urlLower.indexOf('http:') == -1 && urlLower.indexOf('https:') == -1 && urlLower.indexOf('file:') == -1) {
-                    if (url.indexOf(Emby.Page.baseUrl()) != 0) {
-
-                        url = Emby.Page.baseUrl() + '/' + url;
-                    }
-                }
-
-                var separatorIndex = Math.max(url.lastIndexOf('/'), url.lastIndexOf('\\'));
-                plugin.baseUrl = url.substring(0, separatorIndex);
-
-                pluginManager.register(plugin);
-                resolve();
+            require(['pluginManager'], function (pluginManager) {
+                pluginManager.loadPlugin(url).then(resolve, reject);
             });
         });
     }
