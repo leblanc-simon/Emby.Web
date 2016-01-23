@@ -387,6 +387,12 @@
             };
         });
 
+        define('apiClientResolver', [], function () {
+            return function () {
+                return connectionManager.currentApiClient();
+            };
+        });
+
     }
 
     function loadApiClientDependencies(callback) {

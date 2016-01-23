@@ -56,6 +56,8 @@ define(['appsettings', 'connectionManagerResolver', 'events', 'browser'], functi
 
             if (config) {
 
+                return connectionManagerResolver().currentApiClient().updateUserConfiguration(getUserId(), config);
+
             } else {
 
                 return connectionManagerResolver().currentApiClient().getUser(getUserId()).then(function (user) {

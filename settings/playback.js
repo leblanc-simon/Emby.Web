@@ -1,4 +1,4 @@
-define(['loading', 'appsettings', 'qualityoptions', 'userSettings'], function (loading, appSettings, qualityoptions, userSettings) {
+define(['loading', 'appsettings', 'qualityoptions', 'userSettings', 'apiClientResolver'], function (loading, appSettings, qualityoptions, userSettings, apiClientResolver) {
 
     return function (view, params) {
 
@@ -30,6 +30,18 @@ define(['loading', 'appsettings', 'qualityoptions', 'userSettings'], function (l
             }
 
             userSettings.enableCinemaMode(selectEnableCinemaMode.getValue() == 'true');
+
+            var playDefaultAudioTrack = view.querySelector('.selectPlayDefaultAudioTrack').getValue();
+            var audioLanguage = view.querySelector('.selectAudioLanguage').getValue();
+            var subtitleLanguage = view.querySelector('.selectSubtitleLanguage').getValue();
+
+            userSettings.serverConfig().then(function (config) {
+
+                config.PlayDefaultAudioTrack = playDefaultAudioTrack;
+                config.AudioLanguagePreference = audioLanguage || null;
+                config.SubtitleLanguagePreference = subtitleLanguage || null;
+                userSettings.serverConfig(config);
+            });
         });
 
         function renderSettings() {
@@ -62,11 +74,40 @@ define(['loading', 'appsettings', 'qualityoptions', 'userSettings'], function (l
 
             selectEnableCinemaMode.setValue(userSettings.enableCinemaMode());
 
-            userSettings.serverConfig().then(function(config) {
+            var culturesPromise = apiClientResolver().getCultures();
+            var configPromise = userSettings.serverConfig();
+
+            Promise.all([culturesPromise, configPromise]).then(function (responses) {
+
+                var cultures = responses[0];
+                var config = responses[1];
 
                 view.querySelector('.selectPlayDefaultAudioTrack').setValue(config.PlayDefaultAudioTrack);
 
+                var selectAudioLanguage = view.querySelector('.selectAudioLanguage');
+                fillLanguages(selectAudioLanguage, cultures);
+                selectAudioLanguage.setValue(config.AudioLanguagePreference || "");
+
+                var selectSubtitleLanguage = view.querySelector('.selectSubtitleLanguage');
+                fillLanguages(selectSubtitleLanguage, cultures);
+                selectSubtitleLanguage.setValue(config.SubtitleLanguagePreference || "");
             });
+        }
+
+        function fillLanguages(select, languages) {
+
+            var html = "";
+
+            html += "<option value=''></option>";
+
+            for (var i = 0, length = languages.length; i < length; i++) {
+
+                var culture = languages[i];
+
+                html += '<div class="dropdownItem" data-value="' + culture.ThreeLetterISOLanguageName + '">' + culture.DisplayName + '</div>';
+            }
+
+            select.querySelector('.dropdown-content').innerHTML = html;
         }
     }
 
