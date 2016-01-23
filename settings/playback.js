@@ -34,12 +34,14 @@ define(['loading', 'appsettings', 'qualityoptions', 'userSettings', 'apiClientRe
             var playDefaultAudioTrack = view.querySelector('.selectPlayDefaultAudioTrack').getValue();
             var audioLanguage = view.querySelector('.selectAudioLanguage').getValue();
             var subtitleLanguage = view.querySelector('.selectSubtitleLanguage').getValue();
+            var subtitleMode = view.querySelector('.selectSubtitleMode').getValue();
 
             userSettings.serverConfig().then(function (config) {
 
                 config.PlayDefaultAudioTrack = playDefaultAudioTrack;
                 config.AudioLanguagePreference = audioLanguage || null;
                 config.SubtitleLanguagePreference = subtitleLanguage || null;
+                config.SubtitleMode = subtitleMode;
                 userSettings.serverConfig(config);
             });
         });
@@ -83,6 +85,7 @@ define(['loading', 'appsettings', 'qualityoptions', 'userSettings', 'apiClientRe
                 var config = responses[1];
 
                 view.querySelector('.selectPlayDefaultAudioTrack').setValue(config.PlayDefaultAudioTrack);
+                view.querySelector('.selectSubtitleMode').setValue(config.SubtitleMode);
 
                 var selectAudioLanguage = view.querySelector('.selectAudioLanguage');
                 fillLanguages(selectAudioLanguage, cultures);
@@ -96,18 +99,12 @@ define(['loading', 'appsettings', 'qualityoptions', 'userSettings', 'apiClientRe
 
         function fillLanguages(select, languages) {
 
-            var html = "";
-
-            html += "<option value=''></option>";
-
-            for (var i = 0, length = languages.length; i < length; i++) {
-
-                var culture = languages[i];
-
-                html += '<div class="dropdownItem" data-value="' + culture.ThreeLetterISOLanguageName + '">' + culture.DisplayName + '</div>';
-            }
-
-            select.querySelector('.dropdown-content').innerHTML = html;
+            select.setOptions(languages.map(function (culture) {
+                return {
+                    name: culture.DisplayName,
+                    value: culture.ThreeLetterISOLanguageName
+                };
+            }));
         }
     }
 

@@ -41,7 +41,12 @@
 
         <emby-dropdown-menu class="selectSubtitleMode" label="${SubtitleMode}">
             <div class="dropdown-content">
+                <div class="dropdownItem" data-value="Default">${OptionDefaultSubtitles}</div>
+                <div class="dropdownItem" data-value="Smart">${OptionSmartSubtitles}</div>
+                <div class="dropdownItem" data-value="OnlyForced">${OptionOnlyForcedSubtitles}</div>
+                <div class="dropdownItem" data-value="Always">${OptionAlwaysPlaySubtitles}</div>
+                <div class="dropdownItem" data-value="None">${OptionNoSubtitles}</div>
             </div>
-        </emby-dropdown-menu>
+    </emby-dropdown-menu>
     </div>
 </div>
