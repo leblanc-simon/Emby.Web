@@ -38,16 +38,6 @@ define(['loading', 'apphost', 'imageLoader'], function (loading, apphost, imageL
 
             routes = routes.sort(function (a, b) {
 
-                var aOrder = a.order || 0;
-                var bOrder = b.order || 0;
-
-                if (aOrder > bOrder) {
-                    return 1;
-                }
-                if (bOrder > aOrder) {
-                    return -1;
-                }
-
                 var aName = Globalize.translate('core#' + a.category || 'General');
                 var bName = Globalize.translate('core#' + b.category || 'General');
 
@@ -55,6 +45,16 @@ define(['loading', 'apphost', 'imageLoader'], function (loading, apphost, imageL
                     return 1;
                 }
                 if (bName > aName) {
+                    return -1;
+                }
+
+                var aOrder = a.order || 0;
+                var bOrder = b.order || 0;
+
+                if (aOrder > bOrder) {
+                    return 1;
+                }
+                if (bOrder > aOrder) {
                     return -1;
                 }
 
