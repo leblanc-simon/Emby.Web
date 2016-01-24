@@ -121,7 +121,7 @@
             var plugin = plugins[i];
             if (plugin.getRoutes) {
                 plugin.getRoutes().forEach(function (route) {
-                    defineRoute(route, plugin.packageName);
+                    defineRoute(route, plugin.id || plugin.packageName);
                 });
             }
         }
@@ -539,8 +539,8 @@
                 }).map(function (plugin) {
 
                     var translations = plugin.getTranslations ? plugin.getTranslations() : [];
-                    return Globalize.loadTranslations({
-                        name: plugin.packageName,
+                    return globalize.loadTranslations({
+                        name: plugin.id || plugin.packageName,
                         translations: translations
                     });
                 });
