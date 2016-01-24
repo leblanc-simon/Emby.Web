@@ -6,7 +6,6 @@ define(['browser', 'pluginManager'], function (browser, pluginManager) {
 
         self.name = 'Html Video Player';
         self.type = 'mediaplayer';
-        self.packageName = 'htmlvideoplayer';
         self.id = 'htmlvideoplayer';
 
         // Let any players created by plugins take priority

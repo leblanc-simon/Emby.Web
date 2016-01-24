@@ -6,7 +6,6 @@ define(['paperdialoghelper', 'pluginManager'], function (paperdialoghelper, plug
 
         self.name = 'Default Keyboard';
         self.type = 'keyboard';
-        self.packageName = 'keyboard';
         self.id = 'keyboard';
 
         function loadKeyLime() {

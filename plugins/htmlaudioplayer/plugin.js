@@ -6,7 +6,6 @@ define([], function () {
 
         self.name = 'Html Andio Player';
         self.type = 'mediaplayer';
-        self.packageName = 'htmlaudioplayer';
         self.id = 'htmlaudioplayer';
 
         // Let any players created by plugins take priority
