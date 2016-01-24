@@ -1,4 +1,4 @@
-define(['loading', 'slyScroller', 'playbackManager'], function (loading, slyScroller, playbackManager) {
+define(['loading', 'slyScroller', 'playbackManager', 'alphapicker'], function (loading, slyScroller, playbackManager, alphaPicker) {
 
     function createHorizontalScroller(instance, view, item, loading) {
 
@@ -75,7 +75,8 @@ define(['loading', 'slyScroller', 'playbackManager'], function (loading, slyScro
         }
         return Emby.Models.children(item, {
             StartIndex: startIndex,
-            Limit: limit
+            Limit: limit,
+            Fields: 'SortName'
         });
     }
 
@@ -107,6 +108,8 @@ define(['loading', 'slyScroller', 'playbackManager'], function (loading, slyScro
         self.params = params;
         var currentItem;
 
+        var contentScrollSlider = view.querySelector('.scrollSlider');
+
         view.addEventListener('viewshow', function (e) {
 
             var isRestored = e.detail.isRestored;
@@ -126,6 +129,10 @@ define(['loading', 'slyScroller', 'playbackManager'], function (loading, slyScro
 
                 if (!isRestored) {
                     createHorizontalScroller(self, view, item, loading);
+
+                    if (item.Type != 'PhotoAlbum') {
+                        initAlphaPicker();
+                    }
                 }
 
                 if (!params.genreId) {
@@ -161,6 +168,61 @@ define(['loading', 'slyScroller', 'playbackManager'], function (loading, slyScro
             }
 
         });
+
+        function initAlphaPicker() {
+            self.alphaPicker = new alphaPicker({
+                element: view.querySelector('.alphaPicker'),
+                itemsContainer: view.querySelector('.scrollSlider'),
+                itemClass: 'card'
+            });
+
+            self.alphaPicker.on('alphavaluechanged', onAlphaPickerValueChanged);
+        }
+
+        function onAlphaPickerValueChanged() {
+
+            var value = self.alphaPicker.value();
+
+            trySelectValue(value);
+        }
+
+        function trySelectValue(value) {
+
+            var card;
+
+            // If it's the symbol just pick the first card
+            if (value == '#') {
+
+                card = contentScrollSlider.querySelector('.card');
+
+                if (card) {
+                    self.slyFrame.toCenter(card, false);
+                    return;
+                }
+            }
+
+            card = contentScrollSlider.querySelector('.card[data-prefix^=\'' + value + '\']');
+
+            if (card) {
+                self.slyFrame.toCenter(card, false);
+                return;
+            }
+
+            // go to the previous letter
+            var values = self.alphaPicker.values();
+            var index = values.indexOf(value);
+
+            if (index < values.length - 2) {
+                trySelectValue(values[index + 1]);
+            } else {
+                var all = contentScrollSlider.querySelectorAll('.card');
+                card = all.length ? all[all.length - 1] : null;
+
+                if (card) {
+                    self.slyFrame.toCenter(card, false);
+                }
+            }
+        }
 
         function setTitle(item) {
 
@@ -202,6 +264,10 @@ define(['loading', 'slyScroller', 'playbackManager'], function (loading, slyScro
             }
             if (self.listController) {
                 self.listController.destroy();
+            }
+            if (self.alphaPicker) {
+                self.alphaPicker.off('alphavaluechanged', onAlphaPickerValueChanged);
+                self.alphaPicker.destroy();
             }
         });
 
