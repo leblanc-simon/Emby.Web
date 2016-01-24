@@ -33,6 +33,10 @@ require(['inputmanager'], function (inputmanager) {
 
         switch (evt.keyCode) {
 
+            case 27:
+                // escape
+                sendCommand('back', evt.target);
+                return;
             case 37:
                 // left
                 if (!evt.altKey) {
