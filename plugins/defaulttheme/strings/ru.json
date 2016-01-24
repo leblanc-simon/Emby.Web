@@ -1,4 +1,8 @@
 {
+    "Play": "Play",
+    "Queue": "Queue",
+    "Shuffle": "Shuffle",
+    "InsstantMix": "Instant Mix",
     "TooltipFavorite": "\u0418\u0437\u0431\u0440\u0430\u043d\u043d\u043e\u0435",
     "TooltipLike": "\u041d\u0440\u0430\u0432\u0438\u0442\u0441\u044f",
     "TooltipDislike": "\u041d\u0435 \u043d\u0440\u0430\u0432\u0438\u0442\u0441\u044f",

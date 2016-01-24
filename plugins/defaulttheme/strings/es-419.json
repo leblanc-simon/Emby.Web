@@ -1,4 +1,8 @@
 {
+    "Play": "Play",
+    "Queue": "Queue",
+    "Shuffle": "Shuffle",
+    "InsstantMix": "Instant Mix",
     "TooltipFavorite": "Favorito",
     "TooltipLike": "Me gusta",
     "TooltipDislike": "No me gusta",

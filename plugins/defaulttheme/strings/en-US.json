@@ -1,4 +1,8 @@
 {
+    "Play": "Play",
+    "Queue": "Queue",
+    "Shuffle": "Shuffle",
+    "InsstantMix": "Instant Mix",
     "TooltipFavorite": "Favorite",
     "TooltipLike": "Like",
     "TooltipDislike": "Dislike",
@@ -82,9 +86,5 @@
     "Movies": "Movies",
     "Collections": "Collections",
     "Years": "Years",
-    "Favorites": "Favorites",
-    "Shuffle": "Shuffle",
-    "InsstantMix": "Instant Mix",
-    "Queue": "Queue",
-    "Play": "Play"
+    "Favorites": "Favorites"
 }
