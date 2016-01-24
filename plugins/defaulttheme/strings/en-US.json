@@ -82,5 +82,9 @@
     "Movies": "Movies",
     "Collections": "Collections",
     "Years": "Years",
-    "Favorites": "Favorites"
+    "Favorites": "Favorites",
+    "Shuffle": "Shuffle",
+    "InsstantMix": "Instant Mix",
+    "Queue": "Queue",
+    "Play": "Play"
 }
