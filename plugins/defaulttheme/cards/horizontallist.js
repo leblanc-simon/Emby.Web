@@ -47,7 +47,7 @@
                     var cardOptions = options.cardOptions || {};
                     cardOptions.itemsContainer = options.itemsContainer;
                     cardOptions.shape = cardOptions.shape || 'auto';
-                    cardOptions.rows = cardOptions.rows || 1;
+                    cardOptions.rows = cardOptions.rows;
 
                     DefaultTheme.CardBuilder.buildCards(result.Items, cardOptions);
 

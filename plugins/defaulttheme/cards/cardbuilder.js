@@ -48,17 +48,28 @@ define(['datetime', 'imageLoader', 'connectionManager'], function (datetime, ima
 
         if (primaryImageAspectRatio && primaryImageAspectRatio < .85) {
             options.shape = 'portraitCard';
-            options.rows = 2;
+
+            if (options.rows !== 0) {
+                options.rows = 2;
+            }
             options.width = DefaultTheme.CardBuilder.homePortraitWidth;
         }
         else if (primaryImageAspectRatio && primaryImageAspectRatio > 1.34) {
             options.shape = 'backdropCard';
-            options.rows = 3;
+
+            if (options.rows !== 0) {
+                options.rows = 3;
+            }
+
             options.width = DefaultTheme.CardBuilder.homeThumbWidth;
         }
         else {
             options.shape = 'squareCard';
-            options.rows = 3;
+
+            if (options.rows !== 0) {
+                options.rows = 3;
+            }
+
             options.width = 242;
         }
     }
