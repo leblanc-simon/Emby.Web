@@ -249,6 +249,7 @@ define(['playbackManager', 'inputmanager', 'datetime'], function (playbackManage
                 case 'info':
                 case 'play':
                 case 'playpause':
+                case 'pause':
                 case 'fastforward':
                 case 'rewind':
                     showOsd();
@@ -580,12 +581,14 @@ define(['playbackManager', 'inputmanager', 'datetime'], function (playbackManage
 
             if (e.keyCode == 32) {
                 playbackManager.playPause();
+                showOsd();
             }
         });
 
         view.querySelector('.pageContainer').addEventListener('click', function () {
 
             playbackManager.playPause();
+            showOsd();
         });
 
         view.querySelector('.buttonMute').addEventListener('click', function () {
