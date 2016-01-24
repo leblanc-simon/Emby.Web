@@ -7,6 +7,7 @@ define([], function () {
         self.name = 'Backdrop ScreenSaver';
         self.type = 'screensaver';
         self.packageName = 'backdropscreensaver';
+        self.id = 'backdropscreensaver';
         self.supportsAnonymous = false;
 
         var currentSlideshow;

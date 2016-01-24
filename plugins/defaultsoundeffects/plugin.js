@@ -7,6 +7,7 @@ define(['pluginManager'], function (pluginManager) {
         self.name = 'Default Sound Effects';
         self.type = 'soundeffects';
         self.packageName = 'defaultsoundeffects';
+        self.id = 'defaultsoundeffects';
 
         self.getEffects = function() {
             return {

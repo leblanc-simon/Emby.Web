@@ -30,7 +30,7 @@ define(['events'], function (Events) {
 
             if (typeof plugin === 'string') {
                 plugin = plugins.filter(function (p) {
-                    return p.packageName == plugin;
+                    return (p.id || p.packageName) == plugin;
                 })[0];
             }
 

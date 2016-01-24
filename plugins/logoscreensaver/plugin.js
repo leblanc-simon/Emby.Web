@@ -7,6 +7,7 @@ define(['pluginManager'], function (pluginManager) {
         self.name = 'Logo ScreenSaver';
         self.type = 'screensaver';
         self.packageName = 'logoscreensaver';
+        self.id = 'logoscreensaver';
         self.supportsAnonymous = true;
 
         var interval;

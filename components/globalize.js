@@ -75,7 +75,7 @@ define(['connectionManager', 'userSettings', 'events', 'themeManager'], function
     function getDictionary(module) {
 
         if (module == 'theme') {
-            module = themeManager.getCurrentTheme().packageName;
+            module = themeManager.getCurrentTheme().id;
         }
 
         var translations = allTranslations[module];

@@ -34,6 +34,7 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
         self.name = 'Default Theme';
         self.type = 'theme';
         self.packageName = 'defaulttheme';
+        self.id = 'defaulttheme';
 
         self.getHeaderTemplate = function () {
             return pluginManager.mapPath(self, 'header.html');

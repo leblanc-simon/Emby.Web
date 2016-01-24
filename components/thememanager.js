@@ -7,15 +7,15 @@ define([], function () {
         return currentTheme;
     }
 
-    function loadTheme(packageName, callback) {
+    function loadTheme(id, callback) {
 
         var theme = Emby.PluginManager.plugins().filter(function (p) {
-            return p.packageName == packageName;
+            return p.id == id;
         })[0];
 
         if (currentTheme) {
 
-            if (currentTheme.packageName == packageName) {
+            if (currentTheme.id == id) {
                 // Nothing to do, it's already the active theme
                 callback(currentTheme);
                 return;
@@ -32,7 +32,7 @@ define([], function () {
 
             Globalize.loadTranslations({
 
-                name: theme.packageName,
+                name: theme.id,
                 translations: translations
 
             }).then(function () {
