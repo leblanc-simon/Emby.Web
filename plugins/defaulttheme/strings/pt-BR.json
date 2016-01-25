@@ -1,8 +1,8 @@
 {
-    "Play": "Play",
-    "Queue": "Queue",
-    "Shuffle": "Shuffle",
-    "InsstantMix": "Instant Mix",
+    "Play": "Reproduzir",
+    "Queue": "Fila",
+    "Shuffle": "Aleat\u00f3rio",
+    "InsstantMix": "Mix Instant\u00e2neo",
     "TooltipFavorite": "Favorito",
     "TooltipLike": "Curtir",
     "TooltipDislike": "N\u00e3o curtir",

@@ -1,7 +1,7 @@
 {
-    "Play": "Play",
-    "Queue": "Queue",
-    "Shuffle": "Shuffle",
+    "Play": "Afspelen",
+    "Queue": "Wachtrij",
+    "Shuffle": "Willekeurig",
     "InsstantMix": "Instant Mix",
     "TooltipFavorite": "Favoriet",
     "TooltipLike": "Leuk",

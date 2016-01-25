@@ -1,8 +1,8 @@
 {
-    "Play": "Play",
-    "Queue": "Queue",
-    "Shuffle": "Shuffle",
-    "InsstantMix": "Instant Mix",
+    "Play": "Reproducir",
+    "Queue": "Cola",
+    "Shuffle": "Aleatorio",
+    "InsstantMix": "Mezcla Instantanea",
     "TooltipFavorite": "Favorito",
     "TooltipLike": "Me gusta",
     "TooltipDislike": "No me gusta",
