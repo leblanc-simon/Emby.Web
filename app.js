@@ -286,6 +286,7 @@
             pluginManager: 'components/pluginmanager',
             themeManager: 'components/thememanager',
             itemHelper: 'components/itemhelper',
+            mediaInfo: 'components/mediainfo/mediainfo',
             playbackManager: 'components/playbackmanager',
             credentialprovider: 'bower_components/emby-apiclient/credentials',
             apiclient: 'bower_components/emby-apiclient/apiclient',
@@ -392,6 +393,8 @@
         define("paper-dropdown-menu", ["html!" + bowerPath + "/paper-dropdown-menu/paper-dropdown-menu.html", 'paper-base']);
         define("emby-dropdown-menu", ["html!" + bowerPath + "/emby-dropdown-menu/emby-dropdown-menu.html", 'paper-base']);
         define("paper-listbox", ["html!" + bowerPath + "/paper-listbox/paper-listbox.html", 'paper-base']);
+        define("iron-icon-set", ["html!" + bowerPath + "/iron-icon/iron-icon.html", "html!" + bowerPath + "/iron-iconset-svg/iron-iconset-svg.html"]);
+        define("coreIcons", ["html!components/icons.html", 'iron-icon-set']);
 
         define('connectionManagerResolver', [], function () {
             return function () {

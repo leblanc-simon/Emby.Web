@@ -1,4 +1,4 @@
-define(['imageLoader', 'itemHelper', './backdrop'], function (imageLoader, itemHelper, themeBackdrop) {
+define(['imageLoader', 'itemHelper', './backdrop', 'mediaInfo'], function (imageLoader, itemHelper, themeBackdrop, mediaInfo) {
 
     function focusHandler(options) {
 
@@ -175,7 +175,7 @@ define(['imageLoader', 'itemHelper', './backdrop'], function (imageLoader, itemH
 
             var html = '';
 
-            var mediaInfo = DefaultTheme.CardBuilder.getMediaInfoHtml(item);
+            var mediaInfo = mediaInfo.getMediaInfoHtml(item);
 
             html += '<div>';
             html += '<div>';

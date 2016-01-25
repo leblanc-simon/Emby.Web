@@ -1,4 +1,4 @@
-define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'itemHelper', './../components/focushandler', './../components/backdrop'], function (loading, datetime, playbackManager, imageLoader, itemHelper, focusHandler, themeBackdrop) {
+define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'itemHelper', './../components/focushandler', './../components/backdrop', 'mediaInfo'], function (loading, datetime, playbackManager, imageLoader, itemHelper, focusHandler, themeBackdrop, mediaInfo) {
 
     function focusMainSection() {
 
@@ -362,7 +362,7 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'itemHelper', '
             view.querySelector('.mainSection .itemPageButtons').classList.remove('hide');
         }
 
-        var mediaInfoHtml = item.Type == 'Season' || item.Type == 'BoxSet' ? '' : DefaultTheme.CardBuilder.getMediaInfoHtml(item);
+        var mediaInfoHtml = item.Type == 'Season' || item.Type == 'BoxSet' ? '' : mediaInfo.getMediaInfoHtml(item);
         var mediaInfoElem = view.querySelector('.mediaInfo');
 
         if (!mediaInfoHtml) {
