@@ -279,8 +279,8 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
 
         function showBackMenuInternal(callback, showHome) {
 
-            require([pluginManager.mapPath(self, 'backmenu/backmenu.js'), 'css!' + pluginManager.mapPath(self, 'backmenu/backmenu.css')], function () {
-                DefaultTheme.BackMenu.show({
+            require([pluginManager.mapPath(self, 'backmenu/backmenu.js'), 'css!' + pluginManager.mapPath(self, 'backmenu/backmenu.css')], function (showBackMenu) {
+                showBackMenu({
                     callback: callback,
                     showHome: showHome
                 });

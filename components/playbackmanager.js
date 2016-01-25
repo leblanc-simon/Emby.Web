@@ -941,7 +941,7 @@ define(['events', 'datetime', 'appsettings', 'pluginManager', 'userSettings'], f
 
                 deviceProfile.MaxStreamingBitrate = Math.min(deviceProfile.MaxStreamingBitrate, maxBitrate);
 
-                tryStartPlayback(apiClient, deviceProfile, item, startPosition, function (mediaSource) {
+                tryStartPlayback(apiClient, deviceProfile, item, startPosition).then(function (mediaSource) {
 
                     createStreamInfo(apiClient, item.MediaType, item, mediaSource, startPosition).then(function (streamInfo) {
 
@@ -1114,33 +1114,36 @@ define(['events', 'datetime', 'appsettings', 'pluginManager', 'userSettings'], f
                 //Dashboard.showModalLoadingMsg();
             }
 
-            getPlaybackInfo(apiClient, item.Id, deviceProfile, startPosition).then(function (playbackInfoResult) {
+            return getPlaybackInfo(apiClient, item.Id, deviceProfile, startPosition).then(function (playbackInfoResult) {
 
                 if (validatePlaybackInfoResult(playbackInfoResult)) {
 
-                    getOptimalMediaSource(apiClient, item.MediaType, playbackInfoResult.MediaSources).then(function (mediaSource) {
+                    return getOptimalMediaSource(apiClient, item.MediaType, playbackInfoResult.MediaSources).then(function (mediaSource) {
                         if (mediaSource) {
 
                             if (mediaSource.RequiresOpening) {
 
-                                getLiveStream(apiClient, item.Id, playbackInfoResult.PlaySessionId, deviceProfile, startPosition, mediaSource, null, null).then(function (openLiveStreamResult) {
+                                return getLiveStream(apiClient, item.Id, playbackInfoResult.PlaySessionId, deviceProfile, startPosition, mediaSource, null, null).then(function (openLiveStreamResult) {
 
-                                    supportsDirectPlay(apiClient, openLiveStreamResult.MediaSource).then(function (result) {
+                                    return supportsDirectPlay(apiClient, openLiveStreamResult.MediaSource).then(function (result) {
 
                                         openLiveStreamResult.MediaSource.enableDirectPlay = result;
-                                        callback(openLiveStreamResult.MediaSource);
+                                        return openLiveStreamResult.MediaSource;
                                     });
 
                                 });
 
                             } else {
-                                callback(mediaSource);
+                                return mediaSource;
                             }
                         } else {
                             //Dashboard.hideModalLoadingMsg();
                             showPlaybackInfoErrorMessage('NoCompatibleStream');
+                            return Promise.reject();
                         }
                     });
+                } else {
+                    return Promise.reject();
                 }
             });
         }
@@ -1181,38 +1184,38 @@ define(['events', 'datetime', 'appsettings', 'pluginManager', 'userSettings'], f
 
         function getOptimalMediaSource(apiClient, mediaType, versions) {
 
-            return new Promise(function (resolve, reject) {
+            var promises = versions.map(function (v) {
+                return supportsDirectPlay(apiClient, v);
+            });
 
-                var promises = versions.map(function (v) {
-                    return supportsDirectPlay(apiClient, v);
-                });
+            if (!promises.length) {
+                return Promise.reject();
+            }
 
-                Promise.all(promises).then(function (results) {
+            return Promise.all(promises).then(function (results) {
 
-                    for (var i = 0, length = versions.length; i < length; i++) {
-                        versions[i].enableDirectPlay = results[i] || false;
-                    }
-                    var optimalVersion = versions.filter(function (v) {
+                for (var i = 0, length = versions.length; i < length; i++) {
+                    versions[i].enableDirectPlay = results[i] || false;
+                }
+                var optimalVersion = versions.filter(function (v) {
 
-                        return v.enableDirectPlay;
+                    return v.enableDirectPlay;
+
+                })[0];
+
+                if (!optimalVersion) {
+                    optimalVersion = versions.filter(function (v) {
+
+                        return v.SupportsDirectStream;
 
                     })[0];
+                }
 
-                    if (!optimalVersion) {
-                        optimalVersion = versions.filter(function (v) {
+                optimalVersion = optimalVersion || versions.filter(function (s) {
+                    return s.SupportsTranscoding;
+                })[0];
 
-                            return v.SupportsDirectStream;
-
-                        })[0];
-                    }
-
-                    optimalVersion = optimalVersion || versions.filter(function (s) {
-                        return s.SupportsTranscoding;
-                    })[0];
-
-                    resolve(optimalVersion);
-
-                }, reject);
+                return optimalVersion;
             });
         }
 
