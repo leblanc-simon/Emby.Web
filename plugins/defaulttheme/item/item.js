@@ -1,4 +1,4 @@
-define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'itemHelper'], function (loading, datetime, playbackManager, imageLoader, itemHelper) {
+define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'itemHelper', 'defaulttheme/components/focushandler'], function (loading, datetime, playbackManager, imageLoader, itemHelper, focusHandler) {
 
     function focusMainSection() {
 
@@ -58,15 +58,11 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'itemHelper'], 
 
     function initFocusHandler(view, slyFrame) {
 
-        require([Emby.PluginManager.mapPath('defaulttheme', 'cards/focushandler.js')], function (focusHandler) {
-
-            self.focusHandler = new focusHandler({
-                parent: view.querySelector('.scrollSlider'),
-                slyFrame: slyFrame,
-                zoomScale: '1.10',
-                enableBackdrops: false
-            });
-
+        self.focusHandler = new focusHandler({
+            parent: view.querySelector('.scrollSlider'),
+            slyFrame: slyFrame,
+            zoomScale: '1.10',
+            enableBackdrops: false
         });
     }
 

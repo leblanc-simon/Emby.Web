@@ -1,4 +1,4 @@
-define(['loading', 'alphapicker'], function (loading, alphaPicker) {
+define(['loading', 'alphapicker', 'defaulttheme/components/horizontallist', 'defaulttheme/components/tabbedpage'], function (loading, alphaPicker, horizontalList, tabbedPage) {
 
     function renderTabs(view, initialTabId, pageInstance, params) {
 
@@ -16,11 +16,11 @@ define(['loading', 'alphapicker'], function (loading, alphaPicker) {
             Id: "scheduled"
         }];
 
-        var tabbedPage = new DefaultTheme.TabbedPage(view);
-        tabbedPage.loadViewContent = loadViewContent;
-        tabbedPage.params = params;
-        tabbedPage.renderTabs(tabs, initialTabId);
-        pageInstance.tabbedPage = tabbedPage;
+        var tabbedPageInstance = new tabbedPage(view);
+        tabbedPageInstance.loadViewContent = loadViewContent;
+        tabbedPageInstance.params = params;
+        tabbedPageInstance.renderTabs(tabs, initialTabId);
+        pageInstance.tabbedPage = tabbedPageInstance;
     }
 
     function loadViewContent(page, id, type) {
@@ -60,7 +60,7 @@ define(['loading', 'alphapicker'], function (loading, alphaPicker) {
 
     function renderChannels(page, pageParams, autoFocus, slyFrame, resolve) {
 
-        self.listController = new DefaultTheme.HorizontalList({
+        self.listController = new horizontalList({
 
             itemsContainer: page.querySelector('.contentScrollSlider'),
             getItemsMethod: function (startIndex, limit) {
@@ -90,7 +90,7 @@ define(['loading', 'alphapicker'], function (loading, alphaPicker) {
 
     function renderRecordings(page, pageParams, autoFocus, slyFrame, resolve) {
 
-        self.listController = new DefaultTheme.HorizontalList({
+        self.listController = new horizontalList({
 
             itemsContainer: page.querySelector('.contentScrollSlider'),
             getItemsMethod: function (startIndex, limit) {

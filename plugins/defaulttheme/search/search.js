@@ -1,4 +1,4 @@
-define(['loading', 'alphapicker', 'slyScroller'], function (loading, alphaPicker, slyScroller) {
+define(['loading', 'alphapicker', 'slyScroller', 'defaulttheme/components/focushandler'], function (loading, alphaPicker, slyScroller, focusHandler) {
 
     function createVerticalScroller(view, pageInstance) {
 
@@ -31,13 +31,9 @@ define(['loading', 'alphapicker', 'slyScroller'], function (loading, alphaPicker
 
         var searchResults = view.querySelector('.searchResults');
 
-        require([Emby.PluginManager.mapPath('defaulttheme', 'cards/focushandler.js')], function (focusHandler) {
-
-            self.focusHandler = new focusHandler({
-                parent: searchResults,
-                slyFrame: slyFrame
-            });
-
+        self.focusHandler = new focusHandler({
+            parent: searchResults,
+            slyFrame: slyFrame
         });
     }
 

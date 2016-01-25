@@ -1,4 +1,4 @@
-define(['loading', 'alphapicker'], function (loading, alphaPicker) {
+define(['loading', 'alphapicker', 'defaulttheme/components/horizontallist', 'defaulttheme/components/focushandler', 'defaulttheme/components/tabbedpage'], function (loading, alphaPicker, horizontalList, focusHandler, tabbedPage) {
 
     return function(view, params) {
 
@@ -58,14 +58,14 @@ define(['loading', 'alphapicker'], function (loading, alphaPicker) {
                 Id: "favorites"
             }];
 
-            var tabbedPage = new DefaultTheme.TabbedPage(view, {
+            var tabbedPageInstance = new tabbedPage(view, {
                 alphaPicker: self.alphaPicker
             });
 
-            tabbedPage.loadViewContent = loadViewContent;
-            tabbedPage.params = params;
-            tabbedPage.renderTabs(tabs, initialTabId);
-            pageInstance.tabbedPage = tabbedPage;
+            tabbedPageInstance.loadViewContent = loadViewContent;
+            tabbedPageInstance.params = params;
+            tabbedPageInstance.renderTabs(tabs, initialTabId);
+            pageInstance.tabbedPage = tabbedPageInstance;
         }
 
         function loadViewContent(page, id, type) {
@@ -128,7 +128,7 @@ define(['loading', 'alphapicker'], function (loading, alphaPicker) {
 
         function renderUpcoming(page, pageParams, autoFocus, slyFrame, resolve) {
 
-            self.listController = new DefaultTheme.HorizontalList({
+            self.listController = new horizontalList({
 
                 itemsContainer: page.querySelector('.contentScrollSlider'),
                 getItemsMethod: function (startIndex, limit) {
@@ -163,7 +163,7 @@ define(['loading', 'alphapicker'], function (loading, alphaPicker) {
 
         function renderSeries(page, pageParams, autoFocus, slyFrame, resolve) {
 
-            self.listController = new DefaultTheme.HorizontalList({
+            self.listController = new horizontalList({
 
                 itemsContainer: page.querySelector('.contentScrollSlider'),
                 getItemsMethod: function (startIndex, limit) {
@@ -202,7 +202,7 @@ define(['loading', 'alphapicker'], function (loading, alphaPicker) {
 
             }).then(function (genresResult) {
 
-                self.listController = new DefaultTheme.HorizontalList({
+                self.listController = new horizontalList({
 
                     itemsContainer: page.querySelector('.contentScrollSlider'),
                     getItemsMethod: function (startIndex, limit) {
@@ -248,13 +248,10 @@ define(['loading', 'alphapicker'], function (loading, alphaPicker) {
                 loadFavoriteEpisodes(parent, pageParams);
             });
 
-            require([Emby.PluginManager.mapPath('defaulttheme', 'cards/focushandler.js')], function (focusHandler) {
-
-                self.focusHandler = new focusHandler({
-                    parent: page.querySelector('.contentScrollSlider'),
-                    slyFrame: slyFrame,
-                    selectedItemInfoInner: page.querySelector('.selectedItemInfoInner')
-                });
+            self.focusHandler = new focusHandler({
+                parent: page.querySelector('.contentScrollSlider'),
+                slyFrame: slyFrame,
+                selectedItemInfoInner: page.querySelector('.selectedItemInfoInner')
             });
         }
 

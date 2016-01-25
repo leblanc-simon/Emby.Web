@@ -1,4 +1,4 @@
-define(['loading', 'slyScroller', 'playbackManager', 'alphapicker'], function (loading, slyScroller, playbackManager, alphaPicker) {
+define(['loading', 'slyScroller', 'playbackManager', 'alphapicker', 'defaulttheme/components/horizontallist'], function (loading, slyScroller, playbackManager, alphaPicker, horizontalList) {
 
     function createHorizontalScroller(instance, view, item, loading) {
 
@@ -82,7 +82,7 @@ define(['loading', 'slyScroller', 'playbackManager', 'alphapicker'], function (l
 
     function loadChildren(instance, view, item, loading) {
 
-        instance.listController = new DefaultTheme.HorizontalList({
+        instance.listController = new horizontalList({
 
             itemsContainer: view.querySelector('.scrollSlider'),
             getItemsMethod: function (startIndex, limit) {

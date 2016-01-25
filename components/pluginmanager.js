@@ -59,6 +59,8 @@ define(['events'], function (Events) {
                 require([url], function (pluginFactory) {
                     var plugin = new pluginFactory();
 
+                    var originalUrl = url;
+
                     var urlLower = url.toLowerCase();
                     if (urlLower.indexOf('http:') == -1 && urlLower.indexOf('https:') == -1 && urlLower.indexOf('file:') == -1) {
                         if (url.indexOf(Emby.Page.baseUrl()) != 0) {
@@ -69,6 +71,15 @@ define(['events'], function (Events) {
 
                     var separatorIndex = Math.max(url.lastIndexOf('/'), url.lastIndexOf('\\'));
                     plugin.baseUrl = url.substring(0, separatorIndex);
+
+                    requirejs.config({
+                        packages: [
+                        {
+                            name: plugin.id || plugin.packageName,
+                            location: plugin.baseUrl,
+                            main: originalUrl
+                        }]
+                    });
 
                     self.register(plugin);
                     resolve(plugin);

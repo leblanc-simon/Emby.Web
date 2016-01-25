@@ -1,4 +1,4 @@
-define(['./spotlight.js'], function (spotlight) {
+define(['defaulttheme/home/spotlight'], function (spotlight) {
 
     function loadResume(element, parentId) {
 

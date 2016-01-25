@@ -49,9 +49,7 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
                 'css!' + pluginManager.mapPath(self, 'css/papericonbutton'),
                 pluginManager.mapPath(self, 'backdrop.js'),
                 pluginManager.mapPath(self, 'cards/cardbuilder.js'),
-                pluginManager.mapPath(self, 'cards/userdata.js'),
-                pluginManager.mapPath(self, 'cards/tabbedpage.js'),
-                pluginManager.mapPath(self, 'cards/horizontallist.js')
+                pluginManager.mapPath(self, 'cards/userdata.js')
             ];
 
             list.push('css!' + pluginManager.mapPath(self, 'css/fonts'));

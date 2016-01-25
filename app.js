@@ -482,13 +482,13 @@
         // Load installed plugins
 
         var list = [
-        'plugins/defaulttheme/plugin.js',
-        'plugins/logoscreensaver/plugin.js',
-        'plugins/backdropscreensaver/plugin.js',
-        'plugins/keyboard/plugin.js',
-        'plugins/htmlvideoplayer/plugin.js',
-        'plugins/htmlaudioplayer/plugin.js',
-        'plugins/defaultsoundeffects/plugin.js'
+        'plugins/defaulttheme/plugin',
+        'plugins/logoscreensaver/plugin',
+        'plugins/backdropscreensaver/plugin',
+        'plugins/keyboard/plugin',
+        'plugins/htmlvideoplayer/plugin',
+        'plugins/htmlaudioplayer/plugin',
+        'plugins/defaultsoundeffects/plugin'
         ];
 
         for (var i = 0, length = externalPlugins.length; i < length; i++) {

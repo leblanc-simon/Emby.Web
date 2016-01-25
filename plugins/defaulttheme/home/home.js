@@ -1,4 +1,4 @@
-define(['loading'], function (loading) {
+define(['loading', 'defaulttheme/components/tabbedpage'], function (loading, tabbedPage) {
 
     function loadViewHtml(page, parentId, html, viewName, autoFocus) {
 
@@ -7,7 +7,7 @@ define(['loading'], function (loading) {
         html = html;
         homeScrollContent.innerHTML = Globalize.translateHtml(html, 'defaulttheme');
 
-        require([Emby.PluginManager.mapPath('defaulttheme', 'home/views.' + viewName + '.js')], function (viewBuilder) {
+        require(['defaulttheme/home/views.' + viewName], function (viewBuilder) {
 
             var homePanel = homeScrollContent;
             new viewBuilder(homePanel, parentId, autoFocus);
@@ -74,13 +74,13 @@ define(['loading'], function (loading) {
 
             Emby.Models.userViews().then(function (result) {
 
-                var tabbedPage = new DefaultTheme.TabbedPage(view, {
+                var tabbedPageInstance = new tabbedPage(view, {
                     handleFocus: true,
                     immediateSpeed: 100
                 });
-                tabbedPage.loadViewContent = loadViewContent;
-                tabbedPage.renderTabs(result.Items);
-                pageInstance.tabbedPage = tabbedPage;
+                tabbedPageInstance.loadViewContent = loadViewContent;
+                tabbedPageInstance.renderTabs(result.Items);
+                pageInstance.tabbedPage = tabbedPageInstance;
             });
         }
 

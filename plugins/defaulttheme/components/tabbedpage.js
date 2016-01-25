@@ -1,49 +1,44 @@
-(function (globalScope) {
+define(['loading', 'slyScroller', 'defaulttheme/components/focushandler'], function (loading, slyScroller, focusHandler) {
 
     function createHeaderScroller(view, instance, initialTabId) {
 
-        require(['slyScroller', 'loading'], function (slyScroller, loading) {
+        var userViewNames = view.querySelector('.userViewNames');
 
-            var userViewNames = view.querySelector('.userViewNames');
+        var scrollFrame = userViewNames.querySelector('.scrollFrame');
 
-            var scrollFrame = userViewNames.querySelector('.scrollFrame');
+        var options = {
+            horizontal: 1,
+            itemNav: 'basic',
+            mouseDragging: 1,
+            touchDragging: 1,
+            slidee: userViewNames.querySelector('.scrollSlider'),
+            itemSelector: '.btnUserViewHeader',
+            activateOn: 'focus',
+            smart: true,
+            releaseSwing: true,
+            scrollBy: 200,
+            speed: 500,
+            elasticBounds: 1,
+            dragHandle: 1,
+            dynamicHandle: 1,
+            clickBar: 1,
+            elasticBounds: 1,
+            dragHandle: 1,
+            dynamicHandle: 1,
+            clickBar: 1,
+            scrollWidth: userViewNames.querySelectorAll('.btnUserViewHeader').length * (screen.width / 5)
+        };
 
-            scrollFrame.style.display = 'block';
+        slyScroller.create(scrollFrame, options).then(function (slyFrame) {
+            slyFrame.init();
+            loading.hide();
 
-            var options = {
-                horizontal: 1,
-                itemNav: 'basic',
-                mouseDragging: 1,
-                touchDragging: 1,
-                slidee: userViewNames.querySelector('.scrollSlider'),
-                itemSelector: '.btnUserViewHeader',
-                activateOn: 'focus',
-                smart: true,
-                releaseSwing: true,
-                scrollBy: 200,
-                speed: 500,
-                elasticBounds: 1,
-                dragHandle: 1,
-                dynamicHandle: 1,
-                clickBar: 1,
-                elasticBounds: 1,
-                dragHandle: 1,
-                dynamicHandle: 1,
-                clickBar: 1,
-                scrollWidth: userViewNames.querySelectorAll('.btnUserViewHeader').length * (screen.width / 5)
-            };
+            var initialTab = initialTabId ? userViewNames.querySelector('.btnUserViewHeader[data-id=\'' + initialTabId + '\']') : null;
 
-            slyScroller.create(scrollFrame, options).then(function (slyFrame) {
-                slyFrame.init();
-                loading.hide();
-
-                var initialTab = initialTabId ? userViewNames.querySelector('.btnUserViewHeader[data-id=\'' + initialTabId + '\']') : null;
-
-                if (!initialTab) {
-                    initialTab = userViewNames.querySelector('.btnUserViewHeader');
-                }
-                instance.setFocusDelay(view, initialTab);
-            });
+            if (!initialTab) {
+                initialTab = userViewNames.querySelector('.btnUserViewHeader');
+            }
+            instance.setFocusDelay(view, initialTab);
         });
     }
 
@@ -221,37 +216,32 @@
 
         function createHorizontalScroller(view) {
 
-            require(["slyScroller", 'loading'], function (slyScroller, loading) {
+            var scrollFrame = view.querySelector('.itemScrollFrame');
 
-                var scrollFrame = view.querySelector('.itemScrollFrame');
+            var options = {
+                horizontal: 1,
+                itemNav: 0,
+                mouseDragging: 1,
+                touchDragging: 1,
+                slidee: view.querySelector('.contentScrollSlider'),
+                itemSelector: '.card',
+                smart: true,
+                releaseSwing: true,
+                scrollBy: 200,
+                speed: 340,
+                immediateSpeed: pageOptions.immediateSpeed,
+                elasticBounds: 1,
+                dragHandle: 1,
+                dynamicHandle: 1,
+                clickBar: 1,
+                //centerOffset: window.innerWidth * .05,
+                scrollWidth: 200000
+            };
 
-                scrollFrame.style.display = 'block';
-
-                var options = {
-                    horizontal: 1,
-                    itemNav: 0,
-                    mouseDragging: 1,
-                    touchDragging: 1,
-                    slidee: view.querySelector('.contentScrollSlider'),
-                    itemSelector: '.card',
-                    smart: true,
-                    releaseSwing: true,
-                    scrollBy: 200,
-                    speed: 340,
-                    immediateSpeed: pageOptions.immediateSpeed,
-                    elasticBounds: 1,
-                    dragHandle: 1,
-                    dynamicHandle: 1,
-                    clickBar: 1,
-                    //centerOffset: window.innerWidth * .05,
-                    scrollWidth: 200000
-                };
-
-                slyScroller.create(scrollFrame, options).then(function (slyFrame) {
-                    self.bodySlyFrame = slyFrame;
-                    self.bodySlyFrame.init();
-                    initFocusHandler(view, self.bodySlyFrame);
-                });
+            slyScroller.create(scrollFrame, options).then(function (slyFrame) {
+                self.bodySlyFrame = slyFrame;
+                self.bodySlyFrame.init();
+                initFocusHandler(view, self.bodySlyFrame);
             });
         }
 
@@ -261,16 +251,12 @@
 
                 var scrollSlider = view.querySelector('.contentScrollSlider');
 
-                require([Emby.PluginManager.mapPath('defaulttheme', 'cards/focushandler.js')], function (focusHandler) {
-
-                    self.focusHandler = new focusHandler({
-                        parent: scrollSlider,
-                        selectedItemInfoInner: selectedItemInfoInner,
-                        selectedIndexElement: selectedIndexElement,
-                        animateFocus: pageOptions.animateFocus,
-                        slyFrame: self.bodySlyFrame
-                    });
-
+                self.focusHandler = new focusHandler({
+                    parent: scrollSlider,
+                    selectedItemInfoInner: selectedItemInfoInner,
+                    selectedIndexElement: selectedIndexElement,
+                    animateFocus: pageOptions.animateFocus,
+                    slyFrame: self.bodySlyFrame
                 });
             }
         }
@@ -292,10 +278,5 @@
         };
     }
 
-    if (!globalScope.DefaultTheme) {
-        globalScope.DefaultTheme = {};
-    }
-
-    globalScope.DefaultTheme.TabbedPage = tabbedPage;
-
-})(this);
+    return tabbedPage;
+});
