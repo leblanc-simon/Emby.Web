@@ -1,4 +1,4 @@
-define(['loading', 'slyScroller', 'playbackManager', 'alphapicker', 'defaulttheme/components/horizontallist'], function (loading, slyScroller, playbackManager, alphaPicker, horizontalList) {
+define(['loading', 'slyScroller', 'playbackManager', 'alphapicker', './../components/horizontallist'], function (loading, slyScroller, playbackManager, alphaPicker, horizontalList) {
 
     function createHorizontalScroller(instance, view, item, loading) {
 

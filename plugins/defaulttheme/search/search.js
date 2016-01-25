@@ -1,4 +1,4 @@
-define(['loading', 'alphapicker', 'slyScroller', 'defaulttheme/components/focushandler'], function (loading, alphaPicker, slyScroller, focusHandler) {
+define(['loading', 'alphapicker', 'slyScroller', './../components/focushandler'], function (loading, alphaPicker, slyScroller, focusHandler) {
 
     function createVerticalScroller(view, pageInstance) {
 

@@ -1,4 +1,4 @@
-define(['loading', 'slyScroller', 'defaulttheme/components/focushandler'], function (loading, slyScroller, focusHandler) {
+define(['loading', 'slyScroller', './focushandler'], function (loading, slyScroller, focusHandler) {
 
     function createHeaderScroller(view, instance, initialTabId) {
 

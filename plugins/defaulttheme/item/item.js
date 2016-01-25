@@ -1,4 +1,4 @@
-define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'itemHelper', 'defaulttheme/components/focushandler'], function (loading, datetime, playbackManager, imageLoader, itemHelper, focusHandler) {
+define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'itemHelper', './../components/focushandler'], function (loading, datetime, playbackManager, imageLoader, itemHelper, focusHandler) {
 
     function focusMainSection() {
 

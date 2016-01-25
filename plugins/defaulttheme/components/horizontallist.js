@@ -1,4 +1,4 @@
-define(['loading', 'defaulttheme/components/focushandler'], function (loading, focusHandler) {
+define(['loading', './focushandler'], function (loading, focusHandler) {
 
     function horizontalList(options) {
 

@@ -1,4 +1,4 @@
-define(['loading', 'defaulttheme/components/tabbedpage'], function (loading, tabbedPage) {
+define(['loading', './../components/tabbedpage'], function (loading, tabbedPage) {
 
     function loadViewHtml(page, parentId, html, viewName, autoFocus) {
 

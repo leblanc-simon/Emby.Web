@@ -1,4 +1,4 @@
-define(['loading', 'alphapicker', 'defaulttheme/components/horizontallist', 'defaulttheme/components/focushandler', 'defaulttheme/components/tabbedpage'], function (loading, alphaPicker, horizontalList, focusHandler, tabbedPage) {
+define(['loading', 'alphapicker', './../components/horizontallist', './../components/focushandler', './../components/tabbedpage'], function (loading, alphaPicker, horizontalList, focusHandler, tabbedPage) {
 
     return function (view, params) {
 

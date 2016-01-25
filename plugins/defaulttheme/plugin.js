@@ -88,7 +88,7 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
                 path: pluginManager.mapPath(self, 'home.html'),
                 transition: 'slide',
                 type: 'home',
-                controller: pluginManager.mapPath(self, 'home/home.js'),
+                controller: self.id + '/home/home',
                 dependencies: [
                     'css!' + pluginManager.mapPath(self, 'home/home.css')
                 ]
@@ -100,37 +100,37 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
                 dependencies: [
                     'css!' + pluginManager.mapPath(self, 'item/item.css')
                 ],
-                controller: pluginManager.mapPath(self, 'item/item.js')
+                controller: self.id + '/item/item'
             });
 
             routes.push({
                 path: pluginManager.mapPath(self, 'list/list.html'),
                 transition: 'slide',
-                controller: pluginManager.mapPath(self, 'list/list.js')
+                controller: 'defaulttheme/list/list',
             });
 
             routes.push({
                 path: pluginManager.mapPath(self, 'music/music.html'),
                 transition: 'slide',
-                controller: pluginManager.mapPath(self, 'music/music.js')
+                controller: self.id + '/music/music'
             });
 
             routes.push({
                 path: pluginManager.mapPath(self, 'movies/movies.html'),
                 transition: 'slide',
-                controller: pluginManager.mapPath(self, 'movies/movies.js')
+                controller: self.id + '/movies/movies'
             });
 
             routes.push({
                 path: pluginManager.mapPath(self, 'livetv/livetv.html'),
                 transition: 'slide',
-                controller: pluginManager.mapPath(self, 'livetv/livetv.js')
+                controller: self.id + '/livetv/livetv'
             });
 
             routes.push({
                 path: pluginManager.mapPath(self, 'livetv/guide.html'),
                 transition: 'slide',
-                controller: pluginManager.mapPath(self, 'livetv/guide.js'),
+                controller: self.id + '/livetv/guide',
                 dependencies: [
                     'css!' + pluginManager.mapPath(self, 'livetv/guide.css')
                 ]
@@ -139,13 +139,13 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
             routes.push({
                 path: pluginManager.mapPath(self, 'tv/tv.html'),
                 transition: 'slide',
-                controller: pluginManager.mapPath(self, 'tv/tv.js')
+                controller: self.id + '/tv/tv'
             });
 
             routes.push({
                 path: pluginManager.mapPath(self, 'search/search.html'),
                 transition: 'slide',
-                controller: pluginManager.mapPath(self, 'search/search.js'),
+                controller: self.id + '/search/search',
                 dependencies: [
                     'css!' + pluginManager.mapPath(self, 'search/search.css')
                 ]
@@ -154,7 +154,7 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
             routes.push({
                 path: pluginManager.mapPath(self, 'nowplaying/nowplaying.html'),
                 transition: 'slide',
-                controller: pluginManager.mapPath(self, 'nowplaying/nowplaying.js'),
+                controller: self.id + '/nowplaying/nowplaying',
                 dependencies: [
                     'css!' + pluginManager.mapPath(self, 'nowplaying/nowplaying.css')
                 ],
@@ -164,7 +164,7 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
             routes.push({
                 path: pluginManager.mapPath(self, 'nowplaying/playlist.html'),
                 transition: 'slide',
-                controller: pluginManager.mapPath(self, 'nowplaying/playlist.js'),
+                controller: self.id + '/nowplaying/playlist',
                 dependencies: [
                     'css!' + pluginManager.mapPath(self, 'item/item.css')
                 ],
@@ -174,25 +174,13 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
             routes.push({
                 path: pluginManager.mapPath(self, 'nowplaying/videoosd.html'),
                 transition: 'fade',
-                controller: pluginManager.mapPath(self, 'nowplaying/videoosd.js'),
+                controller: self.id + '/nowplaying/videoosd',
                 dependencies: [
                     'css!' + pluginManager.mapPath(self, 'nowplaying/videoosd.css')
                 ],
                 type: 'video-osd',
                 supportsThemeMedia: true
             });
-
-            //routes.push({
-            //    path: pluginManager.mapPath(self, 'settings/settings.html'),
-            //    transition: 'slide',
-            //    dependencies: [
-            //        pluginManager.mapPath(self, 'settings/settings.js')
-            //    ],
-            //    type: 'settings',
-            //    title: 'Default Theme',
-            //    category: 'Theme',
-            //    thumbImage: ''
-            //});
 
             return routes;
         };
