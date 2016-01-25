@@ -1,4 +1,4 @@
-define(['defaulttheme/home/spotlight', 'defaulttheme/components/focushandler'], function (spotlight) {
+define(['./spotlight', 'imageLoader'], function (spotlight, imageLoader) {
 
     function loadResume(element, parentId) {
 
@@ -87,9 +87,7 @@ define(['defaulttheme/home/spotlight', 'defaulttheme/components/focushandler'], 
                 if (recs) {
                     recs.innerHTML = values.join('');
 
-                    require(['imageLoader'], function (imageLoader) {
-                        imageLoader.lazyChildren(recs);
-                    });
+                    imageLoader.lazyChildren(recs);
                 }
             });
         });

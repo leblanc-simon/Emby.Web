@@ -1,4 +1,4 @@
-define([], function () {
+define(['visibleinviewport'], function (visibleinviewport) {
 
     function loadItemIntoSpotlight(card, item, width) {
 
@@ -47,7 +47,7 @@ define([], function () {
         }
     }
 
-    function startSpotlight(self, card, items, width, visibleinviewport) {
+    function startSpotlight(self, card, items, width) {
 
         if (!items.length) {
             return;
@@ -87,9 +87,7 @@ define([], function () {
 
         var self = this;
 
-        require(['visibleinviewport'], function (visibleinviewport) {
-            startSpotlight(self, card, items, width, visibleinviewport);
-        });
+        startSpotlight(self, card, items, width);
     }
 
     return spotlight;
