@@ -1,4 +1,4 @@
-(function (globalScope) {
+define([], function () {
 
     function loadLatestRecordings(element) {
 
@@ -127,10 +127,6 @@
         };
     }
 
-    if (!globalScope.DefaultTheme) {
-        globalScope.DefaultTheme = {};
-    }
+    return view;
 
-    globalScope.DefaultTheme.livetvView = view;
-
-})(this);
+});

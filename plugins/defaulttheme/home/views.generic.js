@@ -1,4 +1,4 @@
-(function (globalScope) {
+define([], function () {
 
     function loadAll(element, parentId, autoFocus) {
 
@@ -39,10 +39,5 @@
         };
     }
 
-    if (!globalScope.DefaultTheme) {
-        globalScope.DefaultTheme = {};
-    }
-
-    globalScope.DefaultTheme.genericView = view;
-
-})(this);
+    return view;
+});

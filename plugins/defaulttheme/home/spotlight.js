@@ -1,4 +1,4 @@
-(function (globalScope) {
+define([], function () {
 
     function loadItemIntoSpotlight(card, item, width) {
 
@@ -92,10 +92,5 @@
         });
     }
 
-    if (!globalScope.DefaultTheme) {
-        globalScope.DefaultTheme = {};
-    }
-
-    globalScope.DefaultTheme.spotlight = spotlight;
-
-})(this);
+    return spotlight;
+});

@@ -1,4 +1,4 @@
-(function (globalScope) {
+define([], function () {
 
     function loadChannels(element, parentId, autoFocus) {
 
@@ -71,10 +71,5 @@
         };
     }
 
-    if (!globalScope.DefaultTheme) {
-        globalScope.DefaultTheme = {};
-    }
-
-    globalScope.DefaultTheme.channelsView = view;
-
-})(this);
+    return view;
+});

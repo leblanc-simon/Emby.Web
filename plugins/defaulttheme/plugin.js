@@ -382,6 +382,7 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
             }
 
             var enableSubduedBackdrop = viewId != 'defaulttheme-item' && viewId != 'defaulttheme-nowplaying' && viewId != 'defaulttheme-nowplayingplaylist';
+
             DefaultTheme.Backdrop.subdued(enableSubduedBackdrop);
             //blurBackdrop(enableBlur);
             //Emby.Backdrop.setBackdrop(pluginManager.mapPath(self, 'css/skin-dark/blur6.png'));

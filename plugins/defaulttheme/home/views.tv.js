@@ -1,4 +1,4 @@
-(function (globalScope) {
+define(['./spotlight.js'], function (spotlight) {
 
     function loadResume(element, parentId) {
 
@@ -95,10 +95,7 @@
 
             var card = element.querySelector('.wideSpotlightCard');
 
-            require([Emby.PluginManager.mapPath('defaulttheme', 'home/spotlight.js')], function () {
-
-                new DefaultTheme.spotlight(card, result.Items, 767);
-            });
+            new spotlight(card, result.Items, 767);
         });
     }
 
@@ -263,10 +260,6 @@
         };
     }
 
-    if (!globalScope.DefaultTheme) {
-        globalScope.DefaultTheme = {};
-    }
+    return view;
 
-    globalScope.DefaultTheme.tvView = view;
-
-})(this);
+});

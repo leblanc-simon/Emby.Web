@@ -1,4 +1,4 @@
-(function (globalScope) {
+define([], function () {
 
     function loadLatest(element, parentId) {
 
@@ -234,10 +234,6 @@
         };
     }
 
-    if (!globalScope.DefaultTheme) {
-        globalScope.DefaultTheme = {};
-    }
+    return view;
 
-    globalScope.DefaultTheme.musicView = view;
-
-})(this);
+});

@@ -7,10 +7,10 @@ define(['loading'], function (loading) {
         html = html;
         homeScrollContent.innerHTML = Globalize.translateHtml(html, 'defaulttheme');
 
-        require([Emby.PluginManager.mapPath('defaulttheme', 'home/views.' + viewName + '.js')], function () {
+        require([Emby.PluginManager.mapPath('defaulttheme', 'home/views.' + viewName + '.js')], function (viewBuilder) {
 
             var homePanel = homeScrollContent;
-            new DefaultTheme[viewName + 'View'](homePanel, parentId, autoFocus);
+            new viewBuilder(homePanel, parentId, autoFocus);
         });
     }
 
