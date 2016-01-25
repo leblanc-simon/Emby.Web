@@ -358,16 +358,14 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
 
         function onViewShow(e) {
 
-            var viewId = e.detail.id;
-
             if (Emby.Page.canGoBack()) {
                 document.querySelector('.headerBackButton').classList.remove('hide');
             } else {
                 document.querySelector('.headerBackButton').classList.add('hide');
             }
+            var path = e.detail.state.path;
 
-            var enableSubduedBackdrop = viewId != 'defaulttheme-item' && viewId != 'defaulttheme-nowplaying' && viewId != 'defaulttheme-nowplayingplaylist';
-
+            var enableSubduedBackdrop = path.indexOf('item.html') == -1 && path.indexOf('nowplaying') == -1;
             require(['defaulttheme/components/backdrop'], function(themeBackdrop) {
                 themeBackdrop.subdued(enableSubduedBackdrop);
             });
