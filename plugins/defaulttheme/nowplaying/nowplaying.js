@@ -1,4 +1,4 @@
-define(['playbackManager', 'datetime'], function (playbackManager, datetime) {
+define(['playbackManager', 'datetime', './../components/backdrop'], function (playbackManager, datetime, themeBackdrop) {
 
     return function (view, params) {
 
@@ -18,7 +18,7 @@ define(['playbackManager', 'datetime'], function (playbackManager, datetime) {
             if (item) {
                 setTitle(item);
 
-                DefaultTheme.Backdrop.setBackdrops([item]);
+                themeBackdrop.setBackdrops([item]);
 
                 DefaultTheme.CardBuilder.buildCards([item], {
                     shape: 'squareCard',
@@ -55,7 +55,7 @@ define(['playbackManager', 'datetime'], function (playbackManager, datetime) {
                 nowPlayingVolumeSlider.disabled = true;
                 nowPlayingPositionSlider.disabled = true;
 
-                DefaultTheme.Backdrop.setBackdrops([]);
+                themeBackdrop.setBackdrops([]);
             }
 
             updatePlaylist();

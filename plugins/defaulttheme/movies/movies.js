@@ -1,4 +1,4 @@
-define(['loading', 'alphapicker', './../components/horizontallist', './../components/tabbedpage'], function (loading, alphaPicker, horizontalList, tabbedPage) {
+define(['loading', 'alphapicker', './../components/horizontallist', './../components/tabbedpage', './../components/backdrop'], function (loading, alphaPicker, horizontalList, tabbedPage, themeBackdrop) {
 
     return function (view, params) {
 
@@ -6,7 +6,7 @@ define(['loading', 'alphapicker', './../components/horizontallist', './../compon
 
         view.addEventListener('viewshow', function (e) {
 
-            DefaultTheme.Backdrop.setStaticBackdrop();
+            themeBackdrop.setStaticBackdrop();
 
             if (!self.tabbedPage) {
                 loading.show();

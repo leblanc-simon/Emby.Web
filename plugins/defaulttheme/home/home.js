@@ -1,4 +1,4 @@
-define(['loading', './../components/tabbedpage'], function (loading, tabbedPage) {
+define(['loading', './../components/tabbedpage', './../components/backdrop'], function (loading, tabbedPage, themeBackdrop) {
 
     function loadViewHtml(page, parentId, html, viewName, autoFocus) {
 
@@ -24,7 +24,7 @@ define(['loading', './../components/tabbedpage'], function (loading, tabbedPage)
 
             Emby.Page.setTitle('');
 
-            DefaultTheme.Backdrop.setStaticBackdrop();
+            themeBackdrop.setStaticBackdrop();
 
             if (!isRestored) {
 

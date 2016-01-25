@@ -47,7 +47,6 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
                 'css!' + pluginManager.mapPath(self, 'css/colors.dark'),
                 'css!' + pluginManager.mapPath(self, 'css/paperstyles'),
                 'css!' + pluginManager.mapPath(self, 'css/papericonbutton'),
-                pluginManager.mapPath(self, 'backdrop.js'),
                 pluginManager.mapPath(self, 'cards/cardbuilder.js'),
                 pluginManager.mapPath(self, 'cards/userdata.js')
             ];
@@ -369,7 +368,9 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
 
             var enableSubduedBackdrop = viewId != 'defaulttheme-item' && viewId != 'defaulttheme-nowplaying' && viewId != 'defaulttheme-nowplayingplaylist';
 
-            DefaultTheme.Backdrop.subdued(enableSubduedBackdrop);
+            require(['defaulttheme/components/backdrop'], function(themeBackdrop) {
+                themeBackdrop.subdued(enableSubduedBackdrop);
+            });
             //blurBackdrop(enableBlur);
             //Emby.Backdrop.setBackdrop(pluginManager.mapPath(self, 'css/skin-dark/blur6.png'));
         }

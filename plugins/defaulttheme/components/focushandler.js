@@ -1,4 +1,4 @@
-define(['imageLoader', 'itemHelper'], function (imageLoader, itemHelper) {
+define(['imageLoader', 'itemHelper', './backdrop'], function (imageLoader, itemHelper, themeBackdrop) {
 
     function focusHandler(options) {
 
@@ -150,7 +150,7 @@ define(['imageLoader', 'itemHelper'], function (imageLoader, itemHelper) {
                 Emby.Models.item(id).then(function (item) {
 
                     if (options.enableBackdrops) {
-                        DefaultTheme.Backdrop.setBackdrops([item], true);
+                        themeBackdrop.setBackdrops([item], true);
                     }
                     setSelectedInfo(card, item);
                 });

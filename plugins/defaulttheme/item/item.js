@@ -1,4 +1,4 @@
-define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'itemHelper', './../components/focushandler'], function (loading, datetime, playbackManager, imageLoader, itemHelper, focusHandler) {
+define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'itemHelper', './../components/focushandler', './../components/backdrop'], function (loading, datetime, playbackManager, imageLoader, itemHelper, focusHandler, themeBackdrop) {
 
     function focusMainSection() {
 
@@ -1009,7 +1009,7 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'itemHelper', '
 
                 // If it's a person, leave the backdrop image from wherever we came from
                 if (item.Type != 'Person') {
-                    DefaultTheme.Backdrop.setBackdrops([item]);
+                    themeBackdrop.setBackdrops([item]);
                     setTitle(item);
                 }
 

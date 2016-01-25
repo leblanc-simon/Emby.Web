@@ -1,4 +1,4 @@
-(function (globalScope) {
+define([], function () {
 
     function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -11,7 +11,7 @@
         var path = Emby.PluginManager.mapPath('defaulttheme', 'css/images/bg1.jpg');
         Emby.Backdrop.setBackdrop(path);
 
-        setTimeout(function() {
+        setTimeout(function () {
             document.querySelector('.themeContainer').classList.add('staticBackdrop');
         }, 1000);
     }
@@ -41,7 +41,7 @@
     }
 
     function subdued(isSubdued) {
-        
+
         var elem = document.querySelector('.themeContainer');
         if (isSubdued) {
 
@@ -52,14 +52,9 @@
         }
     }
 
-    if (!globalScope.DefaultTheme) {
-        globalScope.DefaultTheme = {};
-    }
-
-    globalScope.DefaultTheme.Backdrop = {
+    return {
         setStaticBackdrop: setStaticBackdrop,
         setBackdrops: setBackdrops,
         subdued: subdued
     };
-
-})(this);
+});
