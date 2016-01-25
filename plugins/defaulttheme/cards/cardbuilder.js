@@ -1,46 +1,4 @@
-define(['datetime', 'imageLoader', 'connectionManager'], function (datetime, imageLoader, connectionManager) {
-
-    function getDisplayName(item, displayAsSpecial, includeParentInfo) {
-
-        if (!item) {
-            throw new Error("null item passed into getPosterViewDisplayName");
-        }
-
-        var name = item.EpisodeTitle || item.Name || '';
-
-        if (item.Type == "TvChannel") {
-
-            if (item.Number) {
-                return item.Number + ' ' + name;
-            }
-            return name;
-        }
-        if (displayAsSpecial && item.Type == "Episode" && item.ParentIndexNumber == 0) {
-
-            name = Globalize.translate('ValueSpecialEpisodeName', name);
-
-        } else if (item.Type == "Episode" && item.IndexNumber != null && item.ParentIndexNumber != null) {
-
-            var displayIndexNumber = item.IndexNumber;
-
-            var number = "E" + displayIndexNumber;
-
-            if (includeParentInfo !== false) {
-                number = "S" + item.ParentIndexNumber + ", " + number;
-            }
-
-            if (item.IndexNumberEnd) {
-
-                displayIndexNumber = item.IndexNumberEnd;
-                number += "-" + displayIndexNumber;
-            }
-
-            name = number + " - " + name;
-
-        }
-
-        return name;
-    }
+define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper'], function (datetime, imageLoader, connectionManager, itemHelper) {
 
     function setShapeHorizontal(items, options, isHome) {
 
@@ -652,7 +610,7 @@ define(['datetime', 'imageLoader', 'connectionManager'], function (datetime, ima
         var showParentTitle = options.showParentTitle || (imgInfo.forceName && item.Type == 'Episode');
 
         if (!imgUrl) {
-            cardImageContainerOpen += '<div class="cardText cardCenteredText">' + getDisplayName(item) + '</div>';
+            cardImageContainerOpen += '<div class="cardText cardCenteredText">' + itemHelper.getDisplayName(item) + '</div>';
         }
 
         var nameHtml = '';
@@ -663,7 +621,7 @@ define(['datetime', 'imageLoader', 'connectionManager'], function (datetime, ima
 
         if (showTitle) {
             var nameClass = 'cardText';
-            nameHtml += '<div class="' + nameClass + '">' + getDisplayName(item) + '</div>';
+            nameHtml += '<div class="' + nameClass + '">' + itemHelper.getDisplayName(item) + '</div>';
         }
 
         var innerCardFooterClass = 'innerCardFooter';
@@ -1050,7 +1008,7 @@ define(['datetime', 'imageLoader', 'connectionManager'], function (datetime, ima
                 }
             }
 
-            var displayName = getDisplayName(item);
+            var displayName = itemHelper.getDisplayName(item);
 
             if (options.showIndexNumber && item.IndexNumber != null) {
                 displayName = item.IndexNumber + ". " + displayName;
@@ -1133,7 +1091,6 @@ define(['datetime', 'imageLoader', 'connectionManager'], function (datetime, ima
         buildCards: buildCards,
         homeThumbWidth: 500,
         homePortraitWidth: 243,
-        getDisplayName: getDisplayName,
         getMediaInfoHtml: getMediaInfoHtml,
         getListViewHtml: getListViewHtml,
         getProgressBarHtml: getProgressBarHtml

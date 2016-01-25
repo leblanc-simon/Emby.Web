@@ -1,4 +1,4 @@
-define(['playbackManager', 'inputmanager', 'datetime'], function (playbackManager, inputManager, datetime) {
+define(['playbackManager', 'inputmanager', 'datetime', 'itemHelper'], function (playbackManager, inputManager, datetime, itemHelper) {
 
     return function (view, params) {
 
@@ -42,7 +42,7 @@ define(['playbackManager', 'inputmanager', 'datetime'], function (playbackManage
             if (item) {
                 setTitle(item);
 
-                view.querySelector('.osdTitle').innerHTML = DefaultTheme.CardBuilder.getDisplayName(item);
+                view.querySelector('.osdTitle').innerHTML = itemHelper.getDisplayName(item);
                 view.querySelector('.osdMediaInfo').innerHTML = DefaultTheme.CardBuilder.getMediaInfoHtml(item, {
                     runtime: false,
                     subtitles: false,

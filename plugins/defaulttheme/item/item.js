@@ -1,4 +1,4 @@
-define(['loading', 'datetime', 'playbackManager', 'imageLoader'], function (loading, datetime, playbackManager, imageLoader) {
+define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'itemHelper'], function (loading, datetime, playbackManager, imageLoader, itemHelper) {
 
     function focusMainSection() {
 
@@ -78,7 +78,7 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader'], function (load
             itemTitle.classList.add('hide');
         } else {
             itemTitle.classList.remove('hide');
-            itemTitle.innerHTML = DefaultTheme.CardBuilder.getDisplayName(item);
+            itemTitle.innerHTML = itemHelper.getDisplayName(item);
         }
 
         if (enableTrackList(item) || item.Type == 'MusicArtist') {

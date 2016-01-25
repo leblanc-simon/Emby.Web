@@ -96,10 +96,21 @@
             dependencies: ['emby-dropdown-menu'],
             controller: 'settings/display',
             type: 'settings',
-            title: 'General',
-            category: 'Display',
+            title: 'Display',
+            category: 'General',
             thumbImage: '',
             order: -1
+        });
+
+        defineRoute({
+            path: '/settings/plugins.html',
+            transition: 'slide',
+            dependencies: ['emby-dropdown-menu'],
+            controller: 'settings/plugins',
+            type: 'settings',
+            title: 'Plugins',
+            category: 'General',
+            thumbImage: ''
         });
 
         defineRoute({
@@ -274,6 +285,7 @@
             events: 'bower_components/emby-apiclient/events',
             pluginManager: 'components/pluginmanager',
             themeManager: 'components/thememanager',
+            itemHelper: 'components/itemhelper',
             playbackManager: 'components/playbackmanager',
             credentialprovider: 'bower_components/emby-apiclient/credentials',
             apiclient: 'bower_components/emby-apiclient/apiclient',

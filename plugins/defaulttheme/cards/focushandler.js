@@ -1,4 +1,4 @@
-define(['imageLoader'], function (imageLoader) {
+define(['imageLoader', 'itemHelper'], function (imageLoader, itemHelper) {
 
     function focusHandler(options) {
 
@@ -184,7 +184,7 @@ define(['imageLoader'], function (imageLoader) {
                 html += item.AlbumArtist + " - ";
             }
 
-            html += DefaultTheme.CardBuilder.getDisplayName(item);
+            html += itemHelper.getDisplayName(item);
             html += '</div>';
             if (mediaInfo) {
                 html += '<div class="selectedItemMediaInfo">';
