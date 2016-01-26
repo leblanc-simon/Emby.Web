@@ -99,8 +99,9 @@ define(['playbackManager', 'inputmanager', 'datetime', 'itemHelper', 'mediaInfo'
             osdPoster.innerHTML = '';
         }
 
+        var _osdOpen = true;
         function isOsdOpen() {
-            return !getHeaderElement().classList.contains('hide');
+            return _osdOpen;
         }
 
         function showOsd() {
@@ -170,6 +171,7 @@ define(['playbackManager', 'inputmanager', 'datetime', 'itemHelper', 'mediaInfo'
                 return;
             }
 
+            _osdOpen = true;
             elem.classList.remove('hide');
 
             requestAnimationFrame(function () {
@@ -198,6 +200,7 @@ define(['playbackManager', 'inputmanager', 'datetime', 'itemHelper', 'mediaInfo'
                 var timing = { duration: 300, iterations: 1, easing: 'ease-out' };
                 elem.animate(keyframes, timing).onfinish = function () {
                     elem.classList.add('hide');
+                    _osdOpen = false;
                 };
             });
         }
