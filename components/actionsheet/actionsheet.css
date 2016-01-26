@@ -3,8 +3,9 @@ paper-dialog.actionSheet {
 }
 
 .actionSheetMenuItem {
-    padding: .7em 1em;
+    padding: .5em 1.2em;
     margin: 0;
+    text-transform: none;
 }
 
 .actionSheetScroller {
