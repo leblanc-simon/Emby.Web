@@ -73,5 +73,7 @@
     "ConnectLoginHelp1": "Met Emby Connect kunt u ongeacht waar u bent gemakkelijk uw Emby Server benaderen en servers met uw familie en vrienden delen.",
     "CreatePinErrorMessage": "Er is een fout opgetreden bij het aanmaken van een pincode. Klik op Cre\u00eber Nieuwe Pincode om het opnieuw te proberen.",
     "PinExpiredMessage": "De pincode is verlopen. Klik op Cre\u00eber Nieuwe Pincode om het opnieuw te proberen.",
-    "ConnectPinCodeHeader": "Bezoek {0} en voeg de volgende pincode in om aan te melden met Emby Connect:"
+    "ConnectPinCodeHeader": "Bezoek {0} en voeg de volgende pincode in om aan te melden met Emby Connect:",
+    "SoundEffects": "Sound effects",
+    "Sounds": "Sounds"
 }

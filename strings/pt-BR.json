@@ -73,5 +73,7 @@
     "ConnectLoginHelp1": "Com o Emby Connect voc\u00ea pode facilmente acessar seu Servidor Emby onde estiver e compartilhar servidores com sua fam\u00edlia e amigos.",
     "CreatePinErrorMessage": "Ocorreu um erro ao criar um c\u00f3digo pin. Por favor, clique Gerar Novo Pin para tentar novamente.",
     "PinExpiredMessage": "O c\u00f3digo pin expirou. Por favor, clique Gerar Novo Pin para tentar novamente.",
-    "ConnectPinCodeHeader": "Para entrar com o Emby Connect, visite {0} e digite o seguinte c\u00f3digo pin:"
+    "ConnectPinCodeHeader": "Para entrar com o Emby Connect, visite {0} e digite o seguinte c\u00f3digo pin:",
+    "SoundEffects": "Sound effects",
+    "Sounds": "Sounds"
 }
