@@ -1,4 +1,8 @@
 {
+    "TooltipFavorite": "Favorite",
+    "TooltipDislike": "Dislike",
+    "TooltipLike": "Like",
+    "TooltipPlayed": "Played",
     "OptionAlwaysPlaySubtitlesHelp": "Los subtitulos que concuerden con las preferencias de idioma ser\u00e1n cargados sin importar el idioma de audio seleccionado.",
     "AudioLanguagePreference": "Preferencias de idioma de audio",
     "OptionDefaultSubtitles": "Por defecto",

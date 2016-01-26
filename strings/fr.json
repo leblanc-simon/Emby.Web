@@ -1,4 +1,8 @@
 {
+    "TooltipFavorite": "Favorite",
+    "TooltipDislike": "Dislike",
+    "TooltipLike": "Like",
+    "TooltipPlayed": "Played",
     "OptionAlwaysPlaySubtitlesHelp": "Subtitles matching the language preference will be loaded regardless of the audio language.",
     "AudioLanguagePreference": "Param\u00e8tre de langue audio",
     "OptionDefaultSubtitles": "Par d\u00e9faut",
