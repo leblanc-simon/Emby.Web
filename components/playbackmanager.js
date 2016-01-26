@@ -1551,16 +1551,22 @@ define(['events', 'datetime', 'appsettings', 'pluginManager', 'userSettings'], f
             });
         }
 
+        function initMediaPlayer(plugin) {
+            plugin.currentState = {};
+
+            Events.on(plugin, 'started', onPlaybackStarted);
+            Events.on(plugin, 'stopped', onPlaybackStopped);
+        }
+
         Events.on(pluginManager, 'registered', function (e, plugin) {
 
             if (plugin.type == 'mediaplayer') {
 
-                plugin.currentState = {};
-
-                Events.on(plugin, 'started', onPlaybackStarted);
-                Events.on(plugin, 'stopped', onPlaybackStopped);
+                initMediaPlayer(plugin);
             }
         });
+
+        pluginManager.ofType('mediaplayer').map(initMediaPlayer);
 
         function startProgressInterval(player) {
 

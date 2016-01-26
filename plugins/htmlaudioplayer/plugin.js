@@ -1,4 +1,4 @@
-define([], function () {
+define(['events'], function (Events) {
 
     return function () {
 
@@ -108,7 +108,7 @@ define([], function () {
             });
         };
 
-        self.destroy = function() {
+        self.destroy = function () {
 
         };
 
