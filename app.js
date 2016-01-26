@@ -104,6 +104,17 @@
             order: -1
         });
 
+        defineRoute({
+            path: '/settings/sounds.html',
+            transition: 'slide',
+            dependencies: ['emby-dropdown-menu'],
+            controller: 'settings/sounds',
+            type: 'settings',
+            title: 'Sounds',
+            category: 'General',
+            thumbImage: ''
+        });
+
         //defineRoute({
         //    path: '/settings/plugins.html',
         //    transition: 'slide',
