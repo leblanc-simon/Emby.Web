@@ -282,7 +282,7 @@ define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo
 
             if (showMoreButton) {
                 html += '<div class="listItemsMoreButtonContainer">';
-                html += '<paper-button class="listItemsMoreButton" data-parentid="' + options.parentId + '" data-indextype="Genres" data-indexvalue="' + item.Id + '" raised>MORE</paper-button>';
+                html += '<paper-button class="listItemsMoreButton" data-parentid="' + options.parentId + '" data-indextype="Genres" data-indexvalue="' + item.Id + '" raised>' + Globalize.translate('More') + '</paper-button>';
                 html += '</div>';
             }
 
@@ -317,11 +317,11 @@ define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo
     function getDesiredAspect(shape) {
 
         switch (shape) {
-        
+
             case 'squareCard':
                 return 1;
             case 'backdropCard':
-                return (16/9);
+                return (16 / 9);
             case 'portraitCard':
                 return (2 / 3);
         }
