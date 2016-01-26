@@ -941,7 +941,7 @@ define(['events', 'datetime', 'appsettings', 'pluginManager', 'userSettings'], f
 
                 deviceProfile.MaxStreamingBitrate = Math.min(deviceProfile.MaxStreamingBitrate, maxBitrate);
 
-                tryStartPlayback(apiClient, deviceProfile, item, startPosition).then(function (mediaSource) {
+                getPlaybackMediaSource(apiClient, deviceProfile, item, startPosition).then(function (mediaSource) {
 
                     createStreamInfo(apiClient, item.MediaType, item, mediaSource, startPosition).then(function (streamInfo) {
 
@@ -1107,7 +1107,7 @@ define(['events', 'datetime', 'appsettings', 'pluginManager', 'userSettings'], f
             return tracks;
         }
 
-        function tryStartPlayback(apiClient, deviceProfile, item, startPosition, callback) {
+        function getPlaybackMediaSource(apiClient, deviceProfile, item, startPosition, callback) {
 
             if (item.MediaType === "Video") {
 
@@ -1221,35 +1221,32 @@ define(['events', 'datetime', 'appsettings', 'pluginManager', 'userSettings'], f
 
         function getLiveStream(apiClient, itemId, playSessionId, deviceProfile, startPosition, mediaSource, audioStreamIndex, subtitleStreamIndex) {
 
-            return new Promise(function (resolve, reject) {
+            var postData = {
+                DeviceProfile: deviceProfile,
+                OpenToken: mediaSource.OpenToken
+            };
 
-                var postData = {
-                    DeviceProfile: deviceProfile,
-                    OpenToken: mediaSource.OpenToken
-                };
+            var query = {
+                UserId: apiClient.getCurrentUserId(),
+                StartTimeTicks: startPosition || 0,
+                ItemId: itemId,
+                PlaySessionId: playSessionId
+            };
 
-                var query = {
-                    UserId: apiClient.getCurrentUserId(),
-                    StartTimeTicks: startPosition || 0,
-                    ItemId: itemId,
-                    PlaySessionId: playSessionId
-                };
+            if (audioStreamIndex != null) {
+                query.AudioStreamIndex = audioStreamIndex;
+            }
+            if (subtitleStreamIndex != null) {
+                query.SubtitleStreamIndex = subtitleStreamIndex;
+            }
 
-                if (audioStreamIndex != null) {
-                    query.AudioStreamIndex = audioStreamIndex;
-                }
-                if (subtitleStreamIndex != null) {
-                    query.SubtitleStreamIndex = subtitleStreamIndex;
-                }
+            return apiClient.ajax({
+                url: apiClient.getUrl('LiveStreams/Open', query),
+                type: 'POST',
+                data: JSON.stringify(postData),
+                contentType: "application/json",
+                dataType: "json"
 
-                apiClient.ajax({
-                    url: apiClient.getUrl('LiveStreams/Open', query),
-                    type: 'POST',
-                    data: JSON.stringify(postData),
-                    contentType: "application/json",
-                    dataType: "json"
-
-                }).then(resolve, reject);
             });
         };
 
@@ -1322,28 +1319,24 @@ define(['events', 'datetime', 'appsettings', 'pluginManager', 'userSettings'], f
 
         function getItemsForPlayback(query) {
 
-            return new Promise(function (resolve, reject) {
+            if (query.Ids && query.Ids.split(',').length == 1) {
 
-                if (query.Ids && query.Ids.split(',').length == 1) {
+                return Emby.Models.item(query.Ids.split(',')).then(function (item) {
 
-                    Emby.Models.item(query.Ids.split(',')).then(function (item) {
+                    return {
+                        Items: [item],
+                        TotalRecordCount: 1
+                    };
+                });
+            }
+            else {
 
-                        resolve({
-                            Items: [item],
-                            TotalRecordCount: 1
-                        });
+                query.Limit = query.Limit || 100;
+                query.Fields = "MediaSources,Chapters";
+                query.ExcludeLocationTypes = "Virtual";
 
-                    }, reject);
-                }
-                else {
-
-                    query.Limit = query.Limit || 100;
-                    query.Fields = "MediaSources,Chapters";
-                    query.ExcludeLocationTypes = "Virtual";
-
-                    Emby.Models.items(query).then(resolve, reject);
-                }
-            });
+                return Emby.Models.items(query);
+            }
         };
 
         // Gets or sets the current playlist index
