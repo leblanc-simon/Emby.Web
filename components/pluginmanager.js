@@ -1,4 +1,4 @@
-define(['events', 'globalize'], function (Events, globalize) {
+define(['events'], function (Events) {
 
     function pluginManager() {
 
@@ -50,7 +50,7 @@ define(['events', 'globalize'], function (Events, globalize) {
             return url;
         };
 
-        function loadTranslations(plugin) {
+        function loadTranslations(plugin, globalize) {
             var translations = plugin.getTranslations ? plugin.getTranslations() : [];
             return globalize.loadTranslations({
                 name: plugin.id || plugin.packageName,
@@ -64,7 +64,7 @@ define(['events', 'globalize'], function (Events, globalize) {
 
             return new Promise(function (resolve, reject) {
 
-                require([url], function (pluginFactory) {
+                require([url, 'globalize'], function (pluginFactory, globalize) {
                     var plugin = new pluginFactory();
 
                     var originalUrl = url;
@@ -97,7 +97,7 @@ define(['events', 'globalize'], function (Events, globalize) {
                         resolve(plugin);
                     } else {
 
-                        loadTranslations(plugin).then(function () {
+                        loadTranslations(plugin, globalize).then(function () {
                             resolve(plugin);
                         }, reject);
                     }
