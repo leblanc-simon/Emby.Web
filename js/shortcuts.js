@@ -18,6 +18,58 @@ define(['playbackManager'], function (playbackManager) {
         });
     }
 
+    function showSlideshow(startItemId) {
+
+        return Emby.Models.item(startItemId).then(function (item) {
+
+            return Emby.Models.items({
+
+                MediaTypes: 'Photo',
+                Filters: 'IsNotFolder',
+                ParentId: item.ParentId
+
+            }).then(function (result) {
+
+                var items = result.Items;
+
+                var index = items.map(function (i) {
+                    return i.Id;
+
+                }).indexOf(startItemId);
+
+                if (index == -1) {
+                    index = 0;
+                }
+
+                require(['slideshow'], function (slideshow) {
+
+                    var newSlideShow = new slideshow({
+                        showTitle: false,
+                        cover: false,
+                        items: items,
+                        startIndex: index,
+                        interval: 5000,
+                        interactive: true
+                    });
+
+                    newSlideShow.show();
+                });
+
+            });
+        });
+    }
+
+    function showItem(options) {
+
+        if (options.Type == 'Photo') {
+
+            showSlideshow(options.Id);
+            return;
+        }
+
+        Emby.Page.showItem(options);
+    }
+
     // Add some shortcuts
     document.addEventListener('click', function (e) {
 
@@ -33,7 +85,7 @@ define(['playbackManager'], function (playbackManager) {
                 var isfolder = card.getAttribute('data-isfolder') == 'true';
 
                 if (action == 'link') {
-                    Emby.Page.showItem({
+                    showItem({
                         Id: id,
                         Type: type,
                         IsFolder: isfolder
