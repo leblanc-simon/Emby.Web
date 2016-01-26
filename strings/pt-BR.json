@@ -1,8 +1,8 @@
 {
-    "TooltipFavorite": "Favorite",
-    "TooltipDislike": "Dislike",
-    "TooltipLike": "Like",
-    "TooltipPlayed": "Played",
+    "TooltipFavorite": "Favorito",
+    "TooltipDislike": "N\u00e3o curtir",
+    "TooltipLike": "Curtir",
+    "TooltipPlayed": "Reproduzido",
     "OptionAlwaysPlaySubtitlesHelp": "As legendas que forem iguais ao idioma preferido ser\u00e3o carregadas independente do idioma do \u00e1udio.",
     "AudioLanguagePreference": "Prefer\u00eancia do idioma do \u00e1udio",
     "OptionDefaultSubtitles": "Padr\u00e3o",
