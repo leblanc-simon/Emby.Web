@@ -1,4 +1,4 @@
-define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo', 'paper-icon-item', 'paper-item-body'], function (datetime, imageLoader, connectionManager, itemHelper, mediaInfo) {
+define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo', 'paper-icon-item', 'paper-item-body', 'paper-progress'], function (datetime, imageLoader, connectionManager, itemHelper, mediaInfo) {
 
     function setShapeHorizontal(items, options, isHome) {
 
@@ -515,7 +515,7 @@ define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo
         if (enableProgressIndicator(item)) {
             if (item.Type == "Recording" && item.CompletionPercentage) {
 
-                return '<paper-progress value="' + item.CompletionPercentage + '" class="block transparent"></paper-progress>';
+                return '<paper-progress value="' + item.CompletionPercentage + '" class="transparent"></paper-progress>';
             }
 
             var userData = item.UserData;
@@ -524,7 +524,7 @@ define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo
 
                 if (pct && pct < 100) {
 
-                    return '<paper-progress value="' + pct + '" class="block transparent"></paper-progress>';
+                    return '<paper-progress value="' + pct + '" class="transparent"></paper-progress>';
                 }
             }
         }
