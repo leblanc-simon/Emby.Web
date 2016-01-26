@@ -1,4 +1,4 @@
-define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'itemHelper', './../components/focushandler', './../components/backdrop', 'mediaInfo'], function (loading, datetime, playbackManager, imageLoader, itemHelper, focusHandler, themeBackdrop, mediaInfo) {
+define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButtons', 'itemHelper', './../components/focushandler', './../components/backdrop', 'mediaInfo'], function (loading, datetime, playbackManager, imageLoader, userdataButtons, itemHelper, focusHandler, themeBackdrop, mediaInfo) {
 
     function focusMainSection() {
 
@@ -1014,7 +1014,12 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'itemHelper', '
                 }
 
                 var userDataIconsSelector = enableTrackList(item) || item.Type == 'MusicArtist' ? '.itemPageFixedLeft .itemPageUserDataIcons' : '.mainSection .itemPageUserDataIcons';
-                view.querySelector(userDataIconsSelector).innerHTML = DefaultTheme.UserData.getIconsHtml(item, true, "mediumSizeIcon");
+
+                userdataButtons.fill({
+                    element: view.querySelector(userDataIconsSelector),
+                    buttonClass: 'mediumSizeIcon',
+                    item: item
+                });
 
                 if (!isRestored) {
                     renderName(view, item);

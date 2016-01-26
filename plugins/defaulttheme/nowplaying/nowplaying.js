@@ -1,4 +1,4 @@
-define(['playbackManager', 'datetime', './../components/backdrop'], function (playbackManager, datetime, themeBackdrop) {
+define(['playbackManager', 'datetime', './../components/backdrop', 'userdataButtons'], function (playbackManager, datetime, themeBackdrop, userdataButtons) {
 
     return function (view, params) {
 
@@ -40,7 +40,13 @@ define(['playbackManager', 'datetime', './../components/backdrop'], function (pl
                 }
 
                 view.querySelector('.nowPlayingMetadata').innerHTML = names.join('<br/>');
-                view.querySelector('.userDataIcons').innerHTML = DefaultTheme.UserData.getIconsHtml(item, false, 'xlargePaperIconButton');
+
+                userdataButtons.fill({
+                    element: view.querySelector('.userDataIcons'),
+                    buttonClass: 'xlargePaperIconButton',
+                    item: item,
+                    includePlayed: false
+                });
 
                 nowPlayingVolumeSlider.disabled = false;
                 nowPlayingPositionSlider.disabled = false;

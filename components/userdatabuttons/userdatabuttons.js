@@ -1,11 +1,18 @@
-(function (globalScope) {
+define(['paper-icon-button', 'coreIcons'], function () {
 
     function getUserDataButtonHtml(method, itemId, btnCssClass, icon, tooltip, style) {
 
         var tagName = style == 'fab' ? 'paper-fab' : 'paper-icon-button';
 
-        return '<' + tagName + ' title="' + tooltip + '" data-itemid="' + itemId + '" icon="' + icon + '" class="' + btnCssClass + '" onclick="DefaultTheme.UserData.' + method + '(this);return false;"></' + tagName + '>';
+        return '<' + tagName + ' title="' + tooltip + '" data-itemid="' + itemId + '" icon="core:' + icon + '" class="' + btnCssClass + '" onclick="UserDataButtons.' + method + '(this);return false;"></' + tagName + '>';
 
+    }
+
+    function fill(options) {
+
+        var html = getIconsHtml(options.item, options.includePlayed, options.buttonClass);
+
+        options.element.innerHTML = html;
     }
 
     function getIconsHtml(item, includePlayed, cssClass) {
@@ -23,7 +30,7 @@
         }
 
         if (includePlayed !== false) {
-            var tooltipPlayed = Globalize.translate('TooltipPlayed');
+            var tooltipPlayed = Globalize.translate('core#TooltipPlayed');
 
             if (item.MediaType == 'Video' || item.Type == 'Series' || item.Type == 'Season' || item.Type == 'BoxSet' || item.Type == 'Playlist') {
                 if (item.Type != 'TvChannel') {
@@ -36,8 +43,8 @@
             }
         }
 
-        var tooltipLike = Globalize.translate('TooltipLike');
-        var tooltipDislike = Globalize.translate('TooltipDislike');
+        var tooltipLike = Globalize.translate('core#TooltipLike');
+        var tooltipDislike = Globalize.translate('core#TooltipDislike');
 
         if (typeof userData.Likes == "undefined") {
             html += getUserDataButtonHtml('markDislike', itemId, btnCssClass + ' btnUserData btnDislike', 'thumb-down', tooltipDislike);
@@ -52,7 +59,7 @@
             html += getUserDataButtonHtml('markLike', itemId, btnCssClass + ' btnUserData btnLike', 'thumb-up', tooltipLike);
         }
 
-        var tooltipFavorite = Globalize.translate('TooltipFavorite');
+        var tooltipFavorite = Globalize.translate('core#TooltipFavorite');
         if (userData.IsFavorite) {
 
             html += getUserDataButtonHtml('markFavorite', itemId, btnCssClass + ' btnUserData btnUserDataOn', 'favorite', tooltipFavorite);
@@ -136,16 +143,15 @@
         }
     }
 
-    if (!globalScope.DefaultTheme) {
-        globalScope.DefaultTheme = {};
-    }
-
-    globalScope.DefaultTheme.UserData = {
-        getIconsHtml: getIconsHtml,
-        markFavorite: markFavorite,
-        markLike: markLike,
+    window.UserDataButtons = {
+        markPlayed: markPlayed,
         markDislike: markDislike,
-        markPlayed: markPlayed
+        markLike: markLike,
+        markFavorite: markFavorite
     };
 
-})(this);
+    return {
+        fill: fill
+    };
+
+});

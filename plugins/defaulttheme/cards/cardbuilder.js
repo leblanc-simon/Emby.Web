@@ -1,4 +1,4 @@
-define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo'], function (datetime, imageLoader, connectionManager, itemHelper, mediaInfo) {
+define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo', 'paper-icon-item', 'paper-item-body'], function (datetime, imageLoader, connectionManager, itemHelper, mediaInfo) {
 
     function setShapeHorizontal(items, options, isHome) {
 

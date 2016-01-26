@@ -1,4 +1,4 @@
-define(['connectionManager', 'userSettings', 'events', 'themeManager'], function (connectionManager, userSettings, events, themeManager) {
+define(['connectionManager', 'userSettings', 'events'], function (connectionManager, userSettings, events) {
 
     var allTranslations = {};
     var currentCulture;
@@ -74,8 +74,8 @@ define(['connectionManager', 'userSettings', 'events', 'themeManager'], function
 
     function getDictionary(module) {
 
-        if (module == 'theme') {
-            module = themeManager.getCurrentTheme().id;
+        if (!module) {
+            module = defaultModule();
         }
 
         var translations = allTranslations[module];
@@ -158,9 +158,7 @@ define(['connectionManager', 'userSettings', 'events', 'themeManager'], function
         var parts = key.split('#');
         var module;
 
-        if (parts.length == 1) {
-            module = 'theme';
-        } else {
+        if (parts.length > 1) {
             module = parts[0];
             key = parts[1];
         }
@@ -212,6 +210,17 @@ define(['connectionManager', 'userSettings', 'events', 'themeManager'], function
         return translateHtml(html, module);
     }
 
+    var _defaultModule;
+    function defaultModule(val) {
+
+        if (val) {
+
+            _defaultModule = val;
+        }
+
+        return _defaultModule;
+    }
+
     updateCurrentCulture();
 
     events.on(connectionManager, 'localusersignedin', updateCurrentCulture);
@@ -224,7 +233,7 @@ define(['connectionManager', 'userSettings', 'events', 'themeManager'], function
     return {
         translate: translate,
         translateHtml: translateHtml,
-        loadTranslations: loadTranslations
+        loadTranslations: loadTranslations,
+        defaultModule: defaultModule
     };
-
 });

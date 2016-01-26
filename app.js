@@ -41,7 +41,8 @@
             path: startupRoot + 'manuallogin.html',
             contentPath: startupRoot + 'manuallogin.html',
             transition: 'slide',
-            controller: 'startup/manuallogin'
+            controller: 'startup/manuallogin',
+            dependencies: ['paper-input']
         });
 
         defineRoute({
@@ -62,7 +63,8 @@
             path: startupRoot + 'manualserver.html',
             contentPath: startupRoot + 'manualserver.html',
             transition: 'slide',
-            controller: 'startup/manualserver'
+            controller: 'startup/manualserver',
+            dependencies: ['paper-input']
         });
 
         defineRoute({
@@ -102,16 +104,16 @@
             order: -1
         });
 
-        defineRoute({
-            path: '/settings/plugins.html',
-            transition: 'slide',
-            dependencies: ['emby-dropdown-menu'],
-            controller: 'settings/plugins',
-            type: 'settings',
-            title: 'Plugins',
-            category: 'General',
-            thumbImage: ''
-        });
+        //defineRoute({
+        //    path: '/settings/plugins.html',
+        //    transition: 'slide',
+        //    dependencies: ['emby-dropdown-menu'],
+        //    controller: 'settings/plugins',
+        //    type: 'settings',
+        //    title: 'Plugins',
+        //    category: 'General',
+        //    thumbImage: ''
+        //});
 
         defineRoute({
             path: '/index.html',
@@ -119,23 +121,6 @@
             transition: 'slide',
             dependencies: []
         });
-    }
-
-    function definePluginRoutes() {
-
-        console.log('Defining plugin routes');
-
-        var plugins = Emby.PluginManager.plugins();
-
-        for (var i = 0, length = plugins.length; i < length; i++) {
-
-            var plugin = plugins[i];
-            if (plugin.getRoutes) {
-                plugin.getRoutes().forEach(function (route) {
-                    defineRoute(route, plugin.id || plugin.packageName);
-                });
-            }
-        }
     }
 
     function getCapabilities(apphost) {
@@ -271,10 +256,12 @@
             actionsheet: "components/actionsheet/actionsheet",
             playmenu: "components/playmenu",
             datetime: embyWebComponentsBowerPath + "/datetime",
+            globalize: "components/globalize",
             inputmanager: "components/inputmanager",
             alphapicker: "components/alphapicker/alphapicker",
             paperdialoghelper: "components/paperdialoghelper/paperdialoghelper",
             slideshow: "components/slideshow/slideshow",
+            userdataButtons: "components/userdatabuttons/userdatabuttons",
             browserdeviceprofile: embyWebComponentsBowerPath + "/browserdeviceprofile",
             browser: embyWebComponentsBowerPath + "/browser",
             qualityoptions: embyWebComponentsBowerPath + "/qualityoptions",
@@ -284,6 +271,7 @@
             screenfull: 'bower_components/screenfull/dist/screenfull',
             events: 'bower_components/emby-apiclient/events',
             pluginManager: 'components/pluginmanager',
+            packageManager: 'components/packagemanager',
             themeManager: 'components/thememanager',
             itemHelper: 'components/itemhelper',
             mediaInfo: 'components/mediainfo/mediainfo',
@@ -355,6 +343,11 @@
         //define("type", ["bower_components/type/dist/type"]);
         define("Sly", [bowerPath + "/sly/src/sly"], function () {
             return globalScope.Sly;
+        });
+
+        // alias
+        define("appSettings", ['appsettings'], function (appSettings) {
+            return appSettings;
         });
 
         define("paper-base", ["css!style/paperstyles.css"]);
@@ -438,12 +431,8 @@
              'components/router',
              'css!style/style.css',
              'js/focusmanager',
-             'js/backdrops',
-             'js/dom',
-             'js/shortcuts'
+             'js/backdrops'
             ];
-
-            list.push('screensaverManager');
 
             if (!('registerElement' in document && 'content' in document.createElement('template'))) {
                 list.push("bower_components/webcomponentsjs/webcomponents-lite.min");
@@ -506,7 +495,16 @@
         return new Promise(function (resolve, reject) {
 
             require(['pluginManager'], function (pluginManager) {
-                pluginManager.loadPlugin(url).then(resolve, reject);
+                pluginManager.loadPlugin(url).then(function (plugin) {
+
+                    if (plugin.getRoutes) {
+                        plugin.getRoutes().forEach(function (route) {
+                            defineRoute(route, plugin.id || plugin.packageName);
+                        });
+                    }
+                    resolve(plugin);
+
+                }, reject);
             });
         });
     }
@@ -529,10 +527,7 @@
             defineCoreRoutes();
 
             createConnectionManager().then(function () {
-
                 loadPlugins(startInfo.plugins || []).then(function () {
-
-                    definePluginRoutes();
 
                     require(startInfo.scripts || [], loadPresentation);
                 });
@@ -544,23 +539,11 @@
 
         return new Promise(function (resolve, reject) {
 
-            require(['components/globalize', 'pluginManager'], function (globalize, pluginManager) {
+            require(['globalize'], function (globalize, pluginManager) {
 
                 globalScope.Globalize = globalize;
 
-                var promises = pluginManager.plugins().filter(function (p) {
-                    return p.type != 'theme';
-
-                }).map(function (plugin) {
-
-                    var translations = plugin.getTranslations ? plugin.getTranslations() : [];
-                    return globalize.loadTranslations({
-                        name: plugin.id || plugin.packageName,
-                        translations: translations
-                    });
-                });
-
-                Promise.all(promises).then(resolve, reject);
+                resolve();
             });
         });
     }
@@ -581,8 +564,11 @@
             presentationDependencies.push('js/input/onscreenkeyboard');
             presentationDependencies.push('js/input/keyboard');
             presentationDependencies.push('js/input/api');
+            presentationDependencies.push('js/dom');
+            presentationDependencies.push('js/shortcuts');
 
             presentationDependencies.push('components/controlbox');
+            presentationDependencies.push('screensaverManager');
 
             require(presentationDependencies, function (events) {
 

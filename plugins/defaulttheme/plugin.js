@@ -47,20 +47,15 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
                 'css!' + pluginManager.mapPath(self, 'css/colors.dark'),
                 'css!' + pluginManager.mapPath(self, 'css/paperstyles'),
                 'css!' + pluginManager.mapPath(self, 'css/papericonbutton'),
-                pluginManager.mapPath(self, 'cards/cardbuilder.js'),
-                pluginManager.mapPath(self, 'cards/userdata.js')
+                pluginManager.mapPath(self, 'cards/cardbuilder.js')
             ];
 
             list.push('css!' + pluginManager.mapPath(self, 'css/fonts'));
 
+            // Pull these in because they're used in a lot of places
             list.push('html!' + pluginManager.mapPath(self, 'icons.html'));
             list.push('paper-button');
             list.push('paper-icon-button');
-            list.push('paper-input');
-            list.push('paper-fab');
-            list.push('paper-slider');
-            list.push('paper-icon-item');
-            list.push('paper-item-body');
 
             return list;
         };
@@ -155,7 +150,8 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
                 transition: 'slide',
                 controller: self.id + '/nowplaying/nowplaying',
                 dependencies: [
-                    'css!' + pluginManager.mapPath(self, 'nowplaying/nowplaying.css')
+                    'css!' + pluginManager.mapPath(self, 'nowplaying/nowplaying.css'),
+                    'paper-slider'
                 ],
                 supportsThemeMedia: true
             });
@@ -175,7 +171,8 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
                 transition: 'fade',
                 controller: self.id + '/nowplaying/videoosd',
                 dependencies: [
-                    'css!' + pluginManager.mapPath(self, 'nowplaying/videoosd.css')
+                    'css!' + pluginManager.mapPath(self, 'nowplaying/videoosd.css'),
+                    'paper-slider'
                 ],
                 type: 'video-osd',
                 supportsThemeMedia: true

@@ -1,4 +1,4 @@
-define(['events'], function (Events) {
+define(['events', 'globalize'], function (Events, globalize) {
 
     function pluginManager() {
 
@@ -50,6 +50,14 @@ define(['events'], function (Events) {
             return url;
         };
 
+        function loadTranslations(plugin) {
+            var translations = plugin.getTranslations ? plugin.getTranslations() : [];
+            return globalize.loadTranslations({
+                name: plugin.id || plugin.packageName,
+                translations: translations
+            });
+        }
+
         self.loadPlugin = function (url) {
 
             console.log('Loading plugin: ' + url);
@@ -82,7 +90,17 @@ define(['events'], function (Events) {
                     });
 
                     self.register(plugin);
-                    resolve(plugin);
+
+                    if (plugin.type == 'theme') {
+
+                        // translations won't be loaded for themes until needed
+                        resolve(plugin);
+                    } else {
+
+                        loadTranslations(plugin).then(function () {
+                            resolve(plugin);
+                        }, reject);
+                    }
                 });
             });
         };

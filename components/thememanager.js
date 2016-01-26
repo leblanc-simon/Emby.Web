@@ -24,19 +24,24 @@ define([], function () {
         }
 
         var deps = theme.getDependencies();
+
         require(deps, function () {
 
             currentThemeDependencies = deps;
 
             var translations = theme.getTranslations ? theme.getTranslations() : [];
 
-            Globalize.loadTranslations({
+            require(['globalize'], function (globalize) {
+                globalize.loadTranslations({
 
-                name: theme.id,
-                translations: translations
+                    name: theme.id,
+                    translations: translations
 
-            }).then(function () {
-                loadThemeHeader(theme, callback);
+                }).then(function () {
+                    globalize.defaultModule(theme.id);
+
+                    loadThemeHeader(theme, callback);
+                });
             });
         });
     }
