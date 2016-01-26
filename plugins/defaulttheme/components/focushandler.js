@@ -175,7 +175,7 @@ define(['imageLoader', 'itemHelper', './backdrop', 'mediaInfo'], function (image
 
             var html = '';
 
-            var mediaInfo = mediaInfo.getMediaInfoHtml(item);
+            var mediaInfoHtml = mediaInfo.getMediaInfoHtml(item);
 
             html += '<div>';
             html += '<div>';
@@ -186,9 +186,9 @@ define(['imageLoader', 'itemHelper', './backdrop', 'mediaInfo'], function (image
 
             html += itemHelper.getDisplayName(item);
             html += '</div>';
-            if (mediaInfo) {
+            if (mediaInfoHtml) {
                 html += '<div class="selectedItemMediaInfo">';
-                html += mediaInfo;
+                html += mediaInfoHtml;
                 html += '</div>';
             }
             html += '</div>';
