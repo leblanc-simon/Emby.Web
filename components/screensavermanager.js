@@ -119,7 +119,7 @@ define(['events', 'playbackManager'], function (events, playbackManager) {
                     return;
                 }
 
-                if (Emby.PlaybackManager.isPlayingVideo()) {
+                if (playbackManager.isPlayingVideo()) {
                     return;
                 }
 
