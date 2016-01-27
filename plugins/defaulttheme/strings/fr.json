@@ -1,12 +1,12 @@
 {
-    "Play": "Play",
-    "Queue": "Queue",
-    "Shuffle": "Shuffle",
-    "InsstantMix": "Instant Mix",
+    "Play": "Lire",
+    "Queue": "File d'attente",
+    "Shuffle": "Lecture al\u00e9atoire",
+    "InsstantMix": "Instantan\u00e9",
     "ButtonCancel": "Annuler",
     "AllSeries": "Toutes les s\u00e9ries",
     "Genres": "Genres",
-    "Extras": "Extras",
+    "Extras": "Bonus",
     "NextUp": "Suivant",
     "LatestEpisodes": "\u00c9pisodes les plus r\u00e9cents",
     "ContinueWatching": "Continuer la lecture",
@@ -76,10 +76,10 @@
     "FavoriteSeries": "S\u00e9ries favorites",
     "FavoriteEpisodes": "\u00c9pisodes favoris",
     "FavoriteMovies": "Films favoris",
-    "CastAndCrew": "Cast & Crew",
-    "Unwatched": "Unwatched",
-    "Movies": "Movies",
+    "CastAndCrew": "Distribution et \u00e9quipe",
+    "Unwatched": "Non lu",
+    "Movies": "Films",
     "Collections": "Collections",
-    "Years": "Years",
-    "Favorites": "Favorites"
+    "Years": "Ann\u00e9es",
+    "Favorites": "Favoris"
 }
