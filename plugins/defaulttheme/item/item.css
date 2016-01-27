@@ -69,8 +69,8 @@
 }
 
 .mainSection .itemPageButtons, .mainSection .itemPageUserDataIcons {
-    display: inline-block;
-    vertical-align: middle;
+    display: inline-flex;
+    justify-content: center;
 }
 
     .mainSection .itemPageButtons paper-button {
@@ -169,7 +169,7 @@
 
 .mediaInfoText {
     display: inline-block;
-    padding: .2em .65em;
+    padding: .2em .6em;
     margin-top: 0;
     margin-bottom: 0;
     color: #000;
