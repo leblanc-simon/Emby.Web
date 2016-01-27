@@ -575,6 +575,10 @@ define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo
         var cardImageContainerClass = 'cardImageContainer';
         if (options.coverImage || imgInfo.coverImage) {
             cardImageContainerClass += ' coveredImage';
+
+            if (item.MediaType == 'Photo') {
+                cardImageContainerClass += ' noScale';
+            }
         }
 
         if (!imgUrl) {
