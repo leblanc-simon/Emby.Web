@@ -1,4 +1,4 @@
-define(['events', 'datetime', 'appsettings', 'pluginManager', 'userSettings'], function (Events, datetime, appSettings, pluginManager, userSettings) {
+define(['events', 'datetime', 'appSettings', 'pluginManager', 'userSettings'], function (Events, datetime, appSettings, pluginManager, userSettings) {
 
     function playbackManager() {
 
@@ -398,8 +398,8 @@ define(['events', 'datetime', 'appsettings', 'pluginManager', 'userSettings'], f
 
             var currentSrc = player.currentSrc();
 
-            var playSessionId = Emby.Page.param('PlaySessionId', currentSrc);
-            var liveStreamId = Emby.Page.param('LiveStreamId', currentSrc);
+            var liveStreamId = getPlayerData(player).streamInfo.liveStreamId;
+            var playSessionId = getPlayerData(player).streamInfo.playSessionId;
 
             player.getDeviceProfile().then(function (deviceProfile) {
 
@@ -627,7 +627,7 @@ define(['events', 'datetime', 'appsettings', 'pluginManager', 'userSettings'], f
                     state.PlayState.PlayMethod = playerData.streamInfo.playMethod;
 
                     state.PlayState.LiveStreamId = mediaSource.LiveStreamId;
-                    state.PlayState.PlaySessionId = Emby.Page.param('PlaySessionId', currentSrc);
+                    state.PlayState.PlaySessionId = playerData.streamInfo.playSessionId;
                 }
             }
 
@@ -967,6 +967,7 @@ define(['events', 'datetime', 'appsettings', 'pluginManager', 'userSettings'], f
                 var contentType;
                 var transcodingOffsetTicks = 0;
                 var playerStartPositionTicks = startPosition;
+                var liveStreamId;
 
                 var playMethod = 'Transcode';
 
@@ -992,6 +993,7 @@ define(['events', 'datetime', 'appsettings', 'pluginManager', 'userSettings'], f
 
                             if (mediaSource.LiveStreamId) {
                                 directOptions.LiveStreamId = mediaSource.LiveStreamId;
+                                liveStreamId = mediaSource.LiveStreamId;
                             }
 
                             mediaUrl = apiClient.getUrl('Videos/' + item.Id + '/stream.' + mediaSource.Container, directOptions);
@@ -1040,6 +1042,7 @@ define(['events', 'datetime', 'appsettings', 'pluginManager', 'userSettings'], f
 
                             if (mediaSource.LiveStreamId) {
                                 directOptions.LiveStreamId = mediaSource.LiveStreamId;
+                                liveStreamId = mediaSource.LiveStreamId;
                             }
 
                             mediaUrl = apiClient.getUrl('Audio/' + item.Id + '/stream.' + outputContainer, directOptions);
@@ -1072,11 +1075,25 @@ define(['events', 'datetime', 'appsettings', 'pluginManager', 'userSettings'], f
                     item: item,
                     mediaSource: mediaSource,
                     textTracks: getTextTracks(apiClient, mediaSource),
-                    mediaType: type
+                    mediaType: type,
+                    liveStreamId: liveStreamId,
+                    playSessionId: getParam('playSessionId', mediaUrl)
                 };
 
                 resolve(resultInfo);
             });
+        }
+
+        function getParam(name, url) {
+            name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            var regexS = "[\\?&]" + name + "=([^&#]*)";
+            var regex = new RegExp(regexS, "i");
+
+            var results = regex.exec(url);
+            if (results == null)
+                return "";
+            else
+                return decodeURIComponent(results[1].replace(/\+/g, " "));
         }
 
         function getTextTracks(apiClient, mediaSource) {

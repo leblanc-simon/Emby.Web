@@ -115,16 +115,16 @@
             thumbImage: ''
         });
 
-        //defineRoute({
-        //    path: '/settings/plugins.html',
-        //    transition: 'slide',
-        //    dependencies: ['emby-dropdown-menu'],
-        //    controller: 'settings/plugins',
-        //    type: 'settings',
-        //    title: 'Plugins',
-        //    category: 'General',
-        //    thumbImage: ''
-        //});
+        defineRoute({
+            path: '/settings/plugins.html',
+            transition: 'slide',
+            dependencies: ['emby-dropdown-menu'],
+            controller: 'settings/plugins',
+            type: 'settings',
+            title: 'Plugins',
+            category: 'General',
+            thumbImage: ''
+        });
 
         defineRoute({
             path: '/index.html',
