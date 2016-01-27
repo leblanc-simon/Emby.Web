@@ -226,7 +226,7 @@ a {
     vertical-align: top;
 }
 
-    .cardColumn .card {
+    .cardColumn .card:not(.hide) {
         display: block !important;
     }
 

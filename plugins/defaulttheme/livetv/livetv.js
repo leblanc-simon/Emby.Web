@@ -10,11 +10,13 @@ define(['loading', 'alphapicker', 'defaulttheme/components/horizontallist', './.
         {
             Name: Globalize.translate('Recordings'),
             Id: "recordings"
-        },
-        {
-            Name: Globalize.translate('Scheduled'),
-            Id: "scheduled"
-        }];
+        }
+        //,
+        //{
+        //    Name: Globalize.translate('Scheduled'),
+        //    Id: "scheduled"
+        //}
+        ];
 
         var tabbedPageInstance = new tabbedPage(view);
         tabbedPageInstance.loadViewContent = loadViewContent;
