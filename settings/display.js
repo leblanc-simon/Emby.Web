@@ -13,6 +13,14 @@ define(['loading', 'userSettings'], function (loading, userSettings) {
             loading.hide();
 
             if (!isRestored) {
+
+                // If auto-detection isn't working, then remove the auto item
+                if (!navigator.language) {
+
+                    var autoItem = view.querySelector('.autoDropdownItem');
+                    autoItem.parentNode.removeChild(autoItem);
+                }
+
                 renderSettings();
             }
         });
