@@ -1,4 +1,4 @@
-define([], function () {
+define(['appStorage'], function (appStorage) {
 
     function getKey(name, userId) {
 

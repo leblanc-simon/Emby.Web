@@ -294,7 +294,8 @@
             wakeonlan: customPaths.wakeonlan || "bower_components/emby-apiclient/wakeonlan",
             peoplecardbuilder: 'components/cards/peoplecardbuilder',
             chaptercardbuilder: 'components/cards/chaptercardbuilder',
-            imageLoader: 'bower_components/emby-webcomponents/images/imagehelper'
+            imageLoader: embyWebComponentsBowerPath + '/images/imagehelper',
+            appStorage: 'bower_components/emby-apiclient/appstorage'
         };
 
         if (navigator.webkitPersistentStorage) {
@@ -417,8 +418,7 @@
     function loadApiClientDependencies(callback) {
 
         var list = [
-           'bower_components/emby-apiclient/connectionmanager',
-           'bower_components/emby-apiclient/store'
+           'bower_components/emby-apiclient/connectionmanager'
         ];
 
         require(list, function (connectionManagerExports) {
