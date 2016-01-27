@@ -38,6 +38,7 @@ define(['loading', 'slyScroller', './focushandler'], function (loading, slyScrol
             if (!initialTab) {
                 initialTab = userViewNames.querySelector('.btnUserViewHeader');
             }
+            instance.headerSlyFrame = slyFrame;
             instance.setFocusDelay(view, initialTab);
         });
     }
@@ -60,6 +61,7 @@ define(['loading', 'slyScroller', './focushandler'], function (loading, slyScrol
             var elem = Emby.Dom.parentWithClass(e.target, 'btnUserViewHeader');
 
             if (elem) {
+                instance.headerSlyFrame.toCenter(elem);
                 instance.setFocusDelay(view, elem);
             }
         }, true);
@@ -274,6 +276,10 @@ define(['loading', 'slyScroller', './focushandler'], function (loading, slyScrol
             if (self.bodySlyFrame) {
                 self.bodySlyFrame.destroy();
                 self.bodySlyFrame = null
+            }
+            if (self.headerSlyFrame) {
+                self.headerSlyFrame.destroy();
+                self.headerSlyFrame = null
             }
         };
     }
