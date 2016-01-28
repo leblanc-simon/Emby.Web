@@ -483,11 +483,15 @@ define(['events', 'datetime', 'appSettings', 'pluginManager', 'userSettings'], f
         };
 
         self.playTrailer = function (item) {
-            Emby.Models.itemTrailers(item.Id).then(function (result) {
 
-                self.play({
-                    items: result
-                });
+            require(['connectionManager'], function(connectionManager) {
+                var apiClient = connectionManager.getApiClient(item.ServerId);
+                apiClient.getLocalTrailers(apiClient.getCurrentUserId(), item.Id).then(function (result) {
+
+                    self.play({
+                        items: result
+                    });
+                })
             });
         };
 
