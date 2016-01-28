@@ -484,7 +484,7 @@ define(['events', 'datetime', 'appSettings', 'pluginManager', 'userSettings'], f
 
         self.playTrailer = function (item) {
 
-            require(['connectionManager'], function(connectionManager) {
+            require(['connectionManager'], function (connectionManager) {
                 var apiClient = connectionManager.getApiClient(item.ServerId);
                 apiClient.getLocalTrailers(apiClient.getCurrentUserId(), item.Id).then(function (result) {
 
@@ -868,11 +868,15 @@ define(['events', 'datetime', 'appSettings', 'pluginManager', 'userSettings'], f
                 return;
             }
 
-            Emby.Models.intros(firstItem.Id).then(function (intros) {
+            require(['connectionManager'], function (connectionManager) {
+                var apiClient = connectionManager.getApiClient(firstItem.ServerId);
 
-                items = intros.Items.concat(items);
-                currentPlayOptions = options;
-                playInternal(items[0], options.startPositionTicks, afterPlayInternal);
+                apiClient.getJSON(apiClient.getUrl('Users/' + apiClient.getCurrentUserId() + '/Items/' + firstItem.Id + '/Intros')).then(function (intros) {
+
+                    items = intros.Items.concat(items);
+                    currentPlayOptions = options;
+                    playInternal(items[0], options.startPositionTicks, afterPlayInternal);
+                });
             });
         }
 
