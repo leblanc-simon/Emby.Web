@@ -515,7 +515,7 @@ define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo
         if (enableProgressIndicator(item)) {
             if (item.Type == "Recording" && item.CompletionPercentage) {
 
-                return '<paper-progress value="' + item.CompletionPercentage + '" class="transparent"></paper-progress>';
+                return '<paper-progress class="transparent" value="' + item.CompletionPercentage + '"></paper-progress>';
             }
 
             var userData = item.UserData;
@@ -524,7 +524,7 @@ define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo
 
                 if (pct && pct < 100) {
 
-                    return '<paper-progress value="' + pct + '" class="transparent"></paper-progress>';
+                    return '<paper-progress class="transparent" value="' + pct + '"></paper-progress>';
                 }
             }
         }
@@ -614,7 +614,8 @@ define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo
         var showParentTitle = options.showParentTitle || (imgInfo.forceName && item.Type == 'Episode');
 
         if (!imgUrl) {
-            cardImageContainerOpen += '<div class="cardText cardCenteredText">' + itemHelper.getDisplayName(item) + '</div>';
+            var defaultName = item.EpisodeTitle ? item.Name : itemHelper.getDisplayName(item);
+            cardImageContainerOpen += '<div class="cardText cardCenteredText">' + defaultName + '</div>';
         }
 
         var nameHtml = '';
