@@ -266,7 +266,7 @@
             slyScroller: "components/slyscroller",
             appSettings: "components/appsettings",
             userSettings: "components/usersettings",
-            focusManager: "components/focusmanager",
+            focusManager: embyWebComponentsBowerPath + "/focusmanager",
             tvguide: "components/tvguide/guide",
             actionsheet: "components/actionsheet/actionsheet",
             playmenu: "components/playmenu",

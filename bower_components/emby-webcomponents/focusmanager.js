@@ -16,7 +16,8 @@ define([], function () {
 
     function focus(element) {
 
-        if (element.tagName == 'PAPER-INPUT' || element.tagName == 'PAPER-DROPDOWN-MENU' || element.tagName == 'EMBY-DROPDOWN-MENU') {
+        var tagName = element.tagName;
+        if (tagName == 'PAPER-INPUT' || tagName == 'PAPER-DROPDOWN-MENU' || tagName == 'EMBY-DROPDOWN-MENU') {
             element = element.querySelector('input');
         }
 
@@ -183,7 +184,7 @@ define([], function () {
             return;
         }
 
-        var focusableContainer = Emby.Dom.parentWithClass(activeElement, 'focusable');
+        var focusableContainer = parentWithClass(activeElement, 'focusable');
 
         var rect = getViewportBoundingClientRect(activeElement);
         var focusableElements = [];
@@ -260,15 +261,28 @@ define([], function () {
             var nearestElement = nearest[0].node;
 
             // See if there's a focusable container, and if so, send the focus command to that
-            var nearestElementFocusableParent = Emby.Dom.parentWithClass(nearestElement, 'focusable');
+            var nearestElementFocusableParent = parentWithClass(nearestElement, 'focusable');
             if (nearestElementFocusableParent && nearestElementFocusableParent != nearestElement && activeElement) {
-                if (Emby.Dom.parentWithClass(activeElement, 'focusable') != nearestElementFocusableParent) {
+                if (parentWithClass(activeElement, 'focusable') != nearestElementFocusableParent) {
                     nearestElement = nearestElementFocusableParent;
                 }
             }
 
             focus(nearestElement);
         }
+    }
+
+    function parentWithClass(elem, className) {
+
+        while (!elem.classList || !elem.classList.contains(className)) {
+            elem = elem.parentNode;
+
+            if (!elem) {
+                return null;
+            }
+        }
+
+        return elem;
     }
 
     function getNearestElements(elementInfos, options, direction) {
