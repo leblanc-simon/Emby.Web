@@ -1,4 +1,4 @@
-define(['playbackManager', 'slyScroller', 'loading', 'imageLoader', './../components/backdrop', './../components/listview'], function (playbackManager, slyScroller, loading, imageLoader, themeBackdrop, listview) {
+define(['playbackManager', 'slyScroller', 'loading', 'imageLoader', './../components/backdrop', './../components/listview', 'focusManager'], function (playbackManager, slyScroller, loading, imageLoader, themeBackdrop, listview, focusManager) {
 
     function createVerticalScroller(view, pageInstance) {
 
@@ -34,7 +34,7 @@ define(['playbackManager', 'slyScroller', 'loading', 'imageLoader', './../compon
         var scrollSlider = view.querySelector('.scrollSlider');
         scrollSlider.addEventListener('focus', function (e) {
 
-            var focused = Emby.FocusManager.focusableParent(e.target);
+            var focused = focusManager.focusableParent(e.target);
 
             if (focused) {
                 slyFrame.toCenter(focused);
@@ -81,7 +81,7 @@ define(['playbackManager', 'slyScroller', 'loading', 'imageLoader', './../compon
 
             imageLoader.lazyChildren(section);
 
-            Emby.FocusManager.autoFocus(section, true);
+            focusManager.autoFocus(section);
             updateCurrentPlaylistItem();
         }
 

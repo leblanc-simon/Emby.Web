@@ -1,4 +1,4 @@
-define(['pluginManager'], function (pluginManager) {
+define([], function () {
 
     return function () {
 
@@ -8,10 +8,10 @@ define(['pluginManager'], function (pluginManager) {
         self.type = 'soundeffects';
         self.id = 'defaultsoundeffects';
 
-        self.getEffects = function() {
+        self.getEffects = function () {
             return {
-                navigation: pluginManager.mapPath(self, 'navigation.wav'),
-                select: pluginManager.mapPath(self, 'select.wav')
+                navigation: 'navigation.wav',
+                select: 'select.wav'
             };
         };
     }

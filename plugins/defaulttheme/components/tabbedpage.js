@@ -1,4 +1,4 @@
-define(['loading', 'slyScroller', './focushandler'], function (loading, slyScroller, focusHandler) {
+define(['loading', 'slyScroller', './focushandler', 'focusManager'], function (loading, slyScroller, focusHandler, focusManager) {
 
     function createHeaderScroller(view, instance, initialTabId) {
 
@@ -179,9 +179,9 @@ define(['loading', 'slyScroller', './focushandler'], function (loading, slyScrol
             var selected = this.querySelector('.selected');
 
             if (selected) {
-                Emby.FocusManager.focus(selected);
+                focusManager.focus(selected);
             } else {
-                Emby.FocusManager.autoFocus(this, true);
+                focusManager.autoFocus(this);
             }
         }
 

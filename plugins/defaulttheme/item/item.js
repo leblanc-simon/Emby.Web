@@ -1,8 +1,9 @@
-define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButtons', 'itemHelper', './../components/focushandler', './../components/backdrop', './../components/listview', 'mediaInfo'], function (loading, datetime, playbackManager, imageLoader, userdataButtons, itemHelper, focusHandler, themeBackdrop, listview, mediaInfo) {
+define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButtons', 'itemHelper', './../components/focushandler', './../components/backdrop', './../components/listview', 'mediaInfo', 'focusManager'],
+    function (loading, datetime, playbackManager, imageLoader, userdataButtons, itemHelper, focusHandler, themeBackdrop, listview, mediaInfo, focusManager) {
 
     function focusMainSection() {
 
-        Emby.FocusManager.autoFocus(this, true);
+        focusManager.autoFocus(this);
     }
 
     function setTitle(item) {
@@ -800,7 +801,7 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
             var itemElement = element.querySelector('*[data-id=\'' + focusItem.Id + '\']');
 
-            Emby.FocusManager.focus(itemElement);
+            focusManager.focus(itemElement);
         }
     }
 
@@ -1054,7 +1055,7 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
                     }
 
                     if (enableTrackList(item) || item.Type == 'MusicArtist') {
-                        Emby.FocusManager.autoFocus(view, true);
+                        focusManager.autoFocus(view, true);
                     } else {
                         focusMainSection.call(mainSection);
                     }

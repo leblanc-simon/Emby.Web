@@ -1,4 +1,4 @@
-(function (globalScope, document) {
+define([], function () {
 
     function autoFocus(view, defaultToFirst) {
 
@@ -85,10 +85,6 @@
         }
 
         return focusableElements;
-    }
-
-    if (!globalScope.Emby) {
-        globalScope.Emby = {};
     }
 
     function isFocusContainer(elem, direction) {
@@ -384,7 +380,7 @@
         return result;
     }
 
-    globalScope.Emby.FocusManager = {
+    return {
         autoFocus: autoFocus,
         focus: focus,
         focusableParent: focusableParent,
@@ -402,5 +398,4 @@
             nav(sourceElement, 3);
         }
     };
-
-})(this, document);
+});

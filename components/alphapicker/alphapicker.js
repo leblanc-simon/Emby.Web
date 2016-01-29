@@ -1,12 +1,12 @@
-define(['css!components/alphapicker/style.css'], function () {
+define(['focusManager', 'css!components/alphapicker/style.css'], function (focusManager) {
 
     function focus() {
         var selected = this.querySelector('.selected');
 
         if (selected) {
-            Emby.FocusManager.focus(selected);
+            focusManager.focus(selected);
         } else {
-            Emby.FocusManager.autoFocus(this, true);
+            focusManager.autoFocus(this, true);
         }
     }
 
@@ -214,7 +214,7 @@ define(['css!components/alphapicker/style.css'], function () {
         };
 
         self.focus = function () {
-            Emby.FocusManager.autoFocus(element, true);
+            focusManager.autoFocus(element, true);
         };
 
         render(element, options);

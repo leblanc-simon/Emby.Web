@@ -1,4 +1,4 @@
-define(['loading', 'userSettings', 'pluginManager'], function (loading, userSettings, pluginManager) {
+define(['loading', 'userSettings', 'pluginManager', 'focusManager'], function (loading, userSettings, pluginManager, focusManager) {
 
     return function (view, params) {
 
@@ -26,7 +26,7 @@ define(['loading', 'userSettings', 'pluginManager'], function (loading, userSett
 
         function renderSettings() {
 
-            Emby.FocusManager.autoFocus(view);
+            focusManager.autoFocus(view);
 
             var selectSoundEffects = view.querySelector('.selectSoundEffects');
 

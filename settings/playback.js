@@ -1,4 +1,4 @@
-define(['loading', 'appsettings', 'qualityoptions', 'userSettings', 'apiClientResolver'], function (loading, appSettings, qualityoptions, userSettings, apiClientResolver) {
+define(['loading', 'appsettings', 'qualityoptions', 'userSettings', 'apiClientResolver', 'focusManager'], function (loading, appSettings, qualityoptions, userSettings, apiClientResolver, focusManager) {
 
     return function (view, params) {
 
@@ -48,7 +48,7 @@ define(['loading', 'appsettings', 'qualityoptions', 'userSettings', 'apiClientRe
 
         function renderSettings() {
 
-            Emby.FocusManager.autoFocus(view);
+            focusManager.autoFocus(view);
 
             var selectStreamingBitrate = view.querySelector('.selectStreamingBitrate');
             var selectEnableCinemaMode = view.querySelector('.selectEnableCinemaMode');

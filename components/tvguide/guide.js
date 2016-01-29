@@ -1,4 +1,4 @@
-define(['datetime'], function (datetime) {
+define(['datetime', 'focusManager'], function (datetime, focusManager) {
 
     return function (options) {
 
@@ -373,7 +373,7 @@ define(['datetime'], function (datetime) {
             page.querySelector('.timeslotHeaders').innerHTML = getTimeslotHeadersHtml(startDate, endDate);
             renderPrograms(page, date, channels, programs);
 
-            Emby.FocusManager.autoFocus(page.querySelector('.programGrid'), true);
+            focusManager.autoFocus(page.querySelector('.programGrid'), true);
         }
 
         var gridScrolling = false;
@@ -550,7 +550,7 @@ define(['datetime'], function (datetime) {
 
             scrollSlider.addEventListener('focus', function (e) {
 
-                var focused = Emby.FocusManager.focusableParent(e.target);
+                var focused = focusManager.focusableParent(e.target);
 
                 if (focused) {
                     var now = new Date().getTime();

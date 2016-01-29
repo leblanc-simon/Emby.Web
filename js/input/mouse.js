@@ -1,4 +1,4 @@
-require(['inputmanager'], function (inputmanager) {
+require(['inputmanager', 'focusManager'], function (inputmanager, focusManager) {
 
     var lastMouseInputTime = new Date().getTime();
     var isMouseIdle;
@@ -51,9 +51,9 @@ require(['inputmanager'], function (inputmanager) {
 
     function onMouseEnter(e) {
 
-        var parent = Emby.FocusManager.focusableParent(e.target);
+        var parent = focusManager.focusableParent(e.target);
         if (parent) {
-            Emby.FocusManager.focus(e.target);
+            focusManager.focus(e.target);
         }
     }
 

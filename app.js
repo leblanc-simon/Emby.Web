@@ -263,6 +263,7 @@
             slyScroller: "components/slyscroller",
             appsettings: "components/appsettings",
             userSettings: "components/usersettings",
+            focusManager: "components/focusmanager",
             tvguide: "components/tvguide/guide",
             actionsheet: "components/actionsheet/actionsheet",
             playmenu: "components/playmenu",
@@ -270,13 +271,13 @@
             globalize: "components/globalize",
             inputmanager: "components/inputmanager",
             alphapicker: "components/alphapicker/alphapicker",
-            paperdialoghelper: "components/paperdialoghelper/paperdialoghelper",
             slideshow: "components/slideshow/slideshow",
             userdataButtons: "components/userdatabuttons/userdatabuttons",
             browserdeviceprofile: embyWebComponentsBowerPath + "/browserdeviceprofile",
             browser: embyWebComponentsBowerPath + "/browser",
             qualityoptions: embyWebComponentsBowerPath + "/qualityoptions",
             visibleinviewport: embyWebComponentsBowerPath + "/visibleinviewport",
+            performanceManager: embyWebComponentsBowerPath + "/performancemanager",
             isMobile: "bower_components/isMobile/isMobile.min",
             howler: 'bower_components/howler.js/howler.min',
             screenfull: 'bower_components/screenfull/dist/screenfull',
@@ -362,6 +363,15 @@
             return appSettings;
         });
 
+        // alias
+        define("historyManager", [], function () {
+            return Emby.Page;
+        });
+
+        define("paperdialoghelper", [embyWebComponentsBowerPath + "/paperdialoghelper/paperdialoghelper"], function (paperdialoghelper) {
+            return paperdialoghelper;
+        });
+
         define("paper-base", ["css!style/paperstyles.css"]);
         define("paper-spinner", ["html!" + bowerPath + "/paper-spinner/paper-spinner.html", 'paper-base']);
         define("paper-toast", ["html!" + bowerPath + "/paper-toast/paper-toast.html", 'paper-base']);
@@ -412,7 +422,6 @@
                 return connectionManager.currentApiClient();
             };
         });
-
     }
 
     function loadApiClientDependencies(callback) {
@@ -441,7 +450,6 @@
              'bower_components/page.js/page.js',
              'components/router',
              'css!style/style.css',
-             'js/focusmanager',
              'js/backdrops'
             ];
 

@@ -1,4 +1,4 @@
-define(['playbackManager'], function (playbackManager) {
+define(['playbackManager', 'focusManager'], function (playbackManager, focusManager) {
 
     var lastInputTime = new Date().getTime();
 
@@ -37,7 +37,7 @@ define(['playbackManager'], function (playbackManager) {
         var sourceElement = (options ? options.sourceElement : null);
 
         if (sourceElement) {
-            sourceElement = Emby.FocusManager.focusableParent(sourceElement);
+            sourceElement = focusManager.focusableParent(sourceElement);
         }
 
         sourceElement = sourceElement || document.activeElement || window;
@@ -61,16 +61,16 @@ define(['playbackManager'], function (playbackManager) {
         switch (name) {
 
             case 'up':
-                Emby.FocusManager.moveUp(sourceElement);
+                focusManager.moveUp(sourceElement);
                 break;
             case 'down':
-                Emby.FocusManager.moveDown(sourceElement);
+                focusManager.moveDown(sourceElement);
                 break;
             case 'left':
-                Emby.FocusManager.moveLeft(sourceElement);
+                focusManager.moveLeft(sourceElement);
                 break;
             case 'right':
-                Emby.FocusManager.moveRight(sourceElement);
+                focusManager.moveRight(sourceElement);
                 break;
             case 'home':
                 Emby.Page.goHome();

@@ -1,4 +1,4 @@
-define(['./spotlight'], function (spotlight) {
+define(['./spotlight', 'focusManager'], function (spotlight, focusManager) {
 
     function loadResume(element, parentId) {
 
@@ -134,7 +134,7 @@ define(['./spotlight'], function (spotlight) {
         var self = this;
 
         if (autoFocus) {
-            Emby.FocusManager.autoFocus(element, true);
+            focusManager.autoFocus(element);
         }
 
         loadSpotlight(element, parentId);

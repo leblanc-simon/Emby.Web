@@ -1,4 +1,4 @@
-define(['loading', 'connectionManager', 'startup/startuphelper'], function (loading, connectionManager, startupHelper) {
+define(['loading', 'connectionManager', 'startup/startuphelper', 'focusManager'], function (loading, connectionManager, startupHelper, focusManager) {
 
     return function (view, params) {
 
@@ -15,9 +15,9 @@ define(['loading', 'connectionManager', 'startup/startuphelper'], function (load
             view.querySelector('.txtPassword').value = '';
 
             if (params.user) {
-                Emby.FocusManager.focus(view.querySelector('.txtPassword'));
+                focusManager.focus(view.querySelector('.txtPassword'));
             } else {
-                Emby.FocusManager.focus(view.querySelector('.txtUserName'));
+                focusManager.focus(view.querySelector('.txtUserName'));
             }
 
             if (!isRestored) {

@@ -1,4 +1,4 @@
-define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo', 'paper-icon-item', 'paper-item-body', 'paper-progress'], function (datetime, imageLoader, connectionManager, itemHelper, mediaInfo) {
+define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo', 'focusManager', 'paper-icon-item', 'paper-item-body', 'paper-progress'], function (datetime, imageLoader, connectionManager, itemHelper, mediaInfo, focusManager) {
 
     function setShapeHorizontal(items, options, isHome) {
 
@@ -316,14 +316,17 @@ define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo
 
     function getDesiredAspect(shape) {
 
-        switch (shape) {
-
-            case 'squareCard':
-                return 1;
-            case 'backdropCard':
-                return (16 / 9);
-            case 'portraitCard':
+        if (shape) {
+            shape = shape.toLowerCase();
+            if (shape.indexOf('portrait') != -1) {
                 return (2 / 3);
+            }
+            if (shape.indexOf('backdrop') != -1) {
+                return (16 / 9);
+            }
+            if (shape.indexOf('square') != -1) {
+                return 1;
+            }
         }
         return null;
     }
@@ -693,7 +696,7 @@ define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo
         imageLoader.lazyChildren(options.itemsContainer);
 
         if (options.autoFocus) {
-            Emby.FocusManager.autoFocus(options.itemsContainer, true);
+            focusManager.autoFocus(options.itemsContainer, true);
         }
 
         if (options.indexBy == 'Genres') {

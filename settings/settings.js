@@ -1,4 +1,4 @@
-define(['loading', 'apphost', 'imageLoader'], function (loading, apphost, imageLoader) {
+define(['loading', 'apphost', 'imageLoader', 'focusManager'], function (loading, apphost, imageLoader, focusManager) {
 
     return function (view, params) {
 
@@ -118,7 +118,7 @@ define(['loading', 'apphost', 'imageLoader'], function (loading, apphost, imageL
             imageLoader.lazyChildren(view);
 
             setTimeout(function () {
-                Emby.FocusManager.autoFocus(view, true);
+                focusManager.autoFocus(view);
             }, 300);
         }
 

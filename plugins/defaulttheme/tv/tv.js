@@ -1,4 +1,4 @@
-define(['loading', 'alphapicker', './../components/horizontallist', './../components/focushandler', './../components/tabbedpage', './../components/backdrop'], function (loading, alphaPicker, horizontalList, focusHandler, tabbedPage, themeBackdrop) {
+define(['loading', 'alphapicker', './../components/horizontallist', './../components/focushandler', './../components/tabbedpage', './../components/backdrop', 'focusManager'], function (loading, alphaPicker, horizontalList, focusHandler, tabbedPage, themeBackdrop, focusManager) {
 
     return function(view, params) {
 
@@ -284,7 +284,7 @@ define(['loading', 'alphapicker', './../components/horizontallist', './../compon
                     setTimeout(function () {
                         var firstCard = section.querySelector('.card');
                         if (firstCard) {
-                            Emby.FocusManager.focus(firstCard);
+                            focusManager.focus(firstCard);
                         }
                     }, 400);
                 }

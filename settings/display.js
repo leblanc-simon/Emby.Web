@@ -1,4 +1,4 @@
-define(['loading', 'userSettings'], function (loading, userSettings) {
+define(['loading', 'userSettings', 'focusManager'], function (loading, userSettings, focusManager) {
 
     return function (view, params) {
 
@@ -34,7 +34,7 @@ define(['loading', 'userSettings'], function (loading, userSettings) {
 
         function renderSettings() {
 
-            Emby.FocusManager.autoFocus(view);
+            focusManager.autoFocus(view);
 
             var selectLanguage = view.querySelector('.selectLanguage');
 

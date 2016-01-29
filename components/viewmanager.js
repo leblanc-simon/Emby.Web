@@ -1,4 +1,4 @@
-define(['viewcontainer', 'bower_components/query-string/index'], function (viewcontainer) {
+define(['viewcontainer', 'focusManager', 'bower_components/query-string/index'], function (viewcontainer, focusManager) {
 
     var currentView;
 
@@ -39,7 +39,7 @@ define(['viewcontainer', 'bower_components/query-string/index'], function (viewc
         var eventDetail = getViewEventDetail(view, options, isRestore);
 
         if (!isRestore) {
-            Emby.FocusManager.autoFocus(view);
+            focusManager.autoFocus(view);
         }
         else if (view.activeElement) {
             view.activeElement.focus();

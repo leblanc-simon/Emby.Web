@@ -1,4 +1,4 @@
-define(['loading', './focushandler'], function (loading, focusHandler) {
+define(['loading', './focushandler', 'focusManager'], function (loading, focusHandler, focusManager) {
 
     function horizontalList(options) {
 
@@ -55,7 +55,7 @@ define(['loading', './focushandler'], function (loading, focusHandler) {
                     setTimeout(function () {
                         var firstCard = options.itemsContainer.querySelector('.card');
                         if (firstCard) {
-                            Emby.FocusManager.focus(firstCard);
+                            focusManager.focus(firstCard);
                         }
                     }, 400);
                 }

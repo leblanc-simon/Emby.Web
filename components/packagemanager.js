@@ -11,7 +11,11 @@ define(['appSettings', 'pluginManager'], function (appSettings, pluginManager) {
 
         self.install = function (url) {
 
-            return url;
+            var manifestUrls = JSON.parse(appSettings.get('installedpackages') || '[]');
+            manifestUrls.push(url);
+            appSettings.set('installedpackages', JSON.stringify(manifestUrls));
+
+            return loadPackage(url);
         };
 
         self.uninstall = function () {

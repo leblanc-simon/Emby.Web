@@ -1,4 +1,4 @@
-define(['playbackManager', 'inputmanager', 'datetime', 'itemHelper', 'mediaInfo'], function (playbackManager, inputManager, datetime, itemHelper, mediaInfo) {
+define(['playbackManager', 'inputmanager', 'datetime', 'itemHelper', 'mediaInfo', 'focusManager'], function (playbackManager, inputManager, datetime, itemHelper, mediaInfo, focusManager) {
 
     return function (view, params) {
 
@@ -181,7 +181,7 @@ define(['playbackManager', 'inputmanager', 'datetime', 'itemHelper', 'mediaInfo'
                   { transform: 'translate3d(0,0,0)', opacity: '1', offset: 1 }];
                 var timing = { duration: 300, iterations: 1, easing: 'ease-out' };
                 elem.animate(keyframes, timing).onfinish = function () {
-                    Emby.FocusManager.focus(elem.querySelector('.btnPause'));
+                    focusManager.focus(elem.querySelector('.btnPause'));
                 };
             });
         }

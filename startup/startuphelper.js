@@ -1,4 +1,4 @@
-define(['connectionManager', 'loading', 'themeManager'], function (connectionManager, loading, themeManager) {
+define(['connectionManager', 'loading', 'themeManager', 'focusManager'], function (connectionManager, loading, themeManager, focusManager) {
 
     function signIntoConnect(view) {
 
@@ -194,7 +194,7 @@ define(['connectionManager', 'loading', 'themeManager'], function (connectionMan
                 createHorizontalScroller(view, Sly);
             }
 
-            Emby.FocusManager.autoFocus(scrollSlider, true);
+            focusManager.autoFocus(scrollSlider);
         });
     }
 
@@ -288,7 +288,7 @@ define(['connectionManager', 'loading', 'themeManager'], function (connectionMan
 
         view.querySelector('.scrollSlider').addEventListener('focus', function (e) {
 
-            var focused = Emby.FocusManager.focusableParent(e.target);
+            var focused = focusManager.focusableParent(e.target);
             focusedElement = focused;
 
             if (focused) {
@@ -301,7 +301,7 @@ define(['connectionManager', 'loading', 'themeManager'], function (connectionMan
             var firstCard = scrollFrame.querySelector('.card');
 
             if (firstCard) {
-                Emby.FocusManager.focus(firstCard);
+                focusManager.focus(firstCard);
             }
         }, 200);
     }

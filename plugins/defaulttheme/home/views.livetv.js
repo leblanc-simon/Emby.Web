@@ -1,4 +1,4 @@
-define([], function () {
+define(['focusManager'], function (focusManager) {
 
     function loadLatestRecordings(element) {
 
@@ -65,7 +65,7 @@ define([], function () {
         var self = this;
 
         if (autoFocus) {
-            Emby.FocusManager.autoFocus(element, true);
+            focusManager.autoFocus(element);
         }
 
         loadLatestRecordings(element);

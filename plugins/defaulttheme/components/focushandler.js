@@ -1,4 +1,4 @@
-define(['imageLoader', 'itemHelper', './backdrop', 'mediaInfo'], function (imageLoader, itemHelper, themeBackdrop, mediaInfo) {
+define(['imageLoader', 'itemHelper', './backdrop', 'mediaInfo', 'focusManager'], function (imageLoader, itemHelper, themeBackdrop, mediaInfo, focusManager) {
 
     function focusHandler(options) {
 
@@ -24,7 +24,7 @@ define(['imageLoader', 'itemHelper', './backdrop', 'mediaInfo'], function (image
         var enableSelectedItemPanel = options.selectedItemMode == 'panel';
 
         function onFocusIn(e) {
-            var focused = Emby.FocusManager.focusableParent(e.target);
+            var focused = focusManager.focusableParent(e.target);
             focusedElement = focused;
 
             if (focused) {

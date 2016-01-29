@@ -31,10 +31,21 @@ define(['soundeffects', 'pluginManager', 'userSettings', 'connectionManager', 'e
         }
 
         if (soundeffectPlugin) {
-            effects = soundeffectPlugin.getEffects();
+            setEffects(soundeffectPlugin);
         } else {
             effects = {};
         }
+    }
+
+    function setEffects(soundeffectPlugin) {
+        
+        var effectDictionary = soundeffectPlugin.getEffects();
+        var temp = {};
+
+        for (var i in effectDictionary) {
+            temp[i] = pluginManager.mapPath(soundeffectPlugin, effectDictionary[i]);
+        }
+        effects = temp;
     }
 
     function onKeyDown(evt) {
