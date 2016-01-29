@@ -222,7 +222,7 @@ define(['./spotlight'], function (spotlight) {
         var imgUrl = Emby.Models.imageUrl(card.getAttribute('data-id'), {
             tag: card.querySelector('.primaryImageTag').value,
             type: 'Primary',
-            width: 400
+            maxWidth: 400
         });
 
         newCardImageContainer.style.backgroundImage = "url('" + imgUrl + "')";
