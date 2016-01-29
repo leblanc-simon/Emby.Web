@@ -136,7 +136,7 @@ button.card {
     height: auto !important;
 }
 
-.cardImage.coveredImage, .coveredImage .cardImage {
+.cardImage.coveredImage, .cardImageContainer.coveredImage, .coveredImage .cardImage {
     background-size: 100% 100%;
     background-position: center center;
 }
