@@ -1,4 +1,4 @@
-define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButtons', 'itemHelper', './../components/focushandler', './../components/backdrop', 'mediaInfo'], function (loading, datetime, playbackManager, imageLoader, userdataButtons, itemHelper, focusHandler, themeBackdrop, mediaInfo) {
+define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButtons', 'itemHelper', './../components/focushandler', './../components/backdrop', './../components/listview', 'mediaInfo'], function (loading, datetime, playbackManager, imageLoader, userdataButtons, itemHelper, focusHandler, themeBackdrop, listview, mediaInfo) {
 
     function focusMainSection() {
 
@@ -476,7 +476,7 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
             section.classList.remove('hide');
 
-            section.innerHTML = DefaultTheme.CardBuilder.getListViewHtml(result.Items, {
+            section.innerHTML = listview.getListViewHtml(result.Items, {
                 showIndexNumber: item.Type == 'MusicAlbum',
                 action: 'playallfromhere',
                 showParentTitle: true,
@@ -746,7 +746,7 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
             section.classList.remove('hide');
 
-            section.innerHTML = DefaultTheme.CardBuilder.getListViewHtml(result.Items, {
+            section.innerHTML = listview.getListViewHtml(result.Items, {
                 showIndexNumber: item.Type == 'MusicAlbum',
                 action: 'playallfromhere',
                 enableOverview: true,

@@ -1,4 +1,4 @@
-define(['playbackManager', 'slyScroller', 'loading', 'imageLoader', './../components/backdrop'], function (playbackManager, slyScroller, loading, imageLoader, themeBackdrop) {
+define(['playbackManager', 'slyScroller', 'loading', 'imageLoader', './../components/backdrop', './../components/listview'], function (playbackManager, slyScroller, loading, imageLoader, themeBackdrop, listview) {
 
     function createVerticalScroller(view, pageInstance) {
 
@@ -73,7 +73,7 @@ define(['playbackManager', 'slyScroller', 'loading', 'imageLoader', './../compon
 
             var items = playbackManager.playlist();
 
-            section.innerHTML = DefaultTheme.CardBuilder.getListViewHtml(items, {
+            section.innerHTML = listview.getListViewHtml(items, {
                 action: 'setplaylistindex',
                 showParentTitle: true,
                 enableSideMediaInfo: true
