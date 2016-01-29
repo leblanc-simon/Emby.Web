@@ -1,4 +1,4 @@
-define(['appsettings', 'connectionManagerResolver', 'events', 'browser'], function (appsettings, connectionManagerResolver, events, browser) {
+define(['appSettings', 'connectionManagerResolver', 'events', 'browser'], function (appsettings, connectionManagerResolver, events, browser) {
 
     function getUserId() {
 

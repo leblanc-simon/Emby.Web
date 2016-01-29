@@ -1,4 +1,4 @@
-define(['loading', 'appsettings', 'qualityoptions', 'userSettings', 'apiClientResolver', 'focusManager'], function (loading, appSettings, qualityoptions, userSettings, apiClientResolver, focusManager) {
+define(['loading', 'appSettings', 'qualityoptions', 'userSettings', 'apiClientResolver', 'focusManager'], function (loading, appSettings, qualityoptions, userSettings, apiClientResolver, focusManager) {
 
     return function (view, params) {
 

@@ -1,4 +1,4 @@
-define(['focusManager', 'css!components/alphapicker/style.css'], function (focusManager) {
+define(['focusManager', 'css!./style.css'], function (focusManager) {
 
     function focus() {
         var selected = this.querySelector('.selected');

@@ -1,4 +1,4 @@
-define(['paperdialoghelper'], function (paperdialoghelper) {
+define(['paperdialoghelper', 'css!./style.css'], function (paperdialoghelper) {
 
     return function (options) {
 

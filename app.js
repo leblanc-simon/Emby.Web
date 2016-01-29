@@ -240,6 +240,10 @@
 
     }
 
+    function returnFirstDependency(obj) {
+        return obj;
+    }
+
     function initRequire(customPaths) {
 
         console.log('Initializing requirejs');
@@ -252,7 +256,6 @@
             confirm: "components/confirm",
             toast: "components/toast",
             loading: "components/loading/loading",
-            dialog: "components/dialog",
             soundeffects: "components/soundeffects",
             apphost: customPaths.apphost || "components/apphost",
             shell: customPaths.shell || "components/shell",
@@ -261,7 +264,7 @@
             screensaverManager: "components/screensavermanager",
             viewManager: "components/viewmanager",
             slyScroller: "components/slyscroller",
-            appsettings: "components/appsettings",
+            appSettings: "components/appsettings",
             userSettings: "components/usersettings",
             focusManager: "components/focusmanager",
             tvguide: "components/tvguide/guide",
@@ -270,7 +273,6 @@
             datetime: embyWebComponentsBowerPath + "/datetime",
             globalize: "components/globalize",
             inputmanager: "components/inputmanager",
-            alphapicker: "components/alphapicker/alphapicker",
             slideshow: "components/slideshow/slideshow",
             userdataButtons: "components/userdatabuttons/userdatabuttons",
             browserdeviceprofile: embyWebComponentsBowerPath + "/browserdeviceprofile",
@@ -359,18 +361,18 @@
         });
 
         // alias
-        define("appSettings", ['appsettings'], function (appSettings) {
-            return appSettings;
-        });
+        define("appsettings", ['appSettings'], returnFirstDependency);
 
         // alias
         define("historyManager", [], function () {
             return Emby.Page;
         });
 
-        define("paperdialoghelper", [embyWebComponentsBowerPath + "/paperdialoghelper/paperdialoghelper"], function (paperdialoghelper) {
-            return paperdialoghelper;
-        });
+        define("paperdialoghelper", [embyWebComponentsBowerPath + "/paperdialoghelper/paperdialoghelper"], returnFirstDependency);
+
+        define("alphapicker", ["components/alphapicker/alphapicker"], returnFirstDependency);
+
+        define("dialog", ["components/dialog/dialog"], returnFirstDependency);
 
         define("paper-base", ["css!style/paperstyles.css"]);
         define("paper-spinner", ["html!" + bowerPath + "/paper-spinner/paper-spinner.html", 'paper-base']);
