@@ -1,4 +1,4 @@
-define(['paperdialoghelper', 'apphost'], function (paperdialoghelper, apphost) {
+define(['paperdialoghelper', 'apphost', 'css!./backmenu.css'], function (paperdialoghelper, apphost) {
 
     function getButton(name, icon, option) {
 
@@ -22,7 +22,8 @@ define(['paperdialoghelper', 'apphost'], function (paperdialoghelper, apphost) {
         var dialogResult;
 
         var dlg = paperdialoghelper.createDialog({
-            entryAnimation: 'fade-in-animation'
+            entryAnimation: 'fade-in-animation',
+            removeOnClose: true
         });
 
         dlg.classList.add('backMenu');
@@ -84,8 +85,6 @@ define(['paperdialoghelper', 'apphost'], function (paperdialoghelper, apphost) {
         });
 
         paperdialoghelper.open(dlg).then(function () {
-
-            dlg.parentNode.removeChild(dlg);
 
             var cancelled = false;
 
