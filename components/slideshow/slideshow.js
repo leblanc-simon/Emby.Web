@@ -1,37 +1,38 @@
-define(['paperdialoghelper', 'inputmanager', 'css!components/slideshow/style', 'inputmanager'], function (paperdialoghelper, inputmanager) {
+define(['paperdialoghelper', 'inputmanager', 'css!components/slideshow/style', 'coreIcons'], function (paperdialoghelper, inputmanager) {
 
-    function slideshow(options) {
+    return function (options) {
 
         var self = this;
+        var swiperInstance;
+        var dlg;
 
         function createElements(options) {
 
-            var elem = document.querySelector('.slideshowDialog');
-
-            if (elem) {
-                return elem;
-            }
-
-            var dlg = paperdialoghelper.createDialog({
+            dlg = paperdialoghelper.createDialog({
                 exitAnimationDuration: 800
             });
 
             dlg.classList.add('slideshowDialog');
 
             var html = '';
-            html += '<div class="dialogContent">';
-            html += '<div class="slideshowImage"></div><h1 class="slideshowImageText"></h1>';
 
             if (options.interactive) {
-                html += '<paper-icon-button icon="close" class="btnSlideshowExit"></paper-icon-button>';
+
+                html += '<div>';
+                html += '<div class="slideshowSwiperContainer"><div class="swiper-wrapper"></div></div>';
+
+                html += '<paper-icon-button icon="core:arrow-back" class="btnSlideshowExit" tabindex="-1"></paper-icon-button>';
 
                 html += '<div class="slideshowControlBar">';
-                html += '<paper-icon-button icon="arrow-back" class="btnSlideshowPrevious largeIcon"></paper-icon-button>';
-                html += '<paper-icon-button icon="arrow-forward" class="btnSlideshowNext largeIcon"></paper-icon-button>';
+                html += '<paper-icon-button icon="core:skip-previous" class="btnSlideshowPrevious slideshowButton"></paper-icon-button>';
+                html += '<paper-icon-button icon="core:pause" class="btnSlideshowPause slideshowButton"></paper-icon-button>';
+                html += '<paper-icon-button icon="core:skip-next" class="btnSlideshowNext slideshowButton"></paper-icon-button>';
                 html += '</div>';
-            }
+                html += '</div>';
 
-            html += '</div>';
+            } else {
+                html += '<div class="slideshowImage"></div><h1 class="slideshowImageText"></h1>';
+            }
 
             dlg.innerHTML = html;
 
@@ -42,6 +43,7 @@ define(['paperdialoghelper', 'inputmanager', 'css!components/slideshow/style', '
                 });
                 dlg.querySelector('.btnSlideshowNext').addEventListener('click', nextImage);
                 dlg.querySelector('.btnSlideshowPrevious').addEventListener('click', previousImage);
+                dlg.querySelector('.btnSlideshowPause').addEventListener('click', playPause);
             }
 
             document.body.appendChild(dlg);
@@ -52,25 +54,96 @@ define(['paperdialoghelper', 'inputmanager', 'css!components/slideshow/style', '
                 dlg.parentNode.removeChild(dlg);
             });
 
-
             inputmanager.on(window, onInputCommand);
 
             dlg.addEventListener('iron-overlay-closed', onDialogClosed);
 
-            return dlg;
+            if (options.interactive) {
+                loadSwiper(dlg);
+            }
+        }
+
+        function loadSwiper(dlg) {
+
+            dlg.querySelector('.swiper-wrapper').innerHTML = currentOptions.items.map(getSwiperSlideHtml).join('');
+
+            require(['swiper'], function (swiper) {
+
+                swiperInstance = new Swiper(dlg.querySelector('.slideshowSwiperContainer'), {
+                    // Optional parameters
+                    direction: 'horizontal',
+                    loop: true,
+                    autoplay: options.interval || 8000,
+                    // Disable preloading of all images
+                    preloadImages: false,
+                    // Enable lazy loading
+                    lazyLoading: true,
+                    autoplayDisableOnInteraction: false,
+                    initialSlide: options.startIndex || 0
+                });
+                swiperInstance.startAutoplay();
+            });
+        }
+
+        function getSwiperSlideHtml(item) {
+
+            var html = '';
+            html += '<div class="swiper-slide">';
+            html += '<img data-src="' + getImgUrl(item) + '" class="swiper-lazy">';
+            html += '<paper-spinner class="swiper-lazy-preloader"></paper-spinner>';
+            html += '</div>';
+
+            return html;
         }
 
         function previousImage() {
-            stopInterval();
-            showNextImage(currentIndex - 1);
+            if (swiperInstance) {
+                swiperInstance.slidePrev();
+            } else {
+                stopInterval();
+                showNextImage(currentIndex - 1);
+            }
         }
 
         function nextImage() {
-            stopInterval();
-            showNextImage(currentIndex + 1);
+            if (swiperInstance) {
+                swiperInstance.slideNext();
+            } else {
+                stopInterval();
+                showNextImage(currentIndex + 1);
+            }
+        }
+
+        function play() {
+
+            dlg.querySelector('.btnSlideshowPause').icon = "core:pause";
+            swiperInstance.startAutoplay();
+        }
+
+        function pause() {
+
+            dlg.querySelector('.btnSlideshowPause').icon = "core:play-arrow";
+            swiperInstance.stopAutoplay();
+        }
+
+        function playPause() {
+
+            var paused = dlg.querySelector('.btnSlideshowPause').icon != "core:pause";
+            if (paused) {
+                play();
+            } else {
+                pause();
+            }
         }
 
         function onDialogClosed() {
+
+            var swiper = swiperInstance;
+            if (swiper) {
+                swiper.destroy(true, true);
+                swiperInstance = null;
+            }
+
             inputmanager.off(window, onInputCommand);
         }
 
@@ -86,8 +159,24 @@ define(['paperdialoghelper', 'inputmanager', 'css!components/slideshow/style', '
             stopInterval();
             createElements(options);
 
-            currentIntervalMs = options.interval || 6000;
-            showNextImage(options.startIndex || 0, true);
+            if (!options.interactive) {
+                currentIntervalMs = options.interval || 8000;
+                showNextImage(options.startIndex || 0, true);
+            }
+        }
+
+        function getImgUrl(item) {
+
+            if (item.BackdropImageTags && item.BackdropImageTags.length) {
+                return Emby.Models.backdropImageUrl(item, {
+                    maxWidth: screen.availWidth
+                });
+            } else {
+                return Emby.Models.imageUrl(item, {
+                    type: "Primary",
+                    maxWidth: screen.availWidth
+                });
+            }
         }
 
         function showNextImage(index, skipPreload) {
@@ -101,23 +190,12 @@ define(['paperdialoghelper', 'inputmanager', 'css!components/slideshow/style', '
             var options = currentOptions;
             var items = options.items;
             var item = items[index];
-            var imgUrl;
-
-            if (item.BackdropImageTags && item.BackdropImageTags.length) {
-                imgUrl = Emby.Models.backdropImageUrl(item, {
-                    maxWidth: screen.availWidth
-                });
-            } else {
-                imgUrl = Emby.Models.imageUrl(item, {
-                    type: "Primary",
-                    maxWidth: screen.availWidth
-                });
-            }
+            var imgUrl = getImgUrl(item);
 
             var onSrcLoaded = function () {
-                var cardImageContainer = document.querySelector('.slideshowImage');
+                var cardImageContainer = dlg.querySelector('.slideshowImage');
 
-                var newCardImageContainer = document.createElement('div');
+                var newCardImageContainer = dlg.createElement('div');
                 newCardImageContainer.className = cardImageContainer.className;
 
                 if (options.cover) {
@@ -129,9 +207,9 @@ define(['paperdialoghelper', 'inputmanager', 'css!components/slideshow/style', '
                 cardImageContainer.parentNode.appendChild(newCardImageContainer);
 
                 if (options.showTitle) {
-                    document.querySelector('.slideshowImageText').innerHTML = item.Name;
+                    dlg.querySelector('.slideshowImageText').innerHTML = item.Name;
                 } else {
-                    document.querySelector('.slideshowImageText').innerHTML = '';
+                    dlg.querySelector('.slideshowImageText').innerHTML = '';
                 }
 
                 newCardImageContainer.classList.remove('hide');
@@ -187,9 +265,21 @@ define(['paperdialoghelper', 'inputmanager', 'css!components/slideshow/style', '
                 case 'right':
                     nextImage();
                     break;
+                case 'play':
+                    play();
+                    break;
+                case 'pause':
+                    pause();
+                    break;
+                case 'playpause':
+                    playPause();
+                    break;
                 default:
+                    return
                     break;
             }
+
+            e.preventDefault();
         }
 
         self.show = function () {
@@ -198,13 +288,11 @@ define(['paperdialoghelper', 'inputmanager', 'css!components/slideshow/style', '
 
         self.hide = function () {
 
-            var dlg = document.querySelector('.slideshowDialog');
-            if (dlg) {
+            var dialog = dlg;
+            if (dialog) {
 
-                paperdialoghelper.close(dlg);
+                paperdialoghelper.close(dialog);
             }
         };
     }
-
-    return slideshow;
 });

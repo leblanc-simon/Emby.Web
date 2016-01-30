@@ -424,6 +424,8 @@
                 return connectionManager.currentApiClient();
             };
         });
+
+        define("swiper", [bowerPath + "/Swiper/dist/js/swiper.min", "css!" + bowerPath + "/Swiper/dist/css/swiper.min"], returnFirstDependency);
     }
 
     function loadApiClientDependencies(callback) {

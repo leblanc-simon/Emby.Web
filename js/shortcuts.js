@@ -48,7 +48,7 @@ define(['playbackManager'], function (playbackManager) {
                         cover: false,
                         items: items,
                         startIndex: index,
-                        interval: 5000,
+                        interval: 8000,
                         interactive: true
                     });
 
