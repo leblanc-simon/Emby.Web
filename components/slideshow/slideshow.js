@@ -195,7 +195,7 @@ define(['paperdialoghelper', 'inputmanager', 'css!components/slideshow/style', '
             var onSrcLoaded = function () {
                 var cardImageContainer = dlg.querySelector('.slideshowImage');
 
-                var newCardImageContainer = dlg.createElement('div');
+                var newCardImageContainer = document.createElement('div');
                 newCardImageContainer.className = cardImageContainer.className;
 
                 if (options.cover) {
