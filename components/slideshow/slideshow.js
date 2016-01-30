@@ -90,7 +90,7 @@ define(['paperdialoghelper', 'inputmanager', 'css!components/slideshow/style', '
             var html = '';
             html += '<div class="swiper-slide">';
             html += '<img data-src="' + getImgUrl(item) + '" class="swiper-lazy">';
-            html += '<paper-spinner class="swiper-lazy-preloader"></paper-spinner>';
+            //html += '<paper-spinner class="swiper-lazy-preloader"></paper-spinner>';
             html += '</div>';
 
             return html;
