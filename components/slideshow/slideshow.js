@@ -25,7 +25,7 @@ define(['paperdialoghelper', 'inputmanager', 'css!components/slideshow/style', '
 
                 html += '<div class="slideshowControlBar">';
                 html += '<paper-icon-button icon="core:skip-previous" class="btnSlideshowPrevious slideshowButton"></paper-icon-button>';
-                html += '<paper-icon-button icon="core:pause" class="btnSlideshowPause slideshowButton"></paper-icon-button>';
+                html += '<paper-icon-button icon="core:pause" class="btnSlideshowPause slideshowButton" autoFocus></paper-icon-button>';
                 html += '<paper-icon-button icon="core:skip-next" class="btnSlideshowNext slideshowButton"></paper-icon-button>';
                 html += '</div>';
                 html += '</div>';
