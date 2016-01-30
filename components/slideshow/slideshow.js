@@ -9,7 +9,8 @@ define(['paperdialoghelper', 'inputmanager', 'css!components/slideshow/style', '
         function createElements(options) {
 
             dlg = paperdialoghelper.createDialog({
-                exitAnimationDuration: 800
+                exitAnimationDuration: 800,
+                size: 'fullscreen'
             });
 
             dlg.classList.add('slideshowDialog');

@@ -1,3 +1,10 @@
+.dialogComponent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
 .dialogContent {
     max-width: 50%;
     text-align: center;

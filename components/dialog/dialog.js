@@ -13,7 +13,11 @@ define(['paperdialoghelper', 'css!./style.css'], function (paperdialoghelper) {
         var title = options.title;
         var callback = options.callback;
 
-        var dlg = paperdialoghelper.createDialog();
+        var dlg = paperdialoghelper.createDialog({
+            size: 'fullscreen'
+        });
+
+        dlg.classList.add('dialogComponent');
 
         var html = '';
         html += '<div class="dialogContent">';
@@ -50,7 +54,7 @@ define(['paperdialoghelper', 'css!./style.css'], function (paperdialoghelper) {
             }
         });
 
-        paperdialoghelper.open(dlg).then(function() {
+        paperdialoghelper.open(dlg).then(function () {
             dlg.parentNode.removeChild(dlg);
 
             if (callback) {

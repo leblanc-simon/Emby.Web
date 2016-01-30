@@ -1,4 +1,4 @@
-define(['paperdialoghelper', 'pluginManager'], function (paperdialoghelper, pluginManager) {
+define(['pluginManager'], function (pluginManager) {
 
     return function () {
 
@@ -7,28 +7,6 @@ define(['paperdialoghelper', 'pluginManager'], function (paperdialoghelper, plug
         self.name = 'Default Keyboard';
         self.type = 'keyboard';
         self.id = 'keyboard';
-
-        function loadKeyLime() {
-
-            return new Promise(function (resolve, reject) {
-
-                if (window.keyLime) {
-                    resolve();
-                    return;
-                }
-
-                require([pluginManager.mapPath(self, 'keylime.js')], function () {
-                    window.keyLime.config = window.keyLime.config || {};
-                    window.keyLime.config.noauto = true;
-                    resolve();
-                });
-            });
-
-        }
-
-        function showKeyLime() {
-            window.keyLime.show();
-        }
 
         function getKeys() {
 
@@ -160,9 +138,11 @@ define(['paperdialoghelper', 'pluginManager'], function (paperdialoghelper, plug
             return displayValue;
         }
 
-        function showInternal(options) {
+        function showInternal(options, paperdialoghelper) {
+
             var dlg = paperdialoghelper.createDialog({
-                removeOnClose: true
+                removeOnClose: true,
+                size: 'fullscreen'
             });
 
             dlg.classList.add('keyboardDialog');
@@ -236,9 +216,9 @@ define(['paperdialoghelper', 'pluginManager'], function (paperdialoghelper, plug
 
         self.show = function (options) {
 
-            require(['css!' + Emby.PluginManager.mapPath(self, 'style.css'), 'html!' + Emby.PluginManager.mapPath(self, 'icons.html')], function () {
+            require(['paperdialoghelper', 'css!' + Emby.PluginManager.mapPath(self, 'style.css'), 'html!' + Emby.PluginManager.mapPath(self, 'icons.html')], function (paperdialoghelper) {
 
-                showInternal(options);
+                showInternal(options, paperdialoghelper);
             });
         };
     }

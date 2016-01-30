@@ -1,5 +1,8 @@
 paper-dialog.actionSheet {
     flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .actionSheetMenuItem {

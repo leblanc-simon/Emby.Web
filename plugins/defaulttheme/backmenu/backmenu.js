@@ -23,7 +23,8 @@ define(['paperdialoghelper', 'apphost', 'css!./backmenu.css'], function (paperdi
 
         var dlg = paperdialoghelper.createDialog({
             entryAnimation: 'fade-in-animation',
-            removeOnClose: true
+            removeOnClose: true,
+            size: 'fullscreen'
         });
 
         dlg.classList.add('backMenu');

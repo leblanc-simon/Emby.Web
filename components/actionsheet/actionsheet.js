@@ -7,7 +7,8 @@
         // showCancel
         // title
         var dlg = paperdialoghelper.createDialog({
-            removeOnClose: true
+            removeOnClose: true,
+            size: 'fullscreen'
         });
 
         dlg.classList.add('actionSheet');

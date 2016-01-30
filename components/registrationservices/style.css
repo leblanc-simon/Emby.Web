@@ -1,5 +1,9 @@
 .registrationDialog {
     background: rgba(28, 28, 28, .98) !important;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .registrationDialogContent {

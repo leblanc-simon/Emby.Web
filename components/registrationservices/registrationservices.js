@@ -26,7 +26,8 @@ define(['connectionManager', 'paperdialoghelper', 'css!components/registrationse
     function showUnlockOverlay(feature) {
 
         var dlg = paperdialoghelper.createDialog({
-            removeOnClose: true
+            removeOnClose: true,
+            size: 'fullscreen'
         });
 
         dlg.classList.add('registrationDialog');
