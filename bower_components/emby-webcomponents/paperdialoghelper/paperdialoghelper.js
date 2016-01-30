@@ -109,16 +109,19 @@
         dlg.entryAnimation = options.entryAnimation || defaultEntryAnimation;
         dlg.exitAnimation = 'fade-out-animation';
 
+        // If it's not fullscreen then lower the default animation speed to make it open really fast
+        var entryAnimationDuration = options.entryAnimationDuration || (options.size ? 240 : 300);
+
         dlg.animationConfig = {
             // scale up
             'entry': {
-                name: options.entryAnimation || 'scale-up-animation',
+                name: dlg.entryAnimation,
                 node: dlg,
-                timing: { duration: options.entryAnimationDuration || 300, easing: 'ease-out' }
+                timing: { duration: entryAnimationDuration, easing: 'ease-out' }
             },
             // fade out
             'exit': {
-                name: 'fade-out-animation',
+                name: dlg.exitAnimation,
                 node: dlg,
                 timing: { duration: options.exitAnimationDuration || 400, easing: 'ease-in' }
             }
@@ -140,7 +143,9 @@
             dlg.classList.add(options.size);
         }
 
-        dlg.addEventListener('iron-overlay-opened', onDialogOpened);
+        if (options.autoFocus !== false) {
+            dlg.addEventListener('iron-overlay-opened', onDialogOpened);
+        }
 
         return dlg;
     }
