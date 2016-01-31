@@ -141,7 +141,8 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
                 transition: 'slide',
                 controller: self.id + '/search/search',
                 dependencies: [
-                    'css!' + pluginManager.mapPath(self, 'search/search.css')
+                    'css!' + pluginManager.mapPath(self, 'search/search.css'),
+					'paper-input'
                 ]
             });
 
