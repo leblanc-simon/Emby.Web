@@ -3,19 +3,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.keyboardValue {
-    margin: 1.5em 0;
     text-align: center;
 }
 
 .keyboardValue {
+    margin: 1.5em auto;
+    text-align: center;
     font-size: 150%;
     font-weight: 300;
     border-bottom: 1px solid #444;
     padding-bottom: .25em;
-    width: 50%;
+    width: 60%;
 }
 
 .keyboardContainer {

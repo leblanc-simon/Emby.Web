@@ -149,6 +149,7 @@ define(['pluginManager'], function (pluginManager) {
 
             var html = '';
 
+            html += '<div style="margin:0;padding:0;">';
             html += '<paper-icon-button tabindex="-1" icon="keyboard:arrow-back" class="btnKeyboardExit"></paper-icon-button>';
 
             if (options.label) {
@@ -194,6 +195,7 @@ define(['pluginManager'], function (pluginManager) {
             html += '</div>';
 
             html += '</div>';
+            html += '</div>';
 
             dlg.innerHTML = html;
             document.body.appendChild(dlg);
@@ -216,7 +218,7 @@ define(['pluginManager'], function (pluginManager) {
 
         self.show = function (options) {
 
-            require(['paperdialoghelper', 'css!' + Emby.PluginManager.mapPath(self, 'style.css'), 'html!' + Emby.PluginManager.mapPath(self, 'icons.html')], function (paperdialoghelper) {
+            require(['paperdialoghelper', 'css!' + Emby.PluginManager.mapPath(self, 'style.css'), 'iron-icon-set', 'html!' + Emby.PluginManager.mapPath(self, 'icons.html')], function (paperdialoghelper) {
 
                 showInternal(options, paperdialoghelper);
             });
