@@ -22,6 +22,16 @@ define(['datetime', 'coreIcons'], function (datetime) {
             }
         }
 
+        else if (item.Type == "PhotoAlbum") {
+
+            var count = item.ChildCount;
+
+            if (count) {
+
+                miscInfo.push(Globalize.translate('core#ItemCount', count));
+            }
+        }
+
         if (item.Type == "Episode" || item.MediaType == 'Photo') {
 
             if (item.PremiereDate) {

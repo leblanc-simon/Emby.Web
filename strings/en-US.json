@@ -69,6 +69,7 @@
     "DisplayLanguage": "Display language",
     "DisplaySettings": "Display Settings",
     "TrackCount": "{0} tracks",
+    "ItemCount": "{0} items",
     "ButtonGenerateNewPin": "Generate New Pin",
     "ConnectLoginHelp1": "With Emby Connect you can easily access your Emby Server wherever you are and share servers with your family and friends.",
     "CreatePinErrorMessage": "An error occurred while creating a pin code. Please click Generate New Pin to try again.",
