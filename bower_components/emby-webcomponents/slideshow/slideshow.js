@@ -1,4 +1,4 @@
-define(['paperdialoghelper', 'inputmanager', 'css!components/slideshow/style', 'coreIcons'], function (paperdialoghelper, inputmanager) {
+define(['paperdialoghelper', 'inputmanager', 'css!./style', 'html!./icons', 'iron-icon-set'], function (paperdialoghelper, inputmanager) {
 
     return function (options) {
 
@@ -22,12 +22,12 @@ define(['paperdialoghelper', 'inputmanager', 'css!components/slideshow/style', '
                 html += '<div>';
                 html += '<div class="slideshowSwiperContainer"><div class="swiper-wrapper"></div></div>';
 
-                html += '<paper-icon-button icon="core:arrow-back" class="btnSlideshowExit" tabindex="-1"></paper-icon-button>';
+                html += '<paper-icon-button icon="slideshow:arrow-back" class="btnSlideshowExit" tabindex="-1"></paper-icon-button>';
 
                 html += '<div class="slideshowControlBar">';
-                html += '<paper-icon-button icon="core:skip-previous" class="btnSlideshowPrevious slideshowButton"></paper-icon-button>';
-                html += '<paper-icon-button icon="core:pause" class="btnSlideshowPause slideshowButton" autoFocus></paper-icon-button>';
-                html += '<paper-icon-button icon="core:skip-next" class="btnSlideshowNext slideshowButton"></paper-icon-button>';
+                html += '<paper-icon-button icon="slideshow:skip-previous" class="btnSlideshowPrevious slideshowButton"></paper-icon-button>';
+                html += '<paper-icon-button icon="slideshow:pause" class="btnSlideshowPause slideshowButton" autoFocus></paper-icon-button>';
+                html += '<paper-icon-button icon="slideshow:skip-next" class="btnSlideshowNext slideshowButton"></paper-icon-button>';
                 html += '</div>';
                 html += '</div>';
 
@@ -66,7 +66,11 @@ define(['paperdialoghelper', 'inputmanager', 'css!components/slideshow/style', '
 
         function loadSwiper(dlg) {
 
-            dlg.querySelector('.swiper-wrapper').innerHTML = currentOptions.items.map(getSwiperSlideHtml).join('');
+            if (currentOptions.slides) {
+                dlg.querySelector('.swiper-wrapper').innerHTML = currentOptions.slides.map(getSwiperSlideHtmlFromSlide).join('');
+            } else {
+                dlg.querySelector('.swiper-wrapper').innerHTML = currentOptions.items.map(getSwiperSlideHtmlFromItem).join('');
+            }
 
             require(['swiper'], function (swiper) {
 
@@ -86,12 +90,37 @@ define(['paperdialoghelper', 'inputmanager', 'css!components/slideshow/style', '
             });
         }
 
-        function getSwiperSlideHtml(item) {
+        function getSwiperSlideHtmlFromItem(item) {
+
+            return getSwiperSlideHtmlFromSlide({
+                imageUrl: getImgUrl(item)
+                //title: item.Name,
+                //description: item.Overview
+            });
+        }
+
+        function getSwiperSlideHtmlFromSlide(item) {
 
             var html = '';
             html += '<div class="swiper-slide">';
-            html += '<img data-src="' + getImgUrl(item) + '" class="swiper-lazy">';
+            html += '<img data-src="' + item.imageUrl + '" class="swiper-lazy">';
             //html += '<paper-spinner class="swiper-lazy-preloader"></paper-spinner>';
+            if (item.title || item.subtitle) {
+                html += '<div class="slideText">';
+                html += '<div class="slideTextInner">';
+                if (item.title) {
+                    html += '<div class="slideTitle">';
+                    html += item.title;
+                    html += '</div>';
+                }
+                if (item.description) {
+                    html += '<div class="slideSubtitle">';
+                    html += item.description;
+                    html += '</div>';
+                }
+                html += '</div>';
+                html += '</div>';
+            }
             html += '</div>';
 
             return html;
@@ -117,19 +146,19 @@ define(['paperdialoghelper', 'inputmanager', 'css!components/slideshow/style', '
 
         function play() {
 
-            dlg.querySelector('.btnSlideshowPause').icon = "core:pause";
+            dlg.querySelector('.btnSlideshowPause').icon = "slideshow:pause";
             swiperInstance.startAutoplay();
         }
 
         function pause() {
 
-            dlg.querySelector('.btnSlideshowPause').icon = "core:play-arrow";
+            dlg.querySelector('.btnSlideshowPause').icon = "slideshow:play-arrow";
             swiperInstance.stopAutoplay();
         }
 
         function playPause() {
 
-            var paused = dlg.querySelector('.btnSlideshowPause').icon != "core:pause";
+            var paused = dlg.querySelector('.btnSlideshowPause').icon != "slideshow:pause";
             if (paused) {
                 play();
             } else {

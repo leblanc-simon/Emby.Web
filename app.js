@@ -273,7 +273,6 @@
             datetime: embyWebComponentsBowerPath + "/datetime",
             globalize: "components/globalize",
             inputmanager: "components/inputmanager",
-            slideshow: "components/slideshow/slideshow",
             userdataButtons: "components/userdatabuttons/userdatabuttons",
             browserdeviceprofile: embyWebComponentsBowerPath + "/browserdeviceprofile",
             browser: embyWebComponentsBowerPath + "/browser",
@@ -369,6 +368,7 @@
         });
 
         define("paperdialoghelper", [embyWebComponentsBowerPath + "/paperdialoghelper/paperdialoghelper"], returnFirstDependency);
+        define("slideshow", [embyWebComponentsBowerPath + "/slideshow/slideshow"], returnFirstDependency);
 
         define("alphapicker", ["components/alphapicker/alphapicker"], returnFirstDependency);
 
