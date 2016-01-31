@@ -9,6 +9,7 @@
     background-size: contain;
     background-repeat: no-repeat;
     margin: 0 !important;
+    color: #fff;
 }
 
     .slideshowImage.cover {
@@ -47,8 +48,9 @@
     position: absolute;
     top: 1%;
     left: .5%;
-    width: 5.2vh;
-    height: 5.2vh;
+    width: 6vh;
+    height: 6vh;
+    color: #eee;
 }
 
 .slideshowControlBar {
@@ -59,6 +61,7 @@
     z-index: 1002;
     background: rgba(0,0,0,.5);
     text-align: center;
+    color: #eee;
 }
 
 .mouseIdle .btnSlideshowExit {
@@ -71,8 +74,8 @@
 }
 
 .slideshowButton {
-    width: 7vh;
-    height: 7vh;
+    width: 8vh;
+    height: 8vh;
 }
 
 .slideText {
@@ -81,7 +84,6 @@
     right: 0;
     bottom: 10vh;
     text-align: center;
-    color: #fff;
 }
 
 .slideTextInner {

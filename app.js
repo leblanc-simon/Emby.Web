@@ -272,7 +272,7 @@
             playmenu: "components/playmenu",
             datetime: embyWebComponentsBowerPath + "/datetime",
             globalize: "components/globalize",
-            inputmanager: "components/inputmanager",
+            inputManager: "components/inputmanager",
             userdataButtons: "components/userdatabuttons/userdatabuttons",
             browserdeviceprofile: embyWebComponentsBowerPath + "/browserdeviceprofile",
             browser: embyWebComponentsBowerPath + "/browser",
@@ -361,6 +361,9 @@
 
         // alias
         define("appsettings", ['appSettings'], returnFirstDependency);
+
+        // alias
+        define("inputmanager", ['inputManager'], returnFirstDependency);
 
         // alias
         define("historyManager", [], function () {
