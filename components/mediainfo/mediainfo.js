@@ -22,7 +22,7 @@ define(['datetime', 'coreIcons'], function (datetime) {
             }
         }
 
-        else if (item.Type == "PhotoAlbum") {
+        else if (item.Type == "PhotoAlbum" || item.Type == "BoxSet") {
 
             var count = item.ChildCount;
 
