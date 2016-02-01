@@ -357,7 +357,11 @@
                     else if (item.Type == "MusicAlbum") {
 
                     }
-                    options.SortBy = "SortName";
+                    else if (item.Type == "BoxSet") {
+
+                    } else {
+                        options.SortBy = "SortName";
+                    }
                 }
 
                 normalizeOptions(options);
