@@ -90,7 +90,6 @@ button.card {
 
 .dimunselected .card[focused] .cardImageContainer, .dimunselected .card:focus .cardImageContainer {
     -webkit-filter: none;
-    box-shadow: 0px 0px 5px #fff;
 }
 
 .cardImageContainer {
