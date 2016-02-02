@@ -1,4 +1,5 @@
 {
+    "DimUnselectedPosters": "Dim unselected posters",
     "Play": "Reproducir",
     "Queue": "Cola",
     "Shuffle": "Aleatorio",
@@ -82,6 +83,9 @@
     "Collections": "Colecciones",
     "Years": "A\u00f1os",
     "Favorites": "Favoritos",
-    "More": "More",
-    "Playlists": "Playlists"
+    "More": "Mas",
+    "Playlists": "Listas de Reproducci\u00f3n",
+    "EnableEpisodeSpoilerProtection": "Habilitar opciones anti-spoilers",
+    "EnableEpisodeSpoilerProtectionHelp": "Ocultar detalles para episodios mas all\u00e1 del primero que ha sido visto.",
+    "DefaultTheme": "Tema por defecto"
 }

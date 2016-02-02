@@ -1,4 +1,5 @@
 {
+    "DimUnselectedPosters": "Dim unselected posters",
     "Play": "Lire",
     "Queue": "File d'attente",
     "Shuffle": "Lecture al\u00e9atoire",
@@ -82,6 +83,9 @@
     "Collections": "Collections",
     "Years": "Ann\u00e9es",
     "Favorites": "Favoris",
-    "More": "More",
-    "Playlists": "Playlists"
+    "More": "Plus",
+    "Playlists": "Listes de lecture",
+    "EnableEpisodeSpoilerProtection": "Activer les fonctionnalit\u00e9s anti-spoiler",
+    "EnableEpisodeSpoilerProtectionHelp": "Cacher les d\u00e9tails pour les \u00e9pisodes au-del\u00e0 du premier non visionn\u00e9",
+    "DefaultTheme": "Th\u00e8me par d\u00e9faut"
 }
