@@ -76,5 +76,6 @@
     "PinExpiredMessage": "The pin code has expired. Please click Generate New Pin to try again.",
     "ConnectPinCodeHeader": "To sign in with Emby Connect, visit {0} and enter the following pin code:",
     "SoundEffects": "Sound effects",
+    "ValueSpecialEpisodeName": "Special - {0}",
     "Sounds": "Sounds"
 }

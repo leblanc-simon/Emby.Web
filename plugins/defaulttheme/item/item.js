@@ -734,10 +734,6 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
             Fields: "Overview"
         };
 
-        if (item.Type != 'BoxSet') {
-            options.SortBy = 'SortName';
-        }
-
         Emby.Models.children(item, options).then(function (result) {
 
             if (!result.Items.length) {

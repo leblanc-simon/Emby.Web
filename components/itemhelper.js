@@ -17,7 +17,7 @@ define([], function () {
             }
             return name;
         }
-        if (options.isInlineSpecial && item.Type == "Episode" && item.ParentIndexNumber == 0) {
+        if (/*options.isInlineSpecial &&*/ item.Type == "Episode" && item.ParentIndexNumber == 0) {
 
             name = Globalize.translate('core#ValueSpecialEpisodeName', name);
 
