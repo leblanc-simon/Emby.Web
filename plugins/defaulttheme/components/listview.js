@@ -117,10 +117,6 @@ define(['itemHelper', 'mediaInfo', 'paper-icon-item', 'paper-item-body'], functi
                 html += '<div secondary class="overview">';
                 html += item.Overview;
                 html += '</div>';
-
-                if (item.UserData && !item.UserData.Played) {
-                    enableOverview = false;
-                }
             }
 
             html += '</paper-item-body>';
