@@ -1,5 +1,5 @@
-define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButtons', 'itemHelper', './../components/focushandler', './../components/backdrop', './../components/listview', 'mediaInfo', 'focusManager', 'userSettings'],
-    function (loading, datetime, playbackManager, imageLoader, userdataButtons, itemHelper, focusHandler, themeBackdrop, listview, mediaInfo, focusManager, userSettings) {
+define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButtons', 'itemHelper', './../components/focushandler', './../components/backdrop', './../components/listview', 'mediaInfo', 'focusManager', './../themesettings'],
+    function (loading, datetime, playbackManager, imageLoader, userdataButtons, itemHelper, focusHandler, themeBackdrop, listview, mediaInfo, focusManager, themeSettings) {
 
         function focusMainSection() {
 
@@ -756,7 +756,7 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
                 section.classList.remove('hide');
 
-                if ((userSettings.get('antispoilers') || 'true') == 'true') {
+                if (themeSettings.enableAntiSpoliers()) {
 
                     var isFirstUnseen = true;
                     result.Items.forEach(function (item) {

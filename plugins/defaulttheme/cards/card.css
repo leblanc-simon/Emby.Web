@@ -82,35 +82,15 @@ button.card {
     animation-fill-mode: both;
 }*/
 
-.transformCard .cardBox {
-    animation: scaleCardUp .4s;
-    animation-fill-mode: both;
+.dimunselected .card .cardImageContainer {
+    -webkit-filter: brightness(50%);
+    filter: brightness(50%);
+    transition: filter, -webkit-filter 300ms ease-out !important;
 }
 
-@keyframes scaleCardUp {
-    from {
-        transform: scale(1);
-    }
-
-    to {
-        transform: scale(1.14);
-    }
-}
-
-.transformCardReverse .cardBox {
-    animation: scaleCardDown .4s;
-    animation-fill-mode: both;
-    z-index: 999999;
-}
-
-@keyframes scaleCardDown {
-    from {
-        transform: scale(1.14);
-    }
-
-    to {
-        transform: scale(1);
-    }
+.dimunselected .card[focused] .cardImageContainer, .dimunselected .card:focus .cardImageContainer {
+    -webkit-filter: none;
+    box-shadow: 0px 0px 5px #fff;
 }
 
 .cardImageContainer {
@@ -141,9 +121,9 @@ button.card {
     background-position: center center;
 }
 
-    .coveredImage.noScale, .coveredImage.noScale .cardImage {
-        background-size: cover;
-    }
+.coveredImage.noScale, .coveredImage.noScale .cardImage {
+    background-size: cover;
+}
 
 .cardFooter {
     padding: .25em .25em;

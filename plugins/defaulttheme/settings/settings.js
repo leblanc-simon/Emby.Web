@@ -1,4 +1,4 @@
-define(['loading', 'userSettings', 'focusManager'], function (loading, userSettings, focusManager) {
+define(['loading', './../themesettings', 'focusManager'], function (loading, themeSettings, focusManager) {
 
     return function (view, params) {
 
@@ -20,14 +20,18 @@ define(['loading', 'userSettings', 'focusManager'], function (loading, userSetti
 
         view.addEventListener('viewbeforehide', function (e) {
 
-            userSettings.set('antispoilers', view.querySelector('.selectEnableEpisodeAntiSpoliers').getValue());
+            themeSettings.enableAntiSpoliers(view.querySelector('.selectEnableEpisodeAntiSpoliers').getValue());
+            themeSettings.dimUnselectedPosters(view.querySelector('.selectDimPosters').getValue());
+
+            themeSettings.apply();
         });
 
         function renderSettings() {
 
             focusManager.autoFocus(view);
 
-            view.querySelector('.selectEnableEpisodeAntiSpoliers').setValue(userSettings.get('antispoilers') || 'true');
+            view.querySelector('.selectEnableEpisodeAntiSpoliers').setValue(themeSettings.enableAntiSpoliers());
+            view.querySelector('.selectDimPosters').setValue(themeSettings.dimUnselectedPosters());
         }
     }
 

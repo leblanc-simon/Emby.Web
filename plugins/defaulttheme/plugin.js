@@ -35,6 +35,8 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
         self.type = 'theme';
         self.id = 'defaulttheme';
 
+        var dependencyPrefix = self.id;
+
         self.getHeaderTemplate = function () {
             return pluginManager.mapPath(self, 'header.html');
         };
@@ -73,6 +75,10 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
                 };
             });
         };
+
+        define("defaultthemeSettings", [dependencyPrefix + '/themesettings'], function (themesettings) {
+            return themesettings;
+        });
 
         self.getRoutes = function () {
 
@@ -211,6 +217,15 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
                 clearInterval(clockInterval);
                 clockInterval = null;
             }
+
+            return new Promise(function (resolve, reject) {
+
+                require(['defaultthemeSettings'], function (themeSettings) {
+
+                    themeSettings.unload();
+                    resolve();
+                });
+            });
         };
 
         self.getHomeRoute = function () {
@@ -356,9 +371,19 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
             }
 
             document.querySelector('.headerUserButton').classList.remove('hide');
+
+            require(['defaultthemeSettings'], function (themeSettings) {
+
+                themeSettings.apply();
+            });
         }
 
         function onLocalUserSignedOut(e) {
+
+            require(['defaultthemeSettings'], function (themeSettings) {
+
+                themeSettings.unload();
+            });
 
             // Put the logo back in the page title
             document.querySelector('.headerLogo').classList.remove('hide');
@@ -377,30 +402,9 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
             var path = e.detail.state.path;
 
             var enableSubduedBackdrop = path.indexOf('item.html') == -1 && path.indexOf('nowplaying') == -1;
-            require(['defaulttheme/components/backdrop'], function(themeBackdrop) {
+            require(['defaulttheme/components/backdrop'], function (themeBackdrop) {
                 themeBackdrop.subdued(enableSubduedBackdrop);
             });
-            //blurBackdrop(enableBlur);
-            //Emby.Backdrop.setBackdrop(pluginManager.mapPath(self, 'css/skin-dark/blur6.png'));
-        }
-
-        function blurBackdrop(enabled) {
-
-            var elem = document.documentElement;
-            if (enabled) {
-
-                if (!elem.classList.contains('blurBackdropIn')) {
-                    elem.classList.remove('blurBackdropOut');
-                    elem.classList.add('blurBackdropIn');
-                }
-
-            } else {
-
-                if (elem.classList.contains('blurBackdropIn')) {
-                    elem.classList.remove('blurBackdropIn');
-                    elem.classList.add('blurBackdropOut');
-                }
-            }
         }
     }
 });
