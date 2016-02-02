@@ -2,7 +2,7 @@ define(['focusManager'], function (focusManager) {
 
     function loadLatestRecordings(element) {
 
-        Emby.Models.liveTvRecordings({
+        return Emby.Models.liveTvRecordings({
 
             limit: 6,
             IsInProgress: false
@@ -22,7 +22,7 @@ define(['focusManager'], function (focusManager) {
 
     function loadNowPlaying(element) {
 
-        Emby.Models.liveTvRecommendedPrograms({
+        return Emby.Models.liveTvRecommendedPrograms({
 
             IsAiring: true,
             limit: 9,
@@ -44,7 +44,7 @@ define(['focusManager'], function (focusManager) {
 
     function loadUpcomingPrograms(section, options) {
 
-        Emby.Models.liveTvRecommendedPrograms(options).then(function (result) {
+        return Emby.Models.liveTvRecommendedPrograms(options).then(function (result) {
 
             DefaultTheme.CardBuilder.buildCards(result.Items, {
                 parentContainer: section,
@@ -68,47 +68,52 @@ define(['focusManager'], function (focusManager) {
             focusManager.autoFocus(element);
         }
 
-        loadLatestRecordings(element);
-        loadNowPlaying(element);
+        self.loadData = function () {
 
-        loadUpcomingPrograms(element.querySelector('.upcomingProgramsSection'), {
+            return Promise.all([
+                loadLatestRecordings(element),
+                loadNowPlaying(element),
 
-            IsAiring: false,
-            HasAired: false,
-            limit: 9,
-            IsMovie: false,
-            IsSports: false,
-            IsKids: false,
-            IsSeries: true
+                loadUpcomingPrograms(element.querySelector('.upcomingProgramsSection'), {
 
-        });
+                    IsAiring: false,
+                    HasAired: false,
+                    limit: 9,
+                    IsMovie: false,
+                    IsSports: false,
+                    IsKids: false,
+                    IsSeries: true
 
-        loadUpcomingPrograms(element.querySelector('.upcomingMoviesSection'), {
+                }),
 
-            IsAiring: false,
-            HasAired: false,
-            limit: 9,
-            IsMovie: true
+                loadUpcomingPrograms(element.querySelector('.upcomingMoviesSection'), {
 
-        });
+                    IsAiring: false,
+                    HasAired: false,
+                    limit: 9,
+                    IsMovie: true
 
-        loadUpcomingPrograms(element.querySelector('.upcomingSportsSection'), {
+                }),
 
-            IsAiring: false,
-            HasAired: false,
-            limit: 9,
-            IsSports: true
+                loadUpcomingPrograms(element.querySelector('.upcomingSportsSection'), {
 
-        });
+                    IsAiring: false,
+                    HasAired: false,
+                    limit: 9,
+                    IsSports: true
 
-        loadUpcomingPrograms(element.querySelector('.upcomingKidsSection'), {
+                }),
 
-            IsAiring: false,
-            HasAired: false,
-            limit: 9,
-            IsSports: false,
-            IsKids: true
-        });
+                loadUpcomingPrograms(element.querySelector('.upcomingKidsSection'), {
+
+                    IsAiring: false,
+                    HasAired: false,
+                    limit: 9,
+                    IsSports: false,
+                    IsKids: true
+                })
+            ]);
+        };
 
         element.querySelector('.guideCard').addEventListener('click', function () {
             Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'livetv/guide.html'));

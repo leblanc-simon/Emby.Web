@@ -1,4 +1,4 @@
-define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo', 'focusManager', 'paper-icon-item', 'paper-item-body', 'paper-progress'], function (datetime, imageLoader, connectionManager, itemHelper, mediaInfo, focusManager) {
+define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo', 'focusManager', 'connectionManager', 'paper-icon-item', 'paper-item-body', 'paper-progress'], function (datetime, imageLoader, connectionManager, itemHelper, mediaInfo, focusManager, connectionManager) {
 
     function setShapeHorizontal(items, options, isHome) {
 
@@ -56,17 +56,11 @@ define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo
 
     function buildCardsHtml(items, options) {
 
-        return new Promise(function (resolve, reject) {
+        var apiClient = connectionManager.currentApiClient();
 
-            require(['connectionManager'], function (connectionManager) {
+        var html = buildCardsHtmlInternal(items, apiClient, options);
 
-                var apiClient = connectionManager.currentApiClient();
-
-                var html = buildCardsHtmlInternal(items, apiClient, options);
-
-                resolve(html);
-            });
-        });
+        return html;
     }
 
     function buildCardsHtmlInternal(items, apiClient, options) {
@@ -691,9 +685,24 @@ define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo
 
         var html = buildCardsHtmlInternal(items, apiClient, options);
 
-        options.itemsContainer.innerHTML = html;
+        if (html) {
 
-        imageLoader.lazyChildren(options.itemsContainer);
+            if (options.itemsContainer.cardBuilderHtml != html) {
+                options.itemsContainer.innerHTML = html;
+
+                if (items.length < 50) {
+                    options.itemsContainer.cardBuilderHtml = html;
+                } else {
+                    options.itemsContainer.cardBuilderHtml = null;
+                }
+            }
+
+            imageLoader.lazyChildren(options.itemsContainer);
+        } else {
+            
+            options.itemsContainer.innerHTML = html;
+            options.itemsContainer.cardBuilderHtml = null;
+        }
 
         if (options.autoFocus) {
             focusManager.autoFocus(options.itemsContainer, true);

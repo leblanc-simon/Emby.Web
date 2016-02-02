@@ -9,7 +9,7 @@ define([], function () {
             SortBy: 'SortName'
         };
 
-        Emby.Models.playlists(options).then(function (result) {
+        return Emby.Models.playlists(options).then(function (result) {
 
             var section = element.querySelector('.allSection');
 
@@ -31,7 +31,14 @@ define([], function () {
     function view(element, parentId, autoFocus) {
         var self = this;
 
-        loadAll(element, parentId, autoFocus);
+        self.loadData = function (isRefresh) {
+
+            if (isRefresh) {
+                return Promise.resolve();
+            }
+
+            return loadAll(element, parentId, autoFocus);
+        };
 
         self.destroy = function () {
 

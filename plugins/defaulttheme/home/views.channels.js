@@ -2,7 +2,7 @@ define([], function () {
 
     function loadChannels(element, parentId, autoFocus) {
 
-        Emby.Models.channels().then(function (result) {
+        return Emby.Models.channels().then(function (result) {
 
             var section = element.querySelector('.channelsSection');
 
@@ -23,9 +23,11 @@ define([], function () {
 
             var latestContainer = element.querySelector('.latestContainer');
 
-            for (var i = 0, length = result.Items.length; i < length; i++) {
-                loadLatest(latestContainer, result.Items[i]);
-            }
+            latestContainer.innerHTML = '';
+
+            return Promise.all(result.Items.map(function (i) {
+                return loadLatest(latestContainer, i);
+            }));
         });
     }
 
@@ -49,7 +51,7 @@ define([], function () {
             ChannelIds: channel.Id
         };
 
-        Emby.Models.latestChannelItems(options).then(function (result) {
+        return Emby.Models.latestChannelItems(options).then(function (result) {
 
             DefaultTheme.CardBuilder.buildCards(result.Items, {
                 parentContainer: section,
@@ -64,7 +66,9 @@ define([], function () {
 
         var self = this;
 
-        loadChannels(element, parentId, autoFocus);
+        self.loadData = function () {
+            return loadChannels(element, parentId, autoFocus);
+        };
 
         self.destroy = function () {
 

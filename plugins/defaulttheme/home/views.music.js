@@ -12,7 +12,7 @@ define([], function () {
             EnableImageTypes: "Primary,Backdrop,Thumb"
         };
 
-        Emby.Models.latestItems(options).then(function (result) {
+        return Emby.Models.latestItems(options).then(function (result) {
 
             var section = element.querySelector('.latestSection');
 
@@ -39,7 +39,7 @@ define([], function () {
             Limit: 9
         };
 
-        Emby.Models.playlists(options).then(function (result) {
+        return Emby.Models.playlists(options).then(function (result) {
 
             var section = element.querySelector('.playlistsSection');
 
@@ -69,7 +69,7 @@ define([], function () {
             EnableImageTypes: "Primary,Backdrop,Thumb"
         };
 
-        Emby.Models.items(options).then(function (result) {
+        return Emby.Models.items(options).then(function (result) {
 
             var section = element.querySelector('.recentlyPlayedSection');
 
@@ -99,7 +99,7 @@ define([], function () {
             EnableImageTypes: "Primary,Backdrop,Thumb"
         };
 
-        Emby.Models.items(options).then(function (result) {
+        return Emby.Models.items(options).then(function (result) {
 
             var section = element.querySelector('.frequentlyPlayedSection');
 
@@ -128,7 +128,7 @@ define([], function () {
             EnableImageTypes: "Primary,Backdrop,Thumb"
         };
 
-        Emby.Models.items(options).then(function (result) {
+        return Emby.Models.items(options).then(function (result) {
 
             var section = element.querySelector('.favoriteSongsSection');
 
@@ -157,7 +157,7 @@ define([], function () {
             EnableImageTypes: "Primary,Backdrop,Thumb"
         };
 
-        Emby.Models.items(options).then(function (result) {
+        return Emby.Models.items(options).then(function (result) {
 
             var section = element.querySelector('.favoriteAlbumsSection');
 
@@ -184,7 +184,7 @@ define([], function () {
             EnableImageTypes: "Primary,Backdrop,Thumb"
         };
 
-        Emby.Models.artists(options).then(function (result) {
+        return Emby.Models.artists(options).then(function (result) {
 
             var section = element.querySelector('.favoriteArtistsSection');
 
@@ -209,13 +209,22 @@ define([], function () {
             Emby.FocusManager.autoFocus(element, true);
         }
 
-        loadLatest(element, parentId);
-        loadPlaylists(element, parentId);
-        loadRecentlyPlayed(element, parentId);
-        loadFrequentlyPlayed(element, parentId);
-        loadFavoriteSongs(element, parentId);
-        loadFavoriteAlbums(element, parentId);
-        loadFavoriteArtists(element, parentId);
+        self.loadData = function (isRefresh) {
+
+            if (isRefresh) {
+                return Promise.resolve();
+            }
+
+            return Promise.all([
+                loadLatest(element, parentId),
+                loadPlaylists(element, parentId),
+                loadRecentlyPlayed(element, parentId),
+                loadFrequentlyPlayed(element, parentId),
+                loadFavoriteSongs(element, parentId),
+                loadFavoriteAlbums(element, parentId),
+                loadFavoriteArtists(element, parentId)
+            ]);
+        };
 
         element.querySelector('.artistsCard').addEventListener('click', function () {
             gotoMusicView('albumartists', parentId);

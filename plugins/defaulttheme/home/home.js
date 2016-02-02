@@ -1,6 +1,6 @@
-define(['loading', './../components/tabbedpage', './../components/backdrop'], function (loading, tabbedPage, themeBackdrop) {
+define(['loading', './../components/tabbedpage', './../components/backdrop', 'focusManager', 'playbackManager'], function (loading, tabbedPage, themeBackdrop, focusManager, playbackManager) {
 
-    function loadViewHtml(page, parentId, html, viewName, autoFocus) {
+    function loadViewHtml(page, parentId, html, viewName, autoFocus, self) {
 
         var homeScrollContent = page.querySelector('.contentScrollSlider');
 
@@ -10,13 +10,75 @@ define(['loading', './../components/tabbedpage', './../components/backdrop'], fu
         require(['defaulttheme/home/views.' + viewName], function (viewBuilder) {
 
             var homePanel = homeScrollContent;
-            new viewBuilder(homePanel, parentId, autoFocus);
+            var tabView = new viewBuilder(homePanel, parentId, autoFocus);
+            tabView.element = homePanel;
+            tabView.loadData();
+            self.tabView = tabView;
         });
+    }
+
+    function parentWithClass(elem, className) {
+
+        while (!elem.classList || !elem.classList.contains(className)) {
+            elem = elem.parentNode;
+
+            if (!elem) {
+                return null;
+            }
+        }
+
+        return elem;
     }
 
     return function (view, params) {
 
         var self = this;
+        var needsRefresh;
+
+        function reloadTabData(tabView) {
+
+            if (!needsRefresh) {
+                return;
+            }
+            
+            var activeElement = document.activeElement;
+            var card = activeElement ? parentWithClass(activeElement, 'card') : null;
+            var itemId = card ? card.getAttribute('data-id') : null;
+            var parentItemsContainer = activeElement ? parentWithClass(activeElement, 'itemsContainer') : null;
+
+            tabView.loadData(true).then(function () {
+
+                var tabView = self.tabView;
+
+                if (!activeElement || !document.body.contains(activeElement)) {
+
+                    // need to re-focus
+                    if (itemId) {
+                        card = tabView.element.querySelector('*[data-id=\'' + itemId + '\']');
+
+                        if (card) {
+
+                            var newParentItemsContainer = parentWithClass(card, 'itemsContainer');
+
+                            if (newParentItemsContainer == parentItemsContainer) {
+                                focusManager.focus(card);
+                                return;
+                            }
+                        }
+                    }
+
+                    var focusParent = parentItemsContainer && document.body.contains(parentItemsContainer) ? parentItemsContainer : tabView.element;
+                    focusManager.autoFocus(focusParent);
+                }
+
+            });
+        }
+
+        function onPlaybackStopped() {
+            needsRefresh = true;
+        }
+
+        Events.on(playbackManager, 'playbackstop', onPlaybackStopped);
 
         view.addEventListener('viewshow', function (e) {
 
@@ -26,48 +88,33 @@ define(['loading', './../components/tabbedpage', './../components/backdrop'], fu
 
             themeBackdrop.setStaticBackdrop();
 
-            if (!isRestored) {
-
+            if (isRestored) {
+                if (self.tabView) {
+                    reloadTabData(self.tabView);
+                }
+            } else {
                 loading.show();
 
                 renderTabs(view, self);
-                //require(['actionsheet'], function (actionsheet) {
-
-                //    actionsheet.show({
-                //        title: 'Confirm Button Select',
-                //        items: [
-                //        {
-                //            name: Globalize.translate('ButtonInstantMix'),
-                //            id: 'instantmix',
-                //            ironIcon: 'shuffle'
-                //        },
-                //        {
-                //            name: Globalize.translate('ButtonInstantMix'),
-                //            id: 'instantmix',
-                //            ironIcon: 'shuffle'
-                //        }],
-                //        callback: function (id) {
-
-                //        }
-                //    });
-
-                //});
-                //setTimeout(function() {
-
-                //    require(['alert'], function (alert) {
-                //        alert({
-                //            title: 'Confirm Button Select',
-                //            text: 'This is some text to confirm blah blah blah. This is some text to confirm blah blah blah. This is some text to confirm blah blah blah. This is some text to confirm blah blah blah. This is some text to confirm blah blah blah. Are you sure you wish to continue?'
-                //        });
-                //    });
-                //}, 2000);
             }
+
         });
+
+        view.addEventListener('viewhide', function () {
+
+            needsRefresh = false;
+        });
+
         view.addEventListener('viewdestroy', function () {
 
             if (self.tabbedPage) {
                 self.tabbedPage.destroy();
             }
+            if (self.tabView) {
+                self.tabView.destroy();
+            }
+
+            Events.off(playbackManager, 'playbackstop', onPlaybackStopped);
         });
 
         function renderTabs(view, pageInstance) {
@@ -127,7 +174,7 @@ define(['loading', './../components/tabbedpage', './../components/backdrop'], fu
                 xhr.onload = function (e) {
 
                     var html = this.response;
-                    loadViewHtml(page, id, html, viewName, isFirstLoad);
+                    loadViewHtml(page, id, html, viewName, isFirstLoad, self);
                     isFirstLoad = false;
                     resolve();
                 }

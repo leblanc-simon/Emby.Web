@@ -10,7 +10,7 @@ define(['./spotlight', 'focusManager'], function (spotlight, focusManager) {
             EnableImageTypes: "Primary,Backdrop,Thumb"
         };
 
-        Emby.Models.resumable(options).then(function (result) {
+        return Emby.Models.resumable(options).then(function (result) {
 
             var section = element.querySelector('.resumeSection');
 
@@ -34,7 +34,7 @@ define(['./spotlight', 'focusManager'], function (spotlight, focusManager) {
             ParentId: parentId
         };
 
-        Emby.Models.nextUp(options).then(function (result) {
+        return Emby.Models.nextUp(options).then(function (result) {
 
             var section = element.querySelector('.nextUpSection');
 
@@ -62,7 +62,7 @@ define(['./spotlight', 'focusManager'], function (spotlight, focusManager) {
             EnableImageTypes: "Primary,Backdrop,Thumb"
         };
 
-        Emby.Models.latestItems(options).then(function (result) {
+        return Emby.Models.latestItems(options).then(function (result) {
 
             var section = element.querySelector('.latestSection');
 
@@ -91,7 +91,7 @@ define(['./spotlight', 'focusManager'], function (spotlight, focusManager) {
             ImageTypes: "Backdrop"
         };
 
-        Emby.Models.items(options).then(function (result) {
+        return Emby.Models.items(options).then(function (result) {
 
             var card = element.querySelector('.wideSpotlightCard');
 
@@ -112,7 +112,7 @@ define(['./spotlight', 'focusManager'], function (spotlight, focusManager) {
             ImageTypes: "Backdrop"
         };
 
-        Emby.Models.items(options).then(function (result) {
+        return Emby.Models.items(options).then(function (result) {
 
             var items = result.Items;
             var imgOptions = {
@@ -137,10 +137,16 @@ define(['./spotlight', 'focusManager'], function (spotlight, focusManager) {
             focusManager.autoFocus(element);
         }
 
+        self.loadData = function () {
+
+            return Promise.all([
+            loadResume(element, parentId),
+            loadNextUp(element, parentId),
+            loadLatest(element, parentId)
+            ]);
+        };
+
         loadSpotlight(element, parentId);
-        loadResume(element, parentId);
-        loadNextUp(element, parentId);
-        loadLatest(element, parentId);
         loadImages(element, parentId);
 
         element.querySelector('.allSeriesCard').addEventListener('click', function () {

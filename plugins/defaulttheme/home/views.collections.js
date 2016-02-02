@@ -2,7 +2,7 @@ define([], function () {
 
     function loadAll(element, parentId, autoFocus) {
 
-        Emby.Models.collections({
+        return Emby.Models.collections({
 
             ParentId: parentId,
             EnableImageTypes: "Primary,Backdrop,Thumb",
@@ -29,7 +29,14 @@ define([], function () {
     function view(element, parentId, autoFocus) {
         var self = this;
 
-        loadAll(element, parentId, autoFocus);
+        self.loadData = function (isRefresh) {
+
+            if (isRefresh) {
+                return Promise.resolve();
+            }
+
+            return loadAll(element, parentId, autoFocus);
+        };
 
         self.destroy = function () {
 

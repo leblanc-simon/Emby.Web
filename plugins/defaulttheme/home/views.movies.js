@@ -10,7 +10,7 @@ define(['./spotlight', 'imageLoader', 'focusManager'], function (spotlight, imag
             EnableImageTypes: "Primary,Backdrop,Thumb"
         };
 
-        Emby.Models.resumable(options).then(function (result) {
+        return Emby.Models.resumable(options).then(function (result) {
 
             var resumeSection = element.querySelector('.resumeSection');
 
@@ -35,7 +35,7 @@ define(['./spotlight', 'imageLoader', 'focusManager'], function (spotlight, imag
             EnableImageTypes: "Primary,Backdrop,Thumb"
         };
 
-        Emby.Models.latestItems(options).then(function (result) {
+        return Emby.Models.latestItems(options).then(function (result) {
 
             var resumeSection = element.querySelector('.latestSection');
 
@@ -63,7 +63,7 @@ define(['./spotlight', 'imageLoader', 'focusManager'], function (spotlight, imag
             Fields: "Taglines"
         };
 
-        Emby.Models.items(options).then(function (result) {
+        return Emby.Models.items(options).then(function (result) {
 
             var card = element.querySelector('.wideSpotlightCard');
 
@@ -73,76 +73,71 @@ define(['./spotlight', 'imageLoader', 'focusManager'], function (spotlight, imag
 
     function loadRecommendations(element, parentId) {
 
-        Emby.Models.movieRecommendations({
+        return Emby.Models.movieRecommendations({
 
             categoryLimit: 4,
             ItemLimit: 8
 
         }).then(function (recommendations) {
 
-            Promise.all(recommendations.map(getRecommendationHtml)).then(function (values) {
+            var values = recommendations.map(getRecommendationHtml);
 
-                var recs = element.querySelector('.recommendations');
+            var recs = element.querySelector('.recommendations');
 
-                if (recs) {
-                    recs.innerHTML = values.join('');
+            if (recs) {
+                recs.innerHTML = values.join('');
 
-                    imageLoader.lazyChildren(recs);
-                }
-            });
+                imageLoader.lazyChildren(recs);
+            }
         });
     }
 
     function getRecommendationHtml(recommendation) {
 
-        return new Promise(function (resolve, reject) {
-
-            DefaultTheme.CardBuilder.buildCardsHtml(recommendation.Items, {
-                shape: 'portraitCard',
-                rows: 2,
-                width: DefaultTheme.CardBuilder.homePortraitWidth
-            }).then(function (cardsHtml) {
-
-                var html = '';
-
-                var title = '';
-
-                switch (recommendation.RecommendationType) {
-
-                    case 'SimilarToRecentlyPlayed':
-                        title = Globalize.translate('RecommendationBecauseYouWatched').replace("{0}", recommendation.BaselineItemName);
-                        break;
-                    case 'SimilarToLikedItem':
-                        title = Globalize.translate('RecommendationBecauseYouLike').replace("{0}", recommendation.BaselineItemName);
-                        break;
-                    case 'HasDirectorFromRecentlyPlayed':
-                    case 'HasLikedDirector':
-                        title = Globalize.translate('RecommendationDirectedBy').replace("{0}", recommendation.BaselineItemName);
-                        break;
-                    case 'HasActorFromRecentlyPlayed':
-                    case 'HasLikedActor':
-                        title = Globalize.translate('RecommendationStarring').replace("{0}", recommendation.BaselineItemName);
-                        break;
-                }
-
-                html += '<div class="horizontalSection">';
-                html += '<div class="sectionTitle">' + title + '</div>';
-
-                html += '<div class="itemsContainer">';
-
-                html += cardsHtml;
-
-                html += '</div>';
-                html += '</div>';
-
-                resolve(html);
-            });
+        var cardsHtml = DefaultTheme.CardBuilder.buildCardsHtml(recommendation.Items, {
+            shape: 'portraitCard',
+            rows: 2,
+            width: DefaultTheme.CardBuilder.homePortraitWidth
         });
+
+        var html = '';
+
+        var title = '';
+
+        switch (recommendation.RecommendationType) {
+
+            case 'SimilarToRecentlyPlayed':
+                title = Globalize.translate('RecommendationBecauseYouWatched').replace("{0}", recommendation.BaselineItemName);
+                break;
+            case 'SimilarToLikedItem':
+                title = Globalize.translate('RecommendationBecauseYouLike').replace("{0}", recommendation.BaselineItemName);
+                break;
+            case 'HasDirectorFromRecentlyPlayed':
+            case 'HasLikedDirector':
+                title = Globalize.translate('RecommendationDirectedBy').replace("{0}", recommendation.BaselineItemName);
+                break;
+            case 'HasActorFromRecentlyPlayed':
+            case 'HasLikedActor':
+                title = Globalize.translate('RecommendationStarring').replace("{0}", recommendation.BaselineItemName);
+                break;
+        }
+
+        html += '<div class="horizontalSection">';
+        html += '<div class="sectionTitle">' + title + '</div>';
+
+        html += '<div class="itemsContainer">';
+
+        html += cardsHtml;
+
+        html += '</div>';
+        html += '</div>';
+
+        return html;
     }
 
     function loadImages(element, parentId) {
 
-        Emby.Models.items({
+        return Emby.Models.items({
 
             SortBy: "IsFavoriteOrLiked,Random",
             IncludeItemTypes: "Movie",
@@ -177,11 +172,21 @@ define(['./spotlight', 'imageLoader', 'focusManager'], function (spotlight, imag
             focusManager.autoFocus(element);
         }
 
-        loadResume(element, parentId);
-        loadLatest(element, parentId);
+        self.loadData = function (isRefresh) {
+
+            var promises = [
+                loadResume(element, parentId),
+                loadLatest(element, parentId)
+            ];
+
+            if (!isRefresh) {
+                promises.push(loadRecommendations(element, parentId));
+            }
+
+            return promises;
+        };
         loadSpotlight(element, parentId);
         loadImages(element, parentId);
-        loadRecommendations(element, parentId);
 
         element.querySelector('.allMoviesCard').addEventListener('click', function () {
             Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'movies/movies.html?parentid=' + parentId));
