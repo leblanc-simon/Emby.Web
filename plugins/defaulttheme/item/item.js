@@ -434,8 +434,15 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
         var userData = item.UserData || {};
 
+        var focusedItemIsNextUp = parentWithClass(document.activeElement, 'nextUpSection') != null;
+
         if (item.Type != 'Series' || !userData.PlayedPercentage) {
             section.classList.add('hide');
+
+            if (focusedItemIsNextUp) {
+                // Need to re-focus
+                focusManager.autoFocus(view);
+            }
             return;
         }
 
@@ -445,12 +452,18 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
         }).then(function (result) {
 
+            if (!result.Items.length && focusedItemIsNextUp) {
+                // Need to re-focus
+                focusManager.autoFocus(view);
+            }
+
             DefaultTheme.CardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
                 shape: 'autoVertical',
                 showTitle: true,
-                scalable: true
+                scalable: true,
+                autoFocus: focusedItemIsNextUp
             });
         });
     }
@@ -762,12 +775,25 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
         });
     }
 
+    function parentWithClass(elem, className) {
+
+        while (!elem.classList || !elem.classList.contains(className)) {
+            elem = elem.parentNode;
+
+            if (!elem) {
+                return null;
+            }
+        }
+
+        return elem;
+    }
+
     function onEpisodeListKeyDown(e) {
 
         // 39
         if (e.keyCode == 39) {
 
-            var card = Emby.Dom.parentWithClass(e.target, 'itemAction');
+            var card = parentWithClass(e.target, 'itemAction');
 
             if (card) {
 
