@@ -85,6 +85,6 @@
     "More": "More",
     "Playlists": "Playlists",
     "EnableEpisodeSpoilerProtection": "Enable anti-spoiler features",
-    "EnableEpisodeSpoilerProtectionHelp": "Hide details for future episodes",
+    "EnableEpisodeSpoilerProtectionHelp": "Hide details for future beyond the first unwatched.",
     "DefaultTheme": "Default Theme"
 }
