@@ -1,8 +1,56 @@
-define(['loading', 'apphost', 'imageLoader', 'focusManager'], function (loading, apphost, imageLoader, focusManager) {
+define(['loading', 'apphost', 'imageLoader', 'focusManager', 'slyScroller'], function (loading, apphost, imageLoader, focusManager, slyScroller) {
 
     return function (view, params) {
 
         var self = this;
+        var lastFocus = 0;
+
+        function createVerticalScroller() {
+
+            var scrollFrame = view.querySelector('.scrollFrame');
+
+            var options = {
+                horizontal: 0,
+                itemNav: 0,
+                mouseDragging: 1,
+                touchDragging: 1,
+                slidee: view.querySelector('.scrollSlider'),
+                itemSelector: '.card',
+                smart: true,
+                scrollBy: 200,
+                speed: 270,
+                dragHandle: 1,
+                dynamicHandle: 1,
+                clickBar: 1,
+                scrollWidth: 50000,
+                immediateSpeed: 100,
+                centerOffset: screen.availHeight * .15
+            };
+
+            slyScroller.create(scrollFrame, options).then(function (slyFrame) {
+                self.slyFrame = slyFrame;
+                slyFrame.init();
+                initFocusHandler(view.querySelector('.scrollSlider'), slyFrame);
+            });
+        }
+
+        function initFocusHandler(parent, slyFrame) {
+
+            parent.addEventListener('focus', function (e) {
+
+                var focused = focusManager.focusableParent(e.target);
+
+                if (focused) {
+
+                    var now = new Date().getTime();
+
+                    var animate = (now - lastFocus) > 50;
+                    self.slyFrame.toCenter(focused, !animate);
+                    lastFocus = now;
+                }
+
+            }, true);
+        }
 
         view.addEventListener('viewbeforeshow', function (e) {
 
@@ -14,6 +62,7 @@ define(['loading', 'apphost', 'imageLoader', 'focusManager'], function (loading,
 
             if (!isRestored) {
 
+                createVerticalScroller();
                 view.querySelector('.appInfo').innerHTML = apphost.appName() + ' ' + apphost.appVersion();
                 renderSettings();
             }
@@ -38,8 +87,19 @@ define(['loading', 'apphost', 'imageLoader', 'focusManager'], function (loading,
 
             routes = routes.sort(function (a, b) {
 
-                var aName = Globalize.translate('core#' + a.category || 'General');
-                var bName = Globalize.translate('core#' + b.category || 'General');
+                var aCategory = a.category || 'General';
+                var bCategory = b.category || 'General';
+
+                if (aCategory == 'General') {
+                    aCategory = '0General';
+                }
+
+                if (bCategory == 'General') {
+                    bCategory = '0General';
+                }
+
+                var aName = Globalize.translate('core#' + aCategory);
+                var bName = Globalize.translate('core#' + bCategory);
 
                 if (aName > bName) {
                     return 1;
