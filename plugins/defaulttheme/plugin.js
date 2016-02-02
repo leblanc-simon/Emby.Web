@@ -179,6 +179,19 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
                 supportsThemeMedia: true
             });
 
+            routes.push({
+                path: pluginManager.mapPath(self, 'settings/settings.html'),
+                transition: 'slide',
+                controller: self.id + '/settings/settings',
+                dependencies: [
+                    'emby-dropdown-menu'
+                ],
+                type: 'settings',
+                category: 'Display',
+                thumbImage: '',
+                title: 'Default Theme'
+            });
+
             return routes;
         };
 

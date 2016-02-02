@@ -24,7 +24,7 @@ define(['loading', 'apphost', 'imageLoader', 'focusManager', 'slyScroller'], fun
                 clickBar: 1,
                 scrollWidth: 50000,
                 immediateSpeed: 100,
-                centerOffset: screen.availHeight * .15
+                centerOffset: screen.availHeight * .2
             };
 
             slyScroller.create(scrollFrame, options).then(function (slyFrame) {
@@ -237,6 +237,8 @@ define(['loading', 'apphost', 'imageLoader', 'focusManager', 'slyScroller'], fun
                     return Globalize.translate('core#Themes');
                 case 'Display':
                     return Globalize.translate('core#Display');
+                case 'Plugins':
+                    return Globalize.translate('core#Plugins');
                 default:
                     return Globalize.translate('core#Other');
             }
