@@ -1,8 +1,8 @@
 {
-    "Play": "Play",
-    "Queue": "Queue",
-    "Shuffle": "Shuffle",
-    "InsstantMix": "Instant Mix",
+    "Play": "Reproduzir",
+    "Queue": "Fila",
+    "Shuffle": "Aleat\u00f3rio",
+    "InsstantMix": "Mix instant\u00e2neo",
     "ButtonCancel": "Cancelar",
     "AllSeries": "Todas as S\u00e9ries",
     "Genres": "G\u00e9neros",
@@ -81,5 +81,7 @@
     "Movies": "Filmes",
     "Collections": "Cole\u00e7\u00f5es",
     "Years": "Anos",
-    "Favorites": "Favoritos"
+    "Favorites": "Favoritos",
+    "More": "More",
+    "Playlists": "Playlists"
 }
