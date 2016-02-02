@@ -89,7 +89,9 @@ button.card {
 }
 
 .dimunselected .card[focused] .cardImageContainer, .dimunselected .card:focus .cardImageContainer {
-    -webkit-filter: none;
+    -webkit-filter: brightness(110%);
+    filter: brightness(110%);
+    transition: filter, -webkit-filter 300ms ease-out !important;
 }
 
 .cardImageContainer {
