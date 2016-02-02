@@ -69,11 +69,13 @@
     "DisplayLanguage": "Mostrar idioma",
     "DisplaySettings": "Configuraci\u00f3n de Pantalla",
     "TrackCount": "{0} pistas",
+    "ItemCount": "{0} items",
     "ButtonGenerateNewPin": "Generar Nuevo Pin",
     "ConnectLoginHelp1": "Con Emby Connect puede acceder f\u00e1cilmente a su Servidor Emby en donde quiera que est\u00e9 y compartir servidores con su familia y amigos.",
     "CreatePinErrorMessage": "Ocurri\u00f3 un error al crear un c\u00f3digo pin. Por favor de clic en Generar Nuevo Pin para intentar de nuevo.",
     "PinExpiredMessage": "El c\u00f3digo pin ha expirado. Por favor de clic en Generar Nuevo Pin para intentar de nuevo.",
     "ConnectPinCodeHeader": "Para iniciar sesi\u00f3n con Emby Connect, visite {0} e ingrese el siguiente c\u00f3digo pin:",
     "SoundEffects": "Efectos de Sonido",
+    "ValueSpecialEpisodeName": "Special - {0}",
     "Sounds": "Sonidos"
 }

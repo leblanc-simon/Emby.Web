@@ -60,7 +60,7 @@
     "HeaderNewServer": "Novo Servidor",
     "ButtonChangeServer": "Alterar Servidor",
     "HeaderConnectToServer": "Conectar ao Servidor",
-    "ValueSeriesYearToPresent": "{0}-Present",
+    "ValueSeriesYearToPresent": "{0}-Presente",
     "TextConnectToServerManually": "Conectar ao servidor manualmente",
     "ButtonInstantMix": "Mix Inst\u00e2ntaneo",
     "PlaybackSettings": "Ajustes de Reprodu\u00e7\u00e3o",
@@ -68,12 +68,14 @@
     "OptionAutomatic": "Auto",
     "DisplayLanguage": "Exibir idioma",
     "DisplaySettings": "Exibir Configura\u00e7\u00f5es",
-    "TrackCount": "{0} tracks",
+    "TrackCount": "{0} faixas",
+    "ItemCount": "{0} items",
     "ButtonGenerateNewPin": "Gerar Novo Pin",
     "ConnectLoginHelp1": "Com o Emby Connect voc\u00ea pode facilmente acessar seu Servidor Emby onde estiver e compartilhar servidores com sua fam\u00edlia e amigos.",
     "CreatePinErrorMessage": "Ocorreu um erro ao criar um c\u00f3digo pin. Por favor, clique Gerar Novo Pin para tentar novamente.",
     "PinExpiredMessage": "O c\u00f3digo pin expirou. Por favor, clique Gerar Novo Pin para tentar novamente.",
     "ConnectPinCodeHeader": "Para entrar com o Emby Connect, visite {0} e digite o seguinte c\u00f3digo pin:",
-    "SoundEffects": "Sound effects",
-    "Sounds": "Sounds"
+    "SoundEffects": "Efeitos sonoros",
+    "ValueSpecialEpisodeName": "Special - {0}",
+    "Sounds": "Sons"
 }
