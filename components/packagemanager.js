@@ -3,7 +3,7 @@ define(['appSettings', 'pluginManager'], function (appSettings, pluginManager) {
     function packageManager() {
 
         var self = this;
-        var settingsKey = 'installedpackages';
+        var settingsKey = 'installedpackages1';
 
         var packages = [];
 
@@ -23,14 +23,17 @@ define(['appSettings', 'pluginManager'], function (appSettings, pluginManager) {
 
         self.install = function (url) {
 
-            var manifestUrls = JSON.parse(appSettings.get(settingsKey) || '[]');
+            return loadPackage(url).then(function(pkg) {
+                
+                var manifestUrls = JSON.parse(appSettings.get(settingsKey) || '[]');
 
-            if (manifestUrls.indexOf(url) == -1) {
-                manifestUrls.push(url);
-                appSettings.set(settingsKey, JSON.stringify(manifestUrls));
-            }
+                if (manifestUrls.indexOf(url) == -1) {
+                    manifestUrls.push(url);
+                    appSettings.set(settingsKey, JSON.stringify(manifestUrls));
+                }
 
-            return loadPackage(url);
+                return pkg;
+            });
         };
 
         self.uninstall = function (name) {
@@ -62,7 +65,11 @@ define(['appSettings', 'pluginManager'], function (appSettings, pluginManager) {
         self.init = function () {
             var manifestUrls = JSON.parse(appSettings.get(settingsKey) || '[]');
 
-            return Promise.all(manifestUrls.map(loadPackage));
+            return Promise.all(manifestUrls.map(loadPackage)).then(function() {
+                return Promise.resolve();
+            }, function () {
+                return Promise.resolve();
+            });
         };
 
         function loadPackage(url) {
@@ -97,6 +104,8 @@ define(['appSettings', 'pluginManager'], function (appSettings, pluginManager) {
                         reject();
                     }
                 };
+
+                xhr.onerror = reject;
 
                 xhr.send();
             });

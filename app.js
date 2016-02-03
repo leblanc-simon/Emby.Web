@@ -264,7 +264,6 @@
 
         var paths = {
             alert: "components/alert",
-            prompt: "components/prompt",
             confirm: "components/confirm",
             toast: "components/toast",
             loading: "components/loading/loading",
@@ -388,6 +387,7 @@
         define("alphapicker", ["components/alphapicker/alphapicker"], returnFirstDependency);
 
         define("dialog", ["components/dialog/dialog"], returnFirstDependency);
+        define("prompt", ["components/prompt/prompt"], returnFirstDependency);
 
         define("paper-base", ["css!style/paperstyles.css"]);
         define("paper-spinner", ["html!" + bowerPath + "/paper-spinner/paper-spinner.html", 'paper-base']);
