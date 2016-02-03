@@ -312,6 +312,7 @@ define(['playbackManager', 'inputmanager', 'datetime', 'itemHelper', 'mediaInfo'
             Events.off(playbackManager, 'playbackstop', onPlaybackStop);
 
             inputManager.off(window, onInputCommand);
+            releasePlayer();
         });
 
         function bindToPlayer(player) {
@@ -633,6 +634,7 @@ define(['playbackManager', 'inputmanager', 'datetime', 'itemHelper', 'mediaInfo'
 
                 // Unbind this event so that we don't go back twice
                 Events.off(playbackManager, 'playbackstop', onPlaybackStop);
+                view.removeEventListener('viewbeforehide', onViewHideStopPlayback);
 
                 playbackManager.stop();
 
