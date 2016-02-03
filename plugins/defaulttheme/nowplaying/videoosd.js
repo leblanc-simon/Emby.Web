@@ -280,6 +280,9 @@ define(['playbackManager', 'inputmanager', 'datetime', 'itemHelper', 'mediaInfo'
             setCurrentItem(null);
 
             if (stopInfo.nextMediaType != 'Video') {
+
+                view.removeEventListener('viewbeforehide', onViewHideStopPlayback);
+
                 Emby.Page.back();
             }
         }
