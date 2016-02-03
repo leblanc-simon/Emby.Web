@@ -13,16 +13,12 @@ define(['appSettings', 'pluginManager'], function (appSettings, pluginManager) {
 
         function addPackage(pkg) {
 
-            if (!packages.filter(function (p) {
+            packages = packages.filter(function (p) {
 
-                return p.name == pkg.name;
+                return p.name != pkg.name;
+            });
 
-            }).length) {
-                packages.push(pkg);
-                return true;
-            }
-
-            return false;
+            packages.push(pkg);
         }
 
         self.install = function (url) {
@@ -85,14 +81,17 @@ define(['appSettings', 'pluginManager'], function (appSettings, pluginManager) {
 
                         var pkg = JSON.parse(this.response);
                         pkg.url = originalUrl;
-                        if (addPackage(pkg)) {
-                            var promises = (pkg.plugins || []).map(function (pluginUrl) {
-                                return pluginManager.loadPlugin(mapPath(originalUrl, pluginUrl));
-                            });
-                            Promise.all(promises).then(resolve, resolve);
-                        } else {
-                            resolve(pkg);
+
+                        addPackage(pkg);
+
+                        var plugins = pkg.plugins || [];
+                        if (pkg.plugin) {
+                            plugins.push(pkg.plugin);
                         }
+                        var promises = plugins.map(function (pluginUrl) {
+                            return pluginManager.loadPlugin(mapPath(originalUrl, pluginUrl));
+                        });
+                        Promise.all(promises).then(resolve, resolve);
 
                     } else {
                         reject();
