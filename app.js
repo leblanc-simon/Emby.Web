@@ -98,8 +98,8 @@
             dependencies: ['emby-dropdown-menu'],
             controller: 'settings/display',
             type: 'settings',
-            title: 'Display',
-            category: 'General',
+            title: 'General',
+            category: 'Display',
             thumbImage: '',
             order: -1
         });
@@ -115,16 +115,27 @@
             thumbImage: ''
         });
 
-        //defineRoute({
-        //    path: '/settings/plugins.html',
-        //    transition: 'slide',
-        //    dependencies: ['emby-dropdown-menu'],
-        //    controller: 'settings/plugins',
-        //    type: 'settings',
-        //    title: 'Plugins',
-        //    category: 'General',
-        //    thumbImage: ''
-        //});
+        defineRoute({
+            path: '/settings/plugins.html',
+            transition: 'slide',
+            dependencies: ['emby-dropdown-menu', 'coreIcons'],
+            controller: 'settings/plugins',
+            type: 'settings',
+            title: 'Installed Plugins',
+            category: 'Plugins',
+            thumbImage: ''
+        });
+
+        defineRoute({
+            path: '/settings/catalog.html',
+            transition: 'slide',
+            dependencies: ['emby-dropdown-menu'],
+            controller: 'settings/catalog',
+            type: 'settings',
+            title: 'Plugin Catalog',
+            category: 'Plugins',
+            thumbImage: ''
+        });
 
         defineRoute({
             path: '/index.html',
@@ -253,6 +264,7 @@
 
         var paths = {
             alert: "components/alert",
+            prompt: "components/prompt",
             confirm: "components/confirm",
             toast: "components/toast",
             loading: "components/loading/loading",

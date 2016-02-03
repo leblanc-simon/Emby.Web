@@ -131,9 +131,9 @@ a {
     overflow: hidden;
 }
 
-.userViewNames .scrollFrameX .scrollSlider {
-    padding-left: 3.75%;
-}
+    .userViewNames .scrollFrameX .scrollSlider {
+        padding-left: 3.75%;
+    }
 
 .itemScrollFrame.scrollFrameX {
     overflow: hidden;
@@ -567,3 +567,9 @@ paper-slider.noKnob:hover #sliderKnob {
     .verticalSection > h2 {
         margin-bottom: .25em;
     }
+
+.mainSection .itemPageButtons paper-button, paper-button.mini {
+    padding: .25em .6em .4em;
+    font-size: 90%;
+    text-transform: none;
+}

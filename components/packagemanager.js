@@ -6,11 +6,12 @@ define(['appSettings', 'pluginManager'], function (appSettings, pluginManager) {
         var packages = [];
 
         self.packages = function () {
-            return packages;
+            return packages.splice(0);
         };
 
         self.install = function (url) {
 
+            return Promise.resolve({});
             var manifestUrls = JSON.parse(appSettings.get('installedpackages') || '[]');
             manifestUrls.push(url);
             appSettings.set('installedpackages', JSON.stringify(manifestUrls));

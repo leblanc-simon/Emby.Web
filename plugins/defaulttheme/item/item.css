@@ -73,12 +73,6 @@
     justify-content: center;
 }
 
-    .mainSection .itemPageButtons paper-button {
-        padding: .25em .6em .4em;
-        text-transform: none;
-        font-size: 90%;
-    }
-
 .mainSection .itemPageButtons {
     margin-right: 1em;
 }

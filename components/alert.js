@@ -11,6 +11,6 @@ define(['dialog'], function (dialog) {
 
         options.buttons = [Globalize.translate('core#ButtonOk')];
 
-        dialog(options);
+        return dialog(options);
     };
 });
