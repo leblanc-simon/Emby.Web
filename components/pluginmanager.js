@@ -64,7 +64,7 @@ define(['events'], function (Events) {
 
             return new Promise(function (resolve, reject) {
 
-                require([url, 'globalize', 'cryptojs-md5'], function (pluginFactory, globalize) {
+                require([url, 'globalize'], function (pluginFactory, globalize) {
 
                     var plugin = new pluginFactory();
 
