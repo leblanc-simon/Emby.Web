@@ -773,7 +773,6 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
                 section.innerHTML = listview.getListViewHtml(result.Items, {
                     showIndexNumber: item.Type == 'MusicAlbum',
-                    action: 'playallfromhere',
                     enableOverview: true,
                     imageSize: 'large'
                 });
@@ -784,9 +783,6 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
                 setTimeout(function () {
                     focusFirstUnWatched(result.Items, section);
                 }, 100);
-
-                section.removeEventListener('keydown', onEpisodeListKeyDown);
-                section.addEventListener('keydown', onEpisodeListKeyDown);
             });
         }
 
@@ -801,24 +797,6 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
             }
 
             return elem;
-        }
-
-        function onEpisodeListKeyDown(e) {
-
-            // 39
-            if (e.keyCode == 39) {
-
-                var card = parentWithClass(e.target, 'itemAction');
-
-                if (card) {
-
-                    Emby.Page.showItem(card.getAttribute('data-id'));
-
-                    e.preventDefault();
-                    e.stopPropagation();
-                    return false;
-                }
-            }
         }
 
         function focusFirstUnWatched(items, element) {
