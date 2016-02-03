@@ -60,26 +60,25 @@ define(['events'], function (Events) {
 
         self.loadPlugin = function (url) {
 
-            var existing = plugins.filter(function (p) {
-                return p.installUrl == url;
-            })[0];
-
-            if (existing) {
-                return Promise.resolve(url);
-            }
-
             console.log('Loading plugin: ' + url);
 
             return new Promise(function (resolve, reject) {
 
                 require([url, 'globalize', 'cryptojs-md5'], function (pluginFactory, globalize) {
+
                     var plugin = new pluginFactory();
 
-                    plugin.installUrl = url;
+                    // See if it's already installed
+                    var existing = plugins.filter(function (p) {
+                        return p.id == plugin.id;
+                    })[0];
 
-                    if (!plugin.id) {
-                        plugin.id = CryptoJS.MD5(url).toString();
+                    if (existing) {
+                        resolve(url);
+                        return;
                     }
+
+                    plugin.installUrl = url;
 
                     var urlLower = url.toLowerCase();
                     if (urlLower.indexOf('http:') == -1 && urlLower.indexOf('https:') == -1 && urlLower.indexOf('file:') == -1) {
