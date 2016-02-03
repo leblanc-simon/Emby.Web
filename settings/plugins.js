@@ -202,8 +202,8 @@ define(['loading', 'packageManager', 'imageLoader', 'focusManager', 'slyScroller
 
             list = list.sort(function (a, b) {
 
-                var aName = a.productName;
-                var bName = b.productName;
+                var aName = a.displayName;
+                var bName = b.displayName;
 
                 if (aName > bName) {
                     return 1;
@@ -263,7 +263,7 @@ define(['loading', 'packageManager', 'imageLoader', 'focusManager', 'slyScroller
 </div>\
 </div>\
 <div class="cardFooter">\
-<div class="cardText">' + plugin.productName + '</div>\
+<div class="cardText">' + plugin.displayName + '</div>\
 <div class="cardText">' + plugin.version + '</div>\
 </div>'+ innerClosing + '\
 </'+ tagName + '>';
