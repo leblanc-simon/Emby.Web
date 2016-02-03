@@ -30,6 +30,21 @@ define(['playbackManager', 'focusManager'], function (playbackManager, focusMana
         scope.removeEventListener('command', fn);
     }
 
+    var commandTimes = {};
+
+    function checkCommandTime(command) {
+
+        var last = commandTimes[command] || 0;
+        var now = new Date().getTime();
+
+        if ((now - last) < 1000) {
+            return false;
+        }
+
+        commandTimes[command] = now;
+        return true;
+    }
+
     function handleCommand(name, options) {
 
         notify();
@@ -125,7 +140,9 @@ define(['playbackManager', 'focusManager'], function (playbackManager, focusMana
                 playbackManager.playPause();
                 break;
             case 'stop':
-                playbackManager.stop();
+                if (checkCommandTime('stop')) {
+                    playbackManager.stop();
+                }
                 break;
             case 'changezoom':
                 break;
