@@ -68,11 +68,59 @@ define(['loading', 'packageManager', 'imageLoader', 'focusManager', 'slyScroller
 
             var card = Emby.Dom.parentWithClass(e.target, 'card');
 
-            if (card) {
-                var path = card.getAttribute('data-name');
-
+            if (!card) {
+                return;
             }
+
+            var name = card.getAttribute('data-name');
+
+            var menuItems = [];
+
+            menuItems.push({
+                name: Globalize.translate('core#Uninstall'),
+                id: 'uninstall'
+            });
+
+            require(['actionsheet'], function (actionsheet) {
+
+                actionsheet.show({
+                    items: menuItems,
+                    title: card.querySelector('.cardText').innerHTML,
+                    callback: function (id) {
+
+                        switch (id) {
+                            case 'uninstall':
+                                uninstallPackage(name);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
+
+            });
+
         });
+
+        function uninstallPackage(name) {
+
+            loading.show();
+
+            packageManager.uninstall(name).then(renderPlugins, function () {
+
+                loading.hide();
+
+                require(['alert'], function (alert) {
+
+                    alert({
+
+                        title: Globalize.translate('core#InstallationError'),
+                        text: Globalize.translate('core#GenericErrorMessage')
+
+                    });
+                });
+            });
+        }
 
         view.querySelector('.btnInstall').addEventListener('click', function (e) {
 
@@ -129,7 +177,7 @@ define(['loading', 'packageManager', 'imageLoader', 'focusManager', 'slyScroller
 
             packageManager.install(url).then(function (newPackage) {
 
-                renderPlugins(url, newPackage.name);
+                renderPlugins(newPackage.name);
 
             }, function () {
 
@@ -141,8 +189,7 @@ define(['loading', 'packageManager', 'imageLoader', 'focusManager', 'slyScroller
 
                         title: Globalize.translate('core#InstallationError'),
                         text: Globalize.translate('core#GenericErrorMessage')
-
-                    }).then(installPluginFromUrl);
+                    });
                 });
             });
         }

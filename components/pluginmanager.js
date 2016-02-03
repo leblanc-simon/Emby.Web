@@ -60,6 +60,14 @@ define(['events'], function (Events) {
 
         self.loadPlugin = function (url) {
 
+            var existing = plugins.filter(function (p) {
+                return p.installUrl == url;
+            })[0];
+
+            if (existing) {
+                return Promise.resolve(url);
+            }
+
             console.log('Loading plugin: ' + url);
 
             return new Promise(function (resolve, reject) {
@@ -67,7 +75,7 @@ define(['events'], function (Events) {
                 require([url, 'globalize'], function (pluginFactory, globalize) {
                     var plugin = new pluginFactory();
 
-                    var originalUrl = url;
+                    plugin.installUrl = url;
 
                     var urlLower = url.toLowerCase();
                     if (urlLower.indexOf('http:') == -1 && urlLower.indexOf('https:') == -1 && urlLower.indexOf('file:') == -1) {
@@ -85,7 +93,7 @@ define(['events'], function (Events) {
                         {
                             name: plugin.id || plugin.packageName,
                             location: plugin.baseUrl,
-                            main: originalUrl
+                            main: plugin.installUrl
                         }]
                     });
 

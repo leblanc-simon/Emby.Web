@@ -525,7 +525,16 @@
             list.push(externalPlugins[i]);
         }
 
-        return Promise.all(list.map(loadPlugin));
+        return new Promise(function (resolve, reject) {
+
+            Promise.all(list.map(loadPlugin)).then(function() {
+                
+                require(['packageManager'], function (packageManager) {
+                    packageManager.init().then(resolve, reject);
+                });
+
+            }, reject);
+        });
     }
 
     function loadPlugin(url) {
