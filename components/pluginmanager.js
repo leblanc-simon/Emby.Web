@@ -72,10 +72,14 @@ define(['events'], function (Events) {
 
             return new Promise(function (resolve, reject) {
 
-                require([url, 'globalize'], function (pluginFactory, globalize) {
+                require([url, 'globalize', 'cryptojs-md5'], function (pluginFactory, globalize) {
                     var plugin = new pluginFactory();
 
                     plugin.installUrl = url;
+
+                    if (!plugin.id) {
+                        plugin.id = CryptoJS.MD5(url).toString();
+                    }
 
                     var urlLower = url.toLowerCase();
                     if (urlLower.indexOf('http:') == -1 && urlLower.indexOf('https:') == -1 && urlLower.indexOf('file:') == -1) {
