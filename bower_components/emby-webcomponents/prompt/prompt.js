@@ -1,11 +1,16 @@
-define(['paperdialoghelper', 'coreIcons', 'css!./style.css'], function (paperdialoghelper) {
+define(['paperdialoghelper', 'layoutManager', 'html!./icons.html', 'css!./style.css', 'paper-button', 'paper-input'], function (paperdialoghelper, layoutManager) {
 
     function show(options, resolve, reject) {
 
-        var dlg = paperdialoghelper.createDialog({
-            removeOnClose: true,
-            size: 'fullscreen'
-        });
+        var dialogOptions = {
+            removeOnClose: true
+        };
+
+        if (layoutManager.tv) {
+            dialogOptions.size = 'fullscreen';
+        }
+
+        var dlg = paperdialoghelper.createDialog(dialogOptions);
 
         dlg.classList.add('promptDialog');
 
@@ -13,7 +18,7 @@ define(['paperdialoghelper', 'coreIcons', 'css!./style.css'], function (paperdia
         var submitValue = '';
 
         html += '<div style="margin:0;padding:0;width:50%;text-align:left;">';
-        html += '<paper-icon-button tabindex="-1" icon="core:arrow-back" class="btnPromptExit"></paper-icon-button>';
+        html += '<paper-icon-button tabindex="-1" icon="dialog:arrow-back" class="btnPromptExit"></paper-icon-button>';
 
         if (options.title) {
             html += '<h1 style="margin-bottom:0;">';
@@ -25,7 +30,7 @@ define(['paperdialoghelper', 'coreIcons', 'css!./style.css'], function (paperdia
 
         // TODO: An actual form element should probably be added
         html += '<br/>';
-        html += '<paper-button raised class="block paperSubmit"><iron-icon icon="core:check"></iron-icon><span>' + Globalize.translate('core#ButtonOk') + '</span></paper-button>';
+        html += '<paper-button raised class="block paperSubmit"><iron-icon icon="dialog:check"></iron-icon><span>' + Globalize.translate('core#ButtonOk') + '</span></paper-button>';
 
         html += '</div>';
 

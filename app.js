@@ -388,7 +388,7 @@
         define("alphapicker", ["components/alphapicker/alphapicker"], returnFirstDependency);
 
         define("dialog", ["components/dialog/dialog"], returnFirstDependency);
-        define("prompt", ["components/prompt/prompt"], returnFirstDependency);
+        define("prompt", [embyWebComponentsBowerPath + "/prompt/prompt"], returnFirstDependency);
 
         define("paper-base", ["css!style/paperstyles.css"]);
         define("paper-spinner", ["html!" + bowerPath + "/paper-spinner/paper-spinner.html", 'paper-base']);
