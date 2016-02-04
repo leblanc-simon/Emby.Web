@@ -1,4 +1,10 @@
 {
+    "GenericErrorMessage": "There was an error processing the request. Please try again later.",
+    "InstallFromUrl": "Install from url",
+    "InstallationError": "Installation Failure",
+    "InstallFromCatalog": "Install from catalog",
+    "PluginUrl": "Plugin url",
+    "InstallPlugin": "Install Plugin",
     "TooltipFavorite": "Favorite",
     "TooltipDislike": "Dislike",
     "TooltipLike": "Like",
@@ -77,11 +83,5 @@
     "ConnectPinCodeHeader": "To sign in with Emby Connect, visit {0} and enter the following pin code:",
     "SoundEffects": "Sound effects",
     "ValueSpecialEpisodeName": "Special - {0}",
-    "Sounds": "Sounds",
-    "InstallPlugin": "Install Plugin",
-    "InstallFromCatalog": "Install from catalog",
-    "InstallFromUrl": "Install from url",
-    "PluginUrl": "Plugin url",
-    "InstallationError": "Installation Failure",
-    "GenericErrorMessage": "There was an error processing the request. Please try again later."
+    "Sounds": "Sounds"
 }

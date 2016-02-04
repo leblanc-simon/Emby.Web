@@ -1,4 +1,10 @@
 {
+    "GenericErrorMessage": "There was an error processing the request. Please try again later.",
+    "InstallFromUrl": "Install from url",
+    "InstallationError": "Installation Failure",
+    "InstallFromCatalog": "Install from catalog",
+    "PluginUrl": "Plugin url",
+    "InstallPlugin": "Install Plugin",
     "TooltipFavorite": "Favorito",
     "TooltipDislike": "No me gusta",
     "TooltipLike": "Me gusta",

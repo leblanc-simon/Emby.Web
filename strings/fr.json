@@ -1,4 +1,10 @@
 {
+    "GenericErrorMessage": "Il y a eu une erreur lors de l'ex\u00e9cution de la requ\u00eate. Veuillez r\u00e9essayer plus tard.",
+    "InstallFromUrl": "Installer \u00e0 partir de l'URL",
+    "InstallationError": "Erreur lors de l'installation",
+    "InstallFromCatalog": "Installer \u00e0 partir du catalogue",
+    "PluginUrl": "Url du plugin",
+    "InstallPlugin": "Installer le plugin",
     "TooltipFavorite": "Favoris",
     "TooltipDislike": "Je n'aime pas",
     "TooltipLike": "J'aime",
