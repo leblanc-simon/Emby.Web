@@ -23,8 +23,8 @@ define(['appSettings', 'pluginManager'], function (appSettings, pluginManager) {
 
         self.install = function (url) {
 
-            return loadPackage(url).then(function(pkg) {
-                
+            return loadPackage(url).then(function (pkg) {
+
                 var manifestUrls = JSON.parse(appSettings.get(settingsKey) || '[]');
 
                 if (manifestUrls.indexOf(url) == -1) {
@@ -65,7 +65,7 @@ define(['appSettings', 'pluginManager'], function (appSettings, pluginManager) {
         self.init = function () {
             var manifestUrls = JSON.parse(appSettings.get(settingsKey) || '[]');
 
-            return Promise.all(manifestUrls.map(loadPackage)).then(function() {
+            return Promise.all(manifestUrls.map(loadPackage)).then(function () {
                 return Promise.resolve();
             }, function () {
                 return Promise.resolve();
@@ -96,7 +96,7 @@ define(['appSettings', 'pluginManager'], function (appSettings, pluginManager) {
                             plugins.push(pkg.plugin);
                         }
                         var promises = plugins.map(function (pluginUrl) {
-                            return pluginManager.loadPlugin(mapPath(originalUrl, pluginUrl));
+                            return pluginManager.loadPlugin(self.mapPath(pkg, pluginUrl));
                         });
                         Promise.all(promises).then(resolve, resolve);
 
@@ -111,15 +111,21 @@ define(['appSettings', 'pluginManager'], function (appSettings, pluginManager) {
             });
         }
 
-        function mapPath(packageUrl, pluginUrl) {
+        self.mapPath = function (pkg, pluginUrl) {
 
+            var urlLower = pluginUrl.toLowerCase();
+            if (urlLower.indexOf('http:') == 0 || urlLower.indexOf('https:') == 0 || urlLower.indexOf('file:') == 0) {
+                return pluginUrl;
+            }
+
+            var packageUrl = pkg.url;
             packageUrl = packageUrl.substring(0, packageUrl.lastIndexOf('/'));
 
             packageUrl += '/';
             packageUrl += pluginUrl;
 
             return packageUrl;
-        }
+        };
     }
 
     return new packageManager();

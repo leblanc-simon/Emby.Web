@@ -241,8 +241,8 @@ define(['loading', 'packageManager', 'imageLoader', 'focusManager', 'slyScroller
 
             var cardImageContainer;
 
-            if (plugin.thumbUrl) {
-                cardImageContainer = '<div class="cardImage" style="background-image:url(\'' + plugin.thumbUrl + '\');"></div>';
+            if (plugin.thumb) {
+                cardImageContainer = '<div class="cardImage" style="background-image:url(\'' + packageManager.mapPath(plugin, plugin.thumb) + '\');"></div>';
             }
             else {
 
