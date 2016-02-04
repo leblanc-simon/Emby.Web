@@ -290,6 +290,7 @@
             qualityoptions: embyWebComponentsBowerPath + "/qualityoptions",
             visibleinviewport: embyWebComponentsBowerPath + "/visibleinviewport",
             performanceManager: embyWebComponentsBowerPath + "/performancemanager",
+            layoutManager: embyWebComponentsBowerPath + "/layoutmanager",
             isMobile: "bower_components/isMobile/isMobile.min",
             howler: 'bower_components/howler.js/howler.min',
             screenfull: 'bower_components/screenfull/dist/screenfull',
@@ -527,8 +528,8 @@
 
         return new Promise(function (resolve, reject) {
 
-            Promise.all(list.map(loadPlugin)).then(function() {
-                
+            Promise.all(list.map(loadPlugin)).then(function () {
+
                 require(['packageManager'], function (packageManager) {
                     packageManager.init().then(resolve, reject);
                 });
@@ -601,6 +602,7 @@
 
             var presentationDependencies = [];
 
+            presentationDependencies.push('layoutManager');
             presentationDependencies.push('events');
             presentationDependencies.push('js/models');
             presentationDependencies.push('js/soundeffectplayer');
@@ -617,8 +619,9 @@
             presentationDependencies.push('components/controlbox');
             presentationDependencies.push('screensaverManager');
 
-            require(presentationDependencies, function (events) {
+            require(presentationDependencies, function (layoutManager, events) {
 
+                layoutManager.setFormFactor('tv');
                 globalScope.Events = events;
 
                 console.log('Loading presentation');
