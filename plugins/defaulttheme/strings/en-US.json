@@ -1,5 +1,4 @@
 {
-    "DimUnselectedPosters": "Dim unselected posters",
     "Play": "Play",
     "Queue": "Queue",
     "Shuffle": "Shuffle",
@@ -87,5 +86,6 @@
     "Playlists": "Playlists",
     "EnableEpisodeSpoilerProtection": "Enable anti-spoiler features",
     "EnableEpisodeSpoilerProtectionHelp": "Hide details for episodes beyond the first unwatched",
-    "DefaultTheme": "Default Theme"
+    "DefaultTheme": "Default Theme",
+    "DimUnselectedPosters": "Dim unselected posters"
 }

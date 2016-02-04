@@ -1,5 +1,4 @@
 {
-    "DimUnselectedPosters": "Dim unselected posters",
     "Play": "Afspelen",
     "Queue": "Wachtrij",
     "Shuffle": "Willekeurig",
@@ -87,5 +86,6 @@
     "Playlists": "Afspeellijsten",
     "EnableEpisodeSpoilerProtection": "Anti-spoiler functies inschakelen",
     "EnableEpisodeSpoilerProtectionHelp": "Verberg details van niet bekeken hoofdstukken",
-    "DefaultTheme": "Standaard Thema"
+    "DefaultTheme": "Standaard Thema",
+    "DimUnselectedPosters": "Dim unselected posters"
 }
