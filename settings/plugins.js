@@ -167,7 +167,7 @@ define(['loading', 'packageManager', 'imageLoader', 'focusManager', 'slyScroller
 
                     title: Globalize.translate('core#PluginUrl')
 
-                }).then(installPluginFromUrl);
+                }).then(installPluginFromUrl, renderPlugins);
             });
         }
 
