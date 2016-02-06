@@ -442,6 +442,17 @@
         });
 
         define("swiper", [bowerPath + "/Swiper/dist/js/swiper.min", "css!" + bowerPath + "/Swiper/dist/css/swiper.min"], returnFirstDependency);
+
+        define('dialogText', [], getDialogText());
+    }
+
+    function getDialogText() {
+        return function () {
+            return {
+                buttonOk: 'core#ButtonOk',
+                buttonCancel: 'core#ButtonCancel'
+            };
+        };
     }
 
     function loadApiClientDependencies(callback) {
