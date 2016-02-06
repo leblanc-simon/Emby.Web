@@ -1,16 +1,15 @@
-define([], function () {
+define(['browser', 'Sly'], function (browser) {
 
     return {
         create: function (element, options) {
 
-            return new Promise(function (resolve, reject) {
+            if (browser.mobile) {
+            
+                options.enableNativeScroll = true;
+            }
 
-                require(['Sly'], function () {
-
-                    var sly = new Sly(element, options);
-                    resolve(sly);
-                });
-            });
+            var sly = new Sly(element, options);
+            return Promise.resolve(sly);
         }
     };
 });
