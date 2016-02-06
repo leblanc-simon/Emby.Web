@@ -61,7 +61,6 @@
         // Private variables
         var self = this;
         self.options = o;
-        var parallax = isNumber(frame);
 
         // Frame
         var frameElement = frame;
@@ -121,9 +120,7 @@
         var i, l;
 
         // Normalizing frame
-        if (!parallax) {
-            frame = frameElement;
-        }
+        frame = frameElement;
 
         // Expose properties
         self.initialized = 0;
@@ -164,8 +161,8 @@
             pos.old = extend({}, pos);
 
             // Reset global variables
-            frameSize = parallax ? 0 : getWidthOrHeight(frameElement, o.horizontal ? 'width' : 'height');
-            slideeSize = parallax ? frame : o.scrollWidth || slideeElement[o.horizontal ? 'offsetWidth' : 'offsetHeight'];
+            frameSize = getWidthOrHeight(frameElement, o.horizontal ? 'width' : 'height');
+            slideeSize = o.scrollWidth || slideeElement[o.horizontal ? 'offsetWidth' : 'offsetHeight'];
             pages.length = 0;
 
             // Set position limits & relatives
@@ -179,7 +176,7 @@
             updateRelatives();
 
             // Pages
-            if (!parallax && frameSize > 0) {
+            if (frameSize > 0) {
                 var tempPagePos = pos.start;
                 var pagesHtml = '';
 
@@ -437,12 +434,10 @@
             }
 
             // Update SLIDEE position
-            if (!parallax) {
-                if (transform) {
-                    slideeElement.style[transform] = gpuAcceleration + (o.horizontal ? 'translateX' : 'translateY') + '(' + (-pos.cur) + 'px)';
-                } else {
-                    slideeElement.style[o.horizontal ? 'left' : 'top'] = -round(pos.cur) + 'px';
-                }
+            if (transform) {
+                slideeElement.style[transform] = gpuAcceleration + (o.horizontal ? 'translateX' : 'translateY') + '(' + (-pos.cur) + 'px)';
+            } else {
+                slideeElement.style[o.horizontal ? 'left' : 'top'] = -round(pos.cur) + 'px';
             }
         }
 
@@ -699,17 +694,15 @@
             var centerOffset = frameSize / 2;
 
             // Determine active page
-            if (!parallax) {
-                for (var p = 0, pl = pages.length; p < pl; p++) {
-                    if (slideePos >= pos.end || p === pages.length - 1) {
-                        relatives.activePage = pages.length - 1;
-                        break;
-                    }
+            for (var p = 0, pl = pages.length; p < pl; p++) {
+                if (slideePos >= pos.end || p === pages.length - 1) {
+                    relatives.activePage = pages.length - 1;
+                    break;
+                }
 
-                    if (slideePos <= pages[p] + centerOffset) {
-                        relatives.activePage = p;
-                        break;
-                    }
+                if (slideePos <= pages[p] + centerOffset) {
+                    relatives.activePage = p;
+                    break;
                 }
             }
 
@@ -1103,13 +1096,11 @@
                 itemElements[rel.activeItem].classList.remove(o.activeClass);
             }
 
-            if (!parallax) {
-                // Reset native FRAME element scroll
-                frameElement.removeEventListener('scroll', resetScroll);
-                // Restore original styles
-                frameStyles.restore();
-                slideeStyles.restore();
-            }
+            // Reset native FRAME element scroll
+            frameElement.removeEventListener('scroll', resetScroll);
+            // Restore original styles
+            frameStyles.restore();
+            slideeStyles.restore();
 
             // Clean up collections
             items.length = pages.length = 0;
@@ -1147,17 +1138,14 @@
 
             // Set required styles
             var movables = [];
-            if (!parallax) {
+            if (slideeElement) {
+                movables.push(slideeElement);
+            }
 
-                if (slideeElement) {
-                    movables.push(slideeElement);
-                }
+            //frameElement.style.overflow = 'hidden';
 
-                //frameElement.style.overflow = 'hidden';
-
-                if (!transform && getComputedStyle(frameElement, null).getPropertyValue('position') === 'static') {
-                    frameElement.style.position = 'relative';
-                }
+            if (!transform && getComputedStyle(frameElement, null).getPropertyValue('position') === 'static') {
+                frameElement.style.position = 'relative';
             }
             if (transform) {
                 if (gpuAcceleration) {
@@ -1178,10 +1166,8 @@
                 dragSourceElement.addEventListener(eventName, dragInitSlidee);
             });
 
-            if (!parallax) {
-                // Reset native FRAME element scroll
-                frameElement.addEventListener('scroll', resetScroll);
-            }
+            // Reset native FRAME element scroll
+            frameElement.addEventListener('scroll', resetScroll);
 
             // Mark instance as initialized
             self.initialized = 1;
