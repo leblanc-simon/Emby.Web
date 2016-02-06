@@ -75,6 +75,8 @@
             dest: 0
         };
 
+        var transform = true;
+
         var hPos = {
             start: 0,
             end: 0,
@@ -1361,7 +1363,6 @@
         }
 
         // Global support indicators
-        transform = testProp('transform');
         gpuAcceleration = testProp('perspective') ? 'translateZ(0) ' : '';
     }());
 
