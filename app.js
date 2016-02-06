@@ -366,9 +366,7 @@
         define("cryptojs-sha1", [sha1Path]);
         define("cryptojs-md5", [md5Path]);
 
-        define("Sly", ["components/sly/sly"], function () {
-            return globalScope.Sly;
-        });
+        define("Sly", ["components/sly/sly"], returnFirstDependency);
 
         // alias
         define("appsettings", ['appSettings'], returnFirstDependency);

@@ -33,18 +33,9 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
                 var options = {
                     horizontal: 0,
-                    itemNav: 0,
-                    mouseDragging: 1,
-                    touchDragging: 1,
                     slidee: view.querySelector('.scrollSlider'),
-                    itemSelector: '.card',
-                    smart: true,
-                    scrollBar: view.querySelector('.scrollbar'),
                     scrollBy: 200,
                     speed: 270,
-                    dragHandle: 1,
-                    dynamicHandle: 1,
-                    clickBar: 1,
                     scrollWidth: 50000,
                     immediateSpeed: 100
                 };
