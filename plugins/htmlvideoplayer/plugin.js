@@ -52,6 +52,11 @@ define(['browser', 'pluginManager'], function (browser, pluginManager) {
             });
         };
 
+        function getCrossOriginValue(mediaSource) {
+
+            return 'anonymous';
+        }
+
         function setCurrentSrc(elem, options) {
 
             return new Promise(function (resolve, reject) {
@@ -116,6 +121,8 @@ define(['browser', 'pluginManager'], function (browser, pluginManager) {
                     subtitleTrackIndexToSetOnPlaying = currentTrackIndex;
 
                     currentPlayOptions = options;
+
+                    elem.crossOrigin = getCrossOriginValue(options.mediaSource);
 
                     if (enableHlsJs) {
 
@@ -597,12 +604,12 @@ define(['browser', 'pluginManager'], function (browser, pluginManager) {
                         var html = '';
                         // Can't autoplay in these browsers so we need to use the full controls
                         if (requiresNativeControls) {
-                            html += '<video preload="metadata" autoplay="autoplay" crossorigin="anonymous"' + poster + ' controls="controls" webkit-playsinline>';
+                            html += '<video preload="metadata" autoplay="autoplay"' + poster + ' controls="controls" webkit-playsinline>';
                         }
                         else {
 
                             // Chrome 35 won't play with preload none
-                            html += '<video preload="metadata" autoplay="autoplay" crossorigin="anonymous"' + poster + ' webkit-playsinline>';
+                            html += '<video preload="metadata" autoplay="autoplay"' + poster + ' webkit-playsinline>';
                         }
 
                         html += '</video>';

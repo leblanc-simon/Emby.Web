@@ -42,12 +42,18 @@ define(['events'], function (Events) {
 
                 var val = options.url;
 
+                elem.crossOrigin = getCrossOriginValue(options.mediaSource);
                 elem.src = val;
                 currentSrc = val;
                 elem.play();
                 resolve();
             });
         };
+
+        function getCrossOriginValue(mediaSource) {
+
+            return 'anonymous';
+        }
 
         // Save this for when playback stops, because querying the time at that point might return 0
         self.currentTime = function (val) {
@@ -242,7 +248,6 @@ define(['events'], function (Events) {
                 var elem = document.createElement('audio');
                 elem.classList.add('mediaPlayerAudio');
                 elem.classList.add('hide');
-                elem.crossorigin = "anonymous";
 
                 document.body.appendChild(elem);
 

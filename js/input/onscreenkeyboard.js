@@ -1,13 +1,13 @@
-require(['inputmanager'], function (inputManager) {
+require(['inputmanager', 'browser'], function (inputManager, browser) {
 
     function hasBuiltInKeyboard() {
 
-        // This is going to be really difficult to get right
-        var userAgent = navigator.userAgent.toLowerCase();
-
-        if (userAgent.indexOf('mobile') != -1) {
+        if (browser.mobile) {
             return true;
         }
+
+        // This is going to be really difficult to get right
+        var userAgent = navigator.userAgent.toLowerCase();
 
         if (userAgent.indexOf('tv') != -1) {
             return true;
