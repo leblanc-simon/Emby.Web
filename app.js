@@ -274,7 +274,7 @@
             registrationservices: "components/registrationservices/registrationservices",
             screensaverManager: "components/screensavermanager",
             viewManager: "components/viewmanager",
-            slyScroller: "components/slyscroller",
+            slyScroller: "components/sly/slyscroller",
             appSettings: "components/appsettings",
             userSettings: "components/usersettings",
             focusManager: embyWebComponentsBowerPath + "/focusmanager",
@@ -366,8 +366,7 @@
         define("cryptojs-sha1", [sha1Path]);
         define("cryptojs-md5", [md5Path]);
 
-        //define("type", ["bower_components/type/dist/type"]);
-        define("Sly", [bowerPath + "/sly/src/sly"], function () {
+        define("Sly", ["components/sly/sly"], function () {
             return globalScope.Sly;
         });
 
