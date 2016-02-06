@@ -66,7 +66,6 @@
         var frameElement = frame;
         var slideeElement = o.slidee ? o.slidee : sibling(frameElement.firstChild)[0];
         var frameSize = 0;
-        var slideeSize = 0;
         var pos = {
             start: 0,
             center: 0,
@@ -83,23 +82,10 @@
             cur: 0
         };
 
-        var pagesElements = [];
-        var pages = [];
-
         // Items
-        var itemElements = [];
-        var items = [];
         var rel = {
-            firstItem: 0,
-            lastItem: 0,
-            centerItem: 0,
-            activeItem: null,
-            activePage: 0
+            activeItem: null
         };
-
-        // Styles
-        var frameStyles = new StyleRestorer(frameElement);
-        var slideeStyles = new StyleRestorer(slideeElement);
 
         // Miscellaneous
         var scrollSource = o.scrollSource ? o.scrollSource : frameElement;
@@ -128,10 +114,6 @@
         self.initialized = 0;
         self.frame = frame;
         self.slidee = slideeElement;
-        self.pos = pos;
-        self.rel = rel;
-        self.items = items;
-        self.pages = pages;
         self.options = o;
         self.dragging = dragging;
 
@@ -155,42 +137,14 @@
 		 * @return {Void}
 		 */
         function load(isInit) {
-            // Local variables
-            var lastItemsCount = 0;
-            var lastPagesCount = pages.length;
-
-            // Save old position
-            pos.old = extend({}, pos);
 
             // Reset global variables
             frameSize = getWidthOrHeight(frameElement, o.horizontal ? 'width' : 'height');
-            slideeSize = o.scrollWidth || slideeElement[o.horizontal ? 'offsetWidth' : 'offsetHeight'];
-            pages.length = 0;
+            var slideeSize = o.scrollWidth || slideeElement[o.horizontal ? 'offsetWidth' : 'offsetHeight'];
 
             // Set position limits & relatives
             pos.start = 0;
             pos.end = max(slideeSize - frameSize, 0);
-
-            // Calculate SLIDEE center position
-            pos.center = round(pos.end / 2 + pos.start / 2);
-
-            // Update relative positions
-            updateRelatives();
-
-            // Pages
-            if (frameSize > 0) {
-                var tempPagePos = pos.start;
-                var pagesHtml = '';
-
-                while (tempPagePos - frameSize < pos.end) {
-                    pages.push(tempPagePos);
-                    tempPagePos += frameSize;
-                }
-            }
-
-            // Extend relative variables object with some useful info
-            rel.slideeSize = slideeSize;
-            rel.frameSize = frameSize;
 
             if (isInit) {
                 if (o.startAt != null) slideTo(o.startAt, 1);
@@ -326,21 +280,9 @@
             if (newPos !== pos.dest) {
                 pos.dest = newPos;
                 if (!renderID) {
-
-                    if (!slideeElement.animate) {
-                        if (currentAnimation) {
-                            currentAnimation.cancel();
-                            currentAnimation = null;
-                        }
-                        render();
-                    } else {
-                        renderAnimate(animation);
-                    }
+                    renderAnimate(animation);
                 }
             }
-
-            // Synchronize states
-            updateRelatives();
         }
 
         var scrollEvent = new CustomEvent("scroll");
@@ -389,58 +331,6 @@
                 pos.cur = animation.to;
                 document.dispatchEvent(scrollEvent);
             });
-        }
-
-        /**
-		 * Render animation frame.
-		 *
-		 * @return {Void}
-		 */
-        function render() {
-            if (!self.initialized) {
-                return;
-            }
-
-            // If first render call, wait for next animationFrame
-            if (!renderID) {
-                renderID = rAF(render);
-                return;
-            }
-
-            // If immediate repositioning is requested, don't animate.
-            if (animation.immediate) {
-                pos.cur = animation.to;
-            }
-                // Use tweesing for animations without known end point
-            else if (animation.tweesing) {
-                animation.tweeseDelta = animation.to - pos.cur;
-                // Fuck Zeno's paradox
-                if (abs(animation.tweeseDelta) < 0.1) {
-                    pos.cur = animation.to;
-                } else {
-                    pos.cur += animation.tweeseDelta * (dragging.released ? o.swingSpeed : o.syncSpeed);
-                }
-            }
-                // Use tweening for basic animations with known end point
-            else {
-                animation.time = min(+new Date() - animation.start, o.speed);
-                pos.cur = animation.from + animation.delta * jQuery.easing[o.easing](animation.time / o.speed, animation.time, 0, 1, o.speed);
-            }
-
-            // If there is nothing more to render break the rendering loop, otherwise request new animation frame.
-            if (animation.to === pos.cur) {
-                pos.cur = animation.to;
-                dragging.tweese = renderID = 0;
-            } else {
-                renderID = rAF(render);
-            }
-
-            // Update SLIDEE position
-            if (transform) {
-                slideeElement.style[transform] = gpuAcceleration + (o.horizontal ? 'translateX' : 'translateY') + '(' + (-pos.cur) + 'px)';
-            } else {
-                slideeElement.style[o.horizontal ? 'left' : 'top'] = -round(pos.cur) + 'px';
-            }
         }
 
         function getOffset(elem) {
@@ -638,89 +528,6 @@
         self.toCenter = function (item, immediate) {
             to('center', item, immediate);
         };
-
-        /**
-		 * Get the index of an item in SLIDEE.
-		 *
-		 * @param {Mixed} item     Item DOM element.
-		 *
-		 * @return {Int}  Item index, or -1 if not found.
-		 */
-        function getIndex(item) {
-            return item != null ?
-					isNumber(item) ?
-						item >= 0 && item < items.length ? item : -1 :
-						itemElements.indexOf(item) :
-					-1;
-        }
-        // Expose getIndex without lowering the compressibility of it,
-        // as it is used quite often throughout Sly.
-        self.getIndex = getIndex;
-
-        /**
-		 * Get index of an item in SLIDEE based on a variety of input types.
-		 *
-		 * @param  {Mixed} item DOM element, positive or negative integer.
-		 *
-		 * @return {Int}   Item index, or -1 if not found.
-		 */
-        function getRelativeIndex(item) {
-            return getIndex(isNumber(item) && item < 0 ? item + items.length : item);
-        }
-
-        /**
-		 * Activates a page.
-		 *
-		 * @param {Int}  index     Page index, starting from 0.
-		 * @param {Bool} immediate Whether to reposition immediately without animation.
-		 *
-		 * @return {Void}
-		 */
-        self.activatePage = function (index, immediate) {
-            if (isNumber(index)) {
-                slideTo(pages[within(index, 0, pages.length - 1)], immediate);
-            }
-        };
-
-        /**
-		 * Return relative positions of items based on their visibility within FRAME.
-		 *
-		 * @param {Int} slideePos Position of SLIDEE.
-		 *
-		 * @return {Void}
-		 */
-        function getRelatives(slideePos) {
-            slideePos = within(isNumber(slideePos) ? slideePos : pos.dest, pos.start, pos.end);
-
-            var relatives = {};
-            var centerOffset = frameSize / 2;
-
-            // Determine active page
-            for (var p = 0, pl = pages.length; p < pl; p++) {
-                if (slideePos >= pos.end || p === pages.length - 1) {
-                    relatives.activePage = pages.length - 1;
-                    break;
-                }
-
-                if (slideePos <= pages[p] + centerOffset) {
-                    relatives.activePage = p;
-                    break;
-                }
-            }
-
-            return relatives;
-        }
-
-        /**
-		 * Update object with relative positions.
-		 *
-		 * @param {Int} newPos
-		 *
-		 * @return {Void}
-		 */
-        function updateRelatives(newPos) {
-            //extend(rel, getRelatives(newPos));
-        }
 
         function extend() {
             for (var i = 1; i < arguments.length; i++)
@@ -1094,18 +901,10 @@
 
             scrollSource.removeEventListener(wheelEvent, scrollHandler);
 
-            if (itemElements && rel.activeItem != null) {
-                itemElements[rel.activeItem].classList.remove(o.activeClass);
-            }
-
             // Reset native FRAME element scroll
             frameElement.removeEventListener('scroll', resetScroll);
-            // Restore original styles
-            frameStyles.restore();
-            slideeStyles.restore();
 
             // Clean up collections
-            items.length = pages.length = 0;
             last = {};
 
             // Reset initialized status and return the instance
@@ -1132,12 +931,6 @@
             // Register callbacks map
             self.on(callbackMap);
 
-            // Save styles
-            var holderProps = ['overflow', 'position'];
-            var movableProps = ['position', 'webkitTransform', 'msTransform', 'transform', 'left', 'top', 'width', 'height'];
-            frameStyles.save.apply(frameStyles, holderProps);
-            slideeStyles.save.apply(slideeStyles, movableProps);
-
             // Set required styles
             var movables = [];
             if (slideeElement) {
@@ -1156,9 +949,9 @@
                     //});
                 }
             } else {
-                movables.forEach(function (m) {
-                    m.style.position = 'absolute';
-                });
+                //movables.forEach(function (m) {
+                //    m.style.position = 'absolute';
+                //});
             }
 
             // Scrolling navigation
@@ -1264,17 +1057,6 @@
     }
 
     /**
-	 * Parse style to pixels.
-	 *
-	 * @param {Property} property CSS property to get the pixels from.
-	 *
-	 * @return {Int}
-	 */
-    function getStylePx(computedStyle, property) {
-        return 0 | round(String(computedStyle.getPropertyValue(property)).replace(/[^\-0-9.]/g, ''));
-    }
-
-    /**
 	 * Make sure that number is within the limits.
 	 *
 	 * @param {Number} number
@@ -1285,37 +1067,6 @@
 	 */
     function within(number, min, max) {
         return number < min ? min : number > max ? max : number;
-    }
-
-    /**
-	 * Saves element styles for later restoration.
-	 *
-	 * Example:
-	 *   var styles = new StyleRestorer(frame);
-	 *   styles.save('position');
-	 *   element.style.position = 'absolute';
-	 *   styles.restore(); // restores to state before the assignment above
-	 *
-	 * @param {Element} element
-	 */
-    function StyleRestorer(element) {
-        var self = {};
-        self.style = {};
-        self.save = function () {
-            if (!element || !element.nodeType) return;
-            for (var i = 0; i < arguments.length; i++) {
-                self.style[arguments[i]] = element.style[arguments[i]];
-            }
-            return self;
-        };
-        self.restore = function () {
-            if (!element || !element.nodeType) return;
-            for (var prop in self.style) {
-                if (self.style.hasOwnProperty(prop)) element.style[prop] = self.style[prop];
-            }
-            return self;
-        };
-        return self;
     }
 
     // Local WindowAnimationTiming interface polyfill
@@ -1394,21 +1145,10 @@
         swingSpeed: 0.2,   // Swing synchronization speed, where: 1 = instant, 0 = infinite.
         elasticBounds: false, // Stretch SLIDEE position limits when dragging past FRAME boundaries.
         dragThreshold: 3,     // Distance in pixels before Sly recognizes dragging.
-        interactive: null,  // Selector for special interactive elements.
+        intervactive: null,  // Selector for special interactive elements.
 
         // Scrollbar
-        scrollBar: null,  // Selector or DOM element for scrollbar container.
         dragHandle: false, // Whether the scrollbar handle should be draggable.
-        dynamicHandle: false, // Scrollbar handle represents the ratio between hidden and visible content.
-        minHandleSize: 50,    // Minimal height or width (depends on sly direction) of a handle in pixels.
-        clickBar: false, // Enable navigation by clicking on scrollbar.
-        syncSpeed: 0.5,   // Handle => SLIDEE synchronization speed, where: 1 = instant, 0 = infinite.
-
-        activatePageOn: null, // Event used to activate page. Can be: click, mouseenter, ...
-        pageBuilder:          // Page item generator.
-			function (index) {
-			    return '<li>' + (index + 1) + '</li>';
-			},
 
         // Mixed options
         moveBy: 300,     // Speed in pixels per second used by forward and backward buttons.
