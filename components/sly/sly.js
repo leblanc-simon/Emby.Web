@@ -375,11 +375,8 @@ define([], function () {
             }
 
             // Update the animation object
-            animation.start = +new Date();
-            animation.time = 0;
             animation.from = pos.cur;
             animation.to = newPos;
-            animation.delta = newPos - pos.cur;
             animation.tweesing = dragging.tweese || dragging.init && !dragging.slidee;
             animation.immediate = !animation.tweesing && (immediate || dragging.init && dragging.slidee || !o.speed);
 
@@ -502,18 +499,6 @@ define([], function () {
                 end: offset - frameSize + size,
                 size: size
             };
-        };
-
-        /**
-		 * Stops continuous movement.
-		 *
-		 * @return {Void}
-		 */
-        self.stop = function () {
-            if (dragging.source === 'button') {
-                dragging.init = 0;
-                dragging.released = 1;
-            }
         };
 
         /**
@@ -920,16 +905,6 @@ define([], function () {
                 element = element.parentNode;
             }
             return false;
-        }
-
-        /**
-		 * Continuous movement cleanup on mouseup.
-		 *
-		 * @return {Void}
-		 */
-        function movementReleaseHandler() {
-            self.stop();
-            document.removeEventListener('mouseup', movementReleaseHandler);
         }
 
         /**

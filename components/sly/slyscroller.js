@@ -10,7 +10,10 @@ define(['browser', 'Sly'], function (browser, Sly) {
                 
                 var isSmoothScrollSupported = 'scrollBehavior' in document.documentElement.style;
                 if (isSmoothScrollSupported) {
-                    //options.enableNativeScroll = true;
+
+                    if (options.horizontal && browser.firefox) {
+                        //options.enableNativeScroll = true;
+                    }
                 }
             }
 
