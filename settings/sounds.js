@@ -19,9 +19,7 @@ define(['loading', 'userSettings', 'pluginManager', 'focusManager'], function (l
 
         view.addEventListener('viewbeforehide', function (e) {
 
-            var selectSoundEffects = view.querySelector('.selectSoundEffects');
-
-            userSettings.set('soundeffects', selectSoundEffects.getValue());
+            userSettings.set('soundeffects', view.querySelector('.selectSoundEffects').getValue());
         });
 
         function renderSettings() {

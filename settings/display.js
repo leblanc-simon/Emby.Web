@@ -1,4 +1,4 @@
-define(['loading', 'userSettings', 'focusManager'], function (loading, userSettings, focusManager) {
+define(['loading', 'userSettings', 'focusManager', 'pluginManager'], function (loading, userSettings, focusManager, pluginManager) {
 
     return function (view, params) {
 
@@ -30,6 +30,8 @@ define(['loading', 'userSettings', 'focusManager'], function (loading, userSetti
             var selectLanguage = view.querySelector('.selectLanguage');
 
             userSettings.set('language', selectLanguage.getValue());
+
+            userSettings.set('theme', view.querySelector('.selectTheme').getValue());
         });
 
         function renderSettings() {
@@ -39,6 +41,18 @@ define(['loading', 'userSettings', 'focusManager'], function (loading, userSetti
             var selectLanguage = view.querySelector('.selectLanguage');
 
             selectLanguage.setValue(userSettings.get('language') || '');
+
+            var selectTheme = view.querySelector('.selectTheme');
+
+            var options = pluginManager.ofType('theme').map(function (plugin) {
+                return {
+                    name: plugin.name,
+                    value: plugin.id
+                };
+            });
+
+            selectTheme.setOptions(options);
+            selectTheme.setValue(userSettings.get('theme') || options[0].value);
         }
     }
 
