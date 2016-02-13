@@ -111,7 +111,7 @@ define(['userSettings', 'events'], function (userSettings, events) {
 
         var theme = userSettings.get('theme') || 'defaulttheme';
 
-        loadTheme('defaulttheme', function (theme) {
+        loadTheme(theme, function (theme) {
             Emby.Page.goHome();
         });
     }
