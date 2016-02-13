@@ -21,8 +21,13 @@ define(['appSettings', 'connectionManagerResolver', 'events', 'browser'], functi
             if (!userId) {
                 throw new Error('userId cannot be null');
             }
+
+            var currentValue = self.get(name);
             appsettings.set(name, value, userId);
-            events.trigger(self, 'change', [name]);
+
+            if (currentValue != value) {
+                events.trigger(self, 'change', [name]);
+            }
         };
 
         self.get = function (name) {
