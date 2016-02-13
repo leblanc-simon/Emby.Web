@@ -1,4 +1,4 @@
-define([], function () {
+define(['userSettings', 'events'], function (userSettings, events) {
 
     var currentTheme;
     var currentThemeDependencies = [];
@@ -109,10 +109,18 @@ define([], function () {
 
     function loadUserTheme() {
 
+        var theme = userSettings.get('theme') || 'defaulttheme';
+
         loadTheme('defaulttheme', function (theme) {
             Emby.Page.goHome();
         });
     }
+
+    events.on(userSettings, 'change', function (e, name) {
+        if (name == 'theme') {
+            loadUserTheme();
+        }
+    });
 
     return {
         getCurrentTheme: getCurrentTheme,
