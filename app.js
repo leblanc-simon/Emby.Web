@@ -39,7 +39,6 @@
 
         defineRoute({
             path: startupRoot + 'manuallogin.html',
-            contentPath: startupRoot + 'manuallogin.html',
             transition: 'slide',
             controller: 'startup/manuallogin',
             dependencies: ['paper-input']
@@ -47,21 +46,18 @@
 
         defineRoute({
             path: startupRoot + 'welcome.html',
-            contentPath: startupRoot + 'welcome.html',
             transition: 'slide',
             controller: 'startup/welcome'
         });
 
         defineRoute({
             path: startupRoot + 'connectlogin.html',
-            contentPath: startupRoot + 'connectlogin.html',
             transition: 'slide',
             controller: 'startup/connectlogin'
         });
 
         defineRoute({
             path: startupRoot + 'manualserver.html',
-            contentPath: startupRoot + 'manualserver.html',
             transition: 'slide',
             controller: 'startup/manualserver',
             dependencies: ['paper-input']
