@@ -1,6 +1,8 @@
 define(['loading', 'alphapicker', './../components/horizontallist', './../components/focushandler', './../components/tabbedpage', './../components/backdrop', 'focusManager'], function (loading, alphaPicker, horizontalList, focusHandler, tabbedPage, themeBackdrop, focusManager) {
 
-    return function(view, params) {
+    var themeId = 'defaulttheme';
+	
+	return function(view, params) {
 
         var self = this;
 
@@ -238,12 +240,12 @@ define(['loading', 'alphapicker', './../components/horizontallist', './../compon
 
         function renderFavorites(page, pageParams, autoFocus, slyFrame, resolve) {
 
-            fetch(Emby.PluginManager.mapUrl('defaulttheme', 'tv/views.favorites.html'), { mode: 'no-cors' }).then(function (response) {
+            fetch(Emby.PluginManager.mapUrl(themeId, 'tv/views.favorites.html'), { mode: 'no-cors' }).then(function (response) {
                 return response.text();
             }).then(function (html) {
 
                 var parent = page.querySelector('.contentScrollSlider');
-                parent.innerHTML = Globalize.translateHtml(html, 'defaulttheme');
+                parent.innerHTML = Globalize.translateHtml(html, themeId);
                 loadFavoriteSeries(parent, pageParams, autoFocus, resolve);
                 loadFavoriteEpisodes(parent, pageParams);
             });

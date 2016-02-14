@@ -1,6 +1,8 @@
 define(['focusManager'], function (focusManager) {
 
-    function loadLatestRecordings(element) {
+    var themeId = 'defaulttheme';
+	
+	function loadLatestRecordings(element) {
 
         return Emby.Models.liveTvRecordings({
 
@@ -58,7 +60,7 @@ define(['focusManager'], function (focusManager) {
 
     function gotoTvView(tab, parentId) {
 
-        Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'livetv/livetv.html?tab=' + tab));
+        Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'livetv/livetv.html?tab=' + tab));
     }
 
     function view(element, parentId, autoFocus) {
@@ -116,7 +118,7 @@ define(['focusManager'], function (focusManager) {
         };
 
         element.querySelector('.guideCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'livetv/guide.html'));
+            Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'livetv/guide.html'));
         });
 
         element.querySelector('.recordingsCard').addEventListener('click', function () {

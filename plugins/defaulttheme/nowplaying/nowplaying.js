@@ -1,6 +1,8 @@
 define(['playbackManager', 'datetime', './../components/backdrop', 'userdataButtons'], function (playbackManager, datetime, themeBackdrop, userdataButtons) {
 
-    return function (view, params) {
+    var themeId = 'defaulttheme';
+	
+	return function (view, params) {
 
         var self = this;
         var currentPlayer;
@@ -315,7 +317,7 @@ define(['playbackManager', 'datetime', './../components/backdrop', 'userdataButt
 
         view.querySelector('.btnPlaylist').addEventListener('click', function () {
 
-            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'nowplaying/playlist.html'));
+            Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'nowplaying/playlist.html'));
         });
 
         btnRepeat.addEventListener('click', function () {

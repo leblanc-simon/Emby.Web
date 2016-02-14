@@ -1,4 +1,4 @@
-define(['loading', 'alphapicker', 'defaulttheme/components/horizontallist', './../components/tabbedpage'], function (loading, alphaPicker, horizontalList, tabbedPage) {
+define(['loading', 'alphapicker', './../components/horizontallist', './../components/tabbedpage'], function (loading, alphaPicker, horizontalList, tabbedPage) {
 
     function renderTabs(view, initialTabId, pageInstance, params) {
 

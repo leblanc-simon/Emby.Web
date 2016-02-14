@@ -9,38 +9,50 @@ define(['userSettings', 'events'], function (userSettings, events) {
 
     function loadTheme(id, callback) {
 
-        var theme = Emby.PluginManager.plugins().filter(function (p) {
+        var newTheme = Emby.PluginManager.plugins().filter(function (p) {
             return p.id == id;
         })[0];
 
+        if (!newTheme) {
+            newTheme = Emby.PluginManager.plugins().filter(function (p) {
+                return p.id == 'defaulttheme';
+            })[0];
+        }
+
+        var unloadPromise;
+
         if (currentTheme) {
 
-            if (currentTheme.id == id) {
+            if (currentTheme.id == newTheme.id) {
                 // Nothing to do, it's already the active theme
                 callback(currentTheme);
                 return;
             }
-            unloadTheme(currentTheme);
+            unloadPromise = unloadTheme(currentTheme);
+        } else {
+            unloadPromise = Promise.resolve();
         }
 
-        var deps = theme.getDependencies();
+        unloadPromise.then(function() {
+            var deps = newTheme.getDependencies();
 
-        require(deps, function () {
+            require(deps, function () {
 
-            currentThemeDependencies = deps;
+                currentThemeDependencies = deps;
 
-            var translations = theme.getTranslations ? theme.getTranslations() : [];
+                var translations = newTheme.getTranslations ? newTheme.getTranslations() : [];
 
-            require(['globalize'], function (globalize) {
-                globalize.loadTranslations({
+                require(['globalize'], function (globalize) {
+                    globalize.loadTranslations({
 
-                    name: theme.id,
-                    translations: translations
+                        name: newTheme.id,
+                        translations: translations
 
-                }).then(function () {
-                    globalize.defaultModule(theme.id);
+                    }).then(function () {
+                        globalize.defaultModule(newTheme.id);
 
-                    loadThemeHeader(theme, callback);
+                        loadThemeHeader(newTheme, callback);
+                    });
                 });
             });
         });
@@ -54,13 +66,13 @@ define(['userSettings', 'events'], function (userSettings, events) {
 
         // TODO: unload css
 
-        theme.unload();
-
-        document.dispatchEvent(new CustomEvent("themeunload", {
-            detail: {
-                name: theme.name
-            }
-        }));
+        return theme.unload().then(function() {
+            document.dispatchEvent(new CustomEvent("themeunload", {
+                detail: {
+                    name: theme.name
+                }
+            }));
+        });
     }
 
     function loadThemeHeader(theme, callback) {
@@ -112,6 +124,7 @@ define(['userSettings', 'events'], function (userSettings, events) {
         var theme = userSettings.get('theme') || 'defaulttheme';
 
         loadTheme(theme, function (theme) {
+
             Emby.Page.goHome();
         });
     }

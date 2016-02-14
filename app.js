@@ -547,16 +547,7 @@
         return new Promise(function (resolve, reject) {
 
             require(['pluginManager'], function (pluginManager) {
-                pluginManager.loadPlugin(url).then(function (plugin) {
-
-                    if (plugin.getRoutes) {
-                        plugin.getRoutes().forEach(function (route) {
-                            defineRoute(route, plugin.id || plugin.packageName);
-                        });
-                    }
-                    resolve(plugin);
-
-                }, reject);
+                pluginManager.loadPlugin(url).then(resolve, reject);
             });
         });
     }
@@ -681,7 +672,8 @@
     }
 
     globalScope.Emby.App = {
-        logout: logout
+        logout: logout,
+        defineRoute: defineRoute
     };
 
     start();

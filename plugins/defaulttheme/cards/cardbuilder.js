@@ -722,7 +722,7 @@ define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo
             var value = listItemsMoreButton.getAttribute('data-indexvalue');
             var parentid = listItemsMoreButton.getAttribute('data-parentid');
 
-            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'list/list.html') + '?parentid=' + parentid + '&genreId=' + value);
+            Emby.Page.show(Emby.PluginManager.mapRoute('defaulttheme', 'list/list.html') + '?parentid=' + parentid + '&genreId=' + value);
         }
     }
 

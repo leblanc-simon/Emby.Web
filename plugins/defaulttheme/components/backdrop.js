@@ -1,14 +1,16 @@
 define([], function () {
 
-    function getRandomInt(min, max) {
+    var themeId = 'defaulttheme';
+	
+	function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     function setStaticBackdrop() {
 
         return;
-        //var path = Emby.PluginManager.mapPath('defaulttheme', 'css/images/blur' + getRandomInt(1, 6) + '.png');
-        var path = Emby.PluginManager.mapPath('defaulttheme', 'css/images/bg1.jpg');
+        //var path = Emby.PluginManager.mapPath(themeId, 'css/images/blur' + getRandomInt(1, 6) + '.png');
+        var path = Emby.PluginManager.mapPath(themeId, 'css/images/bg1.jpg');
         Emby.Backdrop.setBackdrop(path);
 
         setTimeout(function () {

@@ -1,6 +1,8 @@
 define([], function () {
 
-    function loadLatest(element, parentId) {
+    var themeId = 'defaulttheme';
+	
+	function loadLatest(element, parentId) {
 
         var options = {
 
@@ -199,7 +201,7 @@ define([], function () {
 
     function gotoMusicView(tab, parentId) {
 
-        Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'music/music.html?tab=' + tab + "&parentid=" + parentId));
+        Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'music/music.html?tab=' + tab + "&parentid=" + parentId));
     }
 
     function view(element, parentId, autoFocus) {

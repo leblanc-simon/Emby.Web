@@ -1,5 +1,7 @@
 define(['./spotlight', 'focusManager'], function (spotlight, focusManager) {
 
+	var themeId = 'defaulttheme';
+	
     function loadResume(element, parentId) {
 
         var options = {
@@ -150,15 +152,15 @@ define(['./spotlight', 'focusManager'], function (spotlight, focusManager) {
         loadImages(element, parentId);
 
         element.querySelector('.allSeriesCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'tv/tv.html?parentid=' + parentId));
+            Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'tv/tv.html?parentid=' + parentId));
         });
 
         element.querySelector('.tvUpcomingCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'tv/tv.html?tab=upcoming&parentid=' + parentId));
+            Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'tv/tv.html?tab=upcoming&parentid=' + parentId));
         });
 
         element.querySelector('.tvFavoritesCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapPath('defaulttheme', 'tv/tv.html?tab=favorites&parentid=' + parentId));
+            Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'tv/tv.html?tab=favorites&parentid=' + parentId));
         });
 
         self.destroy = function () {

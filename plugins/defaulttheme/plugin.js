@@ -34,6 +34,7 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
         self.name = 'Default Theme';
         self.type = 'theme';
         self.id = 'defaulttheme';
+		var settingsObjectName = self.id + 'Settings';
 
         var dependencyPrefix = self.id;
 
@@ -76,7 +77,7 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
             });
         };
 
-        define("defaultthemeSettings", [dependencyPrefix + '/themesettings'], function (themesettings) {
+        define(settingsObjectName, [dependencyPrefix + '/themesettings'], function (themesettings) {
             return themesettings;
         });
 
@@ -85,7 +86,7 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
             var routes = [];
 
             routes.push({
-                path: pluginManager.mapPath(self, 'home.html'),
+                path: 'home.html',
                 transition: 'slide',
                 type: 'home',
                 controller: self.id + '/home/home',
@@ -95,7 +96,7 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
             });
 
             routes.push({
-                path: pluginManager.mapPath(self, 'item/item.html'),
+                path: 'item/item.html',
                 transition: 'slide',
                 dependencies: [
                     'css!' + pluginManager.mapPath(self, 'item/item.css')
@@ -104,31 +105,31 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
             });
 
             routes.push({
-                path: pluginManager.mapPath(self, 'list/list.html'),
+                path: 'list/list.html',
                 transition: 'slide',
-                controller: 'defaulttheme/list/list',
+                controller: self.id + '/list/list',
             });
 
             routes.push({
-                path: pluginManager.mapPath(self, 'music/music.html'),
+                path: 'music/music.html',
                 transition: 'slide',
                 controller: self.id + '/music/music'
             });
 
             routes.push({
-                path: pluginManager.mapPath(self, 'movies/movies.html'),
+                path: 'movies/movies.html',
                 transition: 'slide',
                 controller: self.id + '/movies/movies'
             });
 
             routes.push({
-                path: pluginManager.mapPath(self, 'livetv/livetv.html'),
+                path: 'livetv/livetv.html',
                 transition: 'slide',
                 controller: self.id + '/livetv/livetv'
             });
 
             routes.push({
-                path: pluginManager.mapPath(self, 'livetv/guide.html'),
+                path: 'livetv/guide.html',
                 transition: 'slide',
                 controller: self.id + '/livetv/guide',
                 dependencies: [
@@ -137,13 +138,13 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
             });
 
             routes.push({
-                path: pluginManager.mapPath(self, 'tv/tv.html'),
+                path: 'tv/tv.html',
                 transition: 'slide',
                 controller: self.id + '/tv/tv'
             });
 
             routes.push({
-                path: pluginManager.mapPath(self, 'search/search.html'),
+                path: 'search/search.html',
                 transition: 'slide',
                 controller: self.id + '/search/search',
                 dependencies: [
@@ -153,7 +154,7 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
             });
 
             routes.push({
-                path: pluginManager.mapPath(self, 'nowplaying/nowplaying.html'),
+                path: 'nowplaying/nowplaying.html',
                 transition: 'slide',
                 controller: self.id + '/nowplaying/nowplaying',
                 dependencies: [
@@ -164,7 +165,7 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
             });
 
             routes.push({
-                path: pluginManager.mapPath(self, 'nowplaying/playlist.html'),
+                path: 'nowplaying/playlist.html',
                 transition: 'slide',
                 controller: self.id + '/nowplaying/playlist',
                 dependencies: [
@@ -174,7 +175,7 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
             });
 
             routes.push({
-                path: pluginManager.mapPath(self, 'nowplaying/videoosd.html'),
+                path: 'nowplaying/videoosd.html',
                 transition: 'fade',
                 controller: self.id + '/nowplaying/videoosd',
                 dependencies: [
@@ -186,7 +187,7 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
             });
 
             routes.push({
-                path: pluginManager.mapPath(self, 'settings/settings.html'),
+                path: 'settings/settings.html',
                 transition: 'slide',
                 controller: self.id + '/settings/settings',
                 dependencies: [
@@ -195,7 +196,7 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
                 type: 'settings',
                 category: 'Display',
                 thumbImage: '',
-                title: 'Default Theme'
+                title: self.name
             });
 
             return routes;
@@ -220,20 +221,12 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
 
             return new Promise(function (resolve, reject) {
 
-                require(['defaultthemeSettings'], function (themeSettings) {
+                require([settingsObjectName], function (themeSettings) {
 
                     themeSettings.unload();
                     resolve();
                 });
             });
-        };
-
-        self.getHomeRoute = function () {
-            return pluginManager.mapPath(self, 'home.html');
-        };
-
-        self.getVideoOsdRoute = function () {
-            return pluginManager.mapPath(self, 'nowplaying/videoosd.html');
         };
 
         self.showItem = function (item) {
@@ -248,9 +241,9 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
             }
 
             if (showList) {
-                Emby.Page.show(pluginManager.mapPath(self, 'list/list.html') + '?parentid=' + item.Id, { item: item });
+                Emby.Page.show(pluginManager.mapRoute(self, 'list/list.html') + '?parentid=' + item.Id, { item: item });
             } else {
-                Emby.Page.show(pluginManager.mapPath(self, 'item/item.html') + '?id=' + item.Id, { item: item });
+                Emby.Page.show(pluginManager.mapRoute(self, 'item/item.html') + '?id=' + item.Id, { item: item });
             }
         };
 
@@ -272,11 +265,11 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
 
         self.search = function () {
 
-            Emby.Page.show(pluginManager.mapPath(self, 'search/search.html'));
+            Emby.Page.show(pluginManager.mapRoute(self, 'search/search.html'));
         };
 
         self.showNowPlaying = function () {
-            Emby.Page.show(pluginManager.mapPath(self, 'nowplaying/nowplaying.html'));
+            Emby.Page.show(pluginManager.mapRoute(self, 'nowplaying/nowplaying.html'));
         };
 
         self.showUserMenu = function () {
@@ -372,7 +365,7 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
 
             document.querySelector('.headerUserButton').classList.remove('hide');
 
-            require(['defaultthemeSettings'], function (themeSettings) {
+            require([settingsObjectName], function (themeSettings) {
 
                 themeSettings.apply();
             });
@@ -380,7 +373,7 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
 
         function onLocalUserSignedOut(e) {
 
-            require(['defaultthemeSettings'], function (themeSettings) {
+            require([settingsObjectName], function (themeSettings) {
 
                 themeSettings.unload();
             });
@@ -402,7 +395,7 @@ define(['playbackManager', 'pluginManager'], function (playbackManager, pluginMa
             var path = e.detail.state.path;
 
             var enableSubduedBackdrop = path.indexOf('item.html') == -1 && path.indexOf('nowplaying') == -1;
-            require(['defaulttheme/components/backdrop'], function (themeBackdrop) {
+            require([self.id + '/components/backdrop'], function (themeBackdrop) {
                 themeBackdrop.subdued(enableSubduedBackdrop);
             });
         }

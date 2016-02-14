@@ -1,4 +1,4 @@
-define(['loading', 'viewManager', 'themeManager'], function (loading, viewManager, themeManager) {
+define(['loading', 'viewManager', 'themeManager', 'pluginManager'], function (loading, viewManager, themeManager, pluginManager) {
 
     var connectionManager;
 
@@ -403,7 +403,13 @@ define(['loading', 'viewManager', 'themeManager'], function (loading, viewManage
 
     function goHome() {
 
-        show(themeManager.getCurrentTheme().getHomeRoute());
+        var theme = themeManager.getCurrentTheme();
+
+        var homeRoute = theme.getRoutes().filter(function (r) {
+            return r.type == 'home';
+        })[0];
+
+        return show(pluginManager.mapRoute(theme, homeRoute));
     }
 
     function showItem(item) {
@@ -429,7 +435,13 @@ define(['loading', 'viewManager', 'themeManager'], function (loading, viewManage
     }
 
     function showVideoOsd() {
-        return show(themeManager.getCurrentTheme().getVideoOsdRoute());
+        var theme = themeManager.getCurrentTheme();
+
+        var homeRoute = theme.getRoutes().filter(function (r) {
+            return r.type == 'video-osd';
+        })[0];
+
+        return show(pluginManager.mapRoute(theme, homeRoute));
     }
 
     var allRoutes = [];

@@ -26,6 +26,23 @@ define(['events'], function (Events) {
             return plugins;
         };
 
+        self.mapRoute = function (plugin, route) {
+
+            if (typeof plugin === 'string') {
+                plugin = plugins.filter(function (p) {
+                    return (p.id || p.packageName) == plugin;
+                })[0];
+            }
+
+            route = route.path || route;
+
+            if (route.toLowerCase().indexOf('http') == 0) {
+                return route;
+            }
+
+            return '/plugins/' + plugin.id + '/' + route;
+        };
+
         self.mapPath = function (plugin, path) {
 
             if (typeof plugin === 'string') {
@@ -56,6 +73,14 @@ define(['events'], function (Events) {
                 name: plugin.id || plugin.packageName,
                 translations: translations
             });
+        }
+
+        function definePluginRoute(route, plugin) {
+
+            route.contentPath = self.mapPath(plugin, route.path);
+            route.path = self.mapRoute(plugin, route);
+
+            Emby.App.defineRoute(route, plugin.id);
         }
 
         self.loadPlugin = function (url) {
@@ -101,6 +126,12 @@ define(['events'], function (Events) {
                     });
 
                     self.register(plugin);
+
+                    if (plugin.getRoutes) {
+                        plugin.getRoutes().forEach(function (route) {
+                            definePluginRoute(route, plugin);
+                        });
+                    }
 
                     if (plugin.type == 'theme') {
 
