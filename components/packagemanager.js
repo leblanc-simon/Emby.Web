@@ -23,7 +23,7 @@ define(['appSettings', 'pluginManager'], function (appSettings, pluginManager) {
 
         self.install = function (url) {
 
-            return loadPackage(url).then(function (pkg) {
+            return loadPackage(url, true).then(function (pkg) {
 
                 var manifestUrls = JSON.parse(appSettings.get(settingsKey) || '[]');
 
@@ -50,17 +50,22 @@ define(['appSettings', 'pluginManager'], function (appSettings, pluginManager) {
                     return p.name != name;
                 });
 
-                var manifestUrls = JSON.parse(appSettings.get(settingsKey) || '[]');
-
-                manifestUrls = manifestUrls.filter(function (i) {
-                    return i != pkg.url;
-                });
-
-                appSettings.set(settingsKey, JSON.stringify(manifestUrls));
+                removeUrl(pkg.url);
             }
 
             return Promise.resolve();
         };
+
+        function removeUrl(url) {
+
+            var manifestUrls = JSON.parse(appSettings.get(settingsKey) || '[]');
+
+            manifestUrls = manifestUrls.filter(function (i) {
+                return i != url;
+            });
+
+            appSettings.set(settingsKey, JSON.stringify(manifestUrls));
+        }
 
         self.init = function () {
             var manifestUrls = JSON.parse(appSettings.get(settingsKey) || '[]');
@@ -72,7 +77,7 @@ define(['appSettings', 'pluginManager'], function (appSettings, pluginManager) {
             });
         };
 
-        function loadPackage(url) {
+        function loadPackage(url, throwError) {
 
             return new Promise(function (resolve, reject) {
 
@@ -82,6 +87,16 @@ define(['appSettings', 'pluginManager'], function (appSettings, pluginManager) {
                 url += 't=' + new Date().getTime();
 
                 xhr.open('GET', url, true);
+
+                var onError = function () {
+
+                    if (throwError === true) {
+                        reject();
+                    } else {
+                        removeUrl(originalUrl);
+                        resolve();
+                    }
+                };
 
                 xhr.onload = function (e) {
                     if (this.status < 400) {
@@ -101,11 +116,11 @@ define(['appSettings', 'pluginManager'], function (appSettings, pluginManager) {
                         Promise.all(promises).then(resolve, resolve);
 
                     } else {
-                        reject();
+                        onError();
                     }
                 };
 
-                xhr.onerror = reject;
+                xhr.onerror = onError;
 
                 xhr.send();
             });
