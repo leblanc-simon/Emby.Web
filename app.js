@@ -261,8 +261,6 @@
         var paths = {
             alert: "components/alert",
             confirm: "components/confirm",
-            toast: "components/toast",
-            loading: "components/loading/loading",
             soundeffects: "components/soundeffects",
             apphost: customPaths.apphost || "components/apphost",
             shell: customPaths.shell || "components/shell",
@@ -374,6 +372,9 @@
         define("historyManager", [], function () {
             return Emby.Page;
         });
+
+        define("loading", [embyWebComponentsBowerPath + "/loading/loading"], returnFirstDependency);
+        define("toast", [embyWebComponentsBowerPath + "/toast/toast"], returnFirstDependency);
 
         define("paperdialoghelper", [embyWebComponentsBowerPath + "/paperdialoghelper/paperdialoghelper"], returnFirstDependency);
         define("slideshow", [embyWebComponentsBowerPath + "/slideshow/slideshow"], returnFirstDependency);

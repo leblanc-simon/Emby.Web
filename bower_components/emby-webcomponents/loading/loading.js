@@ -1,4 +1,4 @@
-define(['paper-spinner', 'css!components/loading/loading'], function () {
+define(['paper-spinner', 'css!./loading'], function () {
 
     return {
         show: function () {
