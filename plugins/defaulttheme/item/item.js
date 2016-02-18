@@ -1,5 +1,5 @@
-define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButtons', 'itemHelper', './../components/focushandler', './../components/backdrop', './../components/listview', 'mediaInfo', 'focusManager', './../themesettings'],
-    function (loading, datetime, playbackManager, imageLoader, userdataButtons, itemHelper, focusHandler, themeBackdrop, listview, mediaInfo, focusManager, themeSettings) {
+define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButtons', 'itemHelper', './../components/focushandler', './../components/backdrop', './../components/listview', 'mediaInfo', 'focusManager', './../themesettings', 'indicators'],
+    function (loading, datetime, playbackManager, imageLoader, userdataButtons, itemHelper, focusHandler, themeBackdrop, listview, mediaInfo, focusManager, themeSettings, indicators) {
 
         var themeId = 'defaulttheme';
 		
@@ -133,7 +133,7 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
                 if (url && item.Type != "Season" && item.Type != "BoxSet") {
                     detailImage.classList.remove('hide');
-                    detailImage.innerHTML = '<img class="detailImage" src="' + url + '" />' + DefaultTheme.CardBuilder.getProgressBarHtml(item);
+                    detailImage.innerHTML = '<img class="detailImage" src="' + url + '" />' + indicators.getProgressBarHtml(item);
                 } else {
                     detailImage.classList.add('hide');
                     detailImage.innerHTML = '';
