@@ -33,9 +33,21 @@ define(['paper-progress', 'css!./indicators.css'], function () {
         return '';
     }
 
-    function getPlayedIndicator(item) {
+    function enablePlayedIndicator(item) {
 
         if (item.Type == "Series" || item.Type == "Season" || item.Type == "BoxSet" || item.MediaType == "Video" || item.MediaType == "Game" || item.MediaType == "Book") {
+
+            if (item.Type != 'TvChannel') {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function getPlayedIndicator(item) {
+
+        if (enablePlayedIndicator(item)) {
 
             var userData = item.UserData || {};
 
@@ -43,10 +55,8 @@ define(['paper-progress', 'css!./indicators.css'], function () {
                 return '<div class="countIndicator">' + userData.UnplayedItemCount + '</div>';
             }
 
-            if (item.Type != 'TvChannel') {
-                if (userData.PlayedPercentage && userData.PlayedPercentage >= 100 || (userData.Played)) {
-                    return '<div class="playedIndicator"><iron-icon icon="check"></iron-icon></div>';
-                }
+            if (userData.PlayedPercentage && userData.PlayedPercentage >= 100 || (userData.Played)) {
+                return '<div class="playedIndicator"><iron-icon icon="check"></iron-icon></div>';
             }
         }
 
@@ -76,6 +86,8 @@ define(['paper-progress', 'css!./indicators.css'], function () {
     return {
         getProgressBarHtml: getProgressBarHtml,
         getPlayedIndicatorHtml: getPlayedIndicator,
-        getChildCountIndicatorHtml: getChildCountIndicatorHtml
+        getChildCountIndicatorHtml: getChildCountIndicatorHtml,
+        enableProgressIndicator: enableProgressIndicator,
+        enablePlayedIndicator: enablePlayedIndicator
     };
 });
