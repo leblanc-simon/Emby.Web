@@ -1,4 +1,4 @@
-define(['loading', 'alphapicker', './../components/horizontallist', './../components/focushandler', './../components/tabbedpage', './../components/backdrop', 'focusManager'], function (loading, alphaPicker, horizontalList, focusHandler, tabbedPage, themeBackdrop, focusManager) {
+define(['loading', 'alphapicker', './../components/horizontallist', './../cards/cardbuilder', './../components/focushandler', './../components/tabbedpage', './../components/backdrop', 'focusManager'], function (loading, alphaPicker, horizontalList, cardBuilder, focusHandler, tabbedPage, themeBackdrop, focusManager) {
 
     var themeId = 'defaulttheme';
 	
@@ -147,7 +147,6 @@ define(['loading', 'alphapicker', './../components/horizontallist', './../compon
                     shape: 'backdropCard',
                     rows: 3,
                     preferThumb: true,
-                    width: DefaultTheme.CardBuilder.homeThumbWidth,
                     indexBy: 'PremiereDate'
                 },
                 selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
@@ -276,7 +275,7 @@ define(['loading', 'alphapicker', './../components/horizontallist', './../compon
                     section.classList.add('hide');
                 }
 
-                DefaultTheme.CardBuilder.buildCards(result.Items, {
+                cardBuilder.buildCards(result.Items, {
                     itemsContainer: section.querySelector('.itemsContainer'),
                     shape: 'auto',
                     rows: 2
@@ -313,7 +312,7 @@ define(['loading', 'alphapicker', './../components/horizontallist', './../compon
                     section.classList.add('hide');
                 }
 
-                DefaultTheme.CardBuilder.buildCards(result.Items, {
+                cardBuilder.buildCards(result.Items, {
                     itemsContainer: section.querySelector('.itemsContainer'),
                     shape: 'auto',
                     rows: 3

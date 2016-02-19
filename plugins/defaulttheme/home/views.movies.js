@@ -1,4 +1,4 @@
-define(['./spotlight', 'imageLoader', 'focusManager'], function (spotlight, imageLoader, focusManager) {
+define(['./spotlight', 'imageLoader', 'focusManager', './../cards/cardbuilder'], function (spotlight, imageLoader, focusManager, cardbuilder) {
 
     var themeId = 'defaulttheme';
 	
@@ -16,12 +16,11 @@ define(['./spotlight', 'imageLoader', 'focusManager'], function (spotlight, imag
 
             var resumeSection = element.querySelector('.resumeSection');
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardbuilder.buildCards(result.Items, {
                 parentContainer: resumeSection,
                 itemsContainer: resumeSection.querySelector('.itemsContainer'),
                 shape: 'backdropCard',
                 rows: 3,
-                width: DefaultTheme.CardBuilder.homeThumbWidth,
                 preferThumb: true
             });
         });
@@ -41,12 +40,11 @@ define(['./spotlight', 'imageLoader', 'focusManager'], function (spotlight, imag
 
             var resumeSection = element.querySelector('.latestSection');
 
-            DefaultTheme.CardBuilder.buildCards(result, {
+            cardbuilder.buildCards(result, {
                 parentContainer: resumeSection,
                 itemsContainer: resumeSection.querySelector('.itemsContainer'),
                 shape: 'portraitCard',
-                rows: 2,
-                width: DefaultTheme.CardBuilder.homePortraitWidth
+                rows: 2
             });
         });
     }
@@ -96,10 +94,9 @@ define(['./spotlight', 'imageLoader', 'focusManager'], function (spotlight, imag
 
     function getRecommendationHtml(recommendation) {
 
-        var cardsHtml = DefaultTheme.CardBuilder.buildCardsHtml(recommendation.Items, {
+        var cardsHtml = cardbuilder.buildCardsHtml(recommendation.Items, {
             shape: 'portraitCard',
-            rows: 2,
-            width: DefaultTheme.CardBuilder.homePortraitWidth
+            rows: 2
         });
 
         var html = '';

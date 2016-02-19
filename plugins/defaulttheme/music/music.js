@@ -1,4 +1,4 @@
-define(['loading', 'alphapicker', './../components/horizontallist', './../components/focushandler', './../components/tabbedpage', './../components/backdrop', 'focusManager'], function (loading, alphaPicker, horizontalList, focusHandler, tabbedPage, themeBackdrop, focusManager) {
+define(['loading', 'alphapicker', './../cards/cardbuilder', './../components/horizontallist', './../components/focushandler', './../components/tabbedpage', './../components/backdrop', 'focusManager'], function (loading, alphaPicker, cardBuilder, horizontalList, focusHandler, tabbedPage, themeBackdrop, focusManager) {
 
     var themeId = 'defaulttheme';
 	
@@ -152,7 +152,7 @@ define(['loading', 'alphapicker', './../components/horizontallist', './../compon
 
         function renderGenres(page, pageParams, autoFocus, slyFrame, resolve) {
 
-            self.listController = new DefaultTheme.HorizontalList({
+            self.listController = new horizontalList({
 
                 itemsContainer: page.querySelector('.contentScrollSlider'),
                 getItemsMethod: function (startIndex, limit) {
@@ -167,8 +167,7 @@ define(['loading', 'alphapicker', './../components/horizontallist', './../compon
                 cardOptions: {
                     shape: 'backdropCard',
                     rows: 3,
-                    preferThumb: true,
-                    width: DefaultTheme.CardBuilder.homeThumbWidth
+                    preferThumb: true
                 },
                 listCountElement: page.querySelector('.listCount'),
                 listNumbersElement: page.querySelector('.listNumbers'),
@@ -415,7 +414,7 @@ define(['loading', 'alphapicker', './../components/horizontallist', './../compon
                     section.classList.add('hide');
                 }
 
-                DefaultTheme.CardBuilder.buildCards(result.Items, {
+                cardBuilder.buildCards(result.Items, {
                     itemsContainer: section.querySelector('.itemsContainer'),
                     shape: 'auto',
                     rows: 2
@@ -452,7 +451,7 @@ define(['loading', 'alphapicker', './../components/horizontallist', './../compon
                     section.classList.add('hide');
                 }
 
-                DefaultTheme.CardBuilder.buildCards(result.Items, {
+                cardBuilder.buildCards(result.Items, {
                     itemsContainer: section.querySelector('.itemsContainer'),
                     shape: 'auto',
                     rows: 3

@@ -1,5 +1,5 @@
-define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButtons', 'itemHelper', './../components/focushandler', './../components/backdrop', './../components/listview', 'mediaInfo', 'focusManager', './../themesettings', 'indicators'],
-    function (loading, datetime, playbackManager, imageLoader, userdataButtons, itemHelper, focusHandler, themeBackdrop, listview, mediaInfo, focusManager, themeSettings, indicators) {
+define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButtons', 'itemHelper', './../components/focushandler', './../components/backdrop', './../components/listview', 'mediaInfo', 'focusManager', './../themesettings', './../cards/cardbuilder', 'indicators'],
+    function (loading, datetime, playbackManager, imageLoader, userdataButtons, itemHelper, focusHandler, themeBackdrop, listview, mediaInfo, focusManager, themeSettings, cardBuilder, indicators) {
 
         var themeId = 'defaulttheme';
 		
@@ -457,7 +457,7 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
                     focusManager.autoFocus(view);
                 }
 
-                DefaultTheme.CardBuilder.buildCards(result.Items, extendVerticalCardOptions({
+                cardBuilder.buildCards(result.Items, extendVerticalCardOptions({
                     parentContainer: section,
                     itemsContainer: section.querySelector('.itemsContainer'),
                     shape: 'autoVertical',
@@ -723,7 +723,7 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
             Emby.Models.items(query).then(function (result) {
 
-                DefaultTheme.CardBuilder.buildCards(result.Items, {
+                cardBuilder.buildCards(result.Items, {
                     parentContainer: element,
                     itemsContainer: element.querySelector('.itemsContainer'),
                     shape: listOptions.shape,
@@ -874,7 +874,7 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
                 section.classList.remove('hide');
 
-                DefaultTheme.CardBuilder.buildCards(result.Items, extendVerticalCardOptions({
+                cardBuilder.buildCards(result.Items, extendVerticalCardOptions({
                     parentContainer: section,
                     itemsContainer: section.querySelector('.itemsContainer'),
                     shape: 'autoVertical',
@@ -935,7 +935,7 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
                 section.classList.remove('hide');
 
-                DefaultTheme.CardBuilder.buildCards(items, extendVerticalCardOptions({
+                cardBuilder.buildCards(items, extendVerticalCardOptions({
                     parentContainer: section,
                     itemsContainer: section.querySelector('.itemsContainer'),
                     shape: 'autoVertical',
@@ -996,7 +996,7 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
                 section.querySelector('h2').innerHTML = Globalize.translate('SimilarTo', item.Name);
 
-                DefaultTheme.CardBuilder.buildCards(result.Items, extendVerticalCardOptions({
+                cardBuilder.buildCards(result.Items, extendVerticalCardOptions({
                     parentContainer: section,
                     itemsContainer: section.querySelector('.itemsContainer'),
                     shape: 'autoVertical',

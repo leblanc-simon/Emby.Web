@@ -1,6 +1,6 @@
-define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo', 'focusManager', 'connectionManager', 'indicators', 'paper-icon-item', 'paper-item-body'], function (datetime, imageLoader, connectionManager, itemHelper, mediaInfo, focusManager, connectionManager, indicators) {
+define(['datetime', 'imageLoader', 'connectionManager', 'pluginManager', 'itemHelper', 'mediaInfo', 'focusManager', 'connectionManager', 'indicators', 'paper-icon-item', 'paper-item-body'], function (datetime, imageLoader, connectionManager, pluginManager, itemHelper, mediaInfo, focusManager, connectionManager, indicators) {
 
-    function setShapeHorizontal(items, options, isHome) {
+    function setShapeHorizontal(items, options) {
 
         var primaryImageAspectRatio = imageLoader.getPrimaryImageAspectRatio(items) || 0;
 
@@ -10,7 +10,6 @@ define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo
             if (options.rows !== 0) {
                 options.rows = 2;
             }
-            options.width = DefaultTheme.CardBuilder.homePortraitWidth;
         }
         else if (primaryImageAspectRatio && primaryImageAspectRatio > 1.34) {
             options.shape = 'backdropCard';
@@ -18,8 +17,6 @@ define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo
             if (options.rows !== 0) {
                 options.rows = 3;
             }
-
-            options.width = DefaultTheme.CardBuilder.homeThumbWidth;
         }
         else {
             options.shape = 'squareCard';
@@ -27,8 +24,6 @@ define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo
             if (options.rows !== 0) {
                 options.rows = 3;
             }
-
-            options.width = 242;
         }
     }
 
@@ -38,19 +33,45 @@ define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo
 
         if (options.preferThumb) {
             options.shape = 'backdropCard';
-            options.width = 500;
         }
         else if (primaryImageAspectRatio && primaryImageAspectRatio < .85) {
             options.shape = 'portraitCard';
-            options.width = 340;
         }
         else if (primaryImageAspectRatio && primaryImageAspectRatio > 1.34) {
             options.shape = 'backdropCard';
-            options.width = 500;
         }
         else {
             options.shape = 'squareCard';
-            options.width = 340;
+        }
+    }
+
+    function setWidth(isVertical, options) {
+
+        if (options.width) {
+            return;
+        }
+
+        if (isVertical) {
+            if (options.shape == 'backdropCard') {
+                options.width = options.thumbWidth;
+            }
+            else if (options.shape == 'portraitCard') {
+                options.width = options.portraitWidth;
+            }
+            else if (options.shape == 'squareCard') {
+                options.width = options.squareWidth;
+            }
+        }
+        else {
+            if (options.shape == 'backdropCard') {
+                options.width = 500;
+            }
+            else if (options.shape == 'portraitCard') {
+                options.width = 243;
+            }
+            else if (options.shape == 'squareCard') {
+                options.width = 242;
+            }
         }
     }
 
@@ -67,16 +88,15 @@ define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo
 
         var isVertical;
 
-        if (options.shape == 'autoHome') {
-            setShapeHorizontal(items, options, true);
-        }
-        else if (options.shape == 'autoVertical') {
+        if (options.shape == 'autoVertical') {
             isVertical = true;
             setShapeVertical(items, options);
         }
         else if (options.shape == 'auto') {
             setShapeHorizontal(items, options);
         }
+
+        setWidth(isVertical, options);
 
         if (options.indexBy == 'Genres') {
             return buildCardsByGenreHtmlInternal(items, apiClient, options);
@@ -664,19 +684,12 @@ define(['datetime', 'imageLoader', 'connectionManager', 'itemHelper', 'mediaInfo
             var value = listItemsMoreButton.getAttribute('data-indexvalue');
             var parentid = listItemsMoreButton.getAttribute('data-parentid');
 
-            Emby.Page.show(Emby.PluginManager.mapRoute('defaulttheme', 'list/list.html') + '?parentid=' + parentid + '&genreId=' + value);
+            Emby.Page.show(pluginManager.mapRoute('defaulttheme', 'list/list.html') + '?parentid=' + parentid + '&genreId=' + value);
         }
     }
 
-    var cardBuilder = {
+    return {
         buildCardsHtml: buildCardsHtml,
-        buildCards: buildCards,
-        homeThumbWidth: 500,
-        homePortraitWidth: 243
+        buildCards: buildCards
     };
-
-    window.DefaultTheme = window.DefaultTheme || {};
-    window.DefaultTheme.CardBuilder = cardBuilder;
-
-    return cardBuilder;
 });

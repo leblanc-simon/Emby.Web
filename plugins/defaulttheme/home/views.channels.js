@@ -1,4 +1,4 @@
-define([], function () {
+define(['./../cards/cardbuilder'], function (cardBuilder) {
 
     function loadChannels(element, parentId, autoFocus) {
 
@@ -11,12 +11,11 @@ define([], function () {
                 return;
             }
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
                 shape: 'backdropCard',
                 rows: 3,
-                width: DefaultTheme.CardBuilder.homeThumbWidth,
                 preferThumb: true,
                 autoFocus: autoFocus
             });
@@ -53,7 +52,7 @@ define([], function () {
 
         return Emby.Models.latestChannelItems(options).then(function (result) {
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
                 shape: 'auto',

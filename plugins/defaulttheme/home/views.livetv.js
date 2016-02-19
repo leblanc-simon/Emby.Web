@@ -1,4 +1,4 @@
-define(['focusManager'], function (focusManager) {
+define(['focusManager', './../cards/cardbuilder', 'pluginManager'], function (focusManager, cardBuilder, pluginManager) {
 
     var themeId = 'defaulttheme';
 	
@@ -13,11 +13,10 @@ define(['focusManager'], function (focusManager) {
 
             var section = element.querySelector('.latestRecordingsSection');
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
-                shape: 'auto',
-                width: DefaultTheme.CardBuilder.homePortraitWidth
+                shape: 'auto'
             });
         });
     }
@@ -34,11 +33,10 @@ define(['focusManager'], function (focusManager) {
 
             var section = element.querySelector('.nowPlayingSection');
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
                 shape: 'auto',
-                width: DefaultTheme.CardBuilder.homePortraitWidth,
                 coverImage: true
             });
         });
@@ -48,11 +46,10 @@ define(['focusManager'], function (focusManager) {
 
         return Emby.Models.liveTvRecommendedPrograms(options).then(function (result) {
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
                 shape: 'auto',
-                width: DefaultTheme.CardBuilder.homePortraitWidth,
                 coverImage: true
             });
         });
@@ -60,7 +57,7 @@ define(['focusManager'], function (focusManager) {
 
     function gotoTvView(tab, parentId) {
 
-        Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'livetv/livetv.html?tab=' + tab));
+        Emby.Page.show(pluginManager.mapRoute(themeId, 'livetv/livetv.html?tab=' + tab));
     }
 
     function view(element, parentId, autoFocus) {

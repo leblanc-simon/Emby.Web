@@ -1,4 +1,4 @@
-define(['./spotlight', 'focusManager'], function (spotlight, focusManager) {
+define(['./spotlight', 'focusManager', './../cards/cardbuilder'], function (spotlight, focusManager, cardBuilder) {
 
 	var themeId = 'defaulttheme';
 	
@@ -16,12 +16,11 @@ define(['./spotlight', 'focusManager'], function (spotlight, focusManager) {
 
             var section = element.querySelector('.resumeSection');
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
                 shape: 'backdropCard',
                 rows: 3,
-                width: DefaultTheme.CardBuilder.homeThumbWidth,
                 preferThumb: true,
                 addImageData: true
             });
@@ -40,12 +39,11 @@ define(['./spotlight', 'focusManager'], function (spotlight, focusManager) {
 
             var section = element.querySelector('.nextUpSection');
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
                 shape: 'backdropCard',
                 rows: 3,
-                width: DefaultTheme.CardBuilder.homeThumbWidth,
                 preferThumb: true,
                 addImageData: true
             });
@@ -68,12 +66,11 @@ define(['./spotlight', 'focusManager'], function (spotlight, focusManager) {
 
             var section = element.querySelector('.latestSection');
 
-            DefaultTheme.CardBuilder.buildCards(result, {
+            cardBuilder.buildCards(result, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
                 shape: 'backdropCard',
                 rows: 3,
-                width: DefaultTheme.CardBuilder.homeThumbWidth,
                 preferThumb: true,
                 showGroupCount: true
             });
