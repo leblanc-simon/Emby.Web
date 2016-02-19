@@ -421,6 +421,13 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
             }
         }
 
+        function extendVerticalCardOptions(options) {
+            options.portraitWidth = 340;
+            options.squareWidth = 340;
+            options.thumbWidth = 500;
+            return options;
+        }
+
         function renderNextUp(view, item) {
 
             var section = view.querySelector('.nextUpSection');
@@ -450,14 +457,14 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
                     focusManager.autoFocus(view);
                 }
 
-                DefaultTheme.CardBuilder.buildCards(result.Items, {
+                DefaultTheme.CardBuilder.buildCards(result.Items, extendVerticalCardOptions({
                     parentContainer: section,
                     itemsContainer: section.querySelector('.itemsContainer'),
                     shape: 'autoVertical',
                     showTitle: true,
                     scalable: true,
                     autoFocus: focusedItemIsNextUp
-                });
+                }));
             });
         }
 
@@ -624,9 +631,9 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
                         IncludeItemTypes: "Movie",
                         PersonTypes: "",
                         ArtistIds: ""
-                    }, {
+                    }, extendVerticalCardOptions({
                         shape: "autoVertical"
-                    });
+                    }));
                     break;
 
                 case 'MusicVideo':
@@ -635,10 +642,10 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
                         IncludeItemTypes: "MusicVideo",
                         PersonTypes: "",
                         ArtistIds: ""
-                    }, {
+                    }, extendVerticalCardOptions({
                         shape: "autoVertical",
                         showTitle: true
-                    });
+                    }));
                     break;
 
                 case 'Game':
@@ -647,9 +654,9 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
                         IncludeItemTypes: "Game",
                         PersonTypes: "",
                         ArtistIds: ""
-                    }, {
+                    }, extendVerticalCardOptions({
                         shape: "autoVertical"
-                    });
+                    }));
                     break;
 
                 case 'Trailer':
@@ -658,9 +665,9 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
                         IncludeItemTypes: "Trailer",
                         PersonTypes: "",
                         ArtistIds: ""
-                    }, {
+                    }, extendVerticalCardOptions({
                         shape: "autoVertical"
-                    });
+                    }));
                     break;
 
                 case 'Series':
@@ -669,9 +676,9 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
                         IncludeItemTypes: "Series",
                         PersonTypes: "",
                         ArtistIds: ""
-                    }, {
+                    }, extendVerticalCardOptions({
                         shape: "autoVertical"
-                    });
+                    }));
                     break;
 
                 case 'MusicAlbum':
@@ -680,10 +687,10 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
                         IncludeItemTypes: "MusicAlbum",
                         PersonTypes: "",
                         ArtistIds: ""
-                    }, {
+                    }, extendVerticalCardOptions({
                         shape: "autoVertical",
                         playFromHere: true
-                    });
+                    }));
                     break;
 
                 case 'Episode':
@@ -693,11 +700,11 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
                         PersonTypes: "",
                         ArtistIds: "",
                         Limit: 50
-                    }, {
+                    }, extendVerticalCardOptions({
                         shape: "autoVertical",
                         showTitle: true,
                         showParentTitle: true
-                    });
+                    }));
                     break;
 
                 default:
@@ -867,13 +874,13 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
                 section.classList.remove('hide');
 
-                DefaultTheme.CardBuilder.buildCards(result.Items, {
+                DefaultTheme.CardBuilder.buildCards(result.Items, extendVerticalCardOptions({
                     parentContainer: section,
                     itemsContainer: section.querySelector('.itemsContainer'),
                     shape: 'autoVertical',
                     showTitle: showTitle,
                     scalable: true
-                });
+                }));
             });
         }
 
@@ -928,14 +935,14 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
                 section.classList.remove('hide');
 
-                DefaultTheme.CardBuilder.buildCards(items, {
+                DefaultTheme.CardBuilder.buildCards(items, extendVerticalCardOptions({
                     parentContainer: section,
                     itemsContainer: section.querySelector('.itemsContainer'),
                     shape: 'autoVertical',
                     scalable: true,
                     showTitle: true,
                     action: 'playallfromhere'
-                });
+                }));
             });
         }
 
@@ -989,13 +996,13 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
                 section.querySelector('h2').innerHTML = Globalize.translate('SimilarTo', item.Name);
 
-                DefaultTheme.CardBuilder.buildCards(result.Items, {
+                DefaultTheme.CardBuilder.buildCards(result.Items, extendVerticalCardOptions({
                     parentContainer: section,
                     itemsContainer: section.querySelector('.itemsContainer'),
                     shape: 'autoVertical',
                     scalable: true,
                     coverImage: item.Type == 'MusicArtist' || item.Type == 'MusicAlbum'
-                });
+                }));
             });
         }
 
