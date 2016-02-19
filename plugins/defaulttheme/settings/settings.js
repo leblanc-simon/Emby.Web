@@ -8,7 +8,7 @@ define(['loading', './../themesettings', 'focusManager'], function (loading, the
 
             var isRestored = e.detail.isRestored;
 
-            Emby.Page.setTitle(Globalize.translate('DefaultTheme'));
+            Emby.Page.setTitle(Globalize.translate('ThemeName'));
 
             loading.hide();
 
