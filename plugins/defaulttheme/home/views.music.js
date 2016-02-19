@@ -21,7 +21,7 @@ define([], function () {
             DefaultTheme.CardBuilder.buildCards(result, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
-                shape: 'autoHome',
+                shape: 'auto',
                 width: DefaultTheme.CardBuilder.homePortraitWidth
             });
         });

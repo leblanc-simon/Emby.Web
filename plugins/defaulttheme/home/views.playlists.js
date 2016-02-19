@@ -21,7 +21,7 @@ define([], function () {
             DefaultTheme.CardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
-                shape: 'autoHome',
+                shape: 'auto',
                 autoFocus: autoFocus,
                 showTitle: true
             });

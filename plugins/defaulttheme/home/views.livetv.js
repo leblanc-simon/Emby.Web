@@ -16,7 +16,7 @@ define(['focusManager'], function (focusManager) {
             DefaultTheme.CardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
-                shape: 'autoHome',
+                shape: 'auto',
                 width: DefaultTheme.CardBuilder.homePortraitWidth
             });
         });
@@ -37,7 +37,7 @@ define(['focusManager'], function (focusManager) {
             DefaultTheme.CardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
-                shape: 'autoHome',
+                shape: 'auto',
                 width: DefaultTheme.CardBuilder.homePortraitWidth,
                 coverImage: true
             });
@@ -51,7 +51,7 @@ define(['focusManager'], function (focusManager) {
             DefaultTheme.CardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
-                shape: 'autoHome',
+                shape: 'auto',
                 width: DefaultTheme.CardBuilder.homePortraitWidth,
                 coverImage: true
             });
