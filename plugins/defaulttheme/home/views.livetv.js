@@ -1,7 +1,5 @@
-define(['focusManager', './../cards/cardbuilder', 'pluginManager'], function (focusManager, cardBuilder, pluginManager) {
+define(['focusManager', './../cards/cardbuilder', 'pluginManager', './../themeinfo'], function (focusManager, cardBuilder, pluginManager, themeInfo) {
 
-    var themeId = 'defaulttheme';
-	
 	function loadLatestRecordings(element) {
 
         return Emby.Models.liveTvRecordings({
@@ -57,7 +55,7 @@ define(['focusManager', './../cards/cardbuilder', 'pluginManager'], function (fo
 
     function gotoTvView(tab, parentId) {
 
-        Emby.Page.show(pluginManager.mapRoute(themeId, 'livetv/livetv.html?tab=' + tab));
+        Emby.Page.show(pluginManager.mapRoute(themeInfo.id, 'livetv/livetv.html?tab=' + tab));
     }
 
     function view(element, parentId, autoFocus) {
@@ -115,7 +113,7 @@ define(['focusManager', './../cards/cardbuilder', 'pluginManager'], function (fo
         };
 
         element.querySelector('.guideCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'livetv/guide.html'));
+            Emby.Page.show(Emby.PluginManager.mapRoute(themeInfo.id, 'livetv/guide.html'));
         });
 
         element.querySelector('.recordingsCard').addEventListener('click', function () {

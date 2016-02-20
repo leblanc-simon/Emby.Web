@@ -1,7 +1,5 @@
-define(['./spotlight', 'imageLoader', 'focusManager', './../cards/cardbuilder'], function (spotlight, imageLoader, focusManager, cardbuilder) {
+define(['./spotlight', 'imageLoader', 'focusManager', './../cards/cardbuilder', './../themeinfo'], function (spotlight, imageLoader, focusManager, cardbuilder, themeInfo) {
 
-    var themeId = 'defaulttheme';
-	
 	function loadResume(element, parentId) {
 
         var options = {
@@ -188,15 +186,15 @@ define(['./spotlight', 'imageLoader', 'focusManager', './../cards/cardbuilder'],
         loadImages(element, parentId);
 
         element.querySelector('.allMoviesCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'movies/movies.html?parentid=' + parentId));
+            Emby.Page.show(Emby.PluginManager.mapRoute(themeInfo.id, 'movies/movies.html?parentid=' + parentId));
         });
 
         element.querySelector('.movieCollectionsCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'movies/movies.html?tab=collections&parentid=' + parentId));
+            Emby.Page.show(Emby.PluginManager.mapRoute(themeInfo.id, 'movies/movies.html?tab=collections&parentid=' + parentId));
         });
 
         element.querySelector('.movieFavoritesCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'movies/movies.html?tab=favorites&parentid=' + parentId));
+            Emby.Page.show(Emby.PluginManager.mapRoute(themeInfo.id, 'movies/movies.html?tab=favorites&parentid=' + parentId));
         });
 
         self.destroy = function () {
