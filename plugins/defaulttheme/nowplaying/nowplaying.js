@@ -1,7 +1,5 @@
-define(['playbackManager', 'datetime', './../components/backdrop', 'userdataButtons', './../cards/cardbuilder', 'pluginManager'], function (playbackManager, datetime, themeBackdrop, userdataButtons, cardBuilder, pluginManager) {
+define(['playbackManager', 'datetime', './../components/backdrop', 'userdataButtons', './../cards/cardbuilder', 'pluginManager', './../themeinfo'], function (playbackManager, datetime, themeBackdrop, userdataButtons, cardBuilder, pluginManager, themeInfo) {
 
-    var themeId = 'defaulttheme';
-	
 	return function (view, params) {
 
         var self = this;
@@ -317,7 +315,7 @@ define(['playbackManager', 'datetime', './../components/backdrop', 'userdataButt
 
         view.querySelector('.btnPlaylist').addEventListener('click', function () {
 
-            Emby.Page.show(pluginManager.mapRoute(themeId, 'nowplaying/playlist.html'));
+            Emby.Page.show(pluginManager.mapRoute(themeInfo.id, 'nowplaying/playlist.html'));
         });
 
         btnRepeat.addEventListener('click', function () {
