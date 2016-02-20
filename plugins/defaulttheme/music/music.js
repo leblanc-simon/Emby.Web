@@ -1,7 +1,5 @@
-define(['loading', 'alphapicker', './../cards/cardbuilder', './../components/horizontallist', './../components/focushandler', './../components/tabbedpage', './../components/backdrop', 'focusManager'], function (loading, alphaPicker, cardBuilder, horizontalList, focusHandler, tabbedPage, themeBackdrop, focusManager) {
+define(['loading', './../themeinfo', 'alphapicker', './../cards/cardbuilder', './../components/horizontallist', './../components/focushandler', './../components/tabbedpage', './../components/backdrop', 'focusManager'], function (loading, themeInfo, alphaPicker, cardBuilder, horizontalList, focusHandler, tabbedPage, themeBackdrop, focusManager) {
 
-    var themeId = 'defaulttheme';
-	
 	return function (view, params) {
 
         var self = this;
@@ -198,7 +196,7 @@ define(['loading', 'alphapicker', './../cards/cardbuilder', './../components/hor
                 e.preventDefault();
                 e.stopPropagation();
 
-                Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'list/list.html') + '?parentid=' + parentid + '&genreId=' + value);
+                Emby.Page.show(Emby.PluginManager.mapRoute(themeInfo.id, 'list/list.html') + '?parentid=' + parentid + '&genreId=' + value);
 
                 return false;
             }
@@ -379,12 +377,12 @@ define(['loading', 'alphapicker', './../cards/cardbuilder', './../components/hor
 
         function renderFavorites(page, pageParams, autoFocus, slyFrame, resolve) {
 
-            fetch(Emby.PluginManager.mapUrl(themeId, 'music/views.favorites.html'), { mode: 'no-cors' }).then(function (response) {
+            fetch(Emby.PluginManager.mapUrl(themeInfo.id, 'music/views.favorites.html'), { mode: 'no-cors' }).then(function (response) {
                 return response.text();
             }).then(function (html) {
 
                 var parent = page.querySelector('.contentScrollSlider');
-                parent.innerHTML = Globalize.translateHtml(html, themeId);
+                parent.innerHTML = Globalize.translateHtml(html, themeInfo.id);
                 loadFavoriteArtists(parent, pageParams, autoFocus, resolve);
                 loadFavoriteAlbums(parent, pageParams);
             });
