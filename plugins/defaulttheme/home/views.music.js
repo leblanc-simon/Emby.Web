@@ -1,7 +1,5 @@
-define(['./../cards/cardbuilder', 'pluginManager'], function (cardBuilder, pluginManager) {
+define(['./../cards/cardbuilder', 'pluginManager', './../themeinfo'], function (cardBuilder, pluginManager, themeInfo) {
 
-    var themeId = 'defaulttheme';
-	
 	function loadLatest(element, parentId) {
 
         var options = {
@@ -194,7 +192,7 @@ define(['./../cards/cardbuilder', 'pluginManager'], function (cardBuilder, plugi
 
     function gotoMusicView(tab, parentId) {
 
-        Emby.Page.show(pluginManager.mapRoute(themeId, 'music/music.html?tab=' + tab + "&parentid=" + parentId));
+        Emby.Page.show(pluginManager.mapRoute(themeInfo.id, 'music/music.html?tab=' + tab + "&parentid=" + parentId));
     }
 
     function view(element, parentId, autoFocus) {
