@@ -1,6 +1,7 @@
 define([''], function () {
 
     return {
-        id: 'defaulttheme'
+        id: 'defaulttheme',
+        name: 'Default Theme'
     };
 });

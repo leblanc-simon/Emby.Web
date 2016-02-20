@@ -1,6 +1,6 @@
 define(['loading', './../components/tabbedpage', './../components/backdrop', 'focusManager', 'playbackManager', './../themeinfo'], function (loading, tabbedPage, themeBackdrop, focusManager, playbackManager, themeInfo) {
 
-	function loadViewHtml(page, parentId, html, viewName, autoFocus, self) {
+    function loadViewHtml(page, parentId, html, viewName, autoFocus, self) {
 
         var homeScrollContent = page.querySelector('.contentScrollSlider');
 
@@ -40,7 +40,7 @@ define(['loading', './../components/tabbedpage', './../components/backdrop', 'fo
             if (!needsRefresh) {
                 return;
             }
-            
+
             var activeElement = document.activeElement;
             var card = activeElement ? parentWithClass(activeElement, 'card') : null;
             var itemId = card ? card.getAttribute('data-id') : null;
