@@ -1,8 +1,6 @@
-define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButtons', 'itemHelper', './../components/focushandler', './../components/backdrop', './../components/listview', 'mediaInfo', 'focusManager', './../themesettings', './../cards/cardbuilder', 'indicators'],
-    function (loading, datetime, playbackManager, imageLoader, userdataButtons, itemHelper, focusHandler, themeBackdrop, listview, mediaInfo, focusManager, themeSettings, cardBuilder, indicators) {
+define(['loading', './../themeinfo', 'datetime', 'playbackManager', 'imageLoader', 'userdataButtons', 'itemHelper', './../components/focushandler', './../components/backdrop', './../components/listview', 'mediaInfo', 'focusManager', './../themesettings', './../cards/cardbuilder', 'indicators'],
+    function (loading, themeInfo, datetime, playbackManager, imageLoader, userdataButtons, itemHelper, focusHandler, themeBackdrop, listview, mediaInfo, focusManager, themeSettings, cardBuilder, indicators) {
 
-        var themeId = 'defaulttheme';
-		
 		function focusMainSection() {
 
             focusManager.autoFocus(this);
@@ -181,11 +179,11 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
             })[0] || {};
 
             if (item.VideoType == 'Dvd') {
-                html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath(themeId, 'css/mediaicons/S_Media_DVD_white.png') + '" />';
+                html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath(themeInfo.id, 'css/mediaicons/S_Media_DVD_white.png') + '" />';
             }
 
             if (item.VideoType == 'BluRay') {
-                html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath(themeId, 'css/mediaicons/S_Media_BlueRay_white.png') + '" />';
+                html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath(themeInfo.id, 'css/mediaicons/S_Media_BlueRay_white.png') + '" />';
             }
 
             var resolutionText = getResolutionText(item);
