@@ -85,7 +85,7 @@ define(['paperdialoghelper', 'apphost', 'css!./backmenu.css'], function (paperdi
 
         });
 
-        paperdialoghelper.open(dlg).then(function () {
+        return paperdialoghelper.open(dlg).then(function () {
 
             var cancelled = false;
 
@@ -119,8 +119,6 @@ define(['paperdialoghelper', 'apphost', 'css!./backmenu.css'], function (paperdi
                     cancelled = true;
                     break;
             }
-
-            options.callback(cancelled);
         });
     }
 

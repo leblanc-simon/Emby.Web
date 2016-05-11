@@ -1,4 +1,4 @@
-define([], function () {
+define(['./../cards/cardbuilder'], function (cardBuilder) {
 
     function loadAll(element, parentId, autoFocus) {
 
@@ -17,10 +17,10 @@ define([], function () {
                 return;
             }
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
-                shape: 'autoHome',
+                shape: 'auto',
                 autoFocus: autoFocus
             });
         });

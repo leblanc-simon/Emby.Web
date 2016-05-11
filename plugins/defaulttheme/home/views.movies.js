@@ -1,7 +1,5 @@
-define(['./spotlight', 'imageLoader', 'focusManager'], function (spotlight, imageLoader, focusManager) {
+define(['./spotlight', 'imageLoader', 'focusManager', './../cards/cardbuilder', './../themeinfo'], function (spotlight, imageLoader, focusManager, cardbuilder, themeInfo) {
 
-    var themeId = 'defaulttheme';
-	
 	function loadResume(element, parentId) {
 
         var options = {
@@ -16,12 +14,11 @@ define(['./spotlight', 'imageLoader', 'focusManager'], function (spotlight, imag
 
             var resumeSection = element.querySelector('.resumeSection');
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardbuilder.buildCards(result.Items, {
                 parentContainer: resumeSection,
                 itemsContainer: resumeSection.querySelector('.itemsContainer'),
                 shape: 'backdropCard',
                 rows: 3,
-                width: DefaultTheme.CardBuilder.homeThumbWidth,
                 preferThumb: true
             });
         });
@@ -41,12 +38,11 @@ define(['./spotlight', 'imageLoader', 'focusManager'], function (spotlight, imag
 
             var resumeSection = element.querySelector('.latestSection');
 
-            DefaultTheme.CardBuilder.buildCards(result, {
+            cardbuilder.buildCards(result, {
                 parentContainer: resumeSection,
                 itemsContainer: resumeSection.querySelector('.itemsContainer'),
                 shape: 'portraitCard',
-                rows: 2,
-                width: DefaultTheme.CardBuilder.homePortraitWidth
+                rows: 2
             });
         });
     }
@@ -96,10 +92,9 @@ define(['./spotlight', 'imageLoader', 'focusManager'], function (spotlight, imag
 
     function getRecommendationHtml(recommendation) {
 
-        var cardsHtml = DefaultTheme.CardBuilder.buildCardsHtml(recommendation.Items, {
+        var cardsHtml = cardbuilder.buildCardsHtml(recommendation.Items, {
             shape: 'portraitCard',
-            rows: 2,
-            width: DefaultTheme.CardBuilder.homePortraitWidth
+            rows: 2
         });
 
         var html = '';
@@ -191,15 +186,15 @@ define(['./spotlight', 'imageLoader', 'focusManager'], function (spotlight, imag
         loadImages(element, parentId);
 
         element.querySelector('.allMoviesCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'movies/movies.html?parentid=' + parentId));
+            Emby.Page.show(Emby.PluginManager.mapRoute(themeInfo.id, 'movies/movies.html?parentid=' + parentId));
         });
 
         element.querySelector('.movieCollectionsCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'movies/movies.html?tab=collections&parentid=' + parentId));
+            Emby.Page.show(Emby.PluginManager.mapRoute(themeInfo.id, 'movies/movies.html?tab=collections&parentid=' + parentId));
         });
 
         element.querySelector('.movieFavoritesCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'movies/movies.html?tab=favorites&parentid=' + parentId));
+            Emby.Page.show(Emby.PluginManager.mapRoute(themeInfo.id, 'movies/movies.html?tab=favorites&parentid=' + parentId));
         });
 
         self.destroy = function () {

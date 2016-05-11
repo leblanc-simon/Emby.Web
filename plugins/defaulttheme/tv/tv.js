@@ -1,7 +1,5 @@
-define(['loading', 'alphapicker', './../components/horizontallist', './../components/focushandler', './../components/tabbedpage', './../components/backdrop', 'focusManager'], function (loading, alphaPicker, horizontalList, focusHandler, tabbedPage, themeBackdrop, focusManager) {
+define(['loading', './../themeinfo', 'alphapicker', './../components/horizontallist', './../cards/cardbuilder', './../components/focushandler', './../components/tabbedpage', './../components/backdrop', 'focusManager'], function (loading, themeInfo, alphaPicker, horizontalList, cardBuilder, focusHandler, tabbedPage, themeBackdrop, focusManager) {
 
-    var themeId = 'defaulttheme';
-	
 	return function(view, params) {
 
         var self = this;
@@ -147,7 +145,6 @@ define(['loading', 'alphapicker', './../components/horizontallist', './../compon
                     shape: 'backdropCard',
                     rows: 3,
                     preferThumb: true,
-                    width: DefaultTheme.CardBuilder.homeThumbWidth,
                     indexBy: 'PremiereDate'
                 },
                 selectedItemInfoElement: page.querySelector('.selectedItemInfoInner'),
@@ -240,12 +237,12 @@ define(['loading', 'alphapicker', './../components/horizontallist', './../compon
 
         function renderFavorites(page, pageParams, autoFocus, slyFrame, resolve) {
 
-            fetch(Emby.PluginManager.mapUrl(themeId, 'tv/views.favorites.html'), { mode: 'no-cors' }).then(function (response) {
+            fetch(Emby.PluginManager.mapUrl(themeInfo.id, 'tv/views.favorites.html'), { mode: 'no-cors' }).then(function (response) {
                 return response.text();
             }).then(function (html) {
 
                 var parent = page.querySelector('.contentScrollSlider');
-                parent.innerHTML = Globalize.translateHtml(html, themeId);
+                parent.innerHTML = Globalize.translateHtml(html, themeInfo.id);
                 loadFavoriteSeries(parent, pageParams, autoFocus, resolve);
                 loadFavoriteEpisodes(parent, pageParams);
             });
@@ -276,7 +273,7 @@ define(['loading', 'alphapicker', './../components/horizontallist', './../compon
                     section.classList.add('hide');
                 }
 
-                DefaultTheme.CardBuilder.buildCards(result.Items, {
+                cardBuilder.buildCards(result.Items, {
                     itemsContainer: section.querySelector('.itemsContainer'),
                     shape: 'auto',
                     rows: 2
@@ -313,7 +310,7 @@ define(['loading', 'alphapicker', './../components/horizontallist', './../compon
                     section.classList.add('hide');
                 }
 
-                DefaultTheme.CardBuilder.buildCards(result.Items, {
+                cardBuilder.buildCards(result.Items, {
                     itemsContainer: section.querySelector('.itemsContainer'),
                     shape: 'auto',
                     rows: 3

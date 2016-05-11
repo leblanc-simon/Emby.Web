@@ -380,8 +380,10 @@
         define("slideshow", [embyWebComponentsBowerPath + "/slideshow/slideshow"], returnFirstDependency);
 
         define("alphapicker", ["components/alphapicker/alphapicker"], returnFirstDependency);
+        define("indicators", ["components/indicators/indicators"], returnFirstDependency);
 
         define("dialog", ["components/dialog/dialog"], returnFirstDependency);
+        define("backMenu", ["components/backmenu/backmenu"], returnFirstDependency);
         define("prompt", [embyWebComponentsBowerPath + "/prompt/prompt"], returnFirstDependency);
 
         define("paper-base", ["css!style/paperstyles.css"]);

@@ -1,7 +1,5 @@
-define(['./spotlight', 'focusManager'], function (spotlight, focusManager) {
+define(['./spotlight', 'focusManager', './../cards/cardbuilder', './../themeinfo'], function (spotlight, focusManager, cardBuilder, themeInfo) {
 
-	var themeId = 'defaulttheme';
-	
     function loadResume(element, parentId) {
 
         var options = {
@@ -16,12 +14,11 @@ define(['./spotlight', 'focusManager'], function (spotlight, focusManager) {
 
             var section = element.querySelector('.resumeSection');
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
                 shape: 'backdropCard',
                 rows: 3,
-                width: DefaultTheme.CardBuilder.homeThumbWidth,
                 preferThumb: true,
                 addImageData: true
             });
@@ -40,12 +37,11 @@ define(['./spotlight', 'focusManager'], function (spotlight, focusManager) {
 
             var section = element.querySelector('.nextUpSection');
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
                 shape: 'backdropCard',
                 rows: 3,
-                width: DefaultTheme.CardBuilder.homeThumbWidth,
                 preferThumb: true,
                 addImageData: true
             });
@@ -68,12 +64,11 @@ define(['./spotlight', 'focusManager'], function (spotlight, focusManager) {
 
             var section = element.querySelector('.latestSection');
 
-            DefaultTheme.CardBuilder.buildCards(result, {
+            cardBuilder.buildCards(result, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
                 shape: 'backdropCard',
                 rows: 3,
-                width: DefaultTheme.CardBuilder.homeThumbWidth,
                 preferThumb: true,
                 showGroupCount: true
             });
@@ -152,15 +147,15 @@ define(['./spotlight', 'focusManager'], function (spotlight, focusManager) {
         loadImages(element, parentId);
 
         element.querySelector('.allSeriesCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'tv/tv.html?parentid=' + parentId));
+            Emby.Page.show(Emby.PluginManager.mapRoute(themeInfo.id, 'tv/tv.html?parentid=' + parentId));
         });
 
         element.querySelector('.tvUpcomingCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'tv/tv.html?tab=upcoming&parentid=' + parentId));
+            Emby.Page.show(Emby.PluginManager.mapRoute(themeInfo.id, 'tv/tv.html?tab=upcoming&parentid=' + parentId));
         });
 
         element.querySelector('.tvFavoritesCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'tv/tv.html?tab=favorites&parentid=' + parentId));
+            Emby.Page.show(Emby.PluginManager.mapRoute(themeInfo.id, 'tv/tv.html?tab=favorites&parentid=' + parentId));
         });
 
         self.destroy = function () {

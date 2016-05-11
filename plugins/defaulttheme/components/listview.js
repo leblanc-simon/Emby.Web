@@ -1,4 +1,4 @@
-define(['itemHelper', 'mediaInfo', 'paper-icon-item', 'paper-item-body'], function (itemHelper, mediaInfo) {
+define(['itemHelper', 'mediaInfo', 'indicators', 'paper-icon-item', 'paper-item-body'], function (itemHelper, mediaInfo, indicators) {
 
     function getListViewHtml(items, options) {
 
@@ -43,8 +43,8 @@ define(['itemHelper', 'mediaInfo', 'paper-icon-item', 'paper-item-body'], functi
             } else {
                 html += '<div class="paperIconItemImage" item-icon>';
             }
-            html += DefaultTheme.CardBuilder.getPlayedIndicator(item);
-            var progressHtml = DefaultTheme.CardBuilder.getProgressBarHtml(item);
+            html += indicators.getPlayedIndicatorHtml(item);
+            var progressHtml = indicators.getProgressBarHtml(item);
 
             if (progressHtml) {
                 html += progressHtml;

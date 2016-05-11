@@ -1,6 +1,6 @@
-define(['userSettings'], function (userSettings) {
+define(['userSettings', './themeinfo'], function (userSettings, themeinfo) {
 
-    var settingsPrefix = 'defaulttheme-';
+    var settingsPrefix = themeinfo.id + '-';
     var obj = function () {
 
         var self = this;
@@ -33,7 +33,7 @@ define(['userSettings'], function (userSettings) {
             return self.get('dimunselectedposters') == 'true';
         };
 
-        self.apply = function() {
+        self.apply = function () {
 
             if (self.dimUnselectedPosters()) {
                 document.body.classList.add('dimunselected');

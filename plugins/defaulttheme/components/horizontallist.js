@@ -1,4 +1,4 @@
-define(['loading', './focushandler', 'focusManager'], function (loading, focusHandler, focusManager) {
+define(['loading', './focushandler', 'focusManager', './../cards/cardbuilder'], function (loading, focusHandler, focusManager, cardbuilder) {
 
     function horizontalList(options) {
 
@@ -43,7 +43,7 @@ define(['loading', './focushandler', 'focusManager'], function (loading, focusHa
                 cardOptions.shape = cardOptions.shape || 'auto';
                 cardOptions.rows = cardOptions.rows;
 
-                DefaultTheme.CardBuilder.buildCards(result.Items, cardOptions);
+                cardbuilder.buildCards(result.Items, cardOptions);
 
                 loading.hide();
 

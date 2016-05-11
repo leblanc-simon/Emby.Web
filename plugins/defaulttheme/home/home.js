@@ -1,15 +1,13 @@
-define(['loading', './../components/tabbedpage', './../components/backdrop', 'focusManager', 'playbackManager'], function (loading, tabbedPage, themeBackdrop, focusManager, playbackManager) {
+define(['loading', './../components/tabbedpage', './../components/backdrop', 'focusManager', 'playbackManager', './../themeinfo'], function (loading, tabbedPage, themeBackdrop, focusManager, playbackManager, themeInfo) {
 
-    var themeId = 'defaulttheme';
-	
-	function loadViewHtml(page, parentId, html, viewName, autoFocus, self) {
+    function loadViewHtml(page, parentId, html, viewName, autoFocus, self) {
 
         var homeScrollContent = page.querySelector('.contentScrollSlider');
 
         html = html;
-        homeScrollContent.innerHTML = Globalize.translateHtml(html, themeId);
+        homeScrollContent.innerHTML = Globalize.translateHtml(html, themeInfo.id);
 
-        require([themeId + '/home/views.' + viewName], function (viewBuilder) {
+        require([themeInfo.id + '/home/views.' + viewName], function (viewBuilder) {
 
             var homePanel = homeScrollContent;
             var tabView = new viewBuilder(homePanel, parentId, autoFocus);
@@ -42,7 +40,7 @@ define(['loading', './../components/tabbedpage', './../components/backdrop', 'fo
             if (!needsRefresh) {
                 return;
             }
-            
+
             var activeElement = document.activeElement;
             var card = activeElement ? parentWithClass(activeElement, 'card') : null;
             var itemId = card ? card.getAttribute('data-id') : null;
@@ -171,7 +169,7 @@ define(['loading', './../components/tabbedpage', './../components/backdrop', 'fo
                 }
 
                 var xhr = new XMLHttpRequest();
-                xhr.open('GET', Emby.PluginManager.mapPath(themeId, 'home/views.' + viewName + '.html'), true);
+                xhr.open('GET', Emby.PluginManager.mapPath(themeInfo.id, 'home/views.' + viewName + '.html'), true);
 
                 xhr.onload = function (e) {
 

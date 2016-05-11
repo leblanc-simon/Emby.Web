@@ -1,8 +1,6 @@
-define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButtons', 'itemHelper', './../components/focushandler', './../components/backdrop', './../components/listview', 'mediaInfo', 'focusManager', './../themesettings'],
-    function (loading, datetime, playbackManager, imageLoader, userdataButtons, itemHelper, focusHandler, themeBackdrop, listview, mediaInfo, focusManager, themeSettings) {
+define(['loading', './../themeinfo', 'datetime', 'playbackManager', 'imageLoader', 'userdataButtons', 'itemHelper', './../components/focushandler', './../components/backdrop', './../components/listview', 'mediaInfo', 'focusManager', './../themesettings', './../cards/cardbuilder', 'indicators'],
+    function (loading, themeInfo, datetime, playbackManager, imageLoader, userdataButtons, itemHelper, focusHandler, themeBackdrop, listview, mediaInfo, focusManager, themeSettings, cardBuilder, indicators) {
 
-        var themeId = 'defaulttheme';
-		
 		function focusMainSection() {
 
             focusManager.autoFocus(this);
@@ -133,7 +131,7 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
                 if (url && item.Type != "Season" && item.Type != "BoxSet") {
                     detailImage.classList.remove('hide');
-                    detailImage.innerHTML = '<img class="detailImage" src="' + url + '" />' + DefaultTheme.CardBuilder.getProgressBarHtml(item);
+                    detailImage.innerHTML = '<img class="detailImage" src="' + url + '" />' + indicators.getProgressBarHtml(item);
                 } else {
                     detailImage.classList.add('hide');
                     detailImage.innerHTML = '';
@@ -181,11 +179,11 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
             })[0] || {};
 
             if (item.VideoType == 'Dvd') {
-                html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath(themeId, 'css/mediaicons/S_Media_DVD_white.png') + '" />';
+                html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath(themeInfo.id, 'css/mediaicons/S_Media_DVD_white.png') + '" />';
             }
 
             if (item.VideoType == 'BluRay') {
-                html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath(themeId, 'css/mediaicons/S_Media_BlueRay_white.png') + '" />';
+                html += '<img class="mediaInfoIcon mediaInfoImageIcon" src="' + Emby.PluginManager.mapPath(themeInfo.id, 'css/mediaicons/S_Media_BlueRay_white.png') + '" />';
             }
 
             var resolutionText = getResolutionText(item);
@@ -421,6 +419,13 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
             }
         }
 
+        function extendVerticalCardOptions(options) {
+            options.portraitWidth = 340;
+            options.squareWidth = 340;
+            options.thumbWidth = 500;
+            return options;
+        }
+
         function renderNextUp(view, item) {
 
             var section = view.querySelector('.nextUpSection');
@@ -450,14 +455,14 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
                     focusManager.autoFocus(view);
                 }
 
-                DefaultTheme.CardBuilder.buildCards(result.Items, {
+                cardBuilder.buildCards(result.Items, extendVerticalCardOptions({
                     parentContainer: section,
                     itemsContainer: section.querySelector('.itemsContainer'),
                     shape: 'autoVertical',
                     showTitle: true,
                     scalable: true,
                     autoFocus: focusedItemIsNextUp
-                });
+                }));
             });
         }
 
@@ -624,9 +629,9 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
                         IncludeItemTypes: "Movie",
                         PersonTypes: "",
                         ArtistIds: ""
-                    }, {
+                    }, extendVerticalCardOptions({
                         shape: "autoVertical"
-                    });
+                    }));
                     break;
 
                 case 'MusicVideo':
@@ -635,10 +640,10 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
                         IncludeItemTypes: "MusicVideo",
                         PersonTypes: "",
                         ArtistIds: ""
-                    }, {
+                    }, extendVerticalCardOptions({
                         shape: "autoVertical",
                         showTitle: true
-                    });
+                    }));
                     break;
 
                 case 'Game':
@@ -647,9 +652,9 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
                         IncludeItemTypes: "Game",
                         PersonTypes: "",
                         ArtistIds: ""
-                    }, {
+                    }, extendVerticalCardOptions({
                         shape: "autoVertical"
-                    });
+                    }));
                     break;
 
                 case 'Trailer':
@@ -658,9 +663,9 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
                         IncludeItemTypes: "Trailer",
                         PersonTypes: "",
                         ArtistIds: ""
-                    }, {
+                    }, extendVerticalCardOptions({
                         shape: "autoVertical"
-                    });
+                    }));
                     break;
 
                 case 'Series':
@@ -669,9 +674,9 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
                         IncludeItemTypes: "Series",
                         PersonTypes: "",
                         ArtistIds: ""
-                    }, {
+                    }, extendVerticalCardOptions({
                         shape: "autoVertical"
-                    });
+                    }));
                     break;
 
                 case 'MusicAlbum':
@@ -680,10 +685,10 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
                         IncludeItemTypes: "MusicAlbum",
                         PersonTypes: "",
                         ArtistIds: ""
-                    }, {
+                    }, extendVerticalCardOptions({
                         shape: "autoVertical",
                         playFromHere: true
-                    });
+                    }));
                     break;
 
                 case 'Episode':
@@ -693,11 +698,11 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
                         PersonTypes: "",
                         ArtistIds: "",
                         Limit: 50
-                    }, {
+                    }, extendVerticalCardOptions({
                         shape: "autoVertical",
                         showTitle: true,
                         showParentTitle: true
-                    });
+                    }));
                     break;
 
                 default:
@@ -716,7 +721,7 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
             Emby.Models.items(query).then(function (result) {
 
-                DefaultTheme.CardBuilder.buildCards(result.Items, {
+                cardBuilder.buildCards(result.Items, {
                     parentContainer: element,
                     itemsContainer: element.querySelector('.itemsContainer'),
                     shape: listOptions.shape,
@@ -867,13 +872,13 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
                 section.classList.remove('hide');
 
-                DefaultTheme.CardBuilder.buildCards(result.Items, {
+                cardBuilder.buildCards(result.Items, extendVerticalCardOptions({
                     parentContainer: section,
                     itemsContainer: section.querySelector('.itemsContainer'),
                     shape: 'autoVertical',
                     showTitle: showTitle,
                     scalable: true
-                });
+                }));
             });
         }
 
@@ -928,14 +933,14 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
                 section.classList.remove('hide');
 
-                DefaultTheme.CardBuilder.buildCards(items, {
+                cardBuilder.buildCards(items, extendVerticalCardOptions({
                     parentContainer: section,
                     itemsContainer: section.querySelector('.itemsContainer'),
                     shape: 'autoVertical',
                     scalable: true,
                     showTitle: true,
                     action: 'playallfromhere'
-                });
+                }));
             });
         }
 
@@ -989,13 +994,13 @@ define(['loading', 'datetime', 'playbackManager', 'imageLoader', 'userdataButton
 
                 section.querySelector('h2').innerHTML = Globalize.translate('SimilarTo', item.Name);
 
-                DefaultTheme.CardBuilder.buildCards(result.Items, {
+                cardBuilder.buildCards(result.Items, extendVerticalCardOptions({
                     parentContainer: section,
                     itemsContainer: section.querySelector('.itemsContainer'),
                     shape: 'autoVertical',
                     scalable: true,
                     coverImage: item.Type == 'MusicArtist' || item.Type == 'MusicAlbum'
-                });
+                }));
             });
         }
 

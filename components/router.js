@@ -290,13 +290,9 @@ define(['loading', 'viewManager', 'themeManager', 'pluginManager'], function (lo
         // Logout
         // Or exit app
 
-        themeManager.getCurrentTheme().showBackMenu(function (wasCancelled) {
+        themeManager.getCurrentTheme().showBackMenu().then(function () {
 
             isHandlingBackToDefault = false;
-
-            if (wasCancelled) {
-                //themeManager.loadUserTheme();
-            }
         });
     }
 

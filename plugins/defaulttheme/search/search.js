@@ -1,4 +1,4 @@
-define(['loading', 'alphapicker', 'slyScroller', './../components/focushandler'], function (loading, alphaPicker, slyScroller, focusHandler) {
+define(['loading', 'alphapicker', 'slyScroller', './../components/focushandler', './../cards/cardbuilder'], function (loading, alphaPicker, slyScroller, focusHandler, cardBuilder) {
 
     function createVerticalScroller(view, pageInstance) {
 
@@ -156,8 +156,11 @@ define(['loading', 'alphapicker', 'slyScroller', './../components/focushandler']
             cardOptions.itemsContainer = section.querySelector('.itemsContainer');
             cardOptions.shape = 'autoVertical';
             cardOptions.scalable = true;
+            cardOptions.portraitWidth = 340;
+            cardOptions.squareWidth = 340;
+            cardOptions.thumbWidth = 500;
 
-            DefaultTheme.CardBuilder.buildCards(items, cardOptions);
+            cardBuilder.buildCards(items, cardOptions);
         }
 
         function initAlphaPicker(view) {

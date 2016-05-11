@@ -1,7 +1,5 @@
-define([], function () {
+define(['./../cards/cardbuilder', 'pluginManager', './../themeinfo'], function (cardBuilder, pluginManager, themeInfo) {
 
-    var themeId = 'defaulttheme';
-	
 	function loadLatest(element, parentId) {
 
         var options = {
@@ -18,11 +16,10 @@ define([], function () {
 
             var section = element.querySelector('.latestSection');
 
-            DefaultTheme.CardBuilder.buildCards(result, {
+            cardBuilder.buildCards(result, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
-                shape: 'autoHome',
-                width: DefaultTheme.CardBuilder.homePortraitWidth
+                shape: 'auto'
             });
         });
     }
@@ -45,11 +42,10 @@ define([], function () {
 
             var section = element.querySelector('.playlistsSection');
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
-                shape: 'autoHome',
-                width: DefaultTheme.CardBuilder.homePortraitWidth,
+                shape: 'auto',
                 showTitle: true
             });
         });
@@ -75,11 +71,10 @@ define([], function () {
 
             var section = element.querySelector('.recentlyPlayedSection');
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
-                shape: 'autoHome',
-                width: DefaultTheme.CardBuilder.homePortraitWidth,
+                shape: 'auto',
                 action: 'instantmix'
             });
         });
@@ -105,11 +100,10 @@ define([], function () {
 
             var section = element.querySelector('.frequentlyPlayedSection');
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
-                shape: 'autoHome',
-                width: DefaultTheme.CardBuilder.homePortraitWidth,
+                shape: 'auto',
                 action: 'instantmix'
             });
         });
@@ -134,11 +128,10 @@ define([], function () {
 
             var section = element.querySelector('.favoriteSongsSection');
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
-                shape: 'autoHome',
-                width: DefaultTheme.CardBuilder.homePortraitWidth,
+                shape: 'auto',
                 action: 'instantmix'
             });
         });
@@ -163,11 +156,10 @@ define([], function () {
 
             var section = element.querySelector('.favoriteAlbumsSection');
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
-                shape: 'autoHome',
-                width: DefaultTheme.CardBuilder.homePortraitWidth
+                shape: 'auto'
             });
         });
     }
@@ -190,18 +182,17 @@ define([], function () {
 
             var section = element.querySelector('.favoriteArtistsSection');
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
-                shape: 'autoHome',
-                width: DefaultTheme.CardBuilder.homePortraitWidth
+                shape: 'auto'
             });
         });
     }
 
     function gotoMusicView(tab, parentId) {
 
-        Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'music/music.html?tab=' + tab + "&parentid=" + parentId));
+        Emby.Page.show(pluginManager.mapRoute(themeInfo.id, 'music/music.html?tab=' + tab + "&parentid=" + parentId));
     }
 
     function view(element, parentId, autoFocus) {

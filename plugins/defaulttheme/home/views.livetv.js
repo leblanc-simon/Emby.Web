@@ -1,7 +1,5 @@
-define(['focusManager'], function (focusManager) {
+define(['focusManager', './../cards/cardbuilder', 'pluginManager', './../themeinfo'], function (focusManager, cardBuilder, pluginManager, themeInfo) {
 
-    var themeId = 'defaulttheme';
-	
 	function loadLatestRecordings(element) {
 
         return Emby.Models.liveTvRecordings({
@@ -13,11 +11,10 @@ define(['focusManager'], function (focusManager) {
 
             var section = element.querySelector('.latestRecordingsSection');
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
-                shape: 'autoHome',
-                width: DefaultTheme.CardBuilder.homePortraitWidth
+                shape: 'auto'
             });
         });
     }
@@ -34,11 +31,10 @@ define(['focusManager'], function (focusManager) {
 
             var section = element.querySelector('.nowPlayingSection');
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
-                shape: 'autoHome',
-                width: DefaultTheme.CardBuilder.homePortraitWidth,
+                shape: 'auto',
                 coverImage: true
             });
         });
@@ -48,11 +44,10 @@ define(['focusManager'], function (focusManager) {
 
         return Emby.Models.liveTvRecommendedPrograms(options).then(function (result) {
 
-            DefaultTheme.CardBuilder.buildCards(result.Items, {
+            cardBuilder.buildCards(result.Items, {
                 parentContainer: section,
                 itemsContainer: section.querySelector('.itemsContainer'),
-                shape: 'autoHome',
-                width: DefaultTheme.CardBuilder.homePortraitWidth,
+                shape: 'auto',
                 coverImage: true
             });
         });
@@ -60,7 +55,7 @@ define(['focusManager'], function (focusManager) {
 
     function gotoTvView(tab, parentId) {
 
-        Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'livetv/livetv.html?tab=' + tab));
+        Emby.Page.show(pluginManager.mapRoute(themeInfo.id, 'livetv/livetv.html?tab=' + tab));
     }
 
     function view(element, parentId, autoFocus) {
@@ -118,7 +113,7 @@ define(['focusManager'], function (focusManager) {
         };
 
         element.querySelector('.guideCard').addEventListener('click', function () {
-            Emby.Page.show(Emby.PluginManager.mapRoute(themeId, 'livetv/guide.html'));
+            Emby.Page.show(Emby.PluginManager.mapRoute(themeInfo.id, 'livetv/guide.html'));
         });
 
         element.querySelector('.recordingsCard').addEventListener('click', function () {
